@@ -3,7 +3,7 @@ import { useHistory, useLocation } from "react-router-dom";
 import "./style.css";
 
 // import { logout } from "./Action";
-// import { LayoutContext } from "../index";
+import { LayoutContext } from "../index";
 // import { isAdmin } from "../auth/fetchApi";
 
 const logout = () => { }
@@ -13,27 +13,27 @@ const Navbar = (props) => {
     const history = useHistory();
     const location = useLocation();
 
-    //   const { data, dispatch } = useContext(LayoutContext);
+    const { data, dispatch } = useContext(LayoutContext);
 
-    //   const navberToggleOpen = () =>
-    //     data.navberHamburger
-    //       ? dispatch({ type: "hamburgerToggle", payload: false })
-    //       : dispatch({ type: "hamburgerToggle", payload: true });
+    const navberToggleOpen = () =>
+        data.navberHamburger
+            ? dispatch({ type: "hamburgerToggle", payload: false })
+            : dispatch({ type: "hamburgerToggle", payload: true });
 
-    //   const loginModalOpen = () =>
-    //     data.loginSignupModal
-    //       ? dispatch({ type: "loginSignupModalToggle", payload: false })
-    //       : dispatch({ type: "loginSignupModalToggle", payload: true });
+    const loginModalOpen = () =>
+        data.loginSignupModal
+            ? dispatch({ type: "loginSignupModalToggle", payload: false })
+            : dispatch({ type: "loginSignupModalToggle", payload: true });
 
-    //   const cartModalOpen = () =>
-    //     data.cartModal
-    //       ? dispatch({ type: "cartModalToggle", payload: false })
-    //       : dispatch({ type: "cartModalToggle", payload: true });
+    const cartModalOpen = () =>
+        data.cartModal
+            ? dispatch({ type: "cartModalToggle", payload: false })
+            : dispatch({ type: "cartModalToggle", payload: true });
 
-    const data = {cartProduct: ["a", "b"]};
-    const navberToggleOpen = () => { }
-    const loginModalOpen = () => { }
-    const cartModalOpen = () => { }
+    // const data = {cartProduct: ["a", "b"]};
+    // const navberToggleOpen = () => { }
+    // const loginModalOpen = () => { }
+    // const cartModalOpen = () => { }
 
     return (
         <Fragment>
@@ -100,8 +100,8 @@ const Navbar = (props) => {
                         >
                             <svg
                                 className={`${location.pathname === "/wish-list"
-                                        ? "fill-current text-gray-800"
-                                        : ""
+                                    ? "fill-current text-gray-800"
+                                    : ""
                                     } w-8 h-8 text-gray-600 cursor-pointer`}
                                 fill="none"
                                 stroke="currentColor"

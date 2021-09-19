@@ -1,13 +1,18 @@
-import Navbar from './components/partials/Navbar'
+import React, { Fragment, useReducer } from "react";
+import Navbar from './components/shop/partials/Navbar'
 import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
+import { LayoutContext, layoutState, layoutReducer } from "./components/shop";
 
 function App() {
+    const [data, dispatch] = useReducer(layoutReducer, layoutState);
     return (
-        <div>
-            <Router>
-                <Navbar />
-            </Router>
-        </div>
+        <Fragment>
+            <LayoutContext.Provider value={{ data, dispatch }}>
+                <Router>
+                    <Navbar />
+                </Router>
+            </LayoutContext.Provider>
+        </Fragment>
     );
 }
 
