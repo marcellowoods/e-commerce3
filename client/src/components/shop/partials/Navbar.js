@@ -30,6 +30,7 @@ const Navbar = (props) => {
             ? dispatch({ type: "cartModalToggle", payload: false })
             : dispatch({ type: "cartModalToggle", payload: true });
 
+    const isMobileNavOpen = () => data.navberHamburger == true;
     // const data = {cartProduct: ["a", "b"]};
     // const navberToggleOpen = () => { }
     // const loginModalOpen = () => { }
@@ -65,7 +66,7 @@ const Navbar = (props) => {
                         </div>
                     </div>
                 </div>
-                <nav className={`${data.navberHamburger ? "" : "hidden"} sm:flex sm:justify-center sm:items-center mt-4`}>
+                <nav className={`${isMobileNavOpen() ? "" : "hidden"} sm:flex sm:justify-center sm:items-center mt-4`}>
 
                     <div className="flex flex-col sm:flex-row">
                         <a className="mt-3 text-gray-600 hover:underline sm:mx-3 sm:mt-0" href="#">Home</a>
