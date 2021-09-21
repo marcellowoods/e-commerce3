@@ -8,6 +8,52 @@ import { LayoutContext } from "../index";
 
 // const apiURL = process.env.REACT_APP_API_URL;
 
+
+////////////test data
+const items = [
+    {
+        quantity: 2,
+        pName: "rolex",
+        pPrice: 2000,
+        pImages: ["https://images.unsplash.com/photo-1593642632823-8f785ba67e45?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1189&q=80"]
+    },
+    {
+        quantity: 3,
+        pName: "swatch",
+        pPrice: 500,
+        pImages: ["https://images.unsplash.com/photo-1593642632823-8f785ba67e45?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1189&q=80"]
+    }
+];
+const quantity = (item) => item.quantity;
+const subTotal = (id, price) => price;
+const removeCartProduct = (id) => { };
+////////////test data
+
+const CartModalItem = ({ price, name, quantity, imageLink, removeCartProduct }) => {
+
+    return (
+        <div className="flex justify-between mt-6">
+            <div className="flex">
+                <img className="h-20 w-20 object-cover rounded" src={imageLink} alt="" />
+                <div className="mx-3">
+                    <h3 className="text-sm text-gray-600">{name}</h3>
+                    <div className="flex items-center mt-2">
+                        <button className="text-gray-500 focus:outline-none focus:text-gray-600">
+                            <svg className="h-5 w-5" fill="none" strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" viewBox="0 0 24 24" stroke="currentColor"><path d="M12 9v3m0 0v3m0-3h3m-3 0H9m12 0a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
+                        </button>
+                        <span className="text-gray-700 mx-2">{quantity}</span>
+                        <button className="text-gray-500 focus:outline-none focus:text-gray-600">
+                            <svg className="h-5 w-5" fill="none" strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" viewBox="0 0 24 24" stroke="currentColor"><path d="M15 12H9m12 0a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
+                        </button>
+                    </div>
+                </div>
+            </div>
+            <span className="text-gray-600">{price}$</span>
+        </div>
+    )
+}
+
+
 const CartModal = (props) => {
     const history = useHistory();
 
@@ -65,61 +111,16 @@ const CartModal = (props) => {
                     </button>
                 </div>
                 <hr className="my-3" />
-                <div className="flex justify-between mt-6">
-                    <div className="flex">
-                        <img className="h-20 w-20 object-cover rounded" src="https://images.unsplash.com/photo-1593642632823-8f785ba67e45?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1189&q=80" alt="" />
-                        <div className="mx-3">
-                            <h3 className="text-sm text-gray-600">Mac Book Pro</h3>
-                            <div className="flex items-center mt-2">
-                                <button className="text-gray-500 focus:outline-none focus:text-gray-600">
-                                    <svg className="h-5 w-5" fill="none" strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" viewBox="0 0 24 24" stroke="currentColor"><path d="M12 9v3m0 0v3m0-3h3m-3 0H9m12 0a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
-                                </button>
-                                <span className="text-gray-700 mx-2">2</span>
-                                <button className="text-gray-500 focus:outline-none focus:text-gray-600">
-                                    <svg className="h-5 w-5" fill="none" strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" viewBox="0 0 24 24" stroke="currentColor"><path d="M15 12H9m12 0a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
-                                </button>
-                            </div>
-                        </div>
-                    </div>
-                    <span className="text-gray-600">20$</span>
-                </div>
-                <div className="flex justify-between mt-6">
-                    <div className="flex">
-                        <img className="h-20 w-20 object-cover rounded" src="https://images.unsplash.com/photo-1593642632823-8f785ba67e45?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1189&q=80" alt="" />
+                {/* price, name, quantity, imageLink, removeCartProduct */}
+                {items.map((item, index) => (
+                    <CartModalItem
+                        price={item.pPrice}
+                        name={item.pName}
+                        quantity={item.quantity}
+                        imageLink={item.pImages[0]}
+                    />
+                ))}
 
-                        <div className="mx-3">
-                            <h3 className="text-sm text-gray-600">Mac Book Pro</h3>
-                            <div className="flex items-center mt-2">
-                                <button className="text-gray-500 focus:outline-none focus:text-gray-600">
-                                    <svg className="h-5 w-5" fill="none" strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" viewBox="0 0 24 24" stroke="currentColor"><path d="M12 9v3m0 0v3m0-3h3m-3 0H9m12 0a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
-                                </button>
-                                <span className="text-gray-700 mx-2">2</span>
-                                <button className="text-gray-500 focus:outline-none focus:text-gray-600">
-                                    <svg className="h-5 w-5" fill="none" strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" viewBox="0 0 24 24" stroke="currentColor"><path d="M15 12H9m12 0a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
-                                </button>
-                            </div>
-                        </div>
-                    </div>
-                    <span className="text-gray-600">20$</span>
-                </div>
-                <div className="flex justify-between mt-6">
-                    <div className="flex">
-                        <img className="h-20 w-20 object-cover rounded" src="https://images.unsplash.com/photo-1593642632823-8f785ba67e45?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1189&q=80" alt="" />
-                        <div className="mx-3">
-                            <h3 className="text-sm text-gray-600">Mac Book Pro</h3>
-                            <div className="flex items-center mt-2">
-                                <button className="text-gray-500 focus:outline-none focus:text-gray-600">
-                                    <svg className="h-5 w-5" fill="none" strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" viewBox="0 0 24 24" stroke="currentColor"><path d="M12 9v3m0 0v3m0-3h3m-3 0H9m12 0a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
-                                </button>
-                                <span className="text-gray-700 mx-2">2</span>
-                                <button className="text-gray-500 focus:outline-none focus:text-gray-600">
-                                    <svg className="h-5 w-5" fill="none" strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" viewBox="0 0 24 24" stroke="currentColor"><path d="M15 12H9m12 0a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
-                                </button>
-                            </div>
-                        </div>
-                    </div>
-                    <span className="text-gray-600">20$</span>
-                </div>
                 <div className="mt-8">
                     <form className="flex items-center justify-center">
                         <input className="form-input w-48" type="text" placeholder="Add promocode">
@@ -139,3 +140,66 @@ const CartModal = (props) => {
 };
 
 export default CartModal;
+
+
+
+// {
+//     products &&
+//         products.length !== 0 &&
+//         products.map((item, index) => {
+//             return (
+//                 <Fragment key={index}>
+//                     {/* Cart Product Start */}
+//                     <div className="text-white flex space-x-2 my-4 items-center">
+//                         <img
+//                             className="w-16 h-16 object-cover object-center"
+//                             src={`${apiURL}/uploads/products/${item.pImages[0]}`}
+//                             alt="cartProduct"
+//                         />
+//                         <div className="relative w-full flex flex-col">
+//                             <div className="my-2">{item.pName}</div>
+//                             <div className="flex items-center justify-between">
+//                                 <div className="flex items-center justify-between space-x-2">
+//                                     <div className="text-sm text-gray-400">
+//                                         Quantity :
+//                                     </div>
+//                                     <div className="flex items-end">
+//                                         <span className="text-sm text-gray-200">
+//                                             {quantity(item._id)}
+//                                         </span>
+//                                     </div>
+//                                 </div>
+//                                 <div>
+//                                     {" "}
+//                                     <span className="text-sm text-gray-400">
+//                                         Subtotoal :
+//                                     </span>{" "}
+//                                     ${subTotal(item._id, item.pPrice)}.00
+//                                 </div>{" "}
+//                                 {/* SUbtotal Count */}
+//                             </div>
+//                             {/* Cart Product Remove Button */}
+//                             <div
+//                                 onClick={(e) => removeCartProduct(item._id)}
+//                                 className="absolute top-0 right-0 text-white"
+//                             >
+//                                 <svg
+//                                     className="w-5 h-5 cursor-pointer"
+//                                     fill="currentColor"
+//                                     viewBox="0 0 20 20"
+//                                     xmlns="http://www.w3.org/2000/svg"
+//                                 >
+//                                     <path
+//                                         fillRule="evenodd"
+//                                         d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z"
+//                                         clipRule="evenodd"
+//                                     />
+//                                 </svg>
+//                             </div>
+//                         </div>
+//                     </div>
+//                     {/* Cart Product Start */}
+//                 </Fragment>
+//             );
+//         })
+// }
