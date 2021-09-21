@@ -114,6 +114,7 @@ const CartModal = (props) => {
                 {/* price, name, quantity, imageLink, removeCartProduct */}
                 {items.map((item, index) => (
                     <CartModalItem
+                        key={index}
                         price={item.pPrice}
                         name={item.pName}
                         quantity={item.quantity}
