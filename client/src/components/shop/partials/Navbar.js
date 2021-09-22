@@ -71,7 +71,7 @@ const Navbar = (props) => {
                             </button>
                         </div>
 
-                        <div className="flex sm:hidden mx-4">
+                        <div className="flex sm:hidden ml-4">
                             <button onClick={navberToggleOpen} type="button" className="text-gray-600 hover:text-gray-500 focus:outline-none focus:text-gray-500" aria-label="toggle menu">
                                 {/* className="h-6 w-6 fill-current" */}
                                 <svg width="27px" height="27px" viewBox="0 0 24 24" className="fill-current">
