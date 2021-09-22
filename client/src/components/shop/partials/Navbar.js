@@ -52,7 +52,7 @@ const Navbar = (props) => {
                         Brand
                     </div>
                     <div className="flex items-center justify-end w-full">
-                        <button onClick={cartModalOpen} className="text-gray-600 focus:outline-none mx-4 sm:mx-0">
+                        <button onClick={cartModalOpen} className="text-gray-600 focus:outline-none mx-2">
                             {/* <svg className="h-5 w-5" */}
                             <svg class="fill-current hover:text-black" xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24">
                                 <path d="M21,7H7.462L5.91,3.586C5.748,3.229,5.392,3,5,3H2v2h2.356L9.09,15.414C9.252,15.771,9.608,16,10,16h8 c0.4,0,0.762-0.238,0.919-0.606l3-7c0.133-0.309,0.101-0.663-0.084-0.944C21.649,7.169,21.336,7,21,7z M17.341,14h-6.697L8.371,9 h11.112L17.341,14z" />
@@ -62,7 +62,7 @@ const Navbar = (props) => {
                         </button>
 
                         <div className="flex">
-                            <button onClick={navberToggleOpen} type="button" className="md:mx-2 text-gray-600 hover:text-gray-500 focus:outline-none focus:text-gray-500" aria-label="toggle menu">
+                            <button onClick={navberToggleOpen} type="button" className="text-gray-600 hover:text-gray-500 focus:outline-none focus:text-gray-500" aria-label="toggle menu">
                                 {/* className="h-6 w-6 fill-current" */}
                                 <svg class="fill-current hover:text-black" xmlns="http://www.w3.org/2000/svg" width="27" height="27" viewBox="0 0 24 24">
                                     <circle fill="none" cx="12" cy="7" r="3" />
@@ -71,7 +71,7 @@ const Navbar = (props) => {
                             </button>
                         </div>
 
-                        <div className="flex sm:hidden ml-4">
+                        <div className="flex sm:hidden ml-2">
                             <button onClick={navberToggleOpen} type="button" className="text-gray-600 hover:text-gray-500 focus:outline-none focus:text-gray-500" aria-label="toggle menu">
                                 {/* className="h-6 w-6 fill-current" */}
                                 <svg width="27px" height="27px" viewBox="0 0 24 24" className="fill-current">
