@@ -34,8 +34,15 @@ code {
     width: 100%;
 }
 
+/*navy blue */
 .color-main {
     color: rgb(255, 255, 255);
     background-color: rgb(17, 35, 48)
 }
+
+/* white */
+/* .color-main {
+    color: rgb(75, 75, 75);
+    background-color: rgb(255, 255, 255)
+} */
 
