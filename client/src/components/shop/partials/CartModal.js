@@ -55,6 +55,8 @@ const CartModalItem = ({ price, name, quantity, imageLink, removeCartProduct }) 
 }
 
 //https://www.section.io/engineering-education/creating-a-modal-dialog-with-tailwind-css/
+//https://academind.com/tutorials/reactjs-navbar-side-drawer
+//https://www.youtube.com/watch?v=l6nmysZKHFU
 
 const CartModal = (props) => {
     const history = useHistory();
@@ -117,19 +119,9 @@ const CartModal = (props) => {
 
     return (
         <Fragment>
-            {<div
-                className={`${isCartModalOpen() ? "modal-backdrop" : ""} `}
-                onClick={() => {
-                    // close modal when outside of modal is clicked
-                    closeCartModal();
-                }}
-            >
-                <div onClick={e => {
-                    // do not close modal if anything inside modal content is clicked
-                    //https://codesandbox.io/s/oz8wb?file=/src/index.js:356-489
-                    e.stopPropagation();
-                }}
-                    className={`${isCartModalOpen() ? 'translate-x-0 ease-out' : 'translate-x-full ease-in'} fixed right-0 top-0 max-w-xs w-80 sm:w-full h-full px-6 py-4 transition duration-300 transform overflow-y-auto bg-white border-l-2 border-gray-300`}>
+            <div>
+                <div
+                    className={`${isCartModalOpen() ? 'translate-x-0 ease-out' : 'translate-x-full ease-in'} z-40 fixed right-0 top-0 max-w-xs w-80 sm:w-full h-full px-6 py-4 transition duration-300 transform overflow-y-auto bg-white border-l-2 border-gray-300`}>
                     <div className="flex items-center justify-between">
                         <h3 className="text-2xl font-medium text-gray-700">Your cart</h3>
                         <button onClick={cartModalOpen} className="text-gray-600 focus:outline-none">
@@ -179,8 +171,19 @@ const CartModal = (props) => {
                         <svg className="h-5 w-5 mx-2" fill="none" strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" viewBox="0 0 24 24" stroke="currentColor"><path d="M17 8l4 4m0 0l-4 4m4-4H3"></path></svg>
                     </a>
                 </div>
+
+                {isCartModalOpen() &&
+                    <div
+                        className={"modal-backdrop"}
+                        onClick={() => {
+                            // close modal when outside of modal is clicked
+                            closeCartModal();
+                        }}
+                    ></div>}
             </div>
-            }
+
+
+
         </Fragment >
     );
 };
