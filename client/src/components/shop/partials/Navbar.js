@@ -41,7 +41,7 @@ const Navbar = (props) => {
             {/* Navbar Section */}
             <div >
             {/* bg-purple-900 */}
-                <div className="bg-opacity-50">
+                <div className=" bg-opacity-50">
                     <div className="container mx-auto px-6 py-3 flex items-center justify-between">
                         <div className="hidden w-full text-gray-600 md:flex md:items-center">
                             {/* className="h-5 w-5" */}
@@ -87,7 +87,7 @@ const Navbar = (props) => {
                 </div>
                 <nav className={`${isMobileNavOpen() ? "" : "hidden"} sm:flex sm:justify-center sm:items-center `}>
 
-                    <div className="flex flex-col sm:flex-row">
+                    <div className="flex flex-col py-3 sm:flex-row">
                         <a className="mt-3 text-gray-600 hover:underline sm:mx-3 sm:mt-0" href="#">Home</a>
                         <a className="mt-3 text-gray-600 hover:underline sm:mx-3 sm:mt-0" href="#">Shop</a>
                         <a className="mt-3 text-gray-600 hover:underline sm:mx-3 sm:mt-0" href="#">Categories</a>
@@ -95,7 +95,7 @@ const Navbar = (props) => {
                         <a className="mt-3 text-gray-600 hover:underline sm:mx-3 sm:mt-0" href="#">About</a>
                     </div>
                 </nav>
-                <div  className="relative sm:mt-6 max-w-xs md:max-w-lg mx-auto">
+                <div  className="relative py-3 max-w-xs md:max-w-lg mx-auto">
                     <span className="absolute inset-y-0 left-0 pl-3 flex items-center">
                         <svg className="h-5 w-5 text-gray-500" viewBox="0 0 24 24" fill="none">
                             <path d="M21 21L15 15M17 10C17 13.866 13.866 17 10 17C6.13401 17 3 13.866 3 10C3 6.13401 6.13401 3 10 3C13.866 3 17 6.13401 17 10Z" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
