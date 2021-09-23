@@ -31,6 +31,7 @@ const Navbar = (props) => {
             : dispatch({ type: "cartModalToggle", payload: true });
 
     const isMobileNavOpen = () => data.navberHamburger == true;
+    //test
     // const data = {cartProduct: ["a", "b"]};
     // const navberToggleOpen = () => { }
     // const loginModalOpen = () => { }
