@@ -34,15 +34,33 @@ code {
     width: 100%;
 }
 
+
+
+/* white (original design color) */
+.color-main-bg {
+    background-color: rgb(255, 255, 255)
+}
+
+.color-main-bold {
+    color: rgb(55, 65, 81);
+}
+
+.color-main-light {
+    color: rgb(109, 113, 121);
+}
+
+
+
 /*navy blue */
-.color-main {
-    color: rgb(255, 255, 255);
+/* .color-main-bg {
     background-color: rgb(17, 35, 48)
 }
 
-/* white */
-/* .color-main {
-    color: rgb(75, 75, 75);
-    background-color: rgb(255, 255, 255)
+.color-main-bold {
+    color: rgb(255, 255, 255);
+}
+
+.color-main-light {
+    color: rgb(197, 197, 197);
 } */
 
