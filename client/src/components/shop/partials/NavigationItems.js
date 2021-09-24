@@ -2,7 +2,7 @@
 import React from "react";
 import { useHistory } from "react-router-dom";
 
-const Navigation = () => {
+const NavigationItems = () => {
 
     // const history = useHistory();
 
@@ -17,6 +17,6 @@ const Navigation = () => {
     );
 };
 
-export default Navigation;
+export default NavigationItems;
 
 
