@@ -1,5 +1,6 @@
 import React, { Fragment, useReducer } from "react";
 import Navbar from './components/shop/partials/Navbar'
+import MobileNavbarMenu from './components/shop/partials/MobileNavbarMenu'
 import CartModal from './components/shop/partials/CartModal'
 import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
 import { LayoutContext, layoutState, layoutReducer } from "./components/shop";
@@ -11,6 +12,7 @@ function App() {
             <LayoutContext.Provider value={{ data, dispatch }}>
                 <Router>
                     <Navbar />
+                    <MobileNavbarMenu />
                     <CartModal />
                     <h1 className="relative py-3 max-w-xs md:max-w-lg mx-auto">
                         product

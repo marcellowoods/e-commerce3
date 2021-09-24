@@ -59,9 +59,9 @@ const NavbarRender = ({ mobileNavbarToggle, loginModalToggle, cartModalToggle })
 
             </div>
             <div style={{ paddingTop: '72px' }}>
-                <nav className={`sm:flex sm:justify-center sm:items-center `}>
+                <nav className={`hidden sm:flex sm:justify-center sm:items-center `}>
 
-                    <div className="flex flex-col  sm:flex-row">
+                    <div className="flex flex-row">
                         <a className="mt-3 color-main-light hover:underline sm:mx-3 sm:mt-0" href="#">Home</a>
                         <a className="mt-3 color-main-light hover:underline sm:mx-3 sm:mt-0" href="#">Shop</a>
                         <a className="mt-3 color-main-light hover:underline sm:mx-3 sm:mt-0" href="#">Categories</a>
@@ -69,7 +69,7 @@ const NavbarRender = ({ mobileNavbarToggle, loginModalToggle, cartModalToggle })
                         <a className="mt-3 color-main-light hover:underline sm:mx-3 sm:mt-0" href="#">About</a>
                     </div>
                 </nav>
-                <div className=" relative py-5 max-w-xs md:max-w-lg mx-auto">
+                <div className="relative py-5 max-w-xs md:max-w-lg mx-auto">
                     <span className="absolute inset-y-0 left-0 pl-3 flex items-center">
                         <svg className="h-5 w-5 text-gray-500" viewBox="0 0 24 24" fill="none">
                             <path d="M21 21L15 15M17 10C17 13.866 13.866 17 10 17C6.13401 17 3 13.866 3 10C3 6.13401 6.13401 3 10 3C13.866 3 17 6.13401 17 10Z" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
