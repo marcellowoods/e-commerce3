@@ -19,8 +19,8 @@ const MobileNavbarMenu = (props) => {
 
     return (
         <Fragment>
-            <div>
-                <div
+            <div className="visible sm:invisible">
+                <div 
                     className={`${isMobileNavOpen() ? 'translate-x-0 ease-out' : '-translate-x-full ease-in'} z-40 fixed left-0 top-0 max-w-xs w-80 sm:w-full h-full px-6 py-4 transition duration-300 transform overflow-y-auto bg-white  `}>
                     <nav className={`p-5`}>
                         <div className="flex flex-col">
