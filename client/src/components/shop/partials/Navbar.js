@@ -1,5 +1,6 @@
 import React, { Fragment, useContext } from "react";
 import { useHistory, useLocation } from "react-router-dom";
+import Navigation from './Navigation';
 import "./style.css";
 
 // import { logout } from "./Action";
@@ -60,14 +61,7 @@ const NavbarRender = ({ mobileNavbarToggle, loginModalToggle, cartModalToggle })
             </div>
             <div style={{ paddingTop: '72px' }}>
                 <nav className={`hidden sm:flex sm:justify-center sm:items-center `}>
-
-                    <div className="flex flex-row">
-                        <a className="mt-3 color-main-light hover:underline sm:mx-3 sm:mt-0" href="#">Home</a>
-                        <a className="mt-3 color-main-light hover:underline sm:mx-3 sm:mt-0" href="#">Shop</a>
-                        <a className="mt-3 color-main-light hover:underline sm:mx-3 sm:mt-0" href="#">Categories</a>
-                        <a className="mt-3 color-main-light hover:underline sm:mx-3 sm:mt-0" href="#">Contact</a>
-                        <a className="mt-3 color-main-light hover:underline sm:mx-3 sm:mt-0" href="#">About</a>
-                    </div>
+                    <Navigation/>
                 </nav>
                 <div className="relative py-5 max-w-xs md:max-w-lg mx-auto">
                     <span className="absolute inset-y-0 left-0 pl-3 flex items-center">
