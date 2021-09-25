@@ -12,6 +12,32 @@ code {
     monospace;
 }
 
+/* white (original design color) */
+.color-main-bg {
+    background-color: rgb(255, 255, 255)
+}
+
+.color-main-bold {
+    color: rgb(55, 65, 81);
+}
+
+.color-main-light {
+    color: rgb(109, 113, 121);
+}
+
+/*navy blue */
+/* .color-main-bg {
+    background-color: rgb(17, 35, 48)
+}
+
+.color-main-bold {
+    color: rgb(255, 255, 255);
+}
+
+.color-main-light {
+    color: rgb(197, 197, 197);
+} */
+
 
 
 .modal-backdrop {
@@ -34,33 +60,11 @@ code {
     width: 100%;
 }
 
-
-
-/* white (original design color) */
-.color-main-bg {
-    background-color: rgb(255, 255, 255)
-}
-
-.color-main-bold {
-    color: rgb(55, 65, 81);
-}
-
-.color-main-light {
-    color: rgb(109, 113, 121);
+.mobile-searchbar-w{
+    width: 200px;
 }
 
 
 
-/*navy blue */
-/* .color-main-bg {
-    background-color: rgb(17, 35, 48)
-}
 
-.color-main-bold {
-    color: rgb(255, 255, 255);
-}
-
-.color-main-light {
-    color: rgb(197, 197, 197);
-} */
 
