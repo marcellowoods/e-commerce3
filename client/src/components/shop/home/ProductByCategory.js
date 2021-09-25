@@ -1,4 +1,5 @@
 import React, { Fragment, useEffect, useState } from "react";
+import ReactPaginate from 'react-paginate';
 import { useHistory, useParams } from "react-router-dom";
 import Layout from "../layout";
 // import { productByCategory } from "../../admin/products/FetchApi";
@@ -173,7 +174,7 @@ const PageComponent = () => {
     //     }
     // };
 
-
+    let paginationButtonClassName = "py-2 px-4 leading-tight bg-white border border-gray-200 text-blue-700 border-r-0 ml-0 rounded-l hover:bg-blue-500 hover:text-white";
 
     return (
         <Fragment>
@@ -198,15 +199,7 @@ const PageComponent = () => {
                             </div>
                         </div>
 
-                        {products.map((p) => (
-                            // let item = {
-                            //     id: Math.floor(Math.random()*1000),
-                            //     quantity: 2,
-                            //     pName: "omega",
-                            //     pPrice: 2000,
-                            //     pImages: ["https://www.giulian.bg/media/catalog/product/cache/1/small_image/317x/17f82f742ffe127f42dca9de82fb58b1/1/1/118631.jpg"]
-                            // };
-                            // ({id, name, price, imageUrl, onAddClick }) 
+                        {products && products.map((p) => (
                             <ProductCard
                                 id={p.id}
                                 quantity={3}
@@ -219,15 +212,33 @@ const PageComponent = () => {
 
                     </div>
                 </div>
-                <div className="flex justify-center">
+                {/* <div className="flex justify-center">
                     <div className="flex rounded-md mt-8">
                         <a href="#" className="py-2 px-4 leading-tight bg-white border border-gray-200 text-blue-700 border-r-0 ml-0 rounded-l hover:bg-blue-500 hover:text-white"><span>Previous</span></a>
                         <a href="#" className="py-2 px-4 leading-tight bg-white border border-gray-200 text-blue-700 border-r-0 hover:bg-blue-500 hover:text-white"><span>1</span></a>
                         <a href="#" className="py-2 px-4 leading-tight bg-white border border-gray-200 text-blue-700 border-r-0 hover:bg-blue-500 hover:text-white"><span>2</span></a>
                         <a href="#" className="py-2 px-4 leading-tight bg-white border border-gray-200 text-blue-700 border-r-0 hover:bg-blue-500 hover:text-white"><span>3</span></a>
-                        <a href="#" class="py-2 px-4 leading-tight bg-white border border-gray-200 text-blue-700 rounded-r hover:bg-blue-500 hover:text-white"><span>Next</span></a>
+                        <a href="#" className="py-2 px-4 leading-tight bg-white border border-gray-200 text-blue-700 rounded-r hover:bg-blue-500 hover:text-white"><span>Next</span></a>
                     </div>
-                </div>
+                </div> */}
+
+                {/* https://github.com/AdeleD/react-paginate */}
+                <ReactPaginate
+                    previousLabel={"Previous"}
+                    nextLabel={"Next"}
+                    breakLabel={"..."}
+                    breakClassName={""}
+                    pageCount={5}
+                    marginPagesDisplayed={2}
+                    pageRangeDisplayed={5}
+                    onPageChange={(p) => console.log(p)}
+                    containerClassName={"flex justify-center mt-10"}
+                    subContainerClassName={"flex rounded-md"}
+                    previousLinkClassName={"py-2 px-4 leading-tight bg-white border border-gray-200 text-blue-700 border-r-0 ml-0 rounded-l hover:bg-blue-500 hover:text-white"}
+                    nextLinkClassName={"py-2 px-4 leading-tight bg-white border border-gray-200 text-blue-700 rounded-r hover:bg-blue-500 hover:text-white"}
+                    pageLinkClassName={ "py-2 px-4 leading-tight bg-white border border-gray-200 text-blue-700 border-r-0 hover:bg-blue-500 hover:text-white"}
+                    activeLinkClassName={"bg-gray-300"}
+                    />
             </main>
 
         </Fragment >
