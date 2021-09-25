@@ -122,6 +122,23 @@ const AllProduct = ({ products }) => {
     );
 };
 
+const ProductCard = ({ id, name, price, imageUrl, onAddClick }) => {
+
+    return (
+        <div className="w-full max-w-sm mx-auto rounded-md shadow-md overflow-hidden">
+            <div className="flex items-end justify-end h-56 w-full bg-cover" style={{ backgroundImage: `url(${imageUrl})` }}>
+                <button onClick={(id => onAddClick(id))} className="p-2 rounded-full bg-blue-600 text-white mx-5 -mb-4 hover:bg-blue-500 focus:outline-none focus:bg-blue-500">
+                    <svg className="h-5 w-5" fill="none" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewBox="0 0 24 24" stroke="currentColor"><path d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13L5.4 5M7 13l-2.293 2.293c-.63.63-.184 1.707.707 1.707H17m0 0a2 2 0 100 4 2 2 0 000-4zm-8 2a2 2 0 11-4 0 2 2 0 014 0z"></path></svg>
+                </button>
+            </div>
+            <div className="px-5 py-3">
+                <h3 className="text-gray-700 uppercase">{name}</h3>
+                <span className="text-gray-500 mt-2">${price}</span>
+            </div>
+        </div>
+    )
+}
+
 const PageComponent = () => {
     const [products, setProducts] = useState(null);
     const { catId } = useParams();
@@ -133,6 +150,7 @@ const PageComponent = () => {
     const fetchData = () => {
         let items = [];
         let item = {
+            id: Math.floor(Math.random() * 1000),
             quantity: 2,
             pName: "omega",
             pPrice: 2000,
@@ -155,6 +173,8 @@ const PageComponent = () => {
     //     }
     // };
 
+
+
     return (
         <Fragment>
             {/* <div class="container mx-auto px-6">
@@ -165,8 +185,9 @@ const PageComponent = () => {
                     <h3 className="text-gray-700 text-2xl font-medium">Wrist Watch</h3>
                     <span className="mt-3 text-sm text-gray-500">200+ Products</span>
                     <div className="grid gap-6 grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 mt-6">
+
                         <div className="w-full max-w-sm mx-auto rounded-md shadow-md overflow-hidden">
-                            <div className="flex items-end justify-end h-56 w-full bg-cover" style={{backgroundImage: `url(${"https://images.unsplash.com/photo-1495856458515-0637185db551?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=750&q=80"})`}}>
+                            <div className="flex items-end justify-end h-56 w-full bg-cover" style={{ backgroundImage: `url(${"https://images.unsplash.com/photo-1495856458515-0637185db551?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=750&q=80"})` }}>
                                 <button className="p-2 rounded-full bg-blue-600 text-white mx-5 -mb-4 hover:bg-blue-500 focus:outline-none focus:bg-blue-500">
                                     <svg className="h-5 w-5" fill="none" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewBox="0 0 24 24" stroke="currentColor"><path d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13L5.4 5M7 13l-2.293 2.293c-.63.63-.184 1.707.707 1.707H17m0 0a2 2 0 100 4 2 2 0 000-4zm-8 2a2 2 0 11-4 0 2 2 0 014 0z"></path></svg>
                                 </button>
@@ -176,63 +197,38 @@ const PageComponent = () => {
                                 <span className="text-gray-500 mt-2">$123</span>
                             </div>
                         </div>
-                        <div className="w-full max-w-sm mx-auto rounded-md shadow-md overflow-hidden">
-                            <div className="flex items-end justify-end h-56 w-full bg-cover"  style={{backgroundImage: 'https://images.unsplash.com/photo-1495856458515-0637185db551?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=750&q=80'}}>
-                                <button className="p-2 rounded-full bg-blue-600 text-white mx-5 -mb-4 hover:bg-blue-500 focus:outline-none focus:bg-blue-500">
-                                    <svg className="h-5 w-5" fill="none" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewBox="0 0 24 24" stroke="currentColor"><path d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13L5.4 5M7 13l-2.293 2.293c-.63.63-.184 1.707.707 1.707H17m0 0a2 2 0 100 4 2 2 0 000-4zm-8 2a2 2 0 11-4 0 2 2 0 014 0z"></path></svg>
-                                </button>
-                            </div>
-                            <div className="px-5 py-3">
-                                <h3 className="text-gray-700 uppercase">Old watch</h3>
-                                <span className="text-gray-500 mt-2">$95</span>
-                            </div>
-                        </div>
-                        <div className="w-full max-w-sm mx-auto rounded-md shadow-md overflow-hidden">
-                            <div className="flex items-end justify-end h-56 w-full bg-cover" style={{backgroundImage: 'https://images.unsplash.com/photo-1495856458515-0637185db551?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=750&q=80'}}>
-                                <button className="p-2 rounded-full bg-blue-600 text-white mx-5 -mb-4 hover:bg-blue-500 focus:outline-none focus:bg-blue-500">
-                                    <svg className="h-5 w-5" fill="none" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewBox="0 0 24 24" stroke="currentColor"><path d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13L5.4 5M7 13l-2.293 2.293c-.63.63-.184 1.707.707 1.707H17m0 0a2 2 0 100 4 2 2 0 000-4zm-8 2a2 2 0 11-4 0 2 2 0 014 0z"></path></svg>
-                                </button>
-                            </div>
-                            <div className="px-5 py-3">
-                                <h3 className="text-gray-700 uppercase">classNameic watch</h3>
-                                <span className="text-gray-500 mt-2">$125</span>
-                            </div>
-                        </div>
-                        <div className="w-full max-w-sm mx-auto rounded-md shadow-md overflow-hidden">
-                            <div className="flex items-end justify-end h-56 w-full bg-cover" style={{backgroundImage: 'https://images.unsplash.com/photo-1495856458515-0637185db551?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=750&q=80'}}>
-                                <button className="p-2 rounded-full bg-blue-600 text-white mx-5 -mb-4 hover:bg-blue-500 focus:outline-none focus:bg-blue-500">
-                                    <svg className="h-5 w-5" fill="none" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewBox="0 0 24 24" stroke="currentColor"><path d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13L5.4 5M7 13l-2.293 2.293c-.63.63-.184 1.707.707 1.707H17m0 0a2 2 0 100 4 2 2 0 000-4zm-8 2a2 2 0 11-4 0 2 2 0 014 0z"></path></svg>
-                                </button>
-                            </div>
-                            <div className="px-5 py-3">
-                                <h3 className="text-gray-700 uppercase">fossil watch</h3>
-                                <span className="text-gray-500 mt-2">$180</span>
-                            </div>
-                        </div>
-                        <div className="w-full max-w-sm mx-auto rounded-md shadow-md overflow-hidden">
-                            <div className="flex items-end justify-end h-56 w-full bg-cover" style={{backgroundImage: 'https://images.unsplash.com/photo-1495856458515-0637185db551?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=750&q=80'}}>
-                                <button className="p-2 rounded-full bg-blue-600 text-white mx-5 -mb-4 hover:bg-blue-500 focus:outline-none focus:bg-blue-500">
-                                    <svg className="h-5 w-5" fill="none" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewBox="0 0 24 24" stroke="currentColor"><path d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13L5.4 5M7 13l-2.293 2.293c-.63.63-.184 1.707.707 1.707H17m0 0a2 2 0 100 4 2 2 0 000-4zm-8 2a2 2 0 11-4 0 2 2 0 014 0z"></path></svg>
-                                </button>
-                            </div>
-                            <div className="px-5 py-3">
-                                <h3 className="text-gray-700 uppercase">braun watch</h3>
-                                <span className="text-gray-500 mt-2">$49</span>
-                            </div>
-                        </div>
-                        
-                        </div>
+
+                        {products.map((p) => (
+                            // let item = {
+                            //     id: Math.floor(Math.random()*1000),
+                            //     quantity: 2,
+                            //     pName: "omega",
+                            //     pPrice: 2000,
+                            //     pImages: ["https://www.giulian.bg/media/catalog/product/cache/1/small_image/317x/17f82f742ffe127f42dca9de82fb58b1/1/1/118631.jpg"]
+                            // };
+                            // ({id, name, price, imageUrl, onAddClick }) 
+                            <ProductCard
+                                id={p.id}
+                                quantity={3}
+                                imageUrl={p.pImages[0]}
+                                price={p.pPrice}
+                                onAddClick={(id) => {}}
+                            />
+                        ))
+                        }
+
                     </div>
-                    <div className="flex justify-center">
-                        <div className="flex rounded-md mt-8">
-                            <a href="#" className="py-2 px-4 leading-tight bg-white border border-gray-200 text-blue-700 border-r-0 ml-0 rounded-l hover:bg-blue-500 hover:text-white"><span>Previous</span></a>
+                </div>
+                <div className="flex justify-center">
+                    <div className="flex rounded-md mt-8">
+                        <a href="#" className="py-2 px-4 leading-tight bg-white border border-gray-200 text-blue-700 border-r-0 ml-0 rounded-l hover:bg-blue-500 hover:text-white"><span>Previous</span></a>
                         <a href="#" className="py-2 px-4 leading-tight bg-white border border-gray-200 text-blue-700 border-r-0 hover:bg-blue-500 hover:text-white"><span>1</span></a>
                         <a href="#" className="py-2 px-4 leading-tight bg-white border border-gray-200 text-blue-700 border-r-0 hover:bg-blue-500 hover:text-white"><span>2</span></a>
                         <a href="#" className="py-2 px-4 leading-tight bg-white border border-gray-200 text-blue-700 border-r-0 hover:bg-blue-500 hover:text-white"><span>3</span></a>
                         <a href="#" class="py-2 px-4 leading-tight bg-white border border-gray-200 text-blue-700 rounded-r hover:bg-blue-500 hover:text-white"><span>Next</span></a>
                     </div>
-            </div>
-        </main>
+                </div>
+            </main>
 
         </Fragment >
     );
