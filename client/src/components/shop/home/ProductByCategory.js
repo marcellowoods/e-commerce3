@@ -230,6 +230,13 @@ const PageComponent = () => {
             {/* <div class="container mx-auto px-6">
                 <AllProduct products={products} />
             </div> */}
+            
+            {/* the first tridi component doesnt prevent vertical touch move so  that's one way to fix it (weid bug) */}
+            <div className="hidden">
+                <Tridi
+
+                />
+            </div>
             <main className="my-8">
                 <div className="container mx-auto px-6">
                     <h3 className="text-gray-700 text-2xl font-medium">Wrist Watch</h3>
