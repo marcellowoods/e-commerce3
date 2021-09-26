@@ -139,12 +139,18 @@ const ProductCard = ({ id, name, price, imageUrl, onAddClick }) => {
                     alt=""
                 /> */}
                 <Tridi
-                    location="./images"
+                    images={[
+                        "https://images.unsplash.com/photo-1495856458515-0637185db551?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=750&q=80",
+                        "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcT4urtfGLUvPlZXxeJYMKwxod4w0y_Jf_hRBQ&usqp=CAU"
+                    ]}
+                    // location="./images"
                     format="jpg"
-                    count="36"
+                    // count="2"
                     mousewheel={true}
                     inverse={true}
-                    touchDragInterval={1}
+                    // touchDragInterval={1}
+                    dragInterval={10}
+                    touchDragInterval={10}
                 />
 
                 <div className="float-left px-5 py-3">
@@ -179,7 +185,7 @@ const PageComponent = () => {
         items.push({
             id: Math.floor(Math.random() * 1000),
             quantity: 4,
-            pName: "car",
+            pName: "presage",
             pPrice: 100,
             pImages: ["https://images.unsplash.com/photo-1495856458515-0637185db551?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=750&q=80"]
         })
@@ -187,9 +193,9 @@ const PageComponent = () => {
         let item = {
             id: Math.floor(Math.random() * 1000),
             quantity: 2,
-            pName: "car",
+            pName: "watch",
             pPrice: 2000,
-            pImages: ["https://www.giulian.bg/media/catalog/product/cache/1/small_image/317x/17f82f742ffe127f42dca9de82fb58b1/1/1/118631.jpg"]
+            pImages: ["https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcT4urtfGLUvPlZXxeJYMKwxod4w0y_Jf_hRBQ&usqp=CAU"]
         };
         for (let i = 0; i < 15; i++) {
             items.push(item);
