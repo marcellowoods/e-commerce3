@@ -2,6 +2,8 @@ import React, { Fragment, useEffect, useState } from "react";
 import ReactPaginate from 'react-paginate';
 import { useHistory, useParams } from "react-router-dom";
 import Layout from "../layout";
+import Tridi from 'react-tridi';
+import 'react-tridi/dist/index.css';
 // import { productByCategory } from "../../admin/products/FetchApi";
 
 const apiURL = process.env.REACT_APP_API_URL;
@@ -130,11 +132,19 @@ const ProductCard = ({ id, name, price, imageUrl, onAddClick }) => {
     return (
         <div className="w-full max-w-sm mx-auto rounded-md shadow-md overflow-hidden">
             <div className="">
-                <img
+                {/* <img
                     onClick={(e) => { }}
                     className="flex items-end justify-end h-56 w-full object-cover object-center cursor-pointer"
                     src={imageUrl}
                     alt=""
+                /> */}
+                <Tridi
+                    location="./images"
+                    format="jpg"
+                    count="36"
+                    mousewheel={true}
+                    inverse={true}
+                    touchDragInterval={1}
                 />
 
                 <div className="float-left px-5 py-3">
@@ -169,7 +179,7 @@ const PageComponent = () => {
         items.push({
             id: Math.floor(Math.random() * 1000),
             quantity: 4,
-            pName: "watch",
+            pName: "car",
             pPrice: 100,
             pImages: ["https://images.unsplash.com/photo-1495856458515-0637185db551?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=750&q=80"]
         })
@@ -177,7 +187,7 @@ const PageComponent = () => {
         let item = {
             id: Math.floor(Math.random() * 1000),
             quantity: 2,
-            pName: "omega",
+            pName: "car",
             pPrice: 2000,
             pImages: ["https://www.giulian.bg/media/catalog/product/cache/1/small_image/317x/17f82f742ffe127f42dca9de82fb58b1/1/1/118631.jpg"]
         };
