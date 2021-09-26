@@ -146,7 +146,7 @@ const ProductCard = ({ id, name, price, imageUrl, onAddClick, onCardClick }) => 
                         src={imageUrl}
                         alt=""
                     /> */}
-                    <Tridi
+                    {/* <Tridi
                         images={[
                             "https://images.unsplash.com/photo-1495856458515-0637185db551?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=750&q=80",
                             "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcT4urtfGLUvPlZXxeJYMKwxod4w0y_Jf_hRBQ&usqp=CAU",
@@ -161,6 +161,18 @@ const ProductCard = ({ id, name, price, imageUrl, onAddClick, onCardClick }) => 
                         onDragStart={() => lastDrag.current = Date.now()}
                         dragInterval={10}
                         touchDragInterval={10}
+                    /> */}
+                    {/* car */}
+                    <Tridi
+                        location="./images"
+                        format="jpg"
+                        count="36"
+                        mousewheel={true}
+                        inverse={true}
+                        // touchDragInterval={1}
+                        onDragStart={() => lastDrag.current = Date.now()}
+                        dragInterval={1}
+                        touchDragInterval={1}
                     />
                 </div>
 
@@ -196,7 +208,7 @@ const PageComponent = () => {
         items.push({
             id: Math.floor(Math.random() * 1000),
             quantity: 4,
-            pName: "presage",
+            pName: "nissan",
             pPrice: 100,
             pImages: ["https://images.unsplash.com/photo-1495856458515-0637185db551?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=750&q=80"]
         })
@@ -204,7 +216,7 @@ const PageComponent = () => {
         let item = {
             id: Math.floor(Math.random() * 1000),
             quantity: 2,
-            pName: "watch",
+            pName: "nissan",
             pPrice: 2000,
             pImages: ["https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcT4urtfGLUvPlZXxeJYMKwxod4w0y_Jf_hRBQ&usqp=CAU"]
         };
@@ -230,7 +242,7 @@ const PageComponent = () => {
             {/* <div class="container mx-auto px-6">
                 <AllProduct products={products} />
             </div> */}
-            
+
             {/* the first tridi component doesnt prevent vertical touch move so  that's one way to fix it (weid bug) */}
             {/* https://github.com/nevestuan/react-tridi */}
             <div className="hidden">
