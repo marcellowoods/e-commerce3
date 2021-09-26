@@ -232,6 +232,7 @@ const PageComponent = () => {
             </div> */}
             
             {/* the first tridi component doesnt prevent vertical touch move so  that's one way to fix it (weid bug) */}
+            {/* https://github.com/nevestuan/react-tridi */}
             <div className="hidden">
                 <Tridi
 
