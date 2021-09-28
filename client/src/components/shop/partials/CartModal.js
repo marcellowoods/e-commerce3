@@ -1,6 +1,7 @@
 import React, { Fragment, useContext, useEffect } from "react";
 import { useHistory } from "react-router-dom";
 import { LayoutContext } from "../index";
+import { getCartIcon } from "../../../assets/icons";
 // import { cartListProduct } from "./FetchApi";
 // import { isAuthenticate } from "../auth/fetchApi";
 // import { cartList } from "../productDetails/Mixins";
