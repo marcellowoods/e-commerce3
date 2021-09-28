@@ -1,4 +1,5 @@
 import React, { Fragment, useEffect, useState, useRef } from "react";
+import { Animated } from "react-animated-css";
 import { useHistory, useParams } from "react-router-dom";
 import Layout from "../layout";
 import Tridi from 'react-tridi';
@@ -12,6 +13,7 @@ const apiURL = process.env.REACT_APP_API_URL;
 const CategoryMenu = ({ category }) => {
 
     // https://dev.to/fayaz/vue-tailwindcss-a-match-made-in-heaven-animated-dropdown-1nm
+    //https://tailwind-dropdown.surge.sh/
     const [isOpen, setIsOpen] = useState(false);
 
     const allCategories = [
@@ -21,6 +23,9 @@ const CategoryMenu = ({ category }) => {
     ];
 
     const categoryName = "Wrist Watch";
+    const handleOpen = () => {
+        setIsOpen(!isOpen)
+    }
 
     return (
         // <Fragment>
@@ -32,7 +37,7 @@ const CategoryMenu = ({ category }) => {
             <div className="relative text-left inline-block">
                 <span >
                     <button
-                        onClick={() => setIsOpen(!isOpen)}
+                        onClick={handleOpen}
                         type="button"
                         className="p-6 inline-flex items-center justify-between w-full rounded-md border border-gray-300 h-10  bg-white text-sm leading-5 font-medium text-gray-700 hover:text-gray-500 focus:outline-none focus:border-blue-300 focus:shadow-outline-blue active:bg-gray-100 active:text-gray-800 transition ease-in-out duration-150 btn-focus"
                         id="options-menu"
@@ -46,21 +51,27 @@ const CategoryMenu = ({ category }) => {
                         />
                     </button>
                 </span >
-                <div style={{zIndex:2}} className="absolute pt-1">
-                    <div
-                        className="rounded-md bg-white shadow-xs p-10 flex"
-                    >
-                        <div className="">
-                            <p className="pb-10">watches</p>
-                            <p className="pb-10">Phones</p>
-                            <p >keyboards</p>
+
+                    <Animated style={{ zIndex: 5 }} className={` absolute pt-1`} animationIn="fadeIn" animationOut="fadeOut" animationInDuration={400} animationOutDuration={400} isVisible={isOpen}>
+
+                        <div
+                            className="rounded-md bg-white shadow-xs p-10 flex"
+                        >
+                            <div className="">
+                                <p className="pb-10">watches</p>
+                                <p className="pb-10">Phones</p>
+                                <p >keyboards</p>
+                            </div>
+                            <div className="border-t border-gray-100"></div>
+                            <div class="border-t border-gray-100"></div>
+                            <div class="py-1">
+                            </div>
                         </div>
-                        <div className="border-t border-gray-100"></div>
-                        <div class="border-t border-gray-100"></div>
-                        <div class="py-1">
-                        </div>
-                    </div>
-                </div>
+
+                    </Animated>
+
+
+
             </div>
 
             <div className="pt-2 text-sm text-gray-500">200+ Products</div>
