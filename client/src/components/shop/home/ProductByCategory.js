@@ -1,10 +1,10 @@
 import React, { Fragment, useEffect, useState, useRef } from "react";
-import ReactPaginate from 'react-paginate';
 import { useHistory, useParams } from "react-router-dom";
 import Layout from "../layout";
 import Tridi from 'react-tridi';
 import 'react-tridi/dist/index.css';
 import { getAddToCartIcon } from "../../../assets/icons";
+import getPagination from "./getPagination";
 // import { productByCategory } from "../../admin/products/FetchApi";
 
 const apiURL = process.env.REACT_APP_API_URL;
@@ -274,23 +274,11 @@ const PageComponent = () => {
                 </div>
 
                 {/* https://github.com/AdeleD/react-paginate */}
-                <ReactPaginate
-                    previousLabel={"Previous"}
-                    nextLabel={"Next"}
-                    breakLabel={"..."}
-                    breakClassName={""}
-                    pageCount={5}
-                    marginPagesDisplayed={2}
-                    pageRangeDisplayed={5}
-                    onPageChange={(p) => console.log(p)}
-                    containerClassName={"flex justify-center mt-10"}
-                    subContainerClassName={"flex rounded-md"}
-                    previousLinkClassName={"py-2 px-4 leading-tight bg-white border border-gray-200 text-blue-700 border-r-0 ml-0 rounded-l hover:bg-blue-500 hover:text-white"}
-                    nextLinkClassName={"py-2 px-4 leading-tight bg-white border border-gray-200 text-blue-700 rounded-r hover:bg-blue-500 hover:text-white"}
-                    pageLinkClassName={"py-2 px-4 leading-tight bg-white border border-gray-200 text-blue-700 border-r-0 hover:bg-blue-500 hover:text-white"}
-                    breakLinkClassName={"py-2 px-4 leading-tight bg-white border border-gray-200 text-blue-700 border-r-0 hover:bg-blue-500 hover:text-white"}
-                    activeLinkClassName={"bg-gray-300"}
-                />
+                {getPagination({
+                    pageCount: 5,
+                    onPageChange: (p) => console.log(p)
+                })}
+
             </main>
 
         </Fragment >
