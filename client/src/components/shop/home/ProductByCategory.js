@@ -74,7 +74,7 @@ const CategoryMenu = ({ category }) => {
 
             </div>
 
-            <div className="pt-2 text-sm text-gray-500">200+ Products</div>
+            {/* <div className=" pt-2 text-sm text-gray-500">200+ Products</div> */}
         </Fragment >
 
 
