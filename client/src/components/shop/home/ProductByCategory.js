@@ -132,8 +132,6 @@ const ProductCard = ({ id, name, price, imageUrl, onAddClick, onCardClick }) => 
 
     return (
         <div className="w-full max-w-sm mx-auto rounded-md shadow-md overflow-hidden">
-            <div className="">
-
                 <div onClick={
                     () => {
                         if (Date.now() - lastDrag.current < 200) {
@@ -187,10 +185,6 @@ const ProductCard = ({ id, name, price, imageUrl, onAddClick, onCardClick }) => 
                         {getAddToCartIcon()}
                     </button>
                 </div>
-
-
-
-            </div>
         </div>
     )
 }
