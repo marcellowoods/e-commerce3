@@ -39,7 +39,7 @@ const CategoryMenu = ({ category }) => {
                     <button
                         onClick={handleOpen}
                         type="button"
-                        className="p-6 inline-flex items-center justify-between w-full rounded-md border border-gray-300 h-10  bg-white text-sm leading-5 font-medium text-gray-700 hover:text-gray-500 focus:outline-none focus:border-blue-300 focus:shadow-outline-blue active:bg-gray-100 active:text-gray-800 transition ease-in-out duration-150 btn-focus"
+                        className="px-4 py-6 inline-flex items-center justify-between w-full rounded-md border border-gray-300 h-10  bg-white text-sm leading-5 font-medium text-gray-700 hover:text-gray-500 focus:outline-none focus:border-blue-300 focus:shadow-outline-blue active:bg-gray-100 active:text-gray-800 transition ease-in-out duration-150 btn-focus"
                         id="options-menu"
                         aria-haspopup="true"
                         aria-expanded="true"
@@ -51,7 +51,7 @@ const CategoryMenu = ({ category }) => {
                         />
                     </button>
                 </span >
-
+                {/* https://digital-flowers.github.io/react-animated-css.html */}
                     <Animated style={{ zIndex: 5 }} className={` absolute pt-1`} animationIn="fadeIn" animationOut="fadeOut" animationInDuration={400} animationOutDuration={400} isVisible={isOpen}>
 
                         <div
