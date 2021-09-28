@@ -1,88 +1,139 @@
 import React, { Fragment, useEffect, useState, useRef } from "react";
-import { Animated } from "react-animated-css";
 import { useHistory, useParams } from "react-router-dom";
 import Layout from "../layout";
 import Tridi from 'react-tridi';
 import 'react-tridi/dist/index.css';
 import { getAddToCartIcon } from "../../../assets/icons";
 import getPagination from "./getPagination";
+import { Menu, Transition } from '@headlessui/react'
+import { ChevronDownIcon } from '@heroicons/react/solid'
 // import { productByCategory } from "../../admin/products/FetchApi";
 
 const apiURL = process.env.REACT_APP_API_URL;
 
-const CategoryMenu = ({ category }) => {
+function classNames(...classes) {
+    return classes.filter(Boolean).join(' ')
+}
 
-    // https://dev.to/fayaz/vue-tailwindcss-a-match-made-in-heaven-animated-dropdown-1nm
-    //https://tailwind-dropdown.surge.sh/
-    const [isOpen, setIsOpen] = useState(false);
-
-    const allCategories = [
-        { name: "Wrist Watch", _id: "23143" },
-        { name: "Phones", _id: "1463235" },
-        { name: "Keyboards", _id: "1432123435" },
-    ];
-
-    const categoryName = "Wrist Watch";
-    const handleOpen = () => {
-        setIsOpen(!isOpen)
-    }
-
+let categoies = ["watches", "keyboards", "laptops", "cars"]
+//https://www.youtube.com/watch?v=qJnIJa-cF2M
+const CategoryMenu = () => {
     return (
-        // <Fragment>
-        //     <h3 className="text-gray-700 text-2xl font-medium">Wrist Watch</h3>
-        //     <span className="mt-3 text-sm text-gray-500">200+ Products</span>
-        // </Fragment>
-
-        <Fragment>
-            <div className="relative text-left inline-block">
-                <span >
-                    <button
-                        onClick={handleOpen}
-                        type="button"
-                        className="px-4 py-6 inline-flex items-center justify-between w-full rounded-md border border-gray-300 h-10  bg-white text-sm leading-5 font-medium text-gray-700 hover:text-gray-500 focus:outline-none focus:border-blue-300 focus:shadow-outline-blue active:bg-gray-100 active:text-gray-800 transition ease-in-out duration-150 btn-focus"
-                        id="options-menu"
-                        aria-haspopup="true"
-                        aria-expanded="true"
-                    >
-                        <h3 className="text-gray-700 text-2xl font-medium"> {categoryName} </h3>
-                        <img
-                            src="https://s.svgbox.net/hero-solid.svg?ic=chevron-down&fill=grey-800"
-                            className="-mr-2 ml-1 h-6 w-6"
-                        />
-                    </button>
-                </span >
-                {/* https://digital-flowers.github.io/react-animated-css.html */}
-                {/* https://tailwindui.com/components/application-ui/elements/dropdowns */}
-                {/* https://tailwindui.com/#product-application-ui */}
-                {/* https://tailwindui.com/components/application-ui/overlays/modals */}
-                    <Animated style={{ zIndex: 5 }} className={` absolute pt-1`} animationIn="fadeIn" animationOut="fadeOut" animationInDuration={400} animationOutDuration={400} isVisible={isOpen}>
-
-                        <div
-                            className="rounded-md bg-white shadow-xs p-10 flex"
-                        >
-                            <div className="">
-                                <p className="pb-10">watches</p>
-                                <p className="pb-10">Phones</p>
-                                <p >keyboards</p>
-                            </div>
-                            <div className="border-t border-gray-100"></div>
-                            <div class="border-t border-gray-100"></div>
-                            <div class="py-1">
-                            </div>
-                        </div>
-
-                    </Animated>
-
-
-
+        <Menu style={{ zIndex: 2 }} as="div" className="relative inline-block text-left">
+            <div>
+                <Menu.Button className="inline-flex justify-center w-full rounded-md border border-gray-300 shadow-sm px-4 py-2 bg-white text-sm font-medium text-gray-700 hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-gray-100 focus:ring-indigo-500">
+                    <h3 className="text-gray-700 text-2xl font-medium">Cars</h3>
+                    <ChevronDownIcon className="-mr-2 ml-1 mt-2 h-6 w-6" aria-hidden="true" />
+                </Menu.Button>
             </div>
 
-            {/* <div className=" pt-2 text-sm text-gray-500">200+ Products</div> */}
-        </Fragment >
+            <Transition
+                as={Fragment}
+                enter="transition ease-in duration-300"
+                enterFrom="transform opacity-0 "
+                enterTo="transform opacity-100"
+                leave="transition ease-in duration-300"
+                leaveFrom="transform opacity-100"
+                leaveTo="transform opacity-0 "
+            >
+                <Menu.Items className="origin-top-right absolute  mt-2 w-56 rounded-md shadow-lg bg-white ring-1 ring-black ring-opacity-5 focus:outline-none">
+                    <div className="py-1">
+                        {categoies.map((name) => (
+                            <Menu.Item>
+                                {({ active }) => (
+                                    <a
+                                        href="#"
+                                        className={classNames(
+                                            active ? 'bg-gray-100 text-gray-900' : 'text-gray-700',
+                                            'block text-center  px-4 py-4 text-sm'
+                                        )}
+                                    >
+                                        {name}
+                                    </a>
+                                )}
+                            </Menu.Item>
+                        ))}
+                    </div>
+                </Menu.Items>
+            </Transition>
+        </Menu>
+    )
+}
+
+// const CategoryMenu = ({ category }) => {
+
+//     // https://dev.to/fayaz/vue-tailwindcss-a-match-made-in-heaven-animated-dropdown-1nm
+//     //https://tailwind-dropdown.surge.sh/
+//     const [isOpen, setIsOpen] = useState(false);
+
+//     const allCategories = [
+//         { name: "Wrist Watch", _id: "23143" },
+//         { name: "Phones", _id: "1463235" },
+//         { name: "Keyboards", _id: "1432123435" },
+//     ];
+
+//     const categoryName = "Wrist Watch";
+//     const handleOpen = () => {
+//         setIsOpen(!isOpen)
+//     }
+
+//     return (
+//         // <Fragment>
+//         //     <h3 className="text-gray-700 text-2xl font-medium">Wrist Watch</h3>
+//         //     <span className="mt-3 text-sm text-gray-500">200+ Products</span>
+//         // </Fragment>
+
+//         <Fragment>
+//             <div className="relative text-left inline-block">
+//                 <span >
+//                     <button
+//                         onClick={handleOpen}
+//                         type="button"
+//                         className="px-4 py-6 inline-flex items-center justify-between w-full rounded-md border border-gray-300 h-10  bg-white text-sm leading-5 font-medium text-gray-700 hover:text-gray-500 focus:outline-none focus:border-blue-300 focus:shadow-outline-blue active:bg-gray-100 active:text-gray-800 transition ease-in-out duration-150 btn-focus"
+//                         id="options-menu"
+//                         aria-haspopup="true"
+//                         aria-expanded="true"
+//                     >
+//                         <h3 className="text-gray-700 text-2xl font-medium"> {categoryName} </h3>
+//                         <img
+//                             src="https://s.svgbox.net/hero-solid.svg?ic=chevron-down&fill=grey-800"
+//                             className="-mr-2 ml-1 h-6 w-6"
+//                         />
+//                     </button>
+//                 </span >
+//                 {/* https://headlessui.dev/react/menu */}
+//                 {/* https://digital-flowers.github.io/react-animated-css.html */}
+//                 {/* https://tailwindui.com/components/application-ui/elements/dropdowns */}
+//                 {/* https://tailwindui.com/#product-application-ui */}
+//                 {/* https://tailwindui.com/components/application-ui/overlays/modals */}
+//                     <Animated style={{ zIndex: 5 }} className={` absolute pt-1`} animationIn="fadeIn" animationOut="fadeOut" animationInDuration={400} animationOutDuration={400} isVisible={isOpen}>
+
+//                         <div
+//                             className="rounded-md bg-white shadow-xs p-10 flex"
+//                         >
+//                             <div className="">
+//                                 <p className="pb-10">watches</p>
+//                                 <p className="pb-10">Phones</p>
+//                                 <p >keyboards</p>
+//                             </div>
+//                             <div className="border-t border-gray-100"></div>
+//                             <div class="border-t border-gray-100"></div>
+//                             <div class="py-1">
+//                             </div>
+//                         </div>
+
+//                     </Animated>
 
 
-    );
-};
+
+//             </div>
+
+//             {/* <div className=" pt-2 text-sm text-gray-500">200+ Products</div> */}
+//         </Fragment >
+
+
+//     );
+// };
 
 const ProductCard = ({ id, name, price, imageUrl, onAddClick, onCardClick }) => {
 
