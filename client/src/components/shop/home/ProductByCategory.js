@@ -52,6 +52,9 @@ const CategoryMenu = ({ category }) => {
                     </button>
                 </span >
                 {/* https://digital-flowers.github.io/react-animated-css.html */}
+                {/* https://tailwindui.com/components/application-ui/elements/dropdowns */}
+                {/* https://tailwindui.com/#product-application-ui */}
+                {/* https://tailwindui.com/components/application-ui/overlays/modals */}
                     <Animated style={{ zIndex: 5 }} className={` absolute pt-1`} animationIn="fadeIn" animationOut="fadeOut" animationInDuration={400} animationOutDuration={400} isVisible={isOpen}>
 
                         <div
