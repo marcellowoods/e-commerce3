@@ -4,6 +4,7 @@ import { useHistory, useParams } from "react-router-dom";
 import Layout from "../layout";
 import Tridi from 'react-tridi';
 import 'react-tridi/dist/index.css';
+import { getAddToCartIcon } from "../../../assets/icons";
 // import { productByCategory } from "../../admin/products/FetchApi";
 
 const apiURL = process.env.REACT_APP_API_URL;
@@ -182,36 +183,8 @@ const ProductCard = ({ id, name, price, imageUrl, onAddClick, onCardClick }) => 
                 </div>
 
                 <div className="float-right transform translate-y-4 -translate-x-4">
-                    {/* className="p-2 rounded-full  text-white mx-5 mb-4 hover:bg-blue-500 focus:outline-none focus:bg-blue-500" */}
                     <button onClick={(() => onAddClick(id))} className="focus:outline-none">
-                        {/* <svg width="28px" height="28px"  fill="none" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewBox="0 0 24 24" stroke="blue"><path d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13L5.4 5M7 13l-2.293 2.293c-.63.63-.184 1.707.707 1.707H17m0 0a2 2 0 100 4 2 2 0 000-4zm-8 2a2 2 0 11-4 0 2 2 0 014 0z"></path></svg> */}
-                        <svg fill="rgba(59, 130, 246, 1)" width="28px" height="28px" version="1.1" viewBox="0 0 256 256" xmlSpace="preserve" xmlns="http://www.w3.org/2000/svg">
-                            <desc>Created with Fabric.js 1.7.22</desc>
-
-                            <g transform="translate(128 128) scale(.72)" >
-                                <g transform="translate(-175.05 -175.05) scale(3.89)">
-                                    <path d="m72.975 58.994h-41.12c-1.539 0-2.897-1.005-3.347-2.477l-13.309-43.511h-11.699c-1.933 0-3.5-1.567-3.5-3.5s1.567-3.5 3.5-3.5h14.289c1.539 0 2.897 1.005 3.347 2.476l13.309 43.512h36.204l10.585-25.191h-6.021c-1.933 0-3.5-1.567-3.5-3.5s1.567-3.5 3.5-3.5h11.287c1.172 0 2.267 0.587 2.915 1.563s0.766 2.212 0.312 3.293l-13.526 32.191c-0.546 1.299-1.817 2.144-3.226 2.144z" stroke-linecap="round" />
-                                    <circle cx="28.88" cy="74.33" r="6.16" />
-                                    <circle cx="74.59" cy="74.33" r="6.16" />
-                                    <path d="m62.278 19.546h-10.041v-10.04c0-1.933-1.567-3.5-3.5-3.5s-3.5 1.567-3.5 3.5v10.04h-10.04c-1.933 0-3.5 1.567-3.5 3.5s1.567 3.5 3.5 3.5h10.04v10.04c0 1.933 1.567 3.5 3.5 3.5s3.5-1.567 3.5-3.5v-10.04h10.041c1.933 0 3.5-1.567 3.5-3.5s-1.567-3.5-3.5-3.5z" stroke-linecap="round" />
-                                </g>
-                            </g>
-                        </svg>
-
-                        {/* <svg fill="rgba(59, 130, 246, 1)" width="28px" height="28px" version="1.1" viewBox="0 0 256 256" xmlSpace="preserve" xmlns="http://www.w3.org/2000/svg">
-                            <desc>Created with Fabric.js 1.7.22</desc>
-
-                            <g transform="translate(128 128) scale(.72)" >
-                                <g transform="translate(-175.05 -175.05) scale(3.89)">
-                                    <path d="m72.975 58.994h-41.12c-1.539 0-2.897-1.005-3.347-2.477l-13.309-43.511h-11.699c-1.933 0-3.5-1.567-3.5-3.5s1.567-3.5 3.5-3.5h14.289c1.539 0 2.897 1.005 3.347 2.476l13.309 43.512h36.204l10.585-25.191h-6.021c-1.933 0-3.5-1.567-3.5-3.5s1.567-3.5 3.5-3.5h11.287c1.172 0 2.267 0.587 2.915 1.563s0.766 2.212 0.312 3.293l-13.526 32.191c-0.546 1.299-1.817 2.144-3.226 2.144z" strokeLinecap="round" />
-                                    <circle cx="28.88" cy="74.33" r="6.16" />
-                                    <circle cx="74.59" cy="74.33" r="6.16" />
-                                    <path d="m63.653 21.403c-1.367-1.367-3.582-1.367-4.949 0l-5.404 5.404v-17.3c0-1.933-1.567-3.5-3.5-3.5s-3.5 1.567-3.5 3.5v17.3l-5.404-5.404c-1.366-1.366-3.583-1.367-4.95 0s-1.367 3.583 0 4.95l11.378 11.377c0.163 0.163 0.343 0.309 0.535 0.438 0.084 0.056 0.176 0.095 0.264 0.143 0.112 0.061 0.22 0.129 0.338 0.178 0.115 0.047 0.234 0.075 0.353 0.109 0.1 0.03 0.197 0.068 0.301 0.089 0.226 0.045 0.456 0.069 0.685 0.069s0.459-0.024 0.685-0.069c0.104-0.021 0.2-0.059 0.301-0.089 0.118-0.035 0.238-0.062 0.353-0.109 0.119-0.049 0.227-0.117 0.338-0.178 0.088-0.048 0.18-0.087 0.264-0.143 0.193-0.129 0.372-0.274 0.535-0.438l11.378-11.377c1.367-1.368 1.367-3.583-1e-3 -4.95z" stroke-linecap="round" />
-                                </g>
-                            </g>
-                        </svg> */}
-
-
+                        {getAddToCartIcon()}
                     </button>
                 </div>
 
