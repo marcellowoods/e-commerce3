@@ -47,7 +47,7 @@ const CategoryMenu = ({ category }) => {
                         <h3 className="text-gray-700 text-2xl font-medium"> {categoryName} </h3>
                         <img
                             src="https://s.svgbox.net/hero-solid.svg?ic=chevron-down&fill=grey-800"
-                            className="-mr-2 ml-2 h-6 w-6"
+                            className="-mr-2 ml-1 h-6 w-6"
                         />
                     </button>
                 </span >
