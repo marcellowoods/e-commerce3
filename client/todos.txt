@@ -1,1 +1,2 @@
+load tridi if component is in viewport or not?
 https://www.digitalocean.com/community/tutorials/react-components-viewport-react-visibility-sensor

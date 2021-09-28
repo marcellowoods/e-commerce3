@@ -1,6 +1,6 @@
 import ReactPaginate from 'react-paginate';
 
-let getPagination = ({pageCount, onPageChange}) => {
+const getPagination = ({pageCount, onPageChange}) => {
     return (
         <ReactPaginate
             previousLabel={"Previous"}
