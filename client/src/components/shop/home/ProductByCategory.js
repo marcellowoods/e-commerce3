@@ -6,7 +6,7 @@ import 'react-tridi/dist/index.css';
 import { getAddToCartIcon } from "../../../assets/icons";
 import getPagination from "./getPagination";
 import { Menu, Transition } from '@headlessui/react'
-import { ChevronDownIcon } from '@heroicons/react/solid'
+import { CheckIcon, SelectorIcon } from '@heroicons/react/solid'
 // import { productByCategory } from "../../admin/products/FetchApi";
 
 const apiURL = process.env.REACT_APP_API_URL;
@@ -23,7 +23,7 @@ const CategoryMenu = () => {
             <div>
                 <Menu.Button className="inline-flex justify-center w-full rounded-md border border-gray-300 shadow-sm px-4 py-2 bg-white text-sm font-medium text-gray-700 hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-gray-100 focus:ring-indigo-500">
                     <h3 className="text-gray-700 text-2xl font-medium">Cars</h3>
-                    <ChevronDownIcon className="-mr-2 ml-1 mt-2 h-6 w-6" aria-hidden="true" />
+                    <SelectorIcon className="-mr-2 ml-1 mt-2 h-6 w-6" aria-hidden="true" />
                 </Menu.Button>
             </div>
 
@@ -45,6 +45,7 @@ const CategoryMenu = () => {
                                         href="#"
                                         className={classNames(
                                             active ? 'bg-gray-100 text-gray-900' : 'text-gray-700',
+                                            name == "cars" ?  'bg-gray-100' : "",
                                             'block text-center  px-4 py-4 text-sm'
                                         )}
                                     >
