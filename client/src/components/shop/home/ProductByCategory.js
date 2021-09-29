@@ -15,14 +15,15 @@ function classNames(...classes) {
     return classes.filter(Boolean).join(' ')
 }
 
-let categoies = ["watches", "keyboards", "laptops", "cars"]
+// let categoies = ["watches", "keyboards", "laptops", "cars", "watches", "keyboards", "laptops", "cars"]
+let categoies = ["watches", "keyboards", "laptops"]
 //https://www.youtube.com/watch?v=qJnIJa-cF2M
 const CategoryMenu = () => {
 
     const [selectedCategory, setSelectedCategory] = useState(categoies[0]);
 
     return (
-        <Menu style={{ zIndex: 2 }} as="div" className="relative inline-block text-left">
+        <Menu style={{ zIndex: 2}} as="div" className="relative inline-block text-left">
             <div>
                 <Menu.Button className="inline-flex justify-center w-full rounded-md border border-gray-300 shadow-sm px-4 py-2 bg-white text-sm font-medium text-gray-700 hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-gray-100 focus:ring-indigo-500">
                     <h3 className="text-gray-700 text-2xl font-medium">{selectedCategory}</h3>
@@ -39,7 +40,7 @@ const CategoryMenu = () => {
                 leaveFrom="transform opacity-100"
                 leaveTo="transform opacity-0 "
             >
-                <Menu.Items className="origin-top-right absolute  mt-2 w-56 rounded-md shadow-lg bg-white ring-1 ring-black ring-opacity-5 focus:outline-none">
+                <Menu.Items style={{maxHeight: "300px"}} className="overflow-y-auto origin-top-right absolute  mt-2 w-56 rounded-md shadow-lg bg-white ring-1 ring-black ring-opacity-5 focus:outline-none">
                     <div className="py-1">
                         {categoies.map((name) => (
                             <Menu.Item>
