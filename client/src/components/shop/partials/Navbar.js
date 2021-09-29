@@ -61,8 +61,8 @@ const NavbarRender = ({ mobileNavbarToggle, loginModalToggle, cartModalToggle })
     )
 }
 
-
-//({ mobileNavbarToggle, loginModalToggle, cartModalToggle })
+//https://github.com/tailwindlabs/headlessui/issues/239
+// https://codesandbox.io/s/github/DoctorDerek/headlessui-example-close-popover-dynamically-in-react-hover-flyout-dropdown-menu/tree/main/?file=/src/App.js
 const Navbar = (props) => {
     const history = useHistory();
     const location = useLocation();
