@@ -32,10 +32,10 @@ const CategoryMenu = () => {
 
             <Transition
                 as={Fragment}
-                enter="transition ease-in duration-200"
+                enter="transition ease-in duration-300"
                 enterFrom="transform opacity-0 "
                 enterTo="transform opacity-100"
-                leave="transition ease-in duration-200"
+                leave="transition ease-in duration-300"
                 leaveFrom="transform opacity-100"
                 leaveTo="transform opacity-0 "
             >
@@ -256,7 +256,7 @@ const PageComponent = () => {
             <div className="hidden">
                 <Tridi />
             </div>
-            <main className="my-8">
+            <main className="my-5">
                 <div className="container mx-auto px-6">
 
                     <CategoryMenu />
