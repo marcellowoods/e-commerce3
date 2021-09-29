@@ -18,21 +18,24 @@ function classNames(...classes) {
 let categoies = ["watches", "keyboards", "laptops", "cars"]
 //https://www.youtube.com/watch?v=qJnIJa-cF2M
 const CategoryMenu = () => {
+
+    const [selectedCategory, setSelectedCategory] = useState(categoies[0]);
+
     return (
         <Menu style={{ zIndex: 2 }} as="div" className="relative inline-block text-left">
             <div>
                 <Menu.Button className="inline-flex justify-center w-full rounded-md border border-gray-300 shadow-sm px-4 py-2 bg-white text-sm font-medium text-gray-700 hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-gray-100 focus:ring-indigo-500">
-                    <h3 className="text-gray-700 text-2xl font-medium">Cars</h3>
+                    <h3 className="text-gray-700 text-2xl font-medium">{selectedCategory}</h3>
                     <SelectorIcon className="-mr-2 ml-1 mt-2 h-6 w-6" aria-hidden="true" />
                 </Menu.Button>
             </div>
 
             <Transition
                 as={Fragment}
-                enter="transition ease-in duration-300"
+                enter="transition ease-in duration-200"
                 enterFrom="transform opacity-0 "
                 enterTo="transform opacity-100"
-                leave="transition ease-in duration-300"
+                leave="transition ease-in duration-200"
                 leaveFrom="transform opacity-100"
                 leaveTo="transform opacity-0 "
             >
@@ -42,11 +45,11 @@ const CategoryMenu = () => {
                             <Menu.Item>
                                 {({ active }) => (
                                     <a
-                                        href="#"
+                                        onClick={() => setSelectedCategory(name)}
                                         className={classNames(
                                             active ? 'bg-gray-100 text-gray-900' : 'text-gray-700',
-                                            name == "cars" ?  'bg-gray-100' : "",
-                                            'block text-center  px-4 py-4 text-sm'
+                                            selectedCategory == name ?  'bg-gray-100' : "",
+                                            'block text-center  px-4 py-4 text-sm cursor-pointer'
                                         )}
                                     >
                                         {name}
