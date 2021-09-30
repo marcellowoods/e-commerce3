@@ -10,24 +10,12 @@ const MobileNavbarMenu = (props) => {
 
     const { data, dispatch } = useContext(LayoutContext);
 
-    const toggleOn = () => {
-        document.body.style.overflow = 'hidden';
-        dispatch({ type: "hamburgerToggle", payload: true })
-    }
-
-    const toggleOff = () => {
+    const closeMobileNav = () => {
         document.body.style.overflow = 'unset';
         dispatch({ type: "hamburgerToggle", payload: false })
     }
 
-    const mobileNavbarToggle = () =>
-        data.navberHamburger
-            ? toggleOn()
-            : toggleOff()
-
     const isMobileNavOpen = () => data.navberHamburger == true;
-
-    const closeMobileNav = toggleOff;
 
     return (
         <Fragment>

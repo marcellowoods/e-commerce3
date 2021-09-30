@@ -107,9 +107,6 @@ const CartModal = (props) => {
     const { data, dispatch } = useContext(LayoutContext);
     // const products = data.cartProduct;
 
-    const cartModalOpen = () =>
-        dispatch({ type: "cartModalToggle", payload: !data.cartModal });
-
     const isCartModalOpen = () => data.cartModal == true;
 
     const hasProducts = () => products && products.length !== 0;
@@ -121,7 +118,7 @@ const CartModal = (props) => {
     const closeCartModal = () => {
         if (isCartModalOpen) {
             document.body.style.overflow = 'unset';
-            cartModalOpen();
+            dispatch({ type: "cartModalToggle", payload: false });
         }
     }
 
