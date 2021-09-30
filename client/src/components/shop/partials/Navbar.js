@@ -67,10 +67,31 @@ const Navbar = (props) => {
 
     const { data, dispatch } = useContext(LayoutContext);
 
+    //https://stackoverflow.com/questions/54989513/react-prevent-scroll-when-modal-is-open
+    const mobileToggleOn = () => {
+        document.body.style.overflow = 'hidden';
+        dispatch({ type: "hamburgerToggle", payload: true })
+    }
+
+    const mobileToggleOff = () => {
+        document.body.style.overflow = 'unset';
+        dispatch({ type: "hamburgerToggle", payload: false })
+    }
+
+    const cartModalOn = () => {
+        document.body.style.overflow = 'hidden';
+        dispatch({ type: "cartModalToggle", payload: true })
+    }
+
+    const cartModalOff = () => {
+        document.body.style.overflow = 'unset';
+        dispatch({ type: "cartModalToggle", payload: false })
+    }
+
     const mobileNavbarToggle = () =>
         data.navberHamburger
-            ? dispatch({ type: "hamburgerToggle", payload: false })
-            : dispatch({ type: "hamburgerToggle", payload: true });
+            ? mobileToggleOff()
+            : mobileToggleOn()
 
     const loginModalToggle = () =>
         data.loginSignupModal
@@ -79,8 +100,8 @@ const Navbar = (props) => {
 
     const cartModalToggle = () =>
         data.cartModal
-            ? dispatch({ type: "cartModalToggle", payload: false })
-            : dispatch({ type: "cartModalToggle", payload: true });
+            ? cartModalOff()
+            : cartModalOn();
 
     const isMobileNavOpen = () => data.navberHamburger == true;
     //test

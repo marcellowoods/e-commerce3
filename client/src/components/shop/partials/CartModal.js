@@ -23,6 +23,48 @@ const items = [
         pName: "swatch",
         pPrice: 500,
         pImages: ["https://images.unsplash.com/photo-1593642632823-8f785ba67e45?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1189&q=80"]
+    },
+    {
+        quantity: 3,
+        pName: "swatch",
+        pPrice: 500,
+        pImages: ["https://images.unsplash.com/photo-1593642632823-8f785ba67e45?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1189&q=80"]
+    },
+    {
+        quantity: 3,
+        pName: "swatch",
+        pPrice: 500,
+        pImages: ["https://images.unsplash.com/photo-1593642632823-8f785ba67e45?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1189&q=80"]
+    },
+    {
+        quantity: 3,
+        pName: "swatch",
+        pPrice: 500,
+        pImages: ["https://images.unsplash.com/photo-1593642632823-8f785ba67e45?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1189&q=80"]
+    },
+    {
+        quantity: 3,
+        pName: "swatch",
+        pPrice: 500,
+        pImages: ["https://images.unsplash.com/photo-1593642632823-8f785ba67e45?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1189&q=80"]
+    },
+    {
+        quantity: 3,
+        pName: "swatch",
+        pPrice: 500,
+        pImages: ["https://images.unsplash.com/photo-1593642632823-8f785ba67e45?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1189&q=80"]
+    },
+    {
+        quantity: 3,
+        pName: "swatch",
+        pPrice: 500,
+        pImages: ["https://images.unsplash.com/photo-1593642632823-8f785ba67e45?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1189&q=80"]
+    },
+    {
+        quantity: 3,
+        pName: "swatch",
+        pPrice: 500,
+        pImages: ["https://images.unsplash.com/photo-1593642632823-8f785ba67e45?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1189&q=80"]
     }
 ];
 const products = items;
@@ -78,6 +120,7 @@ const CartModal = (props) => {
 
     const closeCartModal = () => {
         if (isCartModalOpen) {
+            document.body.style.overflow = 'unset';
             cartModalOpen();
         }
     }
