@@ -50,7 +50,7 @@ const CategoryMenu = () => {
                                         className={classNames(
                                             active ? 'bg-gray-100 text-gray-900' : 'text-gray-700',
                                             selectedCategory == name ?  'bg-gray-100' : "",
-                                            'block text-center  px-4 py-4 text-sm cursor-pointer'
+                                            'block text-center  px-4 py-4 text-md cursor-pointer'
                                         )}
                                     >
                                         {name}
