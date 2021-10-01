@@ -1,7 +1,7 @@
 import React, { Fragment, useReducer } from "react";
 // import { LayoutContext, layoutState, layoutReducer } from "./components/shop";
 import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
-// import ProductByCategory from "./components/shop/home/ProductByCategory";
+import Shop from "./pages/Shop";
 import Navigation from "./components/navigation"
 
 function App() {
@@ -9,7 +9,7 @@ function App() {
         <Fragment>
             <Navigation />
             <Router>
-                {/* <ProductByCategory /> */}
+                <Shop />
             </Router>
         </Fragment>
     );
