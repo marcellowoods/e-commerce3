@@ -10,7 +10,7 @@ import MobileNavbarMenu from "./MobileNavbarMenu";
 
 const Navigation = () => {
     return (
-        <div className="flex-grow">
+        <div >
             <Navbar />
             {/* <LoginSignup /> */}
             <CartModal />
