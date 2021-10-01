@@ -1,14 +1,14 @@
 import React, { Fragment, useContext } from "react";
-import { useHistory, useLocation } from "react-router-dom";
+// import { useHistory, useLocation } from "react-router-dom";
+import { useDispatch, useSelector } from "react-redux";
 import NavigationItems from './NavigationItems';
 import SearchBar from './SearchBar.js'
-import { getCartIcon, getProfileIcon, getMobileToggleIcon } from "../../../assets/icons";
+import { getCartIcon, getProfileIcon, getMobileToggleIcon } from "../../assets/icons";
 import AccountDropdown from "./AccountDropdown";
 
 import "./style.css";
 
 // import { logout } from "./Action";
-import { LayoutContext } from "../index";
 // import { isAdmin } from "../auth/fetchApi";
 
 const logout = () => { }
@@ -71,10 +71,10 @@ const NavbarRender = ({ mobileNavbarToggle, cartModalToggle }) => {
 }
 
 const Navbar = (props) => {
-    const history = useHistory();
-    const location = useLocation();
 
-    const { data, dispatch } = useContext(LayoutContext);
+    const { drawerCart, drawerNav } = useSelector((state) => ({ ...state }));
+
+    let dispatch = useDispatch();
 
     //https://stackoverflow.com/questions/54989513/react-prevent-scroll-when-modal-is-open
     const mobileToggleOn = () => {
@@ -98,17 +98,17 @@ const Navbar = (props) => {
     }
 
     const mobileNavbarToggle = () =>
-        data.navberHamburger
+        drawerNav
             ? mobileToggleOff()
             : mobileToggleOn()
 
-    const loginModalToggle = () =>
-        data.loginSignupModal
-            ? dispatch({ type: "loginSignupModalToggle", payload: false })
-            : dispatch({ type: "loginSignupModalToggle", payload: true });
+    // const loginModalToggle = () =>
+    //     data.loginSignupModal
+    //         ? dispatch({ type: "loginSignupModalToggle", payload: false })
+    //         : dispatch({ type: "loginSignupModalToggle", payload: true });
 
     const cartModalToggle = () =>
-        data.cartModal
+        drawerCart
             ? cartModalOff()
             : cartModalOn();
 
@@ -122,7 +122,7 @@ const Navbar = (props) => {
     return (
         <NavbarRender
             mobileNavbarToggle={mobileNavbarToggle}
-            loginModalToggle={loginModalToggle}
+            // loginModalToggle={loginModalToggle}
             cartModalToggle={cartModalToggle}
         />
     )

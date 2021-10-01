@@ -1,7 +1,7 @@
 import React, { Fragment, useContext } from "react";
 
 import { Menu, Transition } from '@headlessui/react'
-import {getProfileIcon } from "../../../assets/icons";
+import {getProfileIcon } from "../../assets/icons";
 
 
 const AccountDropdown = () => {

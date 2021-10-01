@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { Route, Redirect, useLocation } from "react-router-dom";
-import { LayoutContext } from "../../index";
+import { LayoutContext } from "../index";
 // import LoadingToRedirect from "./LoadingToRedirect";
 // import LoadingPage from "../../pages/LoadingPage";
 import { currentAdmin } from "./fetchApi";

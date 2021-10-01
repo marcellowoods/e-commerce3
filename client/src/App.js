@@ -1,18 +1,16 @@
 import React, { Fragment, useReducer } from "react";
-import { LayoutContext, layoutState, layoutReducer } from "./components/shop";
+// import { LayoutContext, layoutState, layoutReducer } from "./components/shop";
 import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
-import ProductByCategory from "./components/shop/home/ProductByCategory";
+// import ProductByCategory from "./components/shop/home/ProductByCategory";
+import Navigation from "./components/navigation"
 
 function App() {
-    const [data, dispatch] = useReducer(layoutReducer, layoutState);
     return (
         <Fragment>
-            <LayoutContext.Provider value={{ data, dispatch }}>
-                <Router>
-                <ProductByCategory/>
-
-                </Router>
-            </LayoutContext.Provider>
+            <Navigation />
+            <Router>
+                {/* <ProductByCategory /> */}
+            </Router>
         </Fragment>
     );
 }
@@ -30,7 +28,7 @@ export default App;
 //         <Fragment>
 //             <LayoutContext.Provider value={{ data, dispatch }}>
 //                 <Router>
-                    
+
 //                    <p>ef</p>
 
 //                 </Router>

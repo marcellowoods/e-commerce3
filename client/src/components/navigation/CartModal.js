@@ -1,7 +1,7 @@
 import React, { Fragment, useContext, useEffect } from "react";
 import { useHistory } from "react-router-dom";
-import { LayoutContext } from "../index";
-import { getCartIcon } from "../../../assets/icons";
+import { getCartIcon } from "../../assets/icons";
+import { useDispatch, useSelector } from "react-redux";
 // import { cartListProduct } from "./FetchApi";
 // import { isAuthenticate } from "../auth/fetchApi";
 // import { cartList } from "../productDetails/Mixins";
@@ -104,10 +104,13 @@ const CartModalItem = ({ price, name, quantity, imageLink, removeCartProduct }) 
 const CartModal = (props) => {
     const history = useHistory();
 
-    const { data, dispatch } = useContext(LayoutContext);
+    const { drawerCart } = useSelector((state) => ({ ...state }));
+
+    let dispatch = useDispatch();
+
     // const products = data.cartProduct;
 
-    const isCartModalOpen = () => data.cartModal == true;
+    const isCartModalOpen = () => drawerCart == true;
 
     const hasProducts = () => products && products.length !== 0;
 

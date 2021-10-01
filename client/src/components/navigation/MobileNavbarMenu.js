@@ -1,21 +1,23 @@
 import React, { Fragment, useContext, useEffect } from "react";
 import { useHistory } from "react-router-dom";
 import NavigationItems from './NavigationItems';
-import { LayoutContext } from "../index";
 import SearchBar from './SearchBar.js'
+import { useDispatch, useSelector } from "react-redux";
 
 const MobileNavbarMenu = (props) => {
 
     const history = useHistory();
 
-    const { data, dispatch } = useContext(LayoutContext);
+    let dispatch = useDispatch();
+
+    const { drawerNav } = useSelector((state) => ({ ...state }));
 
     const closeMobileNav = () => {
         document.body.style.overflow = 'unset';
         dispatch({ type: "hamburgerToggle", payload: false })
     }
 
-    const isMobileNavOpen = () => data.navbarHamburger == true;
+    const isMobileNavOpen = () => drawerNav == true;
 
     return (
         <Fragment>
