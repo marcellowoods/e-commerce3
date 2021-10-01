@@ -1,7 +1,7 @@
 import React, { Fragment, createContext } from "react";
 // import { Navber, Footer, CartModal } from "../partials";
 // import LoginSignup from "../auth/LoginSignup";
-import { Navbar, CartModal, MobileNavbarMenu } from "../partials";
+import { Navbar, CartModal, MobileNavbarMenu } from "../navigation";
 
 export const LayoutContext = createContext();
 
