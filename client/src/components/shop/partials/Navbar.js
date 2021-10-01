@@ -112,7 +112,7 @@ const Navbar = (props) => {
             ? cartModalOff()
             : cartModalOn();
 
-    const isMobileNavOpen = () => data.navberHamburger == true;
+    const isMobileNavOpen = () => data.navbarHamburger == true;
     //test
     // const data = {cartProduct: ["a", "b"]};
     // const navberToggleOpen = () => { }

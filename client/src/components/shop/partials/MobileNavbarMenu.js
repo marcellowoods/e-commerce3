@@ -15,7 +15,7 @@ const MobileNavbarMenu = (props) => {
         dispatch({ type: "hamburgerToggle", payload: false })
     }
 
-    const isMobileNavOpen = () => data.navberHamburger == true;
+    const isMobileNavOpen = () => data.navbarHamburger == true;
 
     return (
         <Fragment>

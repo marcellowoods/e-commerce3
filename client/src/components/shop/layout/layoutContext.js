@@ -1,13 +1,7 @@
 export const layoutState = {
-    navberHamburger: false,
-    loginSignupModal: false,
-    loginSignupError: false,
+    user: null,
+    navbarHamburger: false,
     cartModal: false,
-    cartProduct: null,
-    singleProductDetail: null,
-    inCart: null,
-    cartTotalCost: null,
-    orderSuccess: false,
     loading: false,
 };
 
@@ -16,52 +10,22 @@ export const layoutReducer = (state, action) => {
         case "hamburgerToggle":
             return {
                 ...state,
-                navberHamburger: action.payload,
-            };
-        case "loginSignupModalToggle":
-            return {
-                ...state,
-                loginSignupModal: action.payload,
+                navbarHamburger: action.payload,
             };
         case "cartModalToggle":
             return {
                 ...state,
                 cartModal: action.payload,
             };
-        case "cartProduct":
-            return {
-                ...state,
-                cartProduct: action.payload,
-            };
-        case "singleProductDetail":
-            return {
-                ...state,
-                singleProductDetail: action.payload,
-            };
-        case "inCart":
-            return {
-                ...state,
-                inCart: action.payload,
-            };
-        case "cartTotalCost":
-            return {
-                ...state,
-                cartTotalCost: action.payload,
-            };
-        case "loginSignupError":
-            return {
-                ...state,
-                loginSignupError: action.payload,
-            };
-        case "orderSuccess":
-            return {
-                ...state,
-                orderSuccess: action.payload,
-            };
         case "loading":
             return {
                 ...state,
                 loading: action.payload,
+            };
+        case "loggedInUser":
+            return {
+                ...state,
+                user: action.payload,
             };
         default:
             return state;
