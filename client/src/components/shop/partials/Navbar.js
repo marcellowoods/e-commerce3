@@ -3,8 +3,8 @@ import { useHistory, useLocation } from "react-router-dom";
 import NavigationItems from './NavigationItems';
 import SearchBar from './SearchBar.js'
 import { getCartIcon, getProfileIcon, getMobileToggleIcon } from "../../../assets/icons";
-import { Menu, Transition } from '@headlessui/react'
-import { ChevronDownIcon } from '@heroicons/react/solid'
+import AccountDropdown from "./AccountDropdown";
+
 import "./style.css";
 
 // import { logout } from "./Action";
@@ -14,57 +14,7 @@ import { LayoutContext } from "../index";
 const logout = () => { }
 const isAdmin = () => { }
 
-const MyDropdown = () => {
-    return (
-        <div className="text-right">
-            <Menu as="div" className="relative inline-block text-left">
-                <div>
-                    <Menu.Button style={{paddingTop: "6.5px"}} className="color-main-light hover:text-gray-500 focus:outline-none focus:text-gray-500" aria-label="toggle menu">
 
-                            {getProfileIcon()}
-
-                    </Menu.Button>
-                </div>
-                <Transition
-                    as={Fragment}
-                    enter="transition ease-in  duration-300"
-                    enterFrom="transform opacity-0 "
-                    enterTo="transform opacity-100 "
-                    leave="transition ease-in duration-300"
-                    leaveFrom="transform opacity-100 "
-                    leaveTo="transform opacity-0 "
-                > 
-                    <Menu.Items className="absolute right-0 w-40 mt-2 origin-top-right bg-white divide-y divide-gray-100 rounded-md shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none">
-                        <div className="px-1 py-1">
-                            <Menu.Item>
-                                {({ active }) => (
-                                    <button
-                                        className={`${active ? 'bg-violet-500 text-white' : 'text-gray-900'
-                                            } group flex rounded-md items-center w-full px-3 py-3 text-md`}
-                                    >
-
-                                        My Account
-                                    </button>
-                                )}
-                            </Menu.Item>
-                            <Menu.Item>
-                                {({ active }) => (
-                                    <button
-                                        className={`${active ? 'bg-violet-500 text-white' : 'text-gray-900'
-                                            } group flex rounded-md items-center w-full px-3 py-3 text-md`}
-                                    >
-
-                                    My Orders
-                                    </button>
-                                )}
-                            </Menu.Item>
-                        </div>
-                    </Menu.Items>
-                </Transition>
-            </Menu>
-        </div>
-    )
-}
 
 const NavbarRender = ({ mobileNavbarToggle, loginModalToggle, cartModalToggle }) => {
 
@@ -92,7 +42,7 @@ const NavbarRender = ({ mobileNavbarToggle, loginModalToggle, cartModalToggle })
 
 
                         <div className="flex">
-                            <MyDropdown />
+                            <AccountDropdown />
                             {/* <button onClick={loginModalToggle} type="button" className="color-main-light hover:text-gray-500 focus:outline-none focus:text-gray-500" aria-label="toggle menu">
                                 {getProfileIcon()}
                             </button> */}
