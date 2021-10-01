@@ -16,7 +16,7 @@ const isAdmin = () => { }
 
 
 
-const NavbarRender = ({ mobileNavbarToggle, loginModalToggle, cartModalToggle }) => {
+const NavbarRender = ({ mobileNavbarToggle, cartModalToggle }) => {
 
     return (
         <Fragment>
@@ -112,7 +112,6 @@ const Navbar = (props) => {
             ? cartModalOff()
             : cartModalOn();
 
-    const isMobileNavOpen = () => data.navbarHamburger == true;
     //test
     // const data = {cartProduct: ["a", "b"]};
     // const navberToggleOpen = () => { }
