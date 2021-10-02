@@ -14,7 +14,7 @@ const MobileNavbarMenu = (props) => {
 
     const closeMobileNav = () => {
         document.body.style.overflow = 'unset';
-        dispatch({ type: "hamburgerToggle", payload: false })
+        dispatch({ type: "DRAWER_NAV_TOGGLE", payload: false })
     }
 
     const isMobileNavOpen = () => drawerNav == true;

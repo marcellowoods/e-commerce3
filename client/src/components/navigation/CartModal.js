@@ -121,7 +121,7 @@ const CartModal = (props) => {
     const closeCartModal = () => {
         if (isCartModalOpen) {
             document.body.style.overflow = 'unset';
-            dispatch({ type: "cartModalToggle", payload: false });
+            dispatch({ type: "DRAWER_CART_TOGGLE", payload: false });
         }
     }
 

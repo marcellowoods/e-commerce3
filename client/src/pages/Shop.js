@@ -3,7 +3,7 @@ import { useHistory, useParams } from "react-router-dom";
 import Tridi from 'react-tridi';
 import 'react-tridi/dist/index.css';
 import { getAddToCartIcon } from "../assets/icons";
-import getPagination from "../components/pagination/getPagination";
+import getPagination from "../components/navigation/getPagination";
 import { Menu, Transition } from '@headlessui/react'
 import { CheckIcon, SelectorIcon } from '@heroicons/react/solid'
 

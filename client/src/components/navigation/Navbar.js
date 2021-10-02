@@ -79,22 +79,22 @@ const Navbar = (props) => {
     //https://stackoverflow.com/questions/54989513/react-prevent-scroll-when-modal-is-open
     const mobileToggleOn = () => {
         document.body.style.overflow = 'hidden';
-        dispatch({ type: "hamburgerToggle", payload: true })
+        dispatch({ type: "DRAWER_NAV_TOGGLE", payload: true })
     }
 
     const mobileToggleOff = () => {
         document.body.style.overflow = 'unset';
-        dispatch({ type: "hamburgerToggle", payload: false })
+        dispatch({ type: "DRAWER_NAV_TOGGLE", payload: false })
     }
 
     const cartModalOn = () => {
         document.body.style.overflow = 'hidden';
-        dispatch({ type: "cartModalToggle", payload: true })
+        dispatch({ type: "DRAWER_CART_TOGGLE", payload: true })
     }
 
     const cartModalOff = () => {
         document.body.style.overflow = 'unset';
-        dispatch({ type: "cartModalToggle", payload: false })
+        dispatch({ type: "DRAWER_CART_TOGGLE", payload: false })
     }
 
     const mobileNavbarToggle = () =>
