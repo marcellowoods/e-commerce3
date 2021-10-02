@@ -13,7 +13,7 @@ function App() {
 
                 <Route exact path="/" component={Shop} />
                 <Route exact path="/login" component={Login} />
-                <Login />
+                
 
             </Switch>
         </Fragment>

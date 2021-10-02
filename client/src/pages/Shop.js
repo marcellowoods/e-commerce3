@@ -21,7 +21,7 @@ const CategoryMenu = () => {
     const [selectedCategory, setSelectedCategory] = useState(categoies[0]);
 
     return (
-        <Menu style={{ zIndex: 2}} as="div" className="relative inline-block text-left">
+        <Menu style={{ zIndex: 2 }} as="div" className="relative inline-block text-left">
             <div>
                 <Menu.Button className="inline-flex justify-center w-full rounded-md border border-gray-300 shadow-sm px-4 py-2 bg-white text-sm font-medium text-gray-700 hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-gray-100 focus:ring-indigo-500">
                     <h3 className="text-gray-700 text-2xl font-medium">{selectedCategory}</h3>
@@ -38,7 +38,7 @@ const CategoryMenu = () => {
                 leaveFrom="transform opacity-100"
                 leaveTo="transform opacity-0 "
             >
-                <Menu.Items style={{maxHeight: "300px"}} className="overflow-y-auto origin-top-right absolute  mt-2 w-56 rounded-md shadow-lg bg-white ring-1 ring-black ring-opacity-5 focus:outline-none">
+                <Menu.Items style={{ maxHeight: "300px" }} className="overflow-y-auto origin-top-right absolute  mt-2 w-56 rounded-md shadow-lg bg-white ring-1 ring-black ring-opacity-5 focus:outline-none">
                     <div className="py-1">
                         {categoies.map((name) => (
                             <Menu.Item>
@@ -47,7 +47,7 @@ const CategoryMenu = () => {
                                         onClick={() => setSelectedCategory(name)}
                                         className={classNames(
                                             active ? 'bg-gray-100 text-gray-900' : 'text-gray-700',
-                                            selectedCategory == name ?  'bg-gray-100' : "",
+                                            selectedCategory == name ? 'bg-gray-100' : "",
                                             'block text-center  px-4 py-4 text-md cursor-pointer'
                                         )}
                                     >
@@ -252,10 +252,10 @@ const PageComponent = () => {
 
             {/* the first tridi component doesnt prevent vertical touch move so  that's one way to fix it (weid bug) */}
             {/* https://github.com/nevestuan/react-tridi */}
-            <div className="hidden">
+            {/* <div className="hidden">
                 <Tridi />
-            </div>
-            <main className="my-5">
+            </div> */}
+            <div className="my-5">
                 <div className="container mx-auto px-6">
 
                     <CategoryMenu />
@@ -276,12 +276,14 @@ const PageComponent = () => {
                 </div>
 
                 {/* https://github.com/AdeleD/react-paginate */}
+
                 {getPagination({
                     pageCount: 5,
                     onPageChange: (p) => console.log(p)
                 })}
 
-            </main>
+
+            </div>
 
         </Fragment >
     );
