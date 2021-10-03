@@ -276,12 +276,12 @@ const PageComponent = () => {
                 </div>
 
                 {/* https://github.com/AdeleD/react-paginate */}
-
-                {getPagination({
-                    pageCount: 5,
-                    onPageChange: (p) => console.log(p)
-                })}
-
+                <div className="p-6">
+                    {getPagination({
+                        pageCount: 5,
+                        onPageChange: (p) => console.log(p)
+                    })}
+                </div>
 
             </div>
 
