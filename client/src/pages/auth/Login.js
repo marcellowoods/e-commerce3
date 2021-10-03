@@ -2,7 +2,7 @@ import React, { Fragment, useEffect, useState, useRef } from "react";
 
 const Login = () => {
     return (
-        <div className="sm:pt-8">
+        <div className="sm:pt-4">
             <div className="flex bg-white rounded-lg shadow-lg overflow mx-auto sm:max-w-xl">
                 <div className="w-full px-8 sm:py-8 mx-auto">
                     <a href="#" className="flex items-center justify-center mt-4 text-white rounded-lg shadow-md hover:bg-gray-100">
