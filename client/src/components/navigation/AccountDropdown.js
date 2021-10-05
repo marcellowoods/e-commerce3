@@ -1,4 +1,5 @@
 import React, { Fragment, useContext } from "react";
+import { useDispatch, useSelector } from "react-redux";
 
 import { Menu, Transition } from '@headlessui/react'
 import { getProfileIcon } from "../../assets/icons";
@@ -121,7 +122,9 @@ const AccountDropdown = () => {
 
     let history = useHistory();
 
-    const isLoggedIn = false;
+    const { user } = useSelector((state) => ({ ...state }));
+
+    const isLoggedIn = user !== null;
 
     const handleSettingsClicked = () => {
         history.push("/user/settings");

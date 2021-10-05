@@ -101,12 +101,13 @@ const Login = ({ history }) => {
     let dispatch = useDispatch();
 
     useEffect(() => {
-        {
-            if (user && user.token) {
-                let isAdmin = user.role === "admin";
-                roleBasedRedirect(location, history, isAdmin);
-            }
+        
+        if (user && user.token) {
+            let isAdmin = user.role === "admin";
+            console.log("role based redirect")
+            roleBasedRedirect(location, history, isAdmin);
         }
+        
 
     }, [user, history]);
 
