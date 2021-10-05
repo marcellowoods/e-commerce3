@@ -5,6 +5,10 @@ import { getProfileIcon } from "../../assets/icons";
 
 import { useHistory } from "react-router-dom";
 
+import { getAuth, signOut } from "firebase/auth";
+
+const auth = getAuth();
+
 const AccountDropdownRender = ({
     handleSettingsClicked,
     handleOrdersClicked,
@@ -136,7 +140,7 @@ const AccountDropdown = () => {
     }
 
     const handleLogoutClicked = () => {
-        history.push("/user/logout");
+        signOut(auth);
     }
 
     return (

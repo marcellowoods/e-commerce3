@@ -37,6 +37,7 @@ function App() {
 
     let onFirebaseLogout = () => {
 
+        console.log("firebaseLogout")
         dispatch({
             type: "LOGGED_IN_USER",
             payload: null
