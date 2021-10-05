@@ -41,32 +41,49 @@ const LoginRender = ({
                         </div>
                         <h1 className="px-4 py-3 text-center text-gray-600 font-bold">Sign in with Google</h1>
                     </button>
-                    <form onSubmit={emailLoginFormSubmit}>
-                        <div className="mt-4 flex items-center justify-between">
-                            <span className="border-b w-1/5 lg:w-1/4"></span>
-                            <a href="#" className="text-xs text-center text-gray-500 uppercase">or login with email</a>
-                            <span className="border-b w-1/5 lg:w-1/4"></span>
+
+                    <div className="mt-4 flex items-center justify-between">
+                        <span className="border-b w-1/5 lg:w-1/4"></span>
+                        <a href="#" className="text-xs text-center text-gray-500 uppercase">or login with email</a>
+                        <span className="border-b w-1/5 lg:w-1/4"></span>
+                    </div>
+                    <div className="mt-4">
+                        <label className="block text-gray-700 text-sm font-bold mb-2">Email Address</label>
+                        <input className="bg-gray-200 text-gray-700 focus:outline-none focus:shadow-outline border border-gray-300 rounded py-2 px-4 block w-full appearance-none"
+                            type="email"
+                            value={email}
+                            onChange={(e) => setEmail(e.target.value)}
+                            placeholder="Your email"
+                            autoFocus
+                        />
+                    </div>
+                    <div className="mt-4">
+                        <div className="flex justify-between">
+                            <label className="block text-gray-700 text-sm font-bold mb-2">Password</label>
+                            <a href="#" className="text-xs text-gray-500">Forget Password?</a>
                         </div>
-                        <div className="mt-4">
-                            <label className="block text-gray-700 text-sm font-bold mb-2">Email Address</label>
-                            <input className="bg-gray-200 text-gray-700 focus:outline-none focus:shadow-outline border border-gray-300 rounded py-2 px-4 block w-full appearance-none" type="email" />
-                        </div>
-                        <div className="mt-4">
-                            <div className="flex justify-between">
-                                <label className="block text-gray-700 text-sm font-bold mb-2">Password</label>
-                                <a href="#" className="text-xs text-gray-500">Forget Password?</a>
-                            </div>
-                            <input className="bg-gray-200 text-gray-700 focus:outline-none focus:shadow-outline border border-gray-300 rounded py-2 px-4 block w-full appearance-none" type="password" />
-                        </div>
-                        <div className="mt-8">
-                            <button className="bg-gray-700 text-white font-bold py-2 px-4 w-full rounded hover:bg-gray-600">Login</button>
-                        </div>
-                        <div className="mt-4 flex items-center justify-between">
-                            <span className="border-b w-1/5 md:w-1/4"></span>
-                            <a href="#" className="text-xs text-gray-500 uppercase">or sign up</a>
-                            <span className="border-b w-1/5 md:w-1/4"></span>
-                        </div>
-                    </form>
+                        <input
+                            className="bg-gray-200 text-gray-700 focus:outline-none focus:shadow-outline border border-gray-300 rounded py-2 px-4 block w-full appearance-none"
+                            type="password"
+                            value={password}
+                            onChange={(e) => setPassword(e.target.value)}
+                            placeholder="Your password"
+                        />
+                    </div>
+                    <div className="mt-8">
+                        <button
+                            onClick={emailLoginFormSubmit}
+                            disabled={isEmailLoginDisabled()}
+                            className={`${isEmailLoginDisabled() ? "cursor-not-allowed" : ""} focus:outline-none	 bg-gray-700 text-white font-bold py-2 px-4 w-full rounded hover:bg-gray-600`}>
+                            Login
+                        </button>
+                    </div>
+                    <div className="mt-4 flex items-center justify-between">
+                        <span className="border-b w-1/5 md:w-1/4"></span>
+                        <a href="#" className="text-xs text-gray-500 uppercase">or sign up</a>
+                        <span className="border-b w-1/5 md:w-1/4"></span>
+                    </div>
+
                 </div>
             </div>
         </div>
@@ -74,8 +91,8 @@ const LoginRender = ({
 }
 
 const Login = ({ history }) => {
-    const [email, setEmail] = useState("gqlreactnode@gmail.com");
-    const [password, setPassword] = useState("gggggg");
+    const [email, setEmail] = useState("");
+    const [password, setPassword] = useState("");
     const [loading, setLoading] = useState(false);
     let location = useLocation();
 
@@ -93,38 +110,42 @@ const Login = ({ history }) => {
 
     }, [user, history]);
 
-    const emailLoginFormSubmit = async (e) => {
-        e.preventDefault();
-        setLoading(true);
-        // console.table(email, password);
-        try {
-            const result = await signInWithEmailAndPassword(auth, email, password);
-            // console.log(result);
-            const { user } = result;
-            const idTokenResult = await user.getIdTokenResult();
+    // const emailLoginFormSubmit = async (e) => {
+    //     e.preventDefault();
+    //     setLoading(true);
+    //     // console.table(email, password);
+    //     try {
+    //         const result = await signInWithEmailAndPassword(auth, email, password);
+    //         // console.log(result);
+    //         const { user } = result;
+    //         const idTokenResult = await user.getIdTokenResult();
 
-            createOrUpdateUser(idTokenResult.token)
-                .then((res) => {
-                    dispatch({
-                        type: "LOGGED_IN_USER",
-                        payload: {
-                            name: res.data.name,
-                            email: res.data.email,
-                            token: idTokenResult.token,
-                            role: res.data.role,
-                            _id: res.data._id,
-                        },
-                    });
-                    //   roleBasedRedirect(location, history, res);
-                })
-                .catch((err) => console.log(err));
+    //         createOrUpdateUser(idTokenResult.token)
+    //             .then((res) => {
+    //                 dispatch({
+    //                     type: "LOGGED_IN_USER",
+    //                     payload: {
+    //                         name: res.data.name,
+    //                         email: res.data.email,
+    //                         token: idTokenResult.token,
+    //                         role: res.data.role,
+    //                         _id: res.data._id,
+    //                     },
+    //                 });
+    //                 //   roleBasedRedirect(location, history, res);
+    //             })
+    //             .catch((err) => console.log(err));
 
-        } catch (error) {
-            console.log(error);
-            // toast.error(error.message);
-            setLoading(false);
-        }
-    };
+    //     } catch (error) {
+    //         console.log(error);
+    //         // toast.error(error.message);
+    //         setLoading(false);
+    //     }
+    // };
+
+    const emailLoginFormSubmit = (e) => {
+        console.log("form login")
+    }
 
     const googleLogin = async () => {
         signInWithPopup(auth, googleAuthProvider)
@@ -153,16 +174,20 @@ const Login = ({ history }) => {
             });
     };
 
+    const isEmailLoginDisabled = () => (
+        !email || password.length < 6
+    )
+
     return (
-        <LoginRender 
+        <LoginRender
             googleLogin={googleLogin}
             email={email}
             password={password}
             setEmail={setEmail}
             setPassword={setPassword}
             emailLoginFormSubmit={emailLoginFormSubmit}
-            // isEmailLoginDisabled={isEmailLoginDisabled}
-            />
+            isEmailLoginDisabled={isEmailLoginDisabled}
+        />
     );
 };
 
