@@ -21,7 +21,7 @@ const auth = getAuth();
 // }
 
 
-let onAuthStateChanged = (isLoading, setIsLoading, getUserFromServer, successUserFromServer) => {
+let onAuthStateChanged = (isLoading, setIsLoading, getUserFromServer, onSuccessUserFromServer, onFirebaseLogout) => {
 
     return onAuthStateChangedFirebase(auth, async (user) => {
 
@@ -31,7 +31,7 @@ let onAuthStateChanged = (isLoading, setIsLoading, getUserFromServer, successUse
 
             getUserFromServer(idTokenResult.token)
                 .then((res) => {
-                    successUserFromServer(res, idTokenResult);
+                    onSuccessUserFromServer(res, idTokenResult);
                     if (isLoading) {
                         setIsLoading(false);
                     }
@@ -43,6 +43,7 @@ let onAuthStateChanged = (isLoading, setIsLoading, getUserFromServer, successUse
                     }
                 });
         }else{
+            onFirebaseLogout();
             if (isLoading) {
                 setIsLoading(false);
             }

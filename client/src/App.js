@@ -35,8 +35,16 @@ function App() {
         });
     }
 
+    let onFirebaseLogout = () => {
+
+        dispatch({
+            type: "LOGGED_IN_USER",
+            payload: null
+        });
+    }
+
     useEffect(() => {
-        const unsubscribe = onAuthStateChanged(isLoading, setIsLoading, currentUser, onCurrentUserSuccess);
+        const unsubscribe = onAuthStateChanged(isLoading, setIsLoading, currentUser, onCurrentUserSuccess, onFirebaseLogout);
 
         // cleanup
         return () => unsubscribe();
