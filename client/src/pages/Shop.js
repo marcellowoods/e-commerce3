@@ -259,7 +259,8 @@ const PageComponent = () => {
                 <div className="container mx-auto px-6">
 
                     <CategoryMenu />
-                    <div className="grid gap-6 grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 mt-6">
+                    {/* xl:grid-cols-4 */}
+                    <div className="grid gap-6 grid-cols-1 sm:grid-cols-2 lg:grid-cols-3   mt-6">
                         {products && products.map((p) => (
                             <ProductCard
                                 id={p.id}
