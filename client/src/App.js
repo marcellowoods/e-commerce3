@@ -1,14 +1,18 @@
 import React, { useState, useEffect, Fragment } from "react";
 
+import { Switch, Route } from "react-router-dom";
 import onAuthStateChanged from "./auxiliary/firebaseAuthState";
 import { useDispatch } from "react-redux";
 import { currentUser } from "./functions/auth";
 
-import { Switch, Route } from "react-router-dom";
+import UserRoute from "./components/routes/UserRoute";
+import AdminRoute from "./components/routes/UserRoute";
+
 import LoadingPage from "./pages/LoadingPage";
 import Shop from "./pages/Shop";
 import Login from "./pages/auth/Login"
 import Navigation from "./components/navigation"
+import Orders from "./pages/user/Orders";
 
 
 function App() {
@@ -49,7 +53,7 @@ function App() {
 
                 <Route exact path="/" component={Shop} />
                 <Route exact path="/login" component={Login} />
-
+                <UserRoute exact path="/user/orders" component={Orders} />
 
             </Switch>
         </Fragment>

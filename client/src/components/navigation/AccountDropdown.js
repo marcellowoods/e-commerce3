@@ -1,10 +1,17 @@
 import React, { Fragment, useContext } from "react";
 
 import { Menu, Transition } from '@headlessui/react'
-import {getProfileIcon } from "../../assets/icons";
+import { getProfileIcon } from "../../assets/icons";
 
+import { useHistory } from "react-router-dom";
 
-const AccountDropdown = () => {
+const AccountDropdownRender = ({
+    handleSettingsClicked,
+    handleOrdersClicked,
+    handleLoginClicked,
+    handleLogoutClicked,
+    isLoggedIn
+}) => {
     return (
         <div className="text-right">
             <Menu as="div" className="relative inline-block text-left">
@@ -27,16 +34,18 @@ const AccountDropdown = () => {
                             <Menu.Item>
                                 {({ active }) => (
                                     <button
+                                        onClick={handleSettingsClicked}
                                         className={`${active ? 'color-main-bold' : 'color-main-light'
                                             } group flex rounded-md items-center w-full px-3 py-3 text-md`}
                                     >
-                                        My Account
+                                        Settings
                                     </button>
                                 )}
                             </Menu.Item>
                             <Menu.Item>
                                 {({ active }) => (
                                     <button
+                                        onClick={handleOrdersClicked}
                                         className={`${active ? 'color-main-bold' : 'color-main-light'
                                             } group flex rounded-md items-center w-full px-3 py-3 text-md`}
                                     >
@@ -44,12 +53,73 @@ const AccountDropdown = () => {
                                     </button>
                                 )}
                             </Menu.Item>
+                            {isLoggedIn &&
+                                <Menu.Item>
+                                    {({ active }) => (
+                                        <button
+                                            onClick={handleLogoutClicked}
+                                            className={`${active ? 'color-main-bold' : 'color-main-light'
+                                                } group flex rounded-md items-center w-full px-3 py-3 text-md`}
+                                        >
+                                            Logout
+                                        </button>
+                                    )}
+                                </Menu.Item>
+                            }
+                            {!isLoggedIn &&
+                                <Menu.Item>
+                                    {({ active }) => (
+                                        <button
+                                            onClick={handleLogoutClicked}
+                                            className={`${active ? 'color-main-bold' : 'color-main-light'
+                                                } group flex rounded-md items-center w-full px-3 py-3 text-md`}
+                                        >
+                                            Login
+                                        </button>
+                                    )}
+                                </Menu.Item>
+                            }
+
                         </div>
                     </Menu.Items>
                 </Transition>
             </Menu>
         </div>
     )
+}
+
+const AccountDropdown = () => {
+
+    let history = useHistory();
+
+    const isLoggedIn = true;
+
+    const handleSettingsClicked = () => {
+        history.push("/user/settings");
+    }
+
+    const handleOrdersClicked = () => {
+        history.push("/user/orders");
+    }
+
+    const handleLoginClicked = () => {
+        history.push("/user/login");
+    }
+
+    const handleLogoutClicked = () => {
+        history.push("/user/logout");
+    }
+
+    return (
+        <AccountDropdownRender
+            handleSettingsClicked={handleSettingsClicked}
+            handleOrdersClicked={handleOrdersClicked}
+            handleLoginClicked={handleLoginClicked}
+            handleLogoutClicked={handleLogoutClicked}
+            isLoggedIn={isLoggedIn}
+        />
+    )
+
 }
 
 export default AccountDropdown;
