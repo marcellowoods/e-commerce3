@@ -10,6 +10,7 @@ const AccountDropdownRender = ({
     handleOrdersClicked,
     handleLoginClicked,
     handleLogoutClicked,
+    handleRegisterClicked,
     isLoggedIn
 }) => {
     return (
@@ -79,7 +80,7 @@ const AccountDropdownRender = ({
                                     <Menu.Item>
                                         {({ active }) => (
                                             <button
-                                                onClick={handleOrdersClicked}
+                                                onClick={handleLoginClicked}
                                                 className={`${active ? 'color-main-bold' : 'color-main-light'
                                                     } group flex rounded-md items-center w-full px-3 py-3 text-md`}
                                             >
@@ -91,7 +92,7 @@ const AccountDropdownRender = ({
                                     <Menu.Item>
                                         {({ active }) => (
                                             <button
-                                                onClick={handleSettingsClicked}
+                                                onClick={handleRegisterClicked}
                                                 className={`${active ? 'color-main-bold' : 'color-main-light'
                                                     } group flex rounded-md items-center w-full px-3 py-3 text-md`}
                                             >

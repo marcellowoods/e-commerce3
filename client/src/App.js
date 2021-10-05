@@ -56,11 +56,12 @@ function App() {
 
     return (
         <Fragment>
-            <Navigation />
-            <Switch>
 
+            <Navigation />
+
+            <Switch>
                 <Route exact path="/" component={Shop} />
-                <Route exact path="/login" component={Login} />
+                <Route exact path="/user/login" component={Login} />
                 <UserRoute exact path="/user/orders" component={Orders} />
 
             </Switch>
