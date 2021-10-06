@@ -91,8 +91,8 @@ const LoginRender = ({
 }
 
 const Login = ({ history }) => {
-    const [email, setEmail] = useState("");
-    const [password, setPassword] = useState("");
+    const [email, setEmail] = useState("dabstone@protonmail.com");
+    const [password, setPassword] = useState("123456");
     const [loading, setLoading] = useState(false);
     let location = useLocation();
 
@@ -111,42 +111,20 @@ const Login = ({ history }) => {
 
     }, [user, history]);
 
-    // const emailLoginFormSubmit = async (e) => {
-    //     e.preventDefault();
-    //     setLoading(true);
-    //     // console.table(email, password);
-    //     try {
-    //         const result = await signInWithEmailAndPassword(auth, email, password);
-    //         // console.log(result);
-    //         const { user } = result;
-    //         const idTokenResult = await user.getIdTokenResult();
+    const emailLoginFormSubmit = async (e) => {
+        e.preventDefault();
+        setLoading(true);
+        // console.table(email, password);
+        try {
 
-    //         createOrUpdateUser(idTokenResult.token)
-    //             .then((res) => {
-    //                 dispatch({
-    //                     type: "LOGGED_IN_USER",
-    //                     payload: {
-    //                         name: res.data.name,
-    //                         email: res.data.email,
-    //                         token: idTokenResult.token,
-    //                         role: res.data.role,
-    //                         _id: res.data._id,
-    //                     },
-    //                 });
-    //                 //   roleBasedRedirect(location, history, res);
-    //             })
-    //             .catch((err) => console.log(err));
-
-    //     } catch (error) {
-    //         console.log(error);
-    //         // toast.error(error.message);
-    //         setLoading(false);
-    //     }
-    // };
-
-    const emailLoginFormSubmit = (e) => {
-        console.log("form login")
-    }
+            await signInWithEmailAndPassword(auth, email, password);
+            
+        } catch (error) {
+            console.log(error);
+            // toast.error(error.message);
+            setLoading(false);
+        }
+    };
 
     const googleLogin = async () => {
         signInWithPopup(auth, googleAuthProvider)
