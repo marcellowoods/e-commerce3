@@ -2,8 +2,9 @@ import React, { Fragment, useEffect, useState, useRef } from "react";
 import { Link, useLocation } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 
-import { createOrUpdateUser } from "../../functions/auth";
 import { roleBasedRedirect } from "./auxiliary/redirect.js"
+
+
 
 import {
     getAuth,
@@ -12,6 +13,10 @@ import {
     GoogleAuthProvider,
     signInWithPopup
 } from "firebase/auth";
+
+function sleep(ms) {
+    return new Promise(resolve => setTimeout(resolve, ms));
+}
 
 const auth = getAuth();
 const googleAuthProvider = new GoogleAuthProvider();
@@ -101,13 +106,13 @@ const Login = ({ history }) => {
     let dispatch = useDispatch();
 
     useEffect(() => {
-        
+
         if (user && user.token) {
             let isAdmin = user.role === "admin";
             console.log("role based redirect")
             roleBasedRedirect(location, history, isAdmin);
         }
-        
+
 
     }, [user, history]);
 
@@ -118,7 +123,7 @@ const Login = ({ history }) => {
         try {
 
             await signInWithEmailAndPassword(auth, email, password);
-            
+
         } catch (error) {
             console.log(error);
             // toast.error(error.message);
@@ -126,31 +131,32 @@ const Login = ({ history }) => {
         }
     };
 
+    // const emailLoginFormSubmit = async (e) => {
+    //     e.preventDefault();
+
+    //     await signInWithEmailAndPassword(auth, email, password)
+    //         .then((userCredential) => {
+    //             // Signed in 
+    //             const user = userCredential.user;
+    //             await sleep(6000);
+    //             console.log("signed in")
+    //             // ...
+    //         })
+    //         .catch((error) => {
+    //             const errorCode = error.code;
+    //             const errorMessage = error.message;
+    //             console.log(errorMessage);
+    //         });
+    // }
+
     const googleLogin = async () => {
-        signInWithPopup(auth, googleAuthProvider)
-            .then(async (result) => {
-                const { user } = result;
-                const idTokenResult = await user.getIdTokenResult();
-                createOrUpdateUser(idTokenResult.token)
-                    .then((res) => {
-                        dispatch({
-                            type: "LOGGED_IN_USER",
-                            payload: {
-                                name: res.data.name,
-                                email: res.data.email,
-                                token: idTokenResult.token,
-                                role: res.data.role,
-                                _id: res.data._id,
-                            },
-                        });
-                        // roleBasedRedirect(location, history, res);
-                    })
-                    .catch((err) => console.log(err));
-            })
-            .catch((err) => {
-                console.log(err);
-                // toast.error(err.message);
-            });
+        try {
+            await signInWithPopup(auth, googleAuthProvider)
+
+        } catch (error) {
+            console.log(error);
+        }
+
     };
 
     const isEmailLoginDisabled = () => (
