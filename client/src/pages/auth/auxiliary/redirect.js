@@ -10,7 +10,7 @@ const roleBasedRedirect = (location, history, isAdmin) => {
         history.replace("/admin/dashboard");
     } else {
         console.log("push history")
-        history.replace("/user/history");
+        history.replace("/user/orders");
     }
 
 }

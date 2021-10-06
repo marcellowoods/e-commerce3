@@ -13,6 +13,7 @@ import Shop from "./pages/Shop";
 import Login from "./pages/auth/Login"
 import Navigation from "./components/navigation"
 import Orders from "./pages/user/Orders";
+import Settings from "./pages/user/Settings";
 
 
 function App() {
@@ -62,8 +63,9 @@ function App() {
 
             <Switch>
                 <Route exact path="/" component={Shop} />
-                <Route exact path="/user/login" component={Login} />
+                <Route exact path="/login" component={Login} />
                 <UserRoute exact path="/user/orders" component={Orders} />
+                <UserRoute exact path="/user/settings" component={Settings} />
 
             </Switch>
         </Fragment>

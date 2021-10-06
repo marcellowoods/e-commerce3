@@ -135,11 +135,11 @@ const AccountDropdown = () => {
     }
 
     const handleLoginClicked = () => {
-        history.push("/user/login");
+        history.push("/login");
     }
 
     const handleRegisterClicked = () => {
-        history.push("/user/register");
+        history.push("/register");
     }
 
     const handleLogoutClicked = () => {
