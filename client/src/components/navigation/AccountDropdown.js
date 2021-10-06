@@ -10,6 +10,10 @@ import { getAuth, signOut } from "firebase/auth";
 
 const auth = getAuth();
 
+const getItemClassName = (isActive) => (
+    `${isActive ? 'color-main-bold' : 'color-main-light'} focus:outline-none group flex rounded-md items-center w-full px-3 py-3 text-md`
+)
+
 const AccountDropdownRender = ({
     handleSettingsClicked,
     handleOrdersClicked,
@@ -55,8 +59,7 @@ const AccountDropdownRender = ({
                                         {({ active }) => (
                                             <button
                                                 onClick={handleSettingsClicked}
-                                                className={`${active ? 'color-main-bold' : 'color-main-light'
-                                                    } group flex rounded-md items-center w-full px-3 py-3 text-md`}
+                                                className={getItemClassName(active)}
                                             >
                                                 Settings
                                             </button>
@@ -67,8 +70,7 @@ const AccountDropdownRender = ({
                                         {({ active }) => (
                                             <button
                                                 onClick={handleLogoutClicked}
-                                                className={`${active ? 'color-main-bold' : 'color-main-light'
-                                                    } group flex rounded-md items-center w-full px-3 py-3 text-md`}
+                                                className={getItemClassName(active)}
                                             >
                                                 Logout
                                             </button>
@@ -86,8 +88,7 @@ const AccountDropdownRender = ({
                                         {({ active }) => (
                                             <button
                                                 onClick={handleLoginClicked}
-                                                className={`${active ? 'color-main-bold' : 'color-main-light'
-                                                    } group flex rounded-md items-center w-full px-3 py-3 text-md`}
+                                                className={getItemClassName(active)}
                                             >
                                                 Login
                                             </button>
@@ -98,8 +99,7 @@ const AccountDropdownRender = ({
                                         {({ active }) => (
                                             <button
                                                 onClick={handleRegisterClicked}
-                                                className={`${active ? 'color-main-bold' : 'color-main-light'
-                                                    } group flex rounded-md items-center w-full px-3 py-3 text-md`}
+                                                className={getItemClassName(active)}
                                             >
                                                 Register
                                             </button>
