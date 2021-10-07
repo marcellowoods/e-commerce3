@@ -17,6 +17,7 @@ import Register from "./pages/auth/Register";
 import Navigation from "./components/navigation"
 import Orders from "./pages/user/Orders";
 import Settings from "./pages/user/Settings";
+import Home from "./pages/Home"
 
 
 
@@ -66,6 +67,7 @@ function App() {
             <Navigation />
 
             <Switch>
+                <Route exact path="/" component={Home} />
                 <Route exact path="/shop" component={Shop} />
                 <Route exact path="/login" component={Login} />
                 <Route exact path="/register" component={Register} />
