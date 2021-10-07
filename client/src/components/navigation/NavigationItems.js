@@ -12,10 +12,10 @@ const NavigationItems = () => {
     const handleContactClick = () => history.push("/contact");
     const handleAboutClick = () => history.push("/about");
 
-    const cName = "mt-3 focus:outline-none color-main-light hover:text-gray-900 sm:mx-3 sm:mt-0";
+    const cName = "text-left mt-3 focus:outline-none color-main-light hover:text-gray-900 sm:mx-3 sm:mt-0";
 
     return (
-        <div className="flex flex-col sm:flex-row">
+        <div className=" flex flex-col sm:flex-row">
             <button onClick={handleHomeClick} className={cName} >Home</button>
             <button onClick={handleShopClick} className={cName} >Shop</button>
             <button onClick={handleCategoriesClick} className={cName}>Categories</button>
@@ -24,6 +24,8 @@ const NavigationItems = () => {
         </div>
     );
 };
+
+
 
 export default NavigationItems;
 

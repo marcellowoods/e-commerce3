@@ -6,6 +6,7 @@ import { getAddToCartIcon } from "../assets/icons";
 import getPagination from "../components/navigation/getPagination";
 import { Menu, Transition } from '@headlessui/react'
 import { CheckIcon, SelectorIcon } from '@heroicons/react/solid'
+import ProductShopCard from "../components/cards/ProductShopCard"
 
 const apiURL = process.env.REACT_APP_API_URL;
 
@@ -67,69 +68,6 @@ const CategoryMenu = () => {
     )
 }
 
-const ProductCard = ({ id, name, price, imageUrl, onAddClick, onCardClick }) => {
-
-    const lastDrag = useRef(Date.now());
-
-    return (
-        <div className="w-full max-w-sm mx-auto rounded-md shadow-md overflow-hidden">
-            <div onClick={
-                () => {
-                    if (Date.now() - lastDrag.current < 200) {
-                        onCardClick(id)
-                    }
-                }
-            }>
-                {/* <img
-                        onClick={(e) => { }}
-                        className="flex items-end justify-end h-56 w-full object-cover object-center cursor-pointer"
-                        src={imageUrl}
-                        alt=""
-                    /> */}
-                {/* <Tridi
-                        images={[
-                            "https://images.unsplash.com/photo-1495856458515-0637185db551?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=750&q=80",
-                            "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcT4urtfGLUvPlZXxeJYMKwxod4w0y_Jf_hRBQ&usqp=CAU",
-                            "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQ-wMRq6WMZSigBcYV8ycb-5z5I88668rPmww&usqp=CAU"
-                        ]}
-                        // location="./images"
-                        format="jpg"
-                        // count="2"
-                        mousewheel={true}
-                        inverse={true}
-                        // touchDragInterval={1}
-                        onDragStart={() => lastDrag.current = Date.now()}
-                        dragInterval={10}
-                        touchDragInterval={10}
-                    /> */}
-                {/* car */}
-                <Tridi
-                    location="./images"
-                    format="jpg"
-                    count="36"
-                    mousewheel={true}
-                    inverse={true}
-                    // touchDragInterval={1}
-                    onDragStart={() => lastDrag.current = Date.now()}
-                    dragInterval={1}
-                    touchDragInterval={1}
-                />
-            </div>
-
-            <div className="float-left px-5 py-3">
-                <h3 className="color-main-light cursor-pointer uppercase">{name}</h3>
-                <span className="text-gray-500 mt-2">${price}</span>
-            </div>
-
-            <div className="float-right transform translate-y-4 -translate-x-4">
-                <button onClick={(() => onAddClick(id))} className="focus:outline-none">
-                    {getAddToCartIcon()}
-                </button>
-            </div>
-        </div>
-    )
-}
-
 const PageComponent = () => {
     const [products, setProducts] = useState(null);
     const { catId } = useParams();
@@ -181,9 +119,9 @@ const PageComponent = () => {
 
             {/* the first tridi component doesnt prevent vertical touch move so  that's one way to fix it (weid bug) */}
             {/* https://github.com/nevestuan/react-tridi */}
-            {/* <div className="hidden">
+            <div className="hidden">
                 <Tridi />
-            </div> */}
+            </div>
             <div className="my-5">
                 <div className="container mx-auto px-6">
 
@@ -191,7 +129,7 @@ const PageComponent = () => {
                     {/* xl:grid-cols-4 */}
                     <div className="grid gap-6 grid-cols-1 sm:grid-cols-2 lg:grid-cols-3   mt-6">
                         {products && products.map((p) => (
-                            <ProductCard
+                            <ProductShopCard
                                 id={p.id}
                                 quantity={3}
                                 imageUrl={p.pImages[0]}
