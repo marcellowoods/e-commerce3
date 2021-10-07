@@ -3,7 +3,7 @@ import { Link, useLocation } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 
 import { roleBasedRedirect } from "./auxiliary/redirect.js"
-
+import LoadingPage from "../LoadingPage"
 
 
 import {
@@ -117,13 +117,14 @@ const Login = ({ history }) => {
     }, [user, history]);
 
     const emailLoginFormSubmit = async (e) => {
+        
         e.preventDefault();
         setLoading(true);
         // console.table(email, password);
         try {
 
             await signInWithEmailAndPassword(auth, email, password);
-
+            // setLoading(false);
         } catch (error) {
             console.log(error);
             // toast.error(error.message);
@@ -150,11 +151,14 @@ const Login = ({ history }) => {
     // }
 
     const googleLogin = async () => {
+
+        setLoading(true);
         try {
             await signInWithPopup(auth, googleAuthProvider)
-
+            // setLoading(false);
         } catch (error) {
             console.log(error);
+            setLoading(false);
         }
 
     };
@@ -162,6 +166,10 @@ const Login = ({ history }) => {
     const isEmailLoginDisabled = () => (
         !email || password.length < 6
     )
+
+    if(loading){
+        return <LoadingPage />
+    }
 
     return (
         <LoginRender

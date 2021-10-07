@@ -66,7 +66,7 @@ function App() {
             <Navigation />
 
             <Switch>
-                <Route exact path="/" component={Shop} />
+                <Route exact path="/shop" component={Shop} />
                 <Route exact path="/login" component={Login} />
                 <Route exact path="/register" component={Register} />
                 

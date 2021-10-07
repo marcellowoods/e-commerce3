@@ -16,10 +16,6 @@ function classNames(...classes) {
 // let categoies = ["watches", "keyboards", "laptops", "cars", "watches", "keyboards", "laptops", "cars"]
 let categoies = ["watches", "keyboards", "laptops"]
 //https://www.youtube.com/watch?v=qJnIJa-cF2M
-//https://headlessui.dev/react/menu 
-//https://tailwindui.com/components/application-ui/elements/dropdowns 
-//https://tailwindui.com/#product-application-ui 
-//https://tailwindui.com/components/application-ui/overlays/modals 
 const CategoryMenu = () => {
 
     const [selectedCategory, setSelectedCategory] = useState(categoies[0]);
@@ -66,6 +62,81 @@ const CategoryMenu = () => {
         </Menu>
     )
 }
+
+// const CategoryMenu = ({ category }) => {
+
+//     // https://dev.to/fayaz/vue-tailwindcss-a-match-made-in-heaven-animated-dropdown-1nm
+//     //https://tailwind-dropdown.surge.sh/
+//     const [isOpen, setIsOpen] = useState(false);
+
+//     const allCategories = [
+//         { name: "Wrist Watch", _id: "23143" },
+//         { name: "Phones", _id: "1463235" },
+//         { name: "Keyboards", _id: "1432123435" },
+//     ];
+
+//     const categoryName = "Wrist Watch";
+//     const handleOpen = () => {
+//         setIsOpen(!isOpen)
+//     }
+
+//     return (
+//         // <Fragment>
+//         //     <h3 className="text-gray-700 text-2xl font-medium">Wrist Watch</h3>
+//         //     <span className="mt-3 text-sm text-gray-500">200+ Products</span>
+//         // </Fragment>
+
+//         <Fragment>
+//             <div className="relative text-left inline-block">
+//                 <span >
+//                     <button
+//                         onClick={handleOpen}
+//                         type="button"
+//                         className="px-4 py-6 inline-flex items-center justify-between w-full rounded-md border border-gray-300 h-10  bg-white text-sm leading-5 font-medium text-gray-700 hover:text-gray-500 focus:outline-none focus:border-blue-300 focus:shadow-outline-blue active:bg-gray-100 active:text-gray-800 transition ease-in-out duration-150 btn-focus"
+//                         id="options-menu"
+//                         aria-haspopup="true"
+//                         aria-expanded="true"
+//                     >
+//                         <h3 className="text-gray-700 text-2xl font-medium"> {categoryName} </h3>
+//                         <img
+//                             src="https://s.svgbox.net/hero-solid.svg?ic=chevron-down&fill=grey-800"
+//                             className="-mr-2 ml-1 h-6 w-6"
+//                         />
+//                     </button>
+//                 </span >
+//                 {/* https://headlessui.dev/react/menu */}
+//                 {/* https://digital-flowers.github.io/react-animated-css.html */}
+//                 {/* https://tailwindui.com/components/application-ui/elements/dropdowns */}
+//                 {/* https://tailwindui.com/#product-application-ui */}
+//                 {/* https://tailwindui.com/components/application-ui/overlays/modals */}
+//                     <Animated style={{ zIndex: 5 }} className={` absolute pt-1`} animationIn="fadeIn" animationOut="fadeOut" animationInDuration={400} animationOutDuration={400} isVisible={isOpen}>
+
+//                         <div
+//                             className="rounded-md bg-white shadow-xs p-10 flex"
+//                         >
+//                             <div className="">
+//                                 <p className="pb-10">watches</p>
+//                                 <p className="pb-10">Phones</p>
+//                                 <p >keyboards</p>
+//                             </div>
+//                             <div className="border-t border-gray-100"></div>
+//                             <div class="border-t border-gray-100"></div>
+//                             <div class="py-1">
+//                             </div>
+//                         </div>
+
+//                     </Animated>
+
+
+
+//             </div>
+
+//             {/* <div className=" pt-2 text-sm text-gray-500">200+ Products</div> */}
+//         </Fragment >
+
+
+//     );
+// };
 
 const ProductCard = ({ id, name, price, imageUrl, onAddClick, onCardClick }) => {
 
