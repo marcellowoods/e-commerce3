@@ -3,7 +3,49 @@ import Tridi from 'react-tridi';
 import 'react-tridi/dist/index.css';
 import { getAddToCartIcon } from "../../assets/icons";
 
-const ProductShopCard = ({ id, name, price, imageUrl, onAddClick, onCardClick }) => {
+import Slider from "react-slick";
+
+const SimpleSlider = ({images}) => {
+    var settings = {
+        dots: true,
+        infinite: true,
+        speed: 500,
+        slidesToShow: 1,
+        slidesToScroll: 1
+    };
+    return (
+        <Slider {...settings}>
+            {images.map((img) => {
+                return <img
+                    // onClick={(e) => { }}
+                    className="flex items-end justify-end h-56 w-full object-cover object-center cursor-pointer"
+                    src={img}
+                    alt=""
+                />
+            })}
+            {/* <div>
+                <h3>1</h3>
+            </div>
+            <div>
+                <h3>2</h3>
+            </div>
+            <div>
+                <h3>3</h3>
+            </div>
+            <div>
+                <h3>4</h3>
+            </div>
+            <div>
+                <h3>5</h3>
+            </div>
+            <div>
+                <h3>6</h3>
+            </div> */}
+        </Slider>
+    );
+}
+
+const ProductShopCard = ({ id, name, price, images, imageUrl, onAddClick, onCardClick }) => {
 
     const lastDrag = useRef(Date.now());
 
@@ -22,6 +64,7 @@ const ProductShopCard = ({ id, name, price, imageUrl, onAddClick, onCardClick })
                         src={imageUrl}
                         alt=""
                     /> */}
+
                 {/* <Tridi
                         images={[
                             "https://images.unsplash.com/photo-1495856458515-0637185db551?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=750&q=80",
@@ -39,7 +82,7 @@ const ProductShopCard = ({ id, name, price, imageUrl, onAddClick, onCardClick })
                         touchDragInterval={10}
                     /> */}
                 {/* car */}
-                <Tridi
+                {/* <Tridi
                     location="./images"
                     format="jpg"
                     count="36"
@@ -49,7 +92,9 @@ const ProductShopCard = ({ id, name, price, imageUrl, onAddClick, onCardClick })
                     onDragStart={() => lastDrag.current = Date.now()}
                     dragInterval={1}
                     touchDragInterval={1}
-                />
+                /> */}
+                <SimpleSlider images={images}/>
+
             </div>
 
             <div className="float-left px-5 py-3">

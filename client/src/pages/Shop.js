@@ -9,6 +9,7 @@ import ProductShopCard from "../components/cards/ProductShopCard"
 
 const apiURL = process.env.REACT_APP_API_URL;
 
+
 function classNames(...classes) {
     return classes.filter(Boolean).join(' ')
 }
@@ -85,7 +86,9 @@ const PageComponent = () => {
             quantity: 4,
             pName: "nissan",
             pPrice: 100,
-            pImages: ["https://images.unsplash.com/photo-1495856458515-0637185db551?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=750&q=80"]
+            pImages: ["https://images.unsplash.com/photo-1495856458515-0637185db551?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=750&q=80",
+                "https://images.unsplash.com/photo-1495856458515-0637185db551?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=750&q=80",
+                "https://images.unsplash.com/photo-1495856458515-0637185db551?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=750&q=80"]
         })
 
         for (let i = 0; i < 15; i++) {
@@ -94,7 +97,11 @@ const PageComponent = () => {
                 quantity: 2,
                 pName: "nissan",
                 pPrice: 2000,
-                pImages: ["https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcT4urtfGLUvPlZXxeJYMKwxod4w0y_Jf_hRBQ&usqp=CAU"]
+                pImages: ["https://images.unsplash.com/photo-1495856458515-0637185db551?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=750&q=80",
+                    "https://images.unsplash.com/photo-1495856458515-0637185db551?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=750&q=80",
+                    "https://images.unsplash.com/photo-1495856458515-0637185db551?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=750&q=80",
+                    "https://images.unsplash.com/photo-1495856458515-0637185db551?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=750&q=80",
+                    "https://images.unsplash.com/photo-1495856458515-0637185db551?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=750&q=80"]
             });
         }
         setProducts(items);
@@ -111,8 +118,8 @@ const PageComponent = () => {
     //     }
     // };
 
-    if(products == null){
-        return(
+    if (products == null) {
+        return (
             <h1>load products</h1>
         )
     }
@@ -139,6 +146,7 @@ const PageComponent = () => {
                                 key={p.id}
                                 id={p.id}
                                 quantity={3}
+                                images={p.pImages}
                                 imageUrl={p.pImages[0]}
                                 price={p.pPrice}
                                 name={p.pName}
