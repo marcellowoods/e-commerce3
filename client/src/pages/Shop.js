@@ -1,6 +1,6 @@
 import React, { Fragment, useEffect, useState, useRef } from "react";
 import { useHistory, useParams } from "react-router-dom";
-import Tridi from 'react-tridi';
+// import Tridi from 'react-tridi';
 import 'react-tridi/dist/index.css';
 import getPagination from "../components/navigation/getPagination";
 import { Menu, Transition } from '@headlessui/react'
@@ -45,7 +45,7 @@ const CategoryMenu = () => {
                 <Menu.Items style={{ maxHeight: "300px" }} className="overflow-y-auto origin-top-right absolute  mt-2 w-56 rounded-md shadow-lg bg-white ring-1 ring-black ring-opacity-5 focus:outline-none">
                     <div className="py-1">
                         {categoies.map((name) => (
-                            <Menu.Item>
+                            <Menu.Item key={name}>
                                 {({ active }) => (
                                     <a
                                         onClick={() => setSelectedCategory(name)}
@@ -69,7 +69,9 @@ const CategoryMenu = () => {
 
 const PageComponent = () => {
     const [products, setProducts] = useState(null);
-    const { catId } = useParams();
+    const { slug } = useParams();
+
+    console.log(slug)
 
     useEffect(() => {
         fetchData();
@@ -79,22 +81,21 @@ const PageComponent = () => {
         let items = [];
 
         items.push({
-            id: Math.floor(Math.random() * 1000),
+            id: Math.floor(Math.random() * 10000),
             quantity: 4,
             pName: "nissan",
             pPrice: 100,
             pImages: ["https://images.unsplash.com/photo-1495856458515-0637185db551?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=750&q=80"]
         })
 
-        let item = {
-            id: Math.floor(Math.random() * 1000),
-            quantity: 2,
-            pName: "nissan",
-            pPrice: 2000,
-            pImages: ["https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcT4urtfGLUvPlZXxeJYMKwxod4w0y_Jf_hRBQ&usqp=CAU"]
-        };
         for (let i = 0; i < 15; i++) {
-            items.push(item);
+            items.push({
+                id: Math.floor(Math.random() * 10000),
+                quantity: 2,
+                pName: "nissan",
+                pPrice: 2000,
+                pImages: ["https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcT4urtfGLUvPlZXxeJYMKwxod4w0y_Jf_hRBQ&usqp=CAU"]
+            });
         }
         setProducts(items);
     }
@@ -110,6 +111,12 @@ const PageComponent = () => {
     //     }
     // };
 
+    if(products == null){
+        return(
+            <h1>load products</h1>
+        )
+    }
+
     return (
         <Fragment>
             {/* <div class="container mx-auto px-6">
@@ -118,9 +125,9 @@ const PageComponent = () => {
 
             {/* the first tridi component doesnt prevent vertical touch move so  that's one way to fix it (weid bug) */}
             {/* https://github.com/nevestuan/react-tridi */}
-            <div className="hidden">
+            {/* <div className="hidden">
                 <Tridi />
-            </div>
+            </div> */}
             <div className="my-5">
                 <div className="container mx-auto px-6">
 
@@ -129,6 +136,7 @@ const PageComponent = () => {
                     <div className="grid gap-6 grid-cols-1 sm:grid-cols-2 lg:grid-cols-3   mt-6">
                         {products && products.map((p) => (
                             <ProductShopCard
+                                key={p.id}
                                 id={p.id}
                                 quantity={3}
                                 imageUrl={p.pImages[0]}
