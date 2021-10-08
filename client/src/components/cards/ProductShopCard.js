@@ -6,7 +6,7 @@ import { getAddToCartIcon } from "../../assets/icons";
 import Slider from "react-slick";
 
 //https://react-slick.neostack.com/docs/api/
-const SimpleSlider = ({images}) => {
+const SimpleSlider = ({ images }) => {
     var settings = {
         dots: true,
         infinite: true,
@@ -15,7 +15,11 @@ const SimpleSlider = ({images}) => {
         slidesToScroll: 1
     };
     return (
-        <Slider {...settings}>
+        <Slider
+            autoplay={true}
+            autoplaySpeed={5000}
+             dotsClass="slick-dots transform -translate-y-10"
+            {...settings}>
             {images.map((img) => {
                 return <img
                     // onClick={(e) => { }}
@@ -94,7 +98,7 @@ const ProductShopCard = ({ id, name, price, images, imageUrl, onAddClick, onCard
                     dragInterval={1}
                     touchDragInterval={1}
                 /> */}
-                <SimpleSlider images={images}/>
+                <SimpleSlider images={images} />
 
             </div>
 
