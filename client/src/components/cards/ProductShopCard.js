@@ -16,9 +16,8 @@ const SimpleSlider = ({ images }) => {
     };
     return (
         <Slider
-            autoplay={true}
-            autoplaySpeed={5000}
-             dotsClass="slick-dots transform -translate-y-10"
+
+             dotsClass="slick-dots transform translate-y-5"
             {...settings}>
             {images.map((img) => {
                 return <img
