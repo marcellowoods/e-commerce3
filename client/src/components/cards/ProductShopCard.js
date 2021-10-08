@@ -8,7 +8,7 @@ import Slider from "react-slick";
 //https://react-slick.neostack.com/docs/api/
 const SimpleSlider = ({images}) => {
     var settings = {
-        arrows: true,
+        dots: true,
         infinite: true,
         speed: 500,
         slidesToShow: 1,
