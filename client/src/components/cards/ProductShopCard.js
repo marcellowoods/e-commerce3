@@ -1,12 +1,12 @@
 import React, { useRef } from "react";
-import Tridi from 'react-tridi';
-import 'react-tridi/dist/index.css';
+// import Tridi from 'react-tridi';
+// import 'react-tridi/dist/index.css';
 import { getAddToCartIcon } from "../../assets/icons";
 
 import Slider from "react-slick";
 
 //https://react-slick.neostack.com/docs/api/
-const SimpleSlider = ({ images }) => {
+const SimpleSlider = ({ images, onPointerDown,  onPointerUp}) => {
     var settings = {
         dots: true,
         infinite: true,
@@ -16,35 +16,17 @@ const SimpleSlider = ({ images }) => {
     };
     return (
         <Slider
-
-             dotsClass="slick-dots transform translate-y-3"
+            dotsClass="slick-dots transform translate-y-3"
             {...settings}>
             {images.map((img) => {
                 return <img
-                    // onClick={(e) => { }}
+                    onPointerDown={onPointerDown}
+                    onPointerUp={onPointerUp}
                     className="flex items-end justify-end h-56 w-full object-cover object-center cursor-pointer"
                     src={img}
                     alt=""
                 />
             })}
-            {/* <div>
-                <h3>1</h3>
-            </div>
-            <div>
-                <h3>2</h3>
-            </div>
-            <div>
-                <h3>3</h3>
-            </div>
-            <div>
-                <h3>4</h3>
-            </div>
-            <div>
-                <h3>5</h3>
-            </div>
-            <div>
-                <h3>6</h3>
-            </div> */}
         </Slider>
     );
 }
@@ -52,6 +34,17 @@ const SimpleSlider = ({ images }) => {
 const ProductShopCard = ({ id, name, price, images, imageUrl, onAddClick, onCardClick }) => {
 
     const lastDrag = useRef(Date.now());
+
+    const onPointerDown = () => {
+        lastDrag.current = Date.now()
+    }
+
+    const onPointerUp = () => {
+
+        if (Date.now() - lastDrag.current < 50) {
+            onCardClick(id)
+        }
+    }
 
     return (
         <div className="w-full max-w-sm mx-auto rounded-md shadow-md overflow-hidden">
@@ -68,24 +61,7 @@ const ProductShopCard = ({ id, name, price, images, imageUrl, onAddClick, onCard
                         src={imageUrl}
                         alt=""
                     /> */}
-
-                {/* <Tridi
-                        images={[
-                            "https://images.unsplash.com/photo-1495856458515-0637185db551?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=750&q=80",
-                            "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcT4urtfGLUvPlZXxeJYMKwxod4w0y_Jf_hRBQ&usqp=CAU",
-                            "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQ-wMRq6WMZSigBcYV8ycb-5z5I88668rPmww&usqp=CAU"
-                        ]}
-                        // location="./images"
-                        format="jpg"
-                        // count="2"
-                        mousewheel={true}
-                        inverse={true}
-                        // touchDragInterval={1}
-                        onDragStart={() => lastDrag.current = Date.now()}
-                        dragInterval={10}
-                        touchDragInterval={10}
-                    /> */}
-                {/* car */}
+                {/* tridi car */}
                 {/* <Tridi
                     location="./images"
                     format="jpg"
@@ -97,7 +73,11 @@ const ProductShopCard = ({ id, name, price, images, imageUrl, onAddClick, onCard
                     dragInterval={1}
                     touchDragInterval={1}
                 /> */}
-                <SimpleSlider images={images} />
+                <SimpleSlider
+                    onPointerDown={onPointerDown}
+                    onPointerUp={onPointerUp}
+                    images={images}
+                />
 
             </div>
 
