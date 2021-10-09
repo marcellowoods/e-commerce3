@@ -58,7 +58,8 @@ const ProductShopCard = ({ id, name, price, images, imageUrl, onAddClick, onCard
             </div>
 
             <div className="float-left px-5 py-3">
-                <div onClick={() => console.log("clickedd")}>
+                {/* adding transform className fixed the missing event-click (STRANGE)*/}
+                <div className="transform" onClick={() => onCardClick(id)}>
 
                     <h3 className="color-main-light cursor-pointer uppercase">
                         {name}
