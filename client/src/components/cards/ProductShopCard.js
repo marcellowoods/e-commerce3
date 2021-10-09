@@ -2,65 +2,39 @@ import React, { useRef } from "react";
 // import Tridi from 'react-tridi';
 // import 'react-tridi/dist/index.css';
 import { getAddToCartIcon } from "../../assets/icons";
-
-import Slider from "react-slick";
-
-//https://react-slick.neostack.com/docs/api/
-const SimpleSlider = ({ images, onPointerDown,  onPointerUp}) => {
-    var settings = {
-        dots: true,
-        infinite: true,
-        speed: 500,
-        slidesToShow: 1,
-        slidesToScroll: 1
-    };
-    return (
-        <Slider
-            dotsClass="slick-dots transform translate-y-3"
-            {...settings}>
-            {images.map((img) => {
-                return <img
-                    onPointerDown={onPointerDown}
-                    onPointerUp={onPointerUp}
-                    className="flex items-end justify-end h-56 w-full object-cover object-center cursor-pointer"
-                    src={img}
-                    alt=""
-                />
-            })}
-        </Slider>
-    );
-}
+import ProductSlider from "./ProductSlider";
 
 const ProductShopCard = ({ id, name, price, images, imageUrl, onAddClick, onCardClick }) => {
 
     const lastDrag = useRef(Date.now());
 
-    const onPointerDown = () => {
-        lastDrag.current = Date.now()
+    const onPointerDown = (pointerX, pointerY) => {
+
+        lastDrag.current = {x: pointerX, y: pointerY}
     }
 
-    const onPointerUp = () => {
+    const onPointerUp = (pointerX, pointerY) => {
 
-        if (Date.now() - lastDrag.current < 50) {
+        const startPointerX = lastDrag.current.x;
+        const startPointerY = lastDrag.current.y;
+        
+        if ((Math.abs(pointerX - startPointerX) < 5) && (Math.abs(pointerY - startPointerY) < 5)) {
             onCardClick(id)
         }
     }
 
     return (
         <div className="w-full max-w-sm mx-auto rounded-md shadow-md overflow-hidden">
-            <div onClick={
-                () => {
-                    if (Date.now() - lastDrag.current < 200) {
-                        onCardClick(id)
-                    }
-                }
-            }>
+
+            <div>
+                {/* single image */}
                 {/* <img
                         onClick={(e) => { }}
                         className="flex items-end justify-end h-56 w-full object-cover object-center cursor-pointer"
                         src={imageUrl}
                         alt=""
                     /> */}
+
                 {/* tridi car */}
                 {/* <Tridi
                     location="./images"
@@ -73,7 +47,9 @@ const ProductShopCard = ({ id, name, price, images, imageUrl, onAddClick, onCard
                     dragInterval={1}
                     touchDragInterval={1}
                 /> */}
-                <SimpleSlider
+
+                {/* slider */}
+                <ProductSlider
                     onPointerDown={onPointerDown}
                     onPointerUp={onPointerUp}
                     images={images}
@@ -82,7 +58,13 @@ const ProductShopCard = ({ id, name, price, images, imageUrl, onAddClick, onCard
             </div>
 
             <div className="float-left px-5 py-3">
-                <h3 className="color-main-light cursor-pointer uppercase">{name}</h3>
+                <div onClick={() => console.log("clickedd")}>
+
+                    <h3 className="color-main-light cursor-pointer uppercase">
+                        {name}
+                    </h3>
+
+                </div>
                 <span className="text-gray-500 mt-2">${price}</span>
             </div>
 
