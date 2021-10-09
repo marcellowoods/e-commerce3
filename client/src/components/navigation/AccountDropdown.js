@@ -47,8 +47,7 @@ const AccountDropdownRender = ({
                                         {({ active }) => (
                                             <button
                                                 onClick={handleOrdersClicked}
-                                                className={`${active ? 'color-main-bold' : 'color-main-light'
-                                                    } group flex rounded-md items-center w-full px-3 py-3 text-md`}
+                                                className={getItemClassName(active)}
                                             >
                                                 My Orders
                                             </button>
