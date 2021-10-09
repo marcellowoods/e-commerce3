@@ -17,7 +17,7 @@ const SimpleSlider = ({ images }) => {
     return (
         <Slider
 
-             dotsClass="slick-dots transform translate-y-5"
+             dotsClass="slick-dots transform translate-y-3"
             {...settings}>
             {images.map((img) => {
                 return <img
