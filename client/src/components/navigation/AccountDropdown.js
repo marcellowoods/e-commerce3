@@ -32,7 +32,7 @@ const AccountDropdownRender = ({
                 </div>
                 <Transition
                     as={Fragment}
-                    enter="transition ease-in  duration-300"
+                    enter="transition ease-out  duration-300"
                     enterFrom="transform opacity-0 "
                     enterTo="transform opacity-100 "
                     leave="transition ease-out duration-300"
