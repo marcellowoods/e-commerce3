@@ -24,7 +24,7 @@ const ProductShopCard = ({ id, name, price, images, imageUrl, onAddClick, onCard
     }
 
     return (
-        <div className="w-full max-w-sm mx-auto rounded-md shadow-md overflow-hidden">
+        <div key={name} className="w-full max-w-sm mx-auto rounded-md shadow-md overflow-hidden">
 
             <div>
                 {/* single image */}
@@ -35,7 +35,7 @@ const ProductShopCard = ({ id, name, price, images, imageUrl, onAddClick, onCard
                         alt=""
                     /> */}
 
-                {/* tridi car */}
+                {/* tridi */}
                 {/* <Tridi
                     location="./images"
                     format="jpg"

@@ -15,15 +15,15 @@ function classNames(...classes) {
 }
 
 // let categoies = ["watches", "keyboards", "laptops", "cars", "watches", "keyboards", "laptops", "cars"]
-let categoies = ["watches", "keyboards", "laptops"]
+
 //https://www.youtube.com/watch?v=qJnIJa-cF2M
 //https://headlessui.dev/react/menu 
 //https://tailwindui.com/components/application-ui/elements/dropdowns 
 //https://tailwindui.com/#product-application-ui 
 //https://tailwindui.com/components/application-ui/overlays/modals 
-const CategoryMenu = () => {
+const CategoryMenu = ({ allCategories, selectedCategory, setSelectedCategory }) => {
 
-    const [selectedCategory, setSelectedCategory] = useState(categoies[0]);
+    // const [selectedCategory, setSelectedCategory] = useState(categoies[0]);
 
     return (
         <Menu style={{ zIndex: 2 }} as="div" className="relative inline-block text-left">
@@ -45,7 +45,7 @@ const CategoryMenu = () => {
             >
                 <Menu.Items style={{ maxHeight: "300px" }} className="overflow-y-auto origin-top-right absolute  mt-2 w-56 rounded-md shadow-lg bg-white ring-1 ring-black ring-opacity-5 focus:outline-none">
                     <div className="py-1">
-                        {categoies.map((name) => (
+                        {allCategories.map((name) => (
                             <Menu.Item key={name}>
                                 {({ active }) => (
                                     <a
@@ -68,21 +68,71 @@ const CategoryMenu = () => {
     )
 }
 
-const PageComponent = () => {
-    const [products, setProducts] = useState(null);
-    const { slug } = useParams();
+let categoies = ["watches", "keyboards", "laptops"];
 
-    console.log(slug)
+const useDidMountEffect = (func, deps) => {
+    const didMount = useRef(false);
 
     useEffect(() => {
-        fetchData();
+        if (didMount.current) func();
+        else didMount.current = true;
+    }, deps);
+}
+
+const PageComponent = () => {
+
+    const { categorySlug } = useParams();
+
+    const [products, setProducts] = useState(null);
+    const [selectedCategory, setSelectedCategory] = useState(null);
+    const [allCategories, setAllCategories] = useState(null);
+
+    const [isLoading, setIsLoading] = useState(false);
+
+    // console.log(categorySlug);
+
+    const fetchAllCategories = () => {
+        console.log("fetch categories")
+        setAllCategories(categoies);
+    }
+
+    useEffect(() => {
+
+        fetchAllCategories();
+        // fetchData();
     }, []);
 
-    const fetchData = () => {
+    useDidMountEffect(() => {
+
+        if (allCategories) {
+            if (categorySlug) {
+                setSelectedCategory(categorySlug);
+            } else {
+                setSelectedCategory(allCategories[0]);
+            }
+        }
+
+    }, [allCategories])
+
+    useEffect(() => {
+
+
+        if (selectedCategory) {
+            setIsLoading(true);
+            setTimeout(() => {
+                fetchProducts();
+                setIsLoading(false);
+            }, 300);
+
+        }
+        fetchProducts();
+    }, [selectedCategory]);
+
+    const fetchProducts = () => {
         let items = [];
 
         items.push({
-            id: Math.floor(Math.random() * 10000),
+            id: Math.floor(Math.random() * 1000000),
             quantity: 4,
             pName: "casio",
             pPrice: 100,
@@ -93,7 +143,7 @@ const PageComponent = () => {
 
         for (let i = 0; i < 15; i++) {
             items.push({
-                id: Math.floor(Math.random() * 10000),
+                id: Math.floor(Math.random() * 1000000),
                 quantity: 2,
                 pName: "swatch",
                 pPrice: 2000,
@@ -116,11 +166,30 @@ const PageComponent = () => {
     //     }
     // };
 
-    if (products == null) {
+    if (products == null || categoies == null || selectedCategory == null) {
         return (
             <h1>load products</h1>
         )
     }
+
+    const renderProducts = () => (
+        <div key={"products"} className="grid gap-6 grid-cols-1 sm:grid-cols-2 lg:grid-cols-3   mt-6">
+            {products && products.map((p) => (
+                <ProductShopCard
+                    key={p.id}
+                    id={p.id}
+                    quantity={3}
+                    images={p.pImages}
+                    imageUrl={p.pImages[0]}
+                    price={p.pPrice}
+                    name={p.pName}
+                    onAddClick={(id) => { console.log(`added ${id} to cart`) }}
+                    onCardClick={(id) => { alert(`card ${id}`) }}
+                />
+            ))
+            }
+        </div>
+    )
 
     return (
         <Fragment>
@@ -128,32 +197,17 @@ const PageComponent = () => {
                 <AllProduct products={products} />
             </div> */}
 
-            {/* the first tridi component doesnt prevent vertical touch move so  that's one way to fix it (weid bug) */}
-            {/* https://github.com/nevestuan/react-tridi */}
-            {/* <div className="hidden">
-                <Tridi />
-            </div> */}
             <div className="my-5">
                 <div className="container mx-auto px-6">
 
-                    <CategoryMenu />
+                    <CategoryMenu
+                        allCategories={allCategories}
+                        selectedCategory={selectedCategory}
+                        setSelectedCategory={setSelectedCategory}
+                    />
                     {/* xl:grid-cols-4 */}
-                    <div className="grid gap-6 grid-cols-1 sm:grid-cols-2 lg:grid-cols-3   mt-6">
-                        {products && products.map((p) => (
-                            <ProductShopCard
-                                key={p.id}
-                                id={p.id}
-                                quantity={3}
-                                images={p.pImages}
-                                imageUrl={p.pImages[0]}
-                                price={p.pPrice}
-                                name={p.pName}
-                                onAddClick={(id) => { console.log(`added ${id} to cart`) }}
-                                onCardClick={(id) => { alert(`card ${id}`) }}
-                            />
-                        ))
-                        }
-                    </div>
+                    {isLoading ? <h1>loading...</h1> : renderProducts()}
+
                 </div>
 
                 {/* https://github.com/AdeleD/react-paginate */}

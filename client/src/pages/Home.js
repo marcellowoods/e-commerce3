@@ -2,16 +2,12 @@ import React, { Fragment, useEffect, useState, useRef } from "react";
 import { useHistory, useParams, useLocation } from "react-router-dom";
 import ProductShopCard from "../components/cards/ProductShopCard"
 
+// ["watches", "keyboards", "laptops"];
+
 const categories = [
     {
-        description: "cool shoes to wear in the summer",
-        name: "shoes",
-        _id: "143254id",
-        image: 'https://images.unsplash.com/photo-1577655197620-704858b270ac?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1280&q=144'
-    },
-    {
         description: "cool AUTHENTIC watches to wear (they are totally not fake)",
-        name: "wrist watch",
+        name: "watches",
         _id: "1432154id",
         image: 'https://images.unsplash.com/photo-1577655197620-704858b270ac?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1280&q=144'
     },
@@ -23,8 +19,8 @@ const categories = [
     },
 
     {
-        description: "check these Games out, really fun to play with your friends (if you have any)",
-        name: "games",
+        description: "check these laptops out",
+        name: "laptops",
         _id: "1asd254id",
         image: 'https://images.unsplash.com/photo-1577655197620-704858b270ac?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1280&q=144'
     }
