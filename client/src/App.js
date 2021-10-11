@@ -10,6 +10,7 @@ import AdminRoute from "./components/routes/UserRoute";
 
 import LoadingPage from "./pages/LoadingPage";
 import Shop from "./pages/Shop";
+import ProductPage from "./pages/ProductPage";
 
 import Login from "./pages/auth/Login"
 import Register from "./pages/auth/Register";
@@ -69,6 +70,7 @@ function App() {
             <Switch>
                 <Route exact path="/" component={Home} />
                 <Route exact path="/shop/:categorySlug?" component={Shop} />
+                <Route exact path="/product/:productSlug" component={ProductPage} />
                 <Route exact path="/login" component={Login} />
                 <Route exact path="/register" component={Register} />
                 

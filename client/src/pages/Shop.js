@@ -10,7 +10,8 @@ import LoadingPage from "./LoadingPage";
 
 const apiURL = process.env.REACT_APP_API_URL;
 
-const SHOP_PATHNAME = "/shop/"
+const SHOP_PATHNAME = "/shop/";
+const PRODUCT_PATHNAME = "/product/";
 
 
 function classNames(...classes) {
@@ -185,6 +186,10 @@ const PageComponent = () => {
         )
     }
 
+    const pushToProductPage = (id) => {
+        history.push(PRODUCT_PATHNAME + id)
+    }
+
     const renderProducts = () => (
         <div key={"products"} className="grid gap-6 grid-cols-1 sm:grid-cols-2 lg:grid-cols-3   mt-6">
             {products && products.map((p) => (
@@ -197,7 +202,7 @@ const PageComponent = () => {
                     price={p.pPrice}
                     name={p.pName}
                     onAddClick={(id) => { console.log(`added ${id} to cart`) }}
-                    onCardClick={(id) => { alert(`card ${id}`) }}
+                    onCardClick={pushToProductPage}
                 />
             ))
             }
