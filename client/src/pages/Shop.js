@@ -9,6 +9,8 @@ import ProductShopCard from "../components/cards/ProductShopCard"
 
 const apiURL = process.env.REACT_APP_API_URL;
 
+const SHOP_PATHNAME = "/shop/"
+
 
 function classNames(...classes) {
     return classes.filter(Boolean).join(' ')
@@ -83,6 +85,7 @@ const PageComponent = () => {
 
     const { categorySlug } = useParams();
 
+    const history = useHistory();
     const [products, setProducts] = useState(null);
     const [selectedCategory, setSelectedCategory] = useState(null);
     const [allCategories, setAllCategories] = useState(null);
@@ -99,6 +102,7 @@ const PageComponent = () => {
     useEffect(() => {
 
         fetchAllCategories();
+        console.log("refetch")
         // fetchData();
     }, []);
 
@@ -114,11 +118,19 @@ const PageComponent = () => {
 
     }, [allCategories])
 
+    // console.log('render')
+
     useEffect(() => {
 
 
         if (selectedCategory) {
             setIsLoading(true);
+
+            //https://stackoverflow.com/questions/56053810/url-change-without-re-rendering-in-react-router
+            //https://reactjs.org/docs/reconciliation.html
+            const path = SHOP_PATHNAME + selectedCategory;
+            history.replace({ pathname: path });
+
             setTimeout(() => {
                 fetchProducts();
                 setIsLoading(false);
