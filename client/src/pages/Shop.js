@@ -6,6 +6,7 @@ import getPagination from "../components/navigation/getPagination";
 import { Menu, Transition } from '@headlessui/react'
 import { CheckIcon, SelectorIcon } from '@heroicons/react/solid'
 import ProductShopCard from "../components/cards/ProductShopCard"
+import LoadingPage from "./LoadingPage";
 
 const apiURL = process.env.REACT_APP_API_URL;
 
@@ -180,7 +181,7 @@ const PageComponent = () => {
 
     if (products == null || categoies == null || selectedCategory == null) {
         return (
-            <h1>load products</h1>
+            <LoadingPage />
         )
     }
 
@@ -218,7 +219,7 @@ const PageComponent = () => {
                         setSelectedCategory={setSelectedCategory}
                     />
                     {/* xl:grid-cols-4 */}
-                    {isLoading ? <h1>loading...</h1> : renderProducts()}
+                    {isLoading ? <LoadingPage /> : renderProducts()}
 
                 </div>
 
