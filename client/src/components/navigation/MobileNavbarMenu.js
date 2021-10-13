@@ -26,7 +26,7 @@ const MobileNavbarMenu = (props) => {
                     className={`${isMobileNavOpen() ? 'translate-x-0 ease-out' : '-translate-x-full ease-in'} z-40 fixed left-0 top-0 max-w-xs w-80 sm:w-full h-full px-6 py-4 transition duration-300 transform overflow-y-auto bg-white  `}>
                     <div className={`p-3`}>
                         <SearchBar cname={"mobile-searchbar-w relative py-3  mx-auto"} />
-                        <NavigationItems />
+                        <NavigationItems closeMobileNav={closeMobileNav}/>
                     </div>
                 </div>
                 {isMobileNavOpen() &&
