@@ -24,7 +24,7 @@ const ProductPage = () => {
     // }
 
     return (
-        <div className="container mx-auto pb-8 sm:pt-8 px-6">
+        <div className="container mx-auto pb-8 sm:pt-8 px-3">
             <div className="md:flex md:items-center">
                 <div className="w-full h-64 md:w-1/2 lg:h-96">
                     <img className="h-full w-full rounded-md object-cover max-w-lg mx-auto" src="https://images.unsplash.com/photo-1578262825743-a4e402caab76?ixlib=rb-1.2.1&auto=format&fit=crop&w=1051&q=80" alt="Nike Air" />
