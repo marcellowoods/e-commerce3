@@ -88,9 +88,9 @@ const NavbarRender = ({ mobileNavbarToggle, cartModalToggle }) => {
                     <div className="color-main-bold sm:text-center  text-2xl font-semibold">
                         Brand
                     </div>
-                    <div >
-                        <SearchBar cname={"hidden sm:flex searchbar-w relative mx-auto "} />
-                    </div>
+
+                    <SearchBar cname={"hidden sm:flex searchbar-w relative mx-auto py-0.5"} />
+
                     <div className="flex items-center justify-end w-full sm:w-auto">
                         <button onClick={cartModalToggle} className="color-main-light focus:outline-none mx-2">
                             {getCartIcon()}
@@ -117,7 +117,7 @@ const NavbarRender = ({ mobileNavbarToggle, cartModalToggle }) => {
 
             </div>
             <div style={{ paddingTop: '75px' }}>
-                <nav className={`hidden sm:flex sm:justify-center sm:items-center `}>
+                <nav style={{ paddingTop: '5px' }} className={`hidden sm:flex sm:justify-center sm:items-center `}>
                     <NavigationItems />
                 </nav>
 
