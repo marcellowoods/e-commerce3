@@ -1,4 +1,4 @@
-import React, { } from "react";
+import React, {useState } from "react";
 import { useHistory, useParams, useLocation } from "react-router-dom";
 
 const ProductPage0 = () => {
@@ -70,6 +70,18 @@ const ProductPage = () => {
 
     const { productSlug } = useParams();
 
+    const product = {
+        id: Math.floor(Math.random() * 1000000),
+        quantity: 4,
+        pName: "casio",
+        pPrice: 100,
+        pImages: ["https://images.unsplash.com/photo-1495856458515-0637185db551?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=750&q=80",
+            "https://images.unsplash.com/photo-1495856458515-0637185db551?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=750&q=80",
+            "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQ6CiNQLY45qBnDNkz5Gca7tsUWtDgVb94g2g&usqp=CAU"]
+    }
+
+    const {pName: name, pPrice: price, pImages:images, quantity, id} = product;
+
     // const handleClick = (name) => {
     //     history.push(`/shop/${name}`);
     // }
@@ -83,8 +95,8 @@ const ProductPage = () => {
 
                 <div className="w-full max-w-lg mx-auto mt-5 md:ml-8 md:mt-0 md:w-1/2">
 
-                    <h3 className="text-gray-700 uppercase text-lg">Nike Air</h3>
-                    <span className="text-gray-500 mt-3">$125</span>
+                    <h3 className="text-gray-700 uppercase text-lg">{name}</h3>
+                    <span className="text-gray-500 mt-3">${price}</span>
                     <div className="mt-3">
                         <button className="px-8 py-2 bg-indigo-600 text-white text-sm font-medium rounded hover:bg-indigo-500 focus:outline-none focus:bg-indigo-500">Description</button>
                     </div>
