@@ -3,7 +3,7 @@ import { reauthenticateWithCredential } from "@firebase/auth";
 import React from "react";
 import { useHistory } from "react-router-dom";
 
-const NavigationItems = ({ closeMobileNav }) => {
+const NavigationItems = ({ closeMobileNav=null }) => {
 
     const history = useHistory();
 
@@ -16,7 +16,10 @@ const NavigationItems = ({ closeMobileNav }) => {
     const clickHandler = (e) => {
         const id = e.target.id;
 
-        closeMobileNav();
+        if(closeMobileNav !== null){
+            closeMobileNav();
+        }
+        
 
         switch (id) {
             case "home":

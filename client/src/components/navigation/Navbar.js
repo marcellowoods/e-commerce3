@@ -16,7 +16,7 @@ const isAdmin = () => { }
 
 
 //navbar with location bubble
-const NavbarRender = ({ mobileNavbarToggle, cartModalToggle }) => {
+const NavbarRender0 = ({ mobileNavbarToggle, cartModalToggle }) => {
 
     return (
         <Fragment>
@@ -73,7 +73,7 @@ const NavbarRender = ({ mobileNavbarToggle, cartModalToggle }) => {
 }
 
 //navbar without location
-const NavbarRender0 = ({ mobileNavbarToggle, cartModalToggle }) => {
+const NavbarRender = ({ mobileNavbarToggle, cartModalToggle }) => {
 
     return (
         <Fragment>
