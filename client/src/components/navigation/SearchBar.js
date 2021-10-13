@@ -11,7 +11,7 @@ const SearchBar = ({ cname }) => {
                 </svg>
             </span>
 
-            <input className="w-full color-main-bold border color-main-bg rounded-md pl-10 pr-4 py-2 focus:border-blue-500 focus:outline-none focus:shadow-outline" type="text" placeholder="Search">
+            <input className="w-full color-main-bold border border-gray-500 rounded-md pl-10 pr-4 py-2 focus:border-blue-500 focus:outline-none focus:shadow-outline" type="text" placeholder="Search">
             </input>
         </div>
     )
