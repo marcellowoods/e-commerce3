@@ -116,7 +116,7 @@ const NavbarRender = ({ mobileNavbarToggle, cartModalToggle }) => {
                 </div>
 
             </div>
-            <div style={{ paddingTop: '85px' }}>
+            <div style={{ paddingTop: '75px' }}>
                 <nav className={`hidden sm:flex sm:justify-center sm:items-center `}>
                     <NavigationItems />
                 </nav>
