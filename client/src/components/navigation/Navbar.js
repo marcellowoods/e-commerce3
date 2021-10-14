@@ -24,7 +24,7 @@ const NavbarRender0 = ({ mobileNavbarToggle, cartModalToggle }) => {
             {/* bg-purple-900 */}
 
             <div className="color-main-bg fixed top-0 w-full z-10">
-                <div className="container mx-auto px-6 py-4  items-center flex justify-between">
+                <div className="container mx-auto max-w-7xl px-6 py-4  items-center flex justify-between">
 
                     <div className="color-main-light flex items-center mr-2">
                         <svg width="25px" height="25px" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
