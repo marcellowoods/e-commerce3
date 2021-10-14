@@ -191,7 +191,7 @@ const PageComponent = () => {
     }
 
     const renderProducts = () => (
-        <div key={"products"} className="grid gap-6 grid-cols-1 sm:grid-cols-2 lg:grid-cols-3   mt-6">
+        <div key={"products"} className="grid gap-6 grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 mt-6">
             {products && products.map((p) => (
                 <ProductShopCard
                     key={p.id}
@@ -216,7 +216,7 @@ const PageComponent = () => {
             </div> */}
 
             <div className="my-5">
-                <div className="container mx-auto px-6">
+                <div className="container mx-auto max-w-7xl px-6">
 
                     <CategoryMenu
                         allCategories={allCategories}

@@ -81,7 +81,7 @@ const NavbarRender = ({ mobileNavbarToggle, cartModalToggle }) => {
             {/* bg-purple-900 */}
 
             <div className="color-main-bg fixed top-0 w-full z-10">
-                <div className="container mx-auto px-6 py-4  items-center flex justify-between">
+                <div className="container mx-auto px-6 py-4  items-center max-w-7xl flex justify-between">
 
                     <div className="color-main-bold sm:text-center  text-2xl font-semibold">
                         Brand

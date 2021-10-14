@@ -99,7 +99,7 @@ const Home = () => {
     }
 
     return (
-        <div className="container mx-auto px-2">
+        <div className="container max-w-7xl mx-auto px-2">
             <div className="grid  grid-cols-1 lg:grid-cols-2    mt-6">
                 {categories.map(({ description, image, name, _id }) => {
                     return (
