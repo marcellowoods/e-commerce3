@@ -165,7 +165,7 @@ const CartModal = (props) => {
         <Fragment>
             <div>
                 <div 
-                    className={`${isCartModalOpen() ? 'translate-x-0 ease-out' : 'translate-x-full ease-in'} z-40 fixed right-0 top-0 max-w-xs w-80 sm:w-full h-full px-6 py-4 transition duration-300 transform overflow-y-auto bg-white border-l-2 border-gray-300`}>
+                    className={`${isCartModalOpen() ? 'translate-x-0 ease-out' : 'translate-x-full ease-in'} z-40 fixed right-0 top-0 max-w-xs w-70 sm:w-full h-full px-6 py-4 transition duration-300 transform overflow-y-auto bg-white border-l-2 border-gray-300`}>
                     <div className="flex items-center justify-between">
                         <h3 className="text-2xl font-medium text-gray-700">Your cart</h3>
                         <button onClick={closeCartModal} className="text-gray-600 focus:outline-none">
