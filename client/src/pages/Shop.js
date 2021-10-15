@@ -32,7 +32,7 @@ const CategoryMenu = ({ allCategories, selectedCategory, setSelectedCategory }) 
     return (
         <Menu style={{ zIndex: 2 }} as="div" className="relative inline-block text-left">
             <div>
-                <Menu.Button className="inline-flex justify-center w-full rounded-md border border-gray-300 shadow-sm px-4 py-2 bg-white text-sm font-medium text-gray-700 hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-gray-100 focus:ring-indigo-500">
+                <Menu.Button className="inline-flex justify-center w-full rounded-md border border-gray-300 shadow-sm px-4 py-2 bg-white text-sm font-medium text-gray-700 hover:bg-gray-50 focus:outline-none  focus:ring-indigo-500">
                     <h3 className="text-gray-700 text-2xl font-medium">{selectedCategory}</h3>
                     <SelectorIcon className="-mr-2 ml-1 mt-2 h-6 w-6" aria-hidden="true" />
                 </Menu.Button>

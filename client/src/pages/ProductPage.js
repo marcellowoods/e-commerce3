@@ -1,7 +1,66 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import { StarIcon } from '@heroicons/react/solid'
 import { RadioGroup } from '@headlessui/react'
 import { useHistory, useParams, useLocation } from "react-router-dom";
+
+import "slick-carousel/slick/slick.css";
+import "slick-carousel/slick/slick-theme.css";
+
+import Slider from "react-slick";
+
+function SampleNextArrow(props) {
+    const { className, style, onClick } = props;
+    return (
+        <div
+            className={className}
+            style={{ ...style, zIndex: 2, transform: "translate(-40px, 0)" }}
+            onClick={onClick}
+        />
+    );
+}
+
+function SamplePrevArrow(props) {
+    const { className, style, onClick } = props;
+    return (
+        <div
+            className={className}
+            style={{ ...style, zIndex: 2, transform: "translate(40px, 0)" }}
+            onClick={onClick}
+        />
+    );
+}
+
+const ProductSlider = ({ images }) => {
+    var settings = {
+
+        dots: true,
+        infinite: true,
+        speed: 500,
+        slidesToShow: 1,
+        slidesToScroll: 1,
+        nextArrow: <SampleNextArrow />,
+        prevArrow: <SamplePrevArrow />
+        // arrows: true
+    };
+    return (
+        <div>
+            <Slider
+
+                dotsClass="slick-dots transform translate-y-3"
+                {...settings}>
+                {images.map((img) => {
+                    return (
+                        <img
+
+                            src={img}
+                            alt=""
+                        />
+                    )
+                })}
+            </Slider>
+        </div>
+    );
+}
 
 const ProductPage0 = () => {
 
@@ -81,22 +140,10 @@ const product = {
         { id: 2, name: 'Clothing', href: '#' },
     ],
     images: [
-        {
-            src: 'https://tailwindui.com/img/ecommerce-images/product-page-02-secondary-product-shot.jpg',
-            alt: 'Two each of gray, white, and black shirts laying flat.',
-        },
-        {
-            src: 'https://tailwindui.com/img/ecommerce-images/product-page-02-tertiary-product-shot-01.jpg',
-            alt: 'Model wearing plain black basic tee.',
-        },
-        {
-            src: 'https://tailwindui.com/img/ecommerce-images/product-page-02-tertiary-product-shot-02.jpg',
-            alt: 'Model wearing plain gray basic tee.',
-        },
-        {
-            src: 'https://tailwindui.com/img/ecommerce-images/product-page-02-featured-product-shot.jpg',
-            alt: 'Model wearing plain white basic tee.',
-        },
+
+        'https://tailwindui.com/img/ecommerce-images/product-page-02-tertiary-product-shot-01.jpg',
+        'https://tailwindui.com/img/ecommerce-images/product-page-02-tertiary-product-shot-02.jpg',
+
     ],
     colors: [
         { name: 'White', class: 'bg-white', selectedClass: 'ring-gray-400' },
@@ -241,28 +288,42 @@ const SizeSelector = ({ selectedSize, setSelectedSize, productSizes }) => {
 //https://tailwindui.com/components/ecommerce/components/product-overviews
 const ProductPage = () => {
     const [selectedColor, setSelectedColor] = useState(product.colors[0])
-    const [selectedSize, setSelectedSize] = useState(product.sizes[2])
+    const [selectedSize, setSelectedSize] = useState(product.sizes[2]);
+
+    useEffect(() => {
+        window.scrollTo(0, 0)
+    }, [])
 
     return (
         <div className="bg-white">
             <div className="pt-6">
 
 
-                {/* Image gallery */}
-                <div className="mt-6 max-w-xl mx-auto sm:px-6 lg:max-w-2xl lg:px-8 ">
 
-                    <div className="mx-auto rounded-md w-full aspect-w-3 aspect-h-2 rounded-lg overflow-hidden">
-                        <img
+                {/* Image gallery */}
+                <div className="mt-6 max-w-xl mx-auto sm:px-6 lg:max-w-2xl px-4 lg:px-8 ">
+                    <div className="w-full max-w-lg mx-auto rounded-md  overflow-hidden">
+                        {/* <img
                             src={product.images[1].src}
                             alt={product.images[1].alt}
                             className=" w-full h-full object-center object-cover"
+                        /> */}
+
+                        <ProductSlider
+                            images={product.images}
+                            onPointerDown={() => { }}
+                            onPointerUp={() => { }}
                         />
+                        <div className=" py-7">
+
+                        </div>
+
                     </div>
                 </div>
 
                 {/* Product info */}
-                <div className="max-w-2xl mx-auto pt-10 pb-16 px-4 sm:px-6 lg:max-w-7xl lg:pt-16 lg:pb-24 lg:px-8 lg:grid lg:grid-cols-3 lg:grid-rows-[auto,auto,1fr] lg:gap-x-8">
-                    <div className="lg:col-span-2 lg:border-r lg:border-gray-200 lg:pr-8">
+                <div className=" max-w-2xl mx-auto  pb-16 px-4 sm:px-6 lg:max-w-7xl  lg:pb-24 lg:px-8 lg:grid lg:grid-cols-3 lg:grid-rows-[auto,auto,1fr] lg:gap-x-8">
+                    <div className="pt-4 lg:col-span-2 lg:border-r lg:border-gray-200 lg:pr-8">
                         <h1 className="text-2xl font-extrabold tracking-tight text-gray-900 sm:text-3xl">{product.name}</h1>
                     </div>
 
@@ -287,7 +348,7 @@ const ProductPage = () => {
                                 setSelectedSize={setSelectedSize}
                                 productSizes={product.sizes}
                             /> */}
-                            
+
 
                             <button
                                 type="submit"
@@ -322,13 +383,13 @@ const ProductPage = () => {
                             </div>
                         </div>
 
-                        <div className="mt-10">
+                        {/* <div className="mt-10">
                             <h2 className="text-sm font-medium text-gray-900">Details</h2>
 
                             <div className="mt-4 space-y-6">
                                 <p className="text-sm text-gray-600">{product.details}</p>
                             </div>
-                        </div>
+                        </div> */}
                     </div>
                 </div>
             </div>

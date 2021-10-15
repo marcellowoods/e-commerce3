@@ -97,6 +97,10 @@ const Home = () => {
     const handleClick = (name) => {
         history.push(`/shop/${name}`);
     }
+    
+    useEffect(() => {
+        window.scrollTo(0, 0)
+    }, [])
 
     return (
         <div className="container max-w-7xl mx-auto px-2">
