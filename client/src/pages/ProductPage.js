@@ -32,8 +32,15 @@ function SamplePrevArrow(props) {
 
 const ProductSlider = ({ images }) => {
     var settings = {
-
+        customPaging: function (i) {
+            return (
+                <a>
+                    <img src={images[i]} />
+                </a>
+            );
+        },
         dots: true,
+        adaptiveHeight: true,
         infinite: true,
         speed: 500,
         slidesToShow: 1,
@@ -143,6 +150,10 @@ const product = {
 
         'https://tailwindui.com/img/ecommerce-images/product-page-02-tertiary-product-shot-01.jpg',
         'https://tailwindui.com/img/ecommerce-images/product-page-02-tertiary-product-shot-02.jpg',
+        "https://images.unsplash.com/photo-1495856458515-0637185db551?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=750&q=80",
+        "https://images.unsplash.com/photo-1495856458515-0637185db551?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=750&q=80",
+        'https://images.samsung.com/is/image/samsung/p6pim/bg/2108/gallery/bg-galaxy-watch4-classic-399314-sm-r890nzkaeue-481215856?$720_576_PNG$',
+        'https://m.media-amazon.com/images/I/71gdBQP+qGL._UY741_.jpg'
 
     ],
     colors: [
