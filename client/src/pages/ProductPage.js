@@ -31,11 +31,26 @@ function SamplePrevArrow(props) {
 }
 
 const ProductSlider = ({ images }) => {
+
+    const nImages = images.length;
+
+    let scale = null;
+
+    if(nImages < 6){
+        scale = 'scale-200';
+    }else if(nImages >= 6 && nImages <= 7){
+        scale = 'scale-150';
+    }else{
+        scale = '';
+    }
+
+    let translate = nImages > 10 ? 'translate-y-8' : 'translate-y-6'
+
     const settings = {
         customPaging: function (i) {
             return (
                 <a >
-                    <img  src={images[i]} />
+                    <img style={{ transform: 'scale(2.9)', padding: '5.5px' }} src={images[i]} />
                 </a>
             );
         },
@@ -43,7 +58,7 @@ const ProductSlider = ({ images }) => {
         prevArrow: <SamplePrevArrow />,
         adaptiveHeight: true,
         dots: true,
-        dotsClass: "transform  scale-250 translate-y-7 slick-dots slick-thumb",
+        dotsClass: `transform ${scale}  ${translate}  slick-dots slick-thumb`,
         infinite: true,
         speed: 500,
         slidesToShow: 1,
@@ -146,12 +161,17 @@ const product = {
     ],
     images: [
 
+      
+        "https://images.unsplash.com/photo-1495856458515-0637185db551?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=750&q=80",
+        "https://images.unsplash.com/photo-1495856458515-0637185db551?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=750&q=80",
+        'https://images.samsung.com/is/image/samsung/p6pim/bg/2108/gallery/bg-galaxy-watch4-classic-399314-sm-r890nzkaeue-481215856?$720_576_PNG$',
         'https://tailwindui.com/img/ecommerce-images/product-page-02-tertiary-product-shot-01.jpg',
         'https://tailwindui.com/img/ecommerce-images/product-page-02-tertiary-product-shot-02.jpg',
         "https://images.unsplash.com/photo-1495856458515-0637185db551?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=750&q=80",
         "https://images.unsplash.com/photo-1495856458515-0637185db551?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=750&q=80",
-        'https://images.samsung.com/is/image/samsung/p6pim/bg/2108/gallery/bg-galaxy-watch4-classic-399314-sm-r890nzkaeue-481215856?$720_576_PNG$',
-        'https://m.media-amazon.com/images/I/71gdBQP+qGL._UY741_.jpg'
+
+        
+        // 'https://m.media-amazon.com/images/I/71gdBQP+qGL._UY741_.jpg'
 
     ],
     colors: [
@@ -323,7 +343,7 @@ const ProductPage = () => {
                             onPointerDown={() => { }}
                             onPointerUp={() => { }}
                         />
-                        <div className=" py-10">
+                        <div className=" py-7">
 
                         </div>
 
