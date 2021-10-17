@@ -31,29 +31,27 @@ function SamplePrevArrow(props) {
 }
 
 const ProductSlider = ({ images }) => {
-    var settings = {
+    const settings = {
         customPaging: function (i) {
             return (
-                <a>
-                    <img src={images[i]} />
+                <a >
+                    <img  src={images[i]} />
                 </a>
             );
         },
-        dots: true,
+        nextArrow: <SampleNextArrow />,
+        prevArrow: <SamplePrevArrow />,
         adaptiveHeight: true,
+        dots: true,
+        dotsClass: "transform  scale-250 translate-y-7 slick-dots slick-thumb",
         infinite: true,
         speed: 500,
         slidesToShow: 1,
-        slidesToScroll: 1,
-        nextArrow: <SampleNextArrow />,
-        prevArrow: <SamplePrevArrow />
-        // arrows: true
+        slidesToScroll: 1
     };
     return (
         <div>
             <Slider
-
-                dotsClass="slick-dots transform translate-y-3"
                 {...settings}>
                 {images.map((img) => {
                     return (
@@ -325,7 +323,7 @@ const ProductPage = () => {
                             onPointerDown={() => { }}
                             onPointerUp={() => { }}
                         />
-                        <div className=" py-7">
+                        <div className=" py-10">
 
                         </div>
 
