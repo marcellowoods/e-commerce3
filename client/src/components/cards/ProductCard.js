@@ -5,6 +5,8 @@ import { RadioGroup } from '@headlessui/react'
 
 import ProductSlider from './ProductSlider'
 
+const shopUrl = '/shop';
+
 
 function classNames(...classes) {
     return classes.filter(Boolean).join(' ')
@@ -122,7 +124,7 @@ const BreadCrumbs = ({ product }) => {
     const history = useHistory();
 
     const pushToPage = (pageUrl) => {
-        history.push(pageUrl)
+        history.push(shopUrl + pageUrl)
     }
 
     return (

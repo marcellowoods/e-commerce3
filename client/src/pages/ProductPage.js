@@ -73,9 +73,8 @@ const ProductPageDesign = () => {
 const product = {
     name: 'smart watch',
     price: '$192',
-    href: '#',
     breadcrumbs: [
-        { id: 1, name: 'watches', href: '/shop/watches' },
+        { id: 1, name: 'watches', href: '/watches' },
         // { id: 2, name: 'Clothing', href: '#' },
     ],
     images: [
