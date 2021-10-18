@@ -2,87 +2,10 @@ import React, { useState, useEffect } from 'react'
 import { StarIcon } from '@heroicons/react/solid'
 import { RadioGroup } from '@headlessui/react'
 import { useHistory, useParams, useLocation } from "react-router-dom";
+import ProductCard from "../components/cards/ProductCard.js"
 
-import "slick-carousel/slick/slick.css";
-import "slick-carousel/slick/slick-theme.css";
 
-import Slider from "react-slick";
-
-function SampleNextArrow(props) {
-    const { className, style, onClick } = props;
-    return (
-        <div
-            className={className}
-            style={{ ...style, zIndex: 2, transform: "translate(-40px, 0)" }}
-            onClick={onClick}
-        />
-    );
-}
-
-function SamplePrevArrow(props) {
-    const { className, style, onClick } = props;
-    return (
-        <div
-            className={className}
-            style={{ ...style, zIndex: 2, transform: "translate(40px, 0)" }}
-            onClick={onClick}
-        />
-    );
-}
-
-const ProductSlider = ({ images }) => {
-
-    const nImages = images.length;
-
-    let scale = null;
-
-    if(nImages < 6){
-        scale = 'scale-200';
-    }else if(nImages >= 6 && nImages <= 7){
-        scale = 'scale-150';
-    }else{
-        scale = '';
-    }
-
-    let translate = nImages > 10 ? 'translate-y-8' : 'translate-y-6'
-
-    const settings = {
-        customPaging: function (i) {
-            return (
-                <a >
-                    <img style={{ transform: 'scale(2.9)', padding: '5.5px' }} src={images[i]} />
-                </a>
-            );
-        },
-        nextArrow: <SampleNextArrow />,
-        prevArrow: <SamplePrevArrow />,
-        adaptiveHeight: true,
-        dots: true,
-        dotsClass: `transform ${scale}  ${translate}  slick-dots slick-thumb`,
-        infinite: true,
-        speed: 500,
-        slidesToShow: 1,
-        slidesToScroll: 1
-    };
-    return (
-        <div>
-            <Slider
-                {...settings}>
-                {images.map((img) => {
-                    return (
-                        <img
-
-                            src={img}
-                            alt=""
-                        />
-                    )
-                })}
-            </Slider>
-        </div>
-    );
-}
-
-const ProductPage0 = () => {
+const ProductPageDesign = () => {
 
     const { productSlug } = useParams();
 
@@ -97,10 +20,6 @@ const ProductPage0 = () => {
     }
 
     const { pName: name, pPrice: price, pImages: images, quantity, id } = product;
-
-    // const handleClick = (name) => {
-    //     history.push(`/shop/${name}`);
-    // }
 
     return (
         <div className="container mx-auto pb-8 sm:pt-8 px-3">
@@ -152,25 +71,25 @@ const ProductPage0 = () => {
 }
 
 const product = {
-    name: 'Basic Tee 6-Pack',
+    name: 'smart watch',
     price: '$192',
     href: '#',
     breadcrumbs: [
-        { id: 1, name: 'Men', href: '#' },
-        { id: 2, name: 'Clothing', href: '#' },
+        { id: 1, name: 'watches', href: '/shop/watches' },
+        // { id: 2, name: 'Clothing', href: '#' },
     ],
     images: [
 
-      
+
         "https://images.unsplash.com/photo-1495856458515-0637185db551?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=750&q=80",
         "https://images.unsplash.com/photo-1495856458515-0637185db551?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=750&q=80",
         'https://images.samsung.com/is/image/samsung/p6pim/bg/2108/gallery/bg-galaxy-watch4-classic-399314-sm-r890nzkaeue-481215856?$720_576_PNG$',
-        'https://tailwindui.com/img/ecommerce-images/product-page-02-tertiary-product-shot-01.jpg',
-        'https://tailwindui.com/img/ecommerce-images/product-page-02-tertiary-product-shot-02.jpg',
+        // 'https://tailwindui.com/img/ecommerce-images/product-page-02-tertiary-product-shot-01.jpg',
+        // 'https://tailwindui.com/img/ecommerce-images/product-page-02-tertiary-product-shot-02.jpg',
         "https://images.unsplash.com/photo-1495856458515-0637185db551?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=750&q=80",
         "https://images.unsplash.com/photo-1495856458515-0637185db551?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=750&q=80",
 
-        
+
         // 'https://m.media-amazon.com/images/I/71gdBQP+qGL._UY741_.jpg'
 
     ],
@@ -200,230 +119,15 @@ const product = {
     details:
         'The 6-Pack includes two black, two white, and two heather gray Basic Tees. Sign up for our subscription service and be the first to get new, exciting colors, like our upcoming "Charcoal Gray" limited release.',
 }
-const reviews = { href: '#', average: 4, totalCount: 117 }
 
-function classNames(...classes) {
-    return classes.filter(Boolean).join(' ')
-}
-
-const ColorSelector = ({ selectedColor, setSelectedColor, productColors }) => {
-
-    return (
-        <div>
-            <h3 className="text-sm text-gray-900 font-medium">Color</h3>
-
-            <RadioGroup value={selectedColor} onChange={setSelectedColor} className="mt-4">
-                <RadioGroup.Label className="sr-only">Choose a color</RadioGroup.Label>
-                <div className="flex items-center space-x-3">
-                    {productColors.map((color) => (
-                        <RadioGroup.Option
-                            key={color.name}
-                            value={color}
-                            className={({ active, checked }) =>
-                                classNames(
-                                    color.selectedClass,
-                                    active && checked ? 'ring ring-offset-1' : '',
-                                    !active && checked ? 'ring-2' : '',
-                                    '-m-0.5 relative p-0.5 rounded-full flex items-center justify-center cursor-pointer focus:outline-none'
-                                )
-                            }
-                        >
-                            <RadioGroup.Label as="p" className="sr-only">
-                                {color.name}
-                            </RadioGroup.Label>
-                            <span
-                                aria-hidden="true"
-                                className={classNames(
-                                    color.class,
-                                    'h-8 w-8 border border-black border-opacity-10 rounded-full'
-                                )}
-                            />
-                        </RadioGroup.Option>
-                    ))}
-                </div>
-            </RadioGroup>
-        </div>
-    )
-
-}
-
-const SizeSelector = ({ selectedSize, setSelectedSize, productSizes }) => {
-
-    return (
-        <div className="mt-10">
-            <div className="flex items-center justify-between">
-                <h3 className="text-sm text-gray-900 font-medium">Size</h3>
-                <a href="#" className="text-sm font-medium text-indigo-600 hover:text-indigo-500">
-                    Size guide
-                </a>
-            </div>
-
-            <RadioGroup value={selectedSize} onChange={setSelectedSize} className="mt-4">
-                <RadioGroup.Label className="sr-only">Choose a size</RadioGroup.Label>
-                <div className="grid grid-cols-4 gap-4 sm:grid-cols-8 lg:grid-cols-4">
-                    {productSizes.map((size) => (
-                        <RadioGroup.Option
-                            key={size.name}
-                            value={size}
-                            disabled={!size.inStock}
-                            className={({ active }) =>
-                                classNames(
-                                    size.inStock
-                                        ? 'bg-white shadow-sm text-gray-900 cursor-pointer'
-                                        : 'bg-gray-50 text-gray-200 cursor-not-allowed',
-                                    active ? 'ring-2 ring-indigo-500' : '',
-                                    'group relative border rounded-md py-3 px-4 flex items-center justify-center text-sm font-medium uppercase hover:bg-gray-50 focus:outline-none sm:flex-1 sm:py-6'
-                                )
-                            }
-                        >
-                            {({ active, checked }) => (
-                                <>
-                                    <RadioGroup.Label as="p">{size.name}</RadioGroup.Label>
-                                    {size.inStock ? (
-                                        <div
-                                            className={classNames(
-                                                active ? 'border' : 'border-2',
-                                                checked ? 'border-indigo-500' : 'border-transparent',
-                                                'absolute -inset-px rounded-md pointer-events-none'
-                                            )}
-                                            aria-hidden="true"
-                                        />
-                                    ) : (
-                                        <div
-                                            aria-hidden="true"
-                                            className="absolute -inset-px rounded-md border-2 border-gray-200 pointer-events-none"
-                                        >
-                                            <svg
-                                                className="absolute inset-0 w-full h-full text-gray-200 stroke-2"
-                                                viewBox="0 0 100 100"
-                                                preserveAspectRatio="none"
-                                                stroke="currentColor"
-                                            >
-                                                <line x1={0} y1={100} x2={100} y2={0} vectorEffect="non-scaling-stroke" />
-                                            </svg>
-                                        </div>
-                                    )}
-                                </>
-                            )}
-                        </RadioGroup.Option>
-                    ))}
-                </div>
-            </RadioGroup>
-        </div>
-    )
-
-}
-
-//https://tailwindui.com/components/ecommerce/components/product-overviews
 const ProductPage = () => {
-    const [selectedColor, setSelectedColor] = useState(product.colors[0])
-    const [selectedSize, setSelectedSize] = useState(product.sizes[2]);
-
-    useEffect(() => {
-        window.scrollTo(0, 0)
-    }, [])
 
     return (
-        <div className="bg-white">
-            <div className="pt-6">
-
-
-
-                {/* Image gallery */}
-                <div className="mt-6 max-w-xl mx-auto sm:px-6 lg:max-w-2xl px-4 lg:px-8 ">
-                    <div className="w-full max-w-lg mx-auto rounded-md  overflow-hidden">
-                        {/* <img
-                            src={product.images[1].src}
-                            alt={product.images[1].alt}
-                            className=" w-full h-full object-center object-cover"
-                        /> */}
-
-                        <ProductSlider
-                            images={product.images}
-                            onPointerDown={() => { }}
-                            onPointerUp={() => { }}
-                        />
-                        <div className=" py-7">
-
-                        </div>
-
-                    </div>
-                </div>
-
-                {/* Product info */}
-                <div className=" max-w-2xl mx-auto  pb-16 px-4 sm:px-6 lg:max-w-7xl  lg:pb-24 lg:px-8 lg:grid lg:grid-cols-3 lg:grid-rows-[auto,auto,1fr] lg:gap-x-8">
-                    <div className="pt-4 lg:col-span-2 lg:border-r lg:border-gray-200 lg:pr-8">
-                        <h1 className="text-2xl font-extrabold tracking-tight text-gray-900 sm:text-3xl">{product.name}</h1>
-                    </div>
-
-                    {/* Options */}
-                    <div className="mt-4 lg:mt-0 lg:row-span-3">
-                        <h2 className="sr-only">Product information</h2>
-                        <p className="text-3xl text-gray-900">{product.price}</p>
-
-
-
-                        <form className="mt-10">
-
-
-                            {/* <ColorSelector
-                                selectedColor={selectedColor}
-                                setSelectedColor={setSelectedColor}
-                                productColors={product.colors}
-                            />
-
-                            <SizeSelector
-                                selectedSize={selectedSize}
-                                setSelectedSize={setSelectedSize}
-                                productSizes={product.sizes}
-                            /> */}
-
-
-                            <button
-                                type="submit"
-                                className="mt-10 w-full bg-indigo-600 border border-transparent rounded-md py-3 px-8 flex items-center justify-center text-base font-medium text-white hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
-                            >
-                                Add to bag
-                            </button>
-                        </form>
-                    </div>
-
-                    <div className="py-10 lg:pt-6 lg:pb-16 lg:col-start-1 lg:col-span-2 lg:border-r lg:border-gray-200 lg:pr-8">
-                        {/* Description and details */}
-                        <div>
-                            <h3 className="sr-only">Description</h3>
-
-                            <div className="space-y-6">
-                                <p className="text-base text-gray-900">{product.description}</p>
-                            </div>
-                        </div>
-
-                        <div className="mt-10">
-                            <h3 className="text-sm font-medium text-gray-900">Highlights</h3>
-
-                            <div className="mt-4">
-                                <ul role="list" className="pl-4 list-disc text-sm space-y-2">
-                                    {product.highlights.map((highlight) => (
-                                        <li key={highlight} className="text-gray-400">
-                                            <span className="text-gray-600">{highlight}</span>
-                                        </li>
-                                    ))}
-                                </ul>
-                            </div>
-                        </div>
-
-                        {/* <div className="mt-10">
-                            <h2 className="text-sm font-medium text-gray-900">Details</h2>
-
-                            <div className="mt-4 space-y-6">
-                                <p className="text-sm text-gray-600">{product.details}</p>
-                            </div>
-                        </div> */}
-                    </div>
-                </div>
-            </div>
-        </div>
+        <ProductCard product={product}/>
     )
 }
 
 export default ProductPage;
+
+
+

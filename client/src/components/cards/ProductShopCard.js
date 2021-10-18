@@ -2,7 +2,7 @@ import React, { useRef } from "react";
 // import Tridi from 'react-tridi';
 // import 'react-tridi/dist/index.css';
 import { getAddToCartIcon } from "../../assets/icons";
-import ProductSlider from "./ProductSlider";
+import ProductShopSlider from "./ProductShopSlider";
 
 const ProductShopCard = ({ id, name, price, images, imageUrl, onAddClick, onCardClick }) => {
 
@@ -49,7 +49,7 @@ const ProductShopCard = ({ id, name, price, images, imageUrl, onAddClick, onCard
                 /> */}
 
                 {/* slider */}
-                <ProductSlider
+                <ProductShopSlider
                     onPointerDown={onPointerDown}
                     onPointerUp={onPointerUp}
                     images={images}
