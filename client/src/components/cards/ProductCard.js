@@ -206,9 +206,9 @@ const ProductCard = ({ product }) => {
                 </div>
 
                 {/* Product info */}
-                <div className=" max-w-2xl mx-auto  pb-16 px-4 sm:px-6 lg:max-w-7xl  lg:pb-24 lg:px-8 lg:grid lg:grid-cols-3 lg:grid-rows-[auto,auto,1fr] lg:gap-x-8">
+                <div className="max-w-2xl mx-auto  pb-16 px-4 sm:px-6 lg:max-w-7xl  lg:pb-24 lg:px-8 lg:grid lg:grid-cols-3 lg:grid-rows-[auto,auto,1fr] lg:gap-x-8">
                     <div className="pt-4 lg:col-span-2 lg:border-r lg:border-gray-200 lg:pr-8">
-                        <h1 className="text-2xl font-extrabold tracking-tight text-gray-900 sm:text-3xl">{product.name}</h1>
+                        <h1 className="text-2xl font-bold tracking-tight text-gray-900 sm:text-3xl">{product.name}</h1>
                     </div>
 
                     {/* Options */}
