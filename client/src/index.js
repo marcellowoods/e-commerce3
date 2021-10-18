@@ -14,6 +14,8 @@ import { composeWithDevTools } from "redux-devtools-extension";
 //REMOVE composeWithDevTools in production
 const store = createStore(rootReducer, composeWithDevTools());
 
+//cool deisgn
+//https://www.tissotwatches.com/en-en/t1204073705100.html
 ReactDOM.render(
     <Provider store={store}>
         <BrowserRouter>
