@@ -119,7 +119,7 @@ const SizeSelector = ({ selectedSize, setSelectedSize, productSizes }) => {
     )
 }
 
-const BreadCrumbs = ({ product }) => {
+const BreadCrumbs = ({ breadcrumbs, name }) => {
 
     const history = useHistory();
 
@@ -130,7 +130,7 @@ const BreadCrumbs = ({ product }) => {
     return (
         <nav aria-label="Breadcrumb">
             <ol role="list" className="max-w-2xl mx-auto px-4 flex items-center space-x-2 sm:px-6 lg:max-w-7xl">
-                {product.breadcrumbs.map((breadcrumb, index) => (
+                {breadcrumbs.map((breadcrumb) => (
                     <li key={breadcrumb.id}>
                         <div className="flex items-center">
                             <button
@@ -157,7 +157,7 @@ const BreadCrumbs = ({ product }) => {
                 ))}
                 <li className="text-sm">
                     <div aria-current="page" className="text-xl	 text-gray-500">
-                        {product.name}
+                        {name}
                     </div>
                 </li>
             </ol>
@@ -165,20 +165,31 @@ const BreadCrumbs = ({ product }) => {
     )
 }
 
+
 //https://tailwindui.com/components/ecommerce/components/product-overviews
 const ProductCard = ({ product }) => {
-    const [selectedColor, setSelectedColor] = useState(product.colors[0])
-    const [selectedSize, setSelectedSize] = useState(product.sizes[2]);
+
+    const { details, highlights, description, sizes, colors, images, breadcrumbs, price, name } = product;
+
+    const [selectedColor, setSelectedColor] = useState(null);
+    const [selectedSize, setSelectedSize] = useState(null);
 
     useEffect(() => {
-        window.scrollTo(0, 0)
+        window.scrollTo(0, 0);
+        if(colors && colors.length){
+            setSelectedColor(colors[0])
+        }
+
+        if(sizes && sizes.length){
+            setSelectedSize(sizes[0])
+        }
     }, [])
 
     return (
         <div className="bg-white">
             <div className="pt-6 px-2">
 
-                <BreadCrumbs product={product} />
+                {breadcrumbs && <BreadCrumbs breadcrumbs={breadcrumbs} name={name} />}
 
                 {/* Image gallery */}
                 <div className="mt-6 max-w-xl mx-auto sm:px-6 lg:max-w-2xl px-4 lg:px-8 ">
@@ -190,7 +201,7 @@ const ProductCard = ({ product }) => {
                         /> */}
 
                         <ProductSlider
-                            images={product.images}
+                            images={images}
                             onPointerDown={() => { }}
                             onPointerUp={() => { }}
                         />
@@ -204,30 +215,39 @@ const ProductCard = ({ product }) => {
                 {/* Product info */}
                 <div className="max-w-2xl mx-auto  pb-16 px-4 sm:px-6 lg:max-w-7xl  lg:pb-24 lg:px-8 lg:grid lg:grid-cols-3 lg:grid-rows-[auto,auto,1fr] lg:gap-x-8">
                     <div className="pt-4 lg:col-span-2 lg:border-r lg:border-gray-200 lg:pr-8">
-                        <h1 className="text-2xl font-bold tracking-tight text-gray-900 sm:text-3xl">{product.name}</h1>
+                        <h1 className="text-2xl font-bold tracking-tight text-gray-900 sm:text-3xl">{name}</h1>
                     </div>
 
                     {/* Options */}
                     <div className="mt-4 lg:mt-0 lg:row-span-3">
                         <h2 className="sr-only">Product information</h2>
-                        <p className="text-3xl text-gray-900">{product.price}</p>
+                        <p className="text-3xl text-gray-900">{price}</p>
 
 
 
                         <form className="mt-10">
 
 
-                            {/* <ColorSelector
-                                selectedColor={selectedColor}
-                                setSelectedColor={setSelectedColor}
-                                productColors={product.colors}
-                            />
+                            {
+                                colors && (
+                                    <ColorSelector
+                                        selectedColor={selectedColor}
+                                        setSelectedColor={setSelectedColor}
+                                        productColors={product.colors}
+                                    />
+                                )
+                            }
 
-                            <SizeSelector
-                                selectedSize={selectedSize}
-                                setSelectedSize={setSelectedSize}
-                                productSizes={product.sizes}
-                            /> */}
+                            {
+                                sizes && (
+                                    <SizeSelector
+                                        selectedSize={selectedSize}
+                                        setSelectedSize={setSelectedSize}
+                                        productSizes={product.sizes}
+                                    />
+                                )
+                            }
+
 
 
                             <button
@@ -241,35 +261,49 @@ const ProductCard = ({ product }) => {
 
                     <div className="py-10 lg:pt-6 lg:pb-16 lg:col-start-1 lg:col-span-2 lg:border-r lg:border-gray-200 lg:pr-8">
                         {/* Description and details */}
-                        <div>
-                            <h3 className="sr-only">Description</h3>
+                        {
+                            description && (
+                                <div>
+                                    <h3 className="sr-only">Description</h3>
 
-                            <div className="space-y-6">
-                                <p className="text-base text-gray-900">{product.description}</p>
-                            </div>
-                        </div>
+                                    <div className="space-y-6">
+                                        <p className="text-base text-gray-900">{description}</p>
+                                    </div>
+                                </div>
+                            )
+                        }
 
-                        <div className="mt-10">
-                            <h3 className="text-sm font-medium text-gray-900">Highlights</h3>
 
-                            <div className="mt-4">
-                                <ul role="list" className="pl-4 list-disc text-sm space-y-2">
-                                    {product.highlights.map((highlight) => (
-                                        <li key={highlight} className="text-gray-400">
-                                            <span className="text-gray-600">{highlight}</span>
-                                        </li>
-                                    ))}
-                                </ul>
-                            </div>
-                        </div>
+                        {
+                            highlights && (
+                                <div className="mt-10">
+                                    <h3 className="text-sm font-medium text-gray-900">Highlights</h3>
 
-                        {/* <div className="mt-10">
-                            <h2 className="text-sm font-medium text-gray-900">Details</h2>
+                                    <div className="mt-4">
+                                        <ul role="list" className="pl-4 list-disc text-sm space-y-2">
+                                            {highlights.map((highlight) => (
+                                                <li key={highlight} className="text-gray-400">
+                                                    <span className="text-gray-600">{highlight}</span>
+                                                </li>
+                                            ))}
+                                        </ul>
+                                    </div>
+                                </div>
+                            )
+                        }
 
-                            <div className="mt-4 space-y-6">
-                                <p className="text-sm text-gray-600">{product.details}</p>
-                            </div>
-                        </div> */}
+                        {
+                            details && (
+                                <div className="mt-10">
+                                    <h2 className="text-sm font-medium text-gray-900">Details</h2>
+
+                                    <div className="mt-4 space-y-6">
+                                        <p className="text-sm text-gray-600">{product.details}</p>
+                                    </div>
+                                </div>
+                            )
+                        }
+
                     </div>
                 </div>
             </div>
