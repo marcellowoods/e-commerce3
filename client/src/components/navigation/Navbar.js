@@ -33,7 +33,7 @@ const NavbarRender0 = ({ mobileNavbarToggle, cartModalToggle }) => {
                         </svg>
                         {/* <span className="mx-1 text-sm">BG</span> */}
                     </div>
-                    
+
                     <div className="color-main-bold sm:text-center  text-2xl font-semibold">
                         Brand
                     </div>
@@ -88,6 +88,14 @@ const NavbarRender = ({ mobileNavbarToggle, cartModalToggle, isAdmin }) => {
                         Brand
                     </div>
 
+                    {
+                        isAdmin && (
+                            <div className="pr-9">
+       
+                            </div>
+                        )
+                    }
+
                     <SearchBar cname={"hidden sm:flex searchbar-w relative mx-auto py-0.5"} />
 
                     <div className="flex items-center justify-end w-full sm:w-auto">
@@ -103,11 +111,11 @@ const NavbarRender = ({ mobileNavbarToggle, cartModalToggle, isAdmin }) => {
                         {
                             isAdmin && (
                                 <div className="pl-2 flex">
-                                <AdminDropdown />
-                            </div>
+                                    <AdminDropdown />
+                                </div>
                             )
                         }
-     
+
 
                         <div className="flex sm:hidden ml-2">
                             <button onClick={mobileNavbarToggle} type="button" className="color-main-light hover:text-gray-500 focus:outline-none focus:text-gray-500" aria-label="toggle menu">
