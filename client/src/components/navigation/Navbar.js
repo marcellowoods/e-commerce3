@@ -5,6 +5,7 @@ import NavigationItems from './NavigationItems';
 import SearchBar from './SearchBar.js'
 import { getCartIcon, getProfileIcon, getMobileToggleIcon } from "../../assets/icons";
 import AccountDropdown from "./AccountDropdown";
+import AdminDropdown from "./AdminDropdown";
 
 import "./style.css";
 
@@ -73,7 +74,7 @@ const NavbarRender0 = ({ mobileNavbarToggle, cartModalToggle }) => {
 }
 
 //navbar without location
-const NavbarRender = ({ mobileNavbarToggle, cartModalToggle }) => {
+const NavbarRender = ({ mobileNavbarToggle, cartModalToggle, isAdmin }) => {
 
     return (
         <Fragment>
@@ -97,11 +98,16 @@ const NavbarRender = ({ mobileNavbarToggle, cartModalToggle }) => {
 
                         <div className="flex">
                             <AccountDropdown />
-                            {/* <button onClick={loginModalToggle} type="button" className="color-main-light hover:text-gray-500 focus:outline-none focus:text-gray-500" aria-label="toggle menu">
-                                {getProfileIcon()}
-                            </button> */}
-
                         </div>
+
+                        {
+                            isAdmin && (
+                                <div className="pl-2 flex">
+                                <AdminDropdown />
+                            </div>
+                            )
+                        }
+     
 
                         <div className="flex sm:hidden ml-2">
                             <button onClick={mobileNavbarToggle} type="button" className="color-main-light hover:text-gray-500 focus:outline-none focus:text-gray-500" aria-label="toggle menu">
@@ -127,11 +133,14 @@ const NavbarRender = ({ mobileNavbarToggle, cartModalToggle }) => {
 
 const Navbar = (props) => {
 
-    const { drawerCart, drawerNav } = useSelector((state) => ({ ...state }));
+    const { drawerCart, drawerNav, user } = useSelector((state) => ({ ...state }));
 
     let dispatch = useDispatch();
 
     //https://stackoverflow.com/questions/54989513/react-prevent-scroll-when-modal-is-open
+
+    const isAdmin = user && user.role === "admin";
+
     const mobileToggleOn = () => {
         document.body.style.overflow = 'hidden';
         dispatch({ type: "DRAWER_NAV_TOGGLE", payload: true })
@@ -179,6 +188,7 @@ const Navbar = (props) => {
             mobileNavbarToggle={mobileNavbarToggle}
             // loginModalToggle={loginModalToggle}
             cartModalToggle={cartModalToggle}
+            isAdmin={isAdmin}
         />
     )
 };

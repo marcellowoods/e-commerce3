@@ -18,6 +18,7 @@ import Register from "./pages/auth/Register";
 import Navigation from "./components/navigation"
 import Orders from "./pages/user/Orders";
 import Settings from "./pages/user/Settings";
+import AdminDashboard from "./pages/admin/AdminDashboard";
 import Home from "./pages/Home"
 
 
@@ -76,6 +77,9 @@ function App() {
                 
                 <UserRoute exact path="/user/orders" component={Orders} />
                 <UserRoute exact path="/user/settings" component={Settings} />
+                
+                <AdminDashboard exact path="/admin/dashboard" component={AdminDashboard} />
+
 
             </Switch>
         </Fragment>
