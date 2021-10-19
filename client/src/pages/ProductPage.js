@@ -1,6 +1,4 @@
 import React, { useState, useEffect } from 'react'
-import { StarIcon } from '@heroicons/react/solid'
-import { RadioGroup } from '@headlessui/react'
 import { useHistory, useParams, useLocation } from "react-router-dom";
 import ProductCard from "../components/cards/ProductCard.js"
 

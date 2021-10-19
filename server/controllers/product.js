@@ -13,7 +13,7 @@ const slugify = require("slugify");
 
 let translations = createLoader("product");
 
-translations.load();
+// translations.load();
 
 let slugifyLower = (str) => {
     return slugify(str, { lower: true });
