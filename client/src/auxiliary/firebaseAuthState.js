@@ -39,7 +39,7 @@ let onAuthStateChanged = (isLoading, setIsLoading, getUserFromServer, onSuccessU
                     }
                 })
                 .catch((err) => {
-                    console.log(err)
+                    alert(err)
                     if (isLoading) {
                         setIsLoading(false);
                     }
