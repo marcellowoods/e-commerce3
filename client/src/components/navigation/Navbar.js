@@ -96,7 +96,7 @@ const NavbarRender = ({ mobileNavbarToggle, cartModalToggle, isAdmin }) => {
                         )
                     }
 
-                    <SearchBar cname={"hidden sm:flex searchbar-w relative mx-auto py-0.5"} />
+                    <SearchBar cname={"hidden sm:flex searchbar-w relative mx-auto "} />
 
                     <div className="flex items-center justify-end w-full sm:w-auto">
                         <button onClick={cartModalToggle} className="color-main-light focus:outline-none mx-2">
