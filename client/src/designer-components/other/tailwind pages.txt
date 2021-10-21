@@ -1,1 +1,3 @@
 https://www.tailwindtoolbox.com/templates/nordic-store
+
+https://tailwindcomponents.com/component/account-card

@@ -14,14 +14,14 @@ const getItemClassName = (isActive) => (
     `${isActive ? 'color-main-bold' : 'color-main-light'} focus:outline-none group flex rounded-md items-center w-full px-3 py-3 text-md`
 )
 
+
+
 const AdminDropdownRender = ({
-    handleSettingsClicked,
     handleOrdersClicked,
-    handleLoginClicked,
-    handleLogoutClicked,
-    handleRegisterClicked,
-    isLoggedIn
+    handleCreateProductClicked,
+    handleUpdateProductClicked,
 }) => {
+
     return (
         <div className="text-right">
             <Menu as="div" className="relative inline-block text-left">
@@ -57,10 +57,10 @@ const AdminDropdownRender = ({
                             <Menu.Item>
                                 {({ active }) => (
                                     <button
-                                        onClick={handleSettingsClicked}
+                                        onClick={handleCreateProductClicked}
                                         className={getItemClassName(active)}
                                     >
-                                        Update Product
+                                        Create Product
                                     </button>
                                 )}
                             </Menu.Item>
@@ -68,10 +68,10 @@ const AdminDropdownRender = ({
                             <Menu.Item>
                                 {({ active }) => (
                                     <button
-                                        onClick={handleLogoutClicked}
+                                        onClick={handleUpdateProductClicked}
                                         className={getItemClassName(active)}
                                     >
-                                        Create Product
+                                        Update Product
                                     </button>
                                 )}
                             </Menu.Item>
@@ -97,34 +97,23 @@ const AdminDropdown = () => {
 
     const isLoggedIn = user !== null;
 
-    const handleSettingsClicked = () => {
-        history.push("/user/settings");
-    }
-
     const handleOrdersClicked = () => {
-        history.push("/user/orders");
+        history.push("/admin/orders");
     }
 
-    const handleLoginClicked = () => {
-        history.push("/login");
+    const handleCreateProductClicked = () => {
+        history.push("/admin/create-product");
     }
 
-    const handleRegisterClicked = () => {
-        history.push("/register");
-    }
-
-    const handleLogoutClicked = () => {
-        signOut(auth);
+    const handleUpdateProductClicked = () => {
+        history.push("/admin/update-product");
     }
 
     return (
         <AdminDropdownRender
-            handleSettingsClicked={handleSettingsClicked}
             handleOrdersClicked={handleOrdersClicked}
-            handleLoginClicked={handleLoginClicked}
-            handleLogoutClicked={handleLogoutClicked}
-            handleRegisterClicked={handleRegisterClicked}
-            isLoggedIn={isLoggedIn}
+            handleCreateProductClicked={handleCreateProductClicked}
+            handleUpdateProductClicked={handleUpdateProductClicked}
         />
     )
 
