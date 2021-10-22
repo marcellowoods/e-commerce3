@@ -1,39 +1,41 @@
 import React, { Fragment, useEffect, useState, useRef } from "react";
 import { useHistory, useParams, useLocation } from "react-router-dom";
 import ProductShopCard from "../components/cards/ProductShopCard"
+import { getCategories } from "../functions/category";
+
 
 // ["watches", "keyboards", "laptops"];
 
-const categories = [
-    {
-        description: "cool AUTHENTIC watches to wear (they are totally not fake)",
-        name: "watches",
-        _id: "1432154id",
-        image: 'https://images.unsplash.com/photo-1577655197620-704858b270ac?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1280&q=144'
-    },
-    {
-        description: "check these Games out, really fun to play with your friends (if you have any)",
-        name: "keyboards",
-        _id: "1asd254id",
-        image: 'https://images.unsplash.com/photo-1577655197620-704858b270ac?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1280&q=144'
-    },
+// const categories = [
+//     {
+//         description: "cool AUTHENTIC watches to wear (they are totally not fake)",
+//         name: "watches",
+//         _id: "1432154id",
+//         image: 'data:image/jpeg;base64,/9j/4AAQSkZJRgABAQAAAQABAAD/2wCEAAkGBw0NDw0NDQ8NDQ0NDQ0NDQ0NDQ8NDw0NFREWFhURFRUYHSggGBolGxUVITEhJSkrLi4uFx8zODMsNygtLisBCgoKDQ0NDg0PEisZFRkrKysrKysrKysrKystKysrLSsrKysrKysrKysrKysrKysrKysrKysrKysrKysrKysrK//AABEIAKwBJgMBIgACEQEDEQH/xAAXAAEBAQEAAAAAAAAAAAAAAAAAAQIH/8QAIhABAQACAAQHAAAAAAAAAAAAAAERIQJBgfEiMVFhcbHw/8QAFAEBAAAAAAAAAAAAAAAAAAAAAP/EABQRAQAAAAAAAAAAAAAAAAAAAAD/2gAMAwEAAhEDEQA/AO4gAAAlvlrr6KAAAAJICgAAAAAAAAAAAAAAAM8XFZeHEtluLczw6tzfrq0AAAAAAAAAAAAAAAAAAAAAAAAAAAAACZ7qAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAJfZQAAAAAgAAAAAAAAAAAAAAAAAACfvlQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAoAAAAAAAAAJYCgAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAQAAAAAAAAARQAAAAAAAAAAAAEwoAAAACSqAAAAAAAAAAAAAAAAAAAAAAAAAAAAACXPLW5yzrKgAAAAAAAAAAAAAAAmFAAAAAAAABKoAAAAA//Z'
+//     },
+//     {
+//         description: "check these Games out, really fun to play with your friends (if you have any)",
+//         name: "keyboards",
+//         _id: "1asd254id",
+//         image: 'https://images.unsplash.com/photo-1577655197620-704858b270ac?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1280&q=144'
+//     },
 
-    {
-        description: "check these laptops out",
-        name: "laptops",
-        _id: "1asd254id",
-        image: 'https://images.unsplash.com/photo-1577655197620-704858b270ac?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1280&q=144'
-    }
-]
+//     {
+//         description: "check these laptops out",
+//         name: "laptops",
+//         _id: "1asd254id",
+//         image: 'https://images.unsplash.com/photo-1577655197620-704858b270ac?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1280&q=144'
+//     }
+// ]
 
 const CategoryCard = ({ handleClick, description, image, name, slug }) => {
 
     return (
-        <div className="h-64  rounded-md overflow-hidden bg-cover bg-center m-4" style={{ backgroundImage: `url(${image})` }}>
+        <div className="h-64 rounded-md overflow-hidden bg-cover bg-center m-4" style={{ backgroundImage: `url(${image})` }}>
             <div className="bg-gray-900 bg-opacity-50 flex items-center h-full">
                 <div className="px-10 max-w-xl">
                     <h2 className="text-2xl text-white font-semibold">{name}</h2>
-                    <p className="mt-2 text-gray-400">{description}</p>
+                    <p className="mt-2 text-white">{description}</p>
                     <button onClick={() => handleClick(slug)} className="flex items-center mt-4 px-3 py-2 bg-blue-600 text-white text-sm uppercase font-medium rounded hover:bg-blue-500 focus:outline-none focus:bg-blue-500">
                         <span>Shop Now</span>
                         <svg className="h-5 w-5 mx-2" fill="none" strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" viewBox="0 0 24 24" stroke="currentColor"><path d="M17 8l4 4m0 0l-4 4m4-4H3"></path></svg>
@@ -94,10 +96,21 @@ const Home = () => {
 
     let history = useHistory();
 
+    const [categories, setCategories] = useState([]);
+    const [loading, setLoading] = useState(false);
+
+    useEffect(() => {
+        setLoading(true);
+        getCategories().then((c) => {
+            setCategories(c.data);
+            setLoading(false);
+        });
+    }, []);
+
     const handleClick = (name) => {
         history.push(`/shop/${name}`);
     }
-    
+
     useEffect(() => {
         window.scrollTo(0, 0)
     }, [])
