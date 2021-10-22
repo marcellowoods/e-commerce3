@@ -29,6 +29,29 @@ const NameForm = ({ name, setName }) => {
     )
 }
 
+const ImageUrlForm = ({ image, setImage }) => {
+    return (
+        <div className="p-4">
+            <label htmlFor="price" className="block text-sm font-medium text-gray-700">
+                Image
+            </label>
+            <div className="mt-1 relative rounded-md shadow-sm">
+
+                <input
+                    value={image}
+                    onChange={(e) => setImage(e.target.value)}
+                    type="text"
+                    name="name"
+                    placeholder="paste a link or upload (todo)"
+                    id="name"
+                    className="focus:ring-indigo-500 focus:border-indigo-500 block w-full  pr-12 sm:text-sm border-gray-300 rounded-md  ease-linear transition-all duration-150"
+                />
+
+            </div>
+        </div>
+    )
+}
+
 const DescriptionForm = ({ description, setDescription }) => {
     return (
         <div className="p-4">
@@ -61,12 +84,13 @@ const CreateCategory = () => {
 
     const [name, setName] = useState("");
     const [description, setDescription] = useState("");
+    const [image, setImage] = useState("");
 
     const { user } = useSelector((state) => ({ ...state }));
 
     const handleSubmit = () => {
 
-        createCategory({ name, description }, user.token)
+        createCategory({ name, description, image }, user.token)
             .then((res) => {
                 // console.log(res)
                 history.push(`/categories`);
@@ -84,6 +108,12 @@ const CreateCategory = () => {
                 name={name}
                 setName={setName}
             />
+
+            <ImageUrlForm
+                image={image}
+                setImage={setImage}
+            />
+            
 
             <DescriptionForm
                 description={description}

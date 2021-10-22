@@ -5,8 +5,15 @@ const slugify = require("slugify");
 
 exports.create = async (req, res) => {
     try {
-        const { name, description } = req.body;
-        res.json(await new Category({ name, description, slug: slugify(name) }).save());
+        const { name, description, image } = req.body;
+
+        res.json(await new Category({
+            name,
+            description,
+            image,
+            slug: slugify(name)
+        }).save());
+
     } catch (err) {
         // console.log(err);
         res.status(400).send("Create category failed");
