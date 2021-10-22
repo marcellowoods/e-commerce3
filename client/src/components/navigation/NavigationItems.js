@@ -9,7 +9,7 @@ const NavigationItems = ({ closeMobileNav=null }) => {
 
     const handleHomeClick = () => history.push("/");
     const handleShopClick = () => history.push("/shop");
-    const handleCategoriesClick = () => history.push("/shop");
+    const handleCategoriesClick = () => history.push("/categories");
     const handleContactClick = () => history.push("/contact");
     const handleAboutClick = () => history.push("/about");
 

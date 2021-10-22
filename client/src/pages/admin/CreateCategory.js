@@ -1,4 +1,7 @@
 import React, { useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { useHistory } from "react-router-dom";
+import { createCategory } from "../../functions/category"
 
 function classNames(...classes) {
     return classes.filter(Boolean).join(' ')
@@ -54,12 +57,24 @@ const DescriptionForm = ({ description, setDescription }) => {
 //https://tailwindcomponents.com/components/forms?page=2
 const CreateCategory = () => {
 
+    let history = useHistory();
+
     const [name, setName] = useState("");
     const [description, setDescription] = useState("");
 
+    const { user } = useSelector((state) => ({ ...state }));
+
     const handleSubmit = () => {
 
-    }
+        createCategory({ name, description }, user.token)
+            .then((res) => {
+                // console.log(res)
+                history.push(`/categories`);
+            })
+            .catch((err) => {
+                console.log(err);
+            });
+    };
 
     return (
 
