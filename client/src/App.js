@@ -19,6 +19,7 @@ import Navigation from "./components/navigation"
 import Orders from "./pages/user/Orders";
 import Settings from "./pages/user/Settings";
 import CreateProduct from "./pages/admin/CreateProduct";
+import CreateCategory from "./pages/admin/CreateCategory";
 import Home from "./pages/Home"
 
 
@@ -79,6 +80,7 @@ function App() {
                 <UserRoute exact path="/user/settings" component={Settings} />
                 
                 <AdminRoute exact path="/admin/create-product" component={CreateProduct} />
+                <AdminRoute exact path="/admin/create-category" component={CreateCategory} />
 
 
             </Switch>

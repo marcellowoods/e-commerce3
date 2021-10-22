@@ -178,12 +178,11 @@ const CreateProduct = () => {
     return (
 
         <div className="w-full sm:max-w-lg px-4 mx-auto mt-6">
-
+            
             <NameForm
                 name={name}
                 setName={setName}
             />
-
             <PriceForm
                 price={price}
                 setPrice={setPrice}
@@ -194,8 +193,6 @@ const CreateProduct = () => {
                 selectedCategory={selectedCategory}
                 setSelectedCategory={setSelectedCategory}
             />
-
-
 
             <DescriptionForm
                 description={description}

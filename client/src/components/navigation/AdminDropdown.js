@@ -14,12 +14,13 @@ const getItemClassName = (isActive) => (
     `${isActive ? 'color-main-bold' : 'color-main-light'} focus:outline-none group flex rounded-md items-center w-full px-3 py-3 text-md`
 )
 
-
-
 const AdminDropdownRender = ({
     handleOrdersClicked,
     handleCreateProductClicked,
     handleUpdateProductClicked,
+    handleCreateCategoryClicked,
+    handleUpdateCategoryClicked
+
 }) => {
 
     return (
@@ -76,6 +77,28 @@ const AdminDropdownRender = ({
                                 )}
                             </Menu.Item>
 
+                            <Menu.Item>
+                                {({ active }) => (
+                                    <button
+                                        onClick={handleCreateCategoryClicked}
+                                        className={getItemClassName(active)}
+                                    >
+                                        Create Category
+                                    </button>
+                                )}
+                            </Menu.Item>
+
+                            <Menu.Item>
+                                {({ active }) => (
+                                    <button
+                                        onClick={handleUpdateCategoryClicked}
+                                        className={getItemClassName(active)}
+                                    >
+                                        Update Category
+                                    </button>
+                                )}
+                            </Menu.Item>
+
                         </div>
                     </Menu.Items>
 
@@ -109,11 +132,21 @@ const AdminDropdown = () => {
         history.push("/admin/update-product");
     }
 
+    const handleCreateCategoryClicked = () => {
+        history.push("/admin/create-category");
+    }
+
+    const handleUpdateCategoryClicked = () => {
+        history.push("/admin/update-category");
+    }
+
     return (
         <AdminDropdownRender
             handleOrdersClicked={handleOrdersClicked}
             handleCreateProductClicked={handleCreateProductClicked}
             handleUpdateProductClicked={handleUpdateProductClicked}
+            handleCreateCategoryClicked={handleCreateCategoryClicked}
+            handleUpdateCategoryClicked={handleUpdateCategoryClicked}
         />
     )
 
