@@ -3,7 +3,8 @@ import Resizer from "react-image-file-resizer";
 import axios from "axios";
 import { useSelector } from "react-redux";
 
-const FileUploadProduct = ({ values, setValues, setLoading }) => {
+const FileUploadCategory = ({ values, setValues, setLoading }) => {
+
     const { user } = useSelector((state) => ({ ...state }));
 
     const fileUploadAndResize = (e) => {
@@ -83,26 +84,36 @@ const FileUploadProduct = ({ values, setValues, setLoading }) => {
 
     return (
         <>
-            {/* <div className="row">
+            <div className="grid  gap-6 grid-cols-2 sm:grid-cols-3  mt-1">
                 {values.images &&
                     values.images.map((image) => (
-                        <Badge
-                            count="X"
-                            key={image.public_id}
-                            onClick={() => handleImageRemove(image.public_id)}
-                            style={{ cursor: "pointer" }}
-                        >
-                            <Avatar
-                                src={image.url}
-                                size={100}
-                                shape="square"
-                                className="ml-3"
-                            />
-                        </Badge>
+                        // <Badge
+                        //     count="X"
+                        //     key={image.public_id}
+                        //     onClick={() => handleImageRemove(image.public_id)}
+                        //     style={{ cursor: "pointer" }}
+                        // >
+                        //     <Avatar
+                        //         src={image.url}
+                        //         size={100}
+                        //         shape="square"
+                        //         className="ml-3"
+                        //     />
+                        // </Badge>
+                        // <button type="button" class="bg-blue-600 text-white p-2 rounded   flex items-center">
+                        //     <img className="w-4 h-4" src="https://media.gq-magazine.co.uk/photos/5fca181eea319833403830dc/master/w_2121,c_limit/04112020_Watches_14.jpg" />
+                        //     <span class="bg-white p-1 rounded text-blue-600 text-xs ml-2">X</span>
+                        // </button>
+                        <span className="relative inline-block">
+                            <img className="" src={image}/>
+                            <button
+                                className="absolute top-0 right-0 px-2 py-1 text-xs font-bold leading-none text-red-100 transform bg-red-600 rounded-full">X</button>
+                        </span>
+
                     ))}
-            </div> */}
-            <div className="row">
-                <label className="btn btn-primary btn-raised mt-3">
+            </div>
+            <div className="float-right">
+                <label className="mt-3">
                     Choose File
                     <input
                         type="file"
@@ -117,4 +128,4 @@ const FileUploadProduct = ({ values, setValues, setLoading }) => {
     );
 };
 
-export default FileUploadProduct;
+export default FileUploadCategory;

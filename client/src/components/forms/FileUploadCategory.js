@@ -84,7 +84,7 @@ const FileUploadCategory = ({ values, setValues, setLoading }) => {
 
     return (
         <>
-            <div className="grid  gap-6 grid-cols-2 sm:grid-cols-3  mt-1">
+            <div className="grid  gap-6 grid-cols-1  mt-1">
                 {values.images &&
                     values.images.map((image) => (
                         // <Badge
@@ -105,8 +105,9 @@ const FileUploadCategory = ({ values, setValues, setLoading }) => {
                         //     <span class="bg-white p-1 rounded text-blue-600 text-xs ml-2">X</span>
                         // </button>
                         <span className="relative inline-block">
-                            <img className="" src={image}/>
+                            <img className="" src={image.url} />
                             <button
+                                onClick={() => handleImageRemove(image.public_id)}
                                 className="absolute top-0 right-0 px-2 py-1 text-xs font-bold leading-none text-red-100 transform bg-red-600 rounded-full">X</button>
                         </span>
 
