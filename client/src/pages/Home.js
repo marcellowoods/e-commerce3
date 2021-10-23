@@ -2,31 +2,7 @@ import React, { Fragment, useEffect, useState, useRef } from "react";
 import { useHistory, useParams, useLocation } from "react-router-dom";
 import ProductShopCard from "../components/cards/ProductShopCard"
 import { getCategories } from "../functions/category";
-
-
-// ["watches", "keyboards", "laptops"];
-
-// const categories = [
-//     {
-//         description: "cool AUTHENTIC watches to wear (they are totally not fake)",
-//         name: "watches",
-//         _id: "1432154id",
-//         image: 'data:image/jpeg;base64,/9j/4AAQSkZJRgABAQAAAQABAAD/2wCEAAkGBw0NDw0NDQ8NDQ0NDQ0NDQ0NDQ8NDw0NFREWFhURFRUYHSggGBolGxUVITEhJSkrLi4uFx8zODMsNygtLisBCgoKDQ0NDg0PEisZFRkrKysrKysrKysrKystKysrLSsrKysrKysrKysrKysrKysrKysrKysrKysrKysrKysrK//AABEIAKwBJgMBIgACEQEDEQH/xAAXAAEBAQEAAAAAAAAAAAAAAAAAAQIH/8QAIhABAQACAAQHAAAAAAAAAAAAAAERIQJBgfEiMVFhcbHw/8QAFAEBAAAAAAAAAAAAAAAAAAAAAP/EABQRAQAAAAAAAAAAAAAAAAAAAAD/2gAMAwEAAhEDEQA/AO4gAAAlvlrr6KAAAAJICgAAAAAAAAAAAAAAAM8XFZeHEtluLczw6tzfrq0AAAAAAAAAAAAAAAAAAAAAAAAAAAAACZ7qAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAJfZQAAAAAgAAAAAAAAAAAAAAAAAACfvlQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAoAAAAAAAAAJYCgAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAQAAAAAAAAARQAAAAAAAAAAAAEwoAAAACSqAAAAAAAAAAAAAAAAAAAAAAAAAAAAACXPLW5yzrKgAAAAAAAAAAAAAAAmFAAAAAAAABKoAAAAA//Z'
-//     },
-//     {
-//         description: "check these Games out, really fun to play with your friends (if you have any)",
-//         name: "keyboards",
-//         _id: "1asd254id",
-//         image: 'https://images.unsplash.com/photo-1577655197620-704858b270ac?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1280&q=144'
-//     },
-
-//     {
-//         description: "check these laptops out",
-//         name: "laptops",
-//         _id: "1asd254id",
-//         image: 'https://images.unsplash.com/photo-1577655197620-704858b270ac?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1280&q=144'
-//     }
-// ]
+import  LoadingPage from "./LoadingPage";
 
 const CategoryCard = ({ handleClick, description, image, name, slug }) => {
 
@@ -114,6 +90,12 @@ const Home = () => {
     useEffect(() => {
         window.scrollTo(0, 0)
     }, [])
+
+    if(loading){
+        return (
+            <LoadingPage />
+        )
+    }
 
     return (
         <div className="container max-w-7xl mx-auto px-2">

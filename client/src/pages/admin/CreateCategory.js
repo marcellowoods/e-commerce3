@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useHistory } from "react-router-dom";
 import { createCategory } from "../../functions/category"
+import FileUploadCategory from "../../components/forms/FileUploadCategory";
 
 function classNames(...classes) {
     return classes.filter(Boolean).join(' ')
@@ -30,6 +31,20 @@ const NameForm = ({ name, setName }) => {
 }
 
 const ImageUrlForm = ({ image, setImage }) => {
+
+    const [values, setValues] = useState(
+        {
+            images: [
+                "https://media.gq-magazine.co.uk/photos/5fca181eea319833403830dc/master/w_2121,c_limit/04112020_Watches_14.jpg",
+                "https://media.gq-magazine.co.uk/photos/5fca181eea319833403830dc/master/w_2121,c_limit/04112020_Watches_14.jpg",
+                "https://media.gq-magazine.co.uk/photos/5fca181eea319833403830dc/master/w_2121,c_limit/04112020_Watches_14.jpg",
+                "https://media.gq-magazine.co.uk/photos/5fca181eea319833403830dc/master/w_2121,c_limit/04112020_Watches_14.jpg",
+                "https://media.gq-magazine.co.uk/photos/5fca181eea319833403830dc/master/w_2121,c_limit/04112020_Watches_14.jpg",
+                "https://media.gq-magazine.co.uk/photos/5fca181eea319833403830dc/master/w_2121,c_limit/04112020_Watches_14.jpg",
+            ]
+        }
+    )
+
     return (
         <div className="p-4">
             <label htmlFor="price" className="block text-sm font-medium text-gray-700">
@@ -47,7 +62,13 @@ const ImageUrlForm = ({ image, setImage }) => {
                     className="focus:ring-indigo-500 focus:border-indigo-500 block w-full  pr-12 sm:text-sm border-gray-300 rounded-md  ease-linear transition-all duration-150"
                 />
 
+
             </div>
+
+            <div className="pb-4">
+                <FileUploadCategory values={values} />
+            </div>
+
         </div>
     )
 }
@@ -113,7 +134,7 @@ const CreateCategory = () => {
                 image={image}
                 setImage={setImage}
             />
-            
+
 
             <DescriptionForm
                 description={description}
