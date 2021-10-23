@@ -3,7 +3,7 @@ import Resizer from "react-image-file-resizer";
 import axios from "axios";
 import { useSelector } from "react-redux";
 
-const FileUploadCategory = ({ values, setValues, setLoading }) => {
+const FileUpload = ({ values, setValues, setLoading, singleUpload = false }) => {
 
     const { user } = useSelector((state) => ({ ...state }));
 
@@ -11,6 +11,13 @@ const FileUploadCategory = ({ values, setValues, setLoading }) => {
         // console.log(e.target.files);
         // resize
         let files = e.target.files; // 3
+
+        let allFilesLen = files.length + values.length;
+        if(singleUpload && allFilesLen > 1){
+            alert("upload only one file");
+            return;
+        }
+        
         let allUploadedFiles = values.images;
 
         if (files) {
@@ -84,7 +91,7 @@ const FileUploadCategory = ({ values, setValues, setLoading }) => {
 
     return (
         <>
-            <div className="grid  gap-6 grid-cols-1  mt-1">
+            <div className={`grid  gap-6 ${singleUpload ? "grid-cols-1" : "grid-cols-2 sm:grid-cols-3"} x  mt-1`}>
                 {values.images &&
                     values.images.map((image) => (
                         // <Badge
@@ -129,4 +136,4 @@ const FileUploadCategory = ({ values, setValues, setLoading }) => {
     );
 };
 
-export default FileUploadCategory;
+export default FileUpload;

@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useHistory } from "react-router-dom";
 import { createCategory } from "../../functions/category"
-import FileUploadCategory from "../../components/forms/FileUploadCategory";
+import FileUpload from "../../components/forms/FileUpload";
 
 function classNames(...classes) {
     return classes.filter(Boolean).join(' ')
@@ -68,7 +68,7 @@ const ImageUrlForm = ({ image, setImage }) => {
             </div>
 
             <div className="pb-4">
-                <FileUploadCategory values={values} />
+                <FileUpload values={values} singleUpload={false} />
             </div>
 
         </div>
