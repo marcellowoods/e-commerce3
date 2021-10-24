@@ -111,7 +111,7 @@ const FileUpload = ({ values, setValues, setLoading, singleUpload = false }) => 
                         //     <img className="w-4 h-4" src="https://media.gq-magazine.co.uk/photos/5fca181eea319833403830dc/master/w_2121,c_limit/04112020_Watches_14.jpg" />
                         //     <span class="bg-white p-1 rounded text-blue-600 text-xs ml-2">X</span>
                         // </button>
-                        <span className="relative inline-block">
+                        <span key={image.public_id} className="relative inline-block">
                             <img className="" src={image.url} />
                             <button
                                 onClick={() => handleImageRemove(image.public_id)}
@@ -120,8 +120,9 @@ const FileUpload = ({ values, setValues, setLoading, singleUpload = false }) => 
 
                     ))}
             </div>
+            {/* "flex items-center  px-3 py-2 bg-blue-600 text-white text-sm uppercase font-medium rounded hover:bg-blue-500 focus:outline-none focus:bg-blue-500" */}
             <div className="float-right">
-                <label className="mt-3">
+                <label className="mt-3 flex cursor-pointer items-center px-2 py-1 bg-blue-600 text-white text-sm uppercase font-medium rounded hover:bg-blue-500 focus:outline-none focus:bg-blue-500">
                     Choose File
                     <input
                         type="file"
