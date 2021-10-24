@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useHistory } from "react-router-dom";
 import { createCategory } from "../../functions/category"
@@ -30,22 +30,35 @@ const NameForm = ({ name, setName }) => {
     )
 }
 
-const ImageUrlForm = ({ image, setImage }) => {
+const ImageUrlForm = ({ imageUrl, setImageUrl }) => {
 
-    const [values, setValues] = useState(
-        {
-            images: [
-                {url: "https://media.gq-magazine.co.uk/photos/5fca181eea319833403830dc/master/w_2121,c_limit/04112020_Watches_14.jpg",
-                public_id: 123},
-                {url: "https://media.gq-magazine.co.uk/photos/5fca181eea319833403830dc/master/w_2121,c_limit/04112020_Watches_14.jpg",
-                public_id: 123},
-                {url: "https://media.gq-magazine.co.uk/photos/5fca181eea319833403830dc/master/w_2121,c_limit/04112020_Watches_14.jpg",
-                public_id: 123},
-                {url: "https://media.gq-magazine.co.uk/photos/5fca181eea319833403830dc/master/w_2121,c_limit/04112020_Watches_14.jpg",
-                public_id: 123},
-            ]
+    // const [values, setValues] = useState(
+    //     {
+    //         images: [
+    //             {url: "https://media.gq-magazine.co.uk/photos/5fca181eea319833403830dc/master/w_2121,c_limit/04112020_Watches_14.jpg",
+    //             public_id: 123},
+    //             {url: "https://media.gq-magazine.co.uk/photos/5fca181eea319833403830dc/master/w_2121,c_limit/04112020_Watches_14.jpg",
+    //             public_id: 123},
+    //             {url: "https://media.gq-magazine.co.uk/photos/5fca181eea319833403830dc/master/w_2121,c_limit/04112020_Watches_14.jpg",
+    //             public_id: 123},
+    //             {url: "https://media.gq-magazine.co.uk/photos/5fca181eea319833403830dc/master/w_2121,c_limit/04112020_Watches_14.jpg",
+    //             public_id: 123},
+    //         ]
+    //     }
+    // )
+
+    const [uploadedImages, setUploadedImages] = useState([]);
+    const [loading, setLoading] = useState(false);
+
+    useEffect(() => {
+        if(uploadedImages.length && uploadedImages[0].url){
+            const url = uploadedImages[0].url
+            setImageUrl(url);
+        }else{
+            setImageUrl("");
         }
-    )
+
+    }, [uploadedImages])
 
     return (
         <div className="p-4">
@@ -55,20 +68,24 @@ const ImageUrlForm = ({ image, setImage }) => {
             <div className="mt-1 relative rounded-md shadow-sm">
 
                 <input
-                    value={image}
-                    onChange={(e) => setImage(e.target.value)}
+                    value={imageUrl}
+                    onChange={(e) => setImageUrl(e.target.value)}
                     type="text"
                     name="name"
-                    placeholder="paste a link or upload (todo)"
+                    placeholder="paste a link or upload image"
                     id="name"
                     className="focus:ring-indigo-500 focus:border-indigo-500 block w-full  pr-12 sm:text-sm border-gray-300 rounded-md  ease-linear transition-all duration-150"
                 />
 
-
             </div>
 
             <div className="pb-4">
-                <FileUpload values={values} singleUpload={false} />
+                <FileUpload
+                    images={uploadedImages}
+                    setImages={setUploadedImages}
+                    setLoading={setLoading}
+                    singleUpload={true}
+                />
             </div>
 
         </div>
@@ -107,19 +124,25 @@ const CreateCategory = () => {
 
     const [name, setName] = useState("");
     const [description, setDescription] = useState("");
-    const [image, setImage] = useState("");
+    const [imageUrl, setImageUrl] = useState("");
 
     const { user } = useSelector((state) => ({ ...state }));
 
     const handleSubmit = () => {
 
-        createCategory({ name, description, image }, user.token)
+        createCategory({ name, description, image: imageUrl }, user.token)
             .then((res) => {
                 // console.log(res)
                 history.push(`/categories`);
             })
-            .catch((err) => {
-                console.log(err);
+            .catch((error) => {
+                if(error.response) { 
+                    /*errthe request was made and the server responded
+                    with a status code that falls out of the range of 2xx */
+                    console.log(error.response.data)
+                    alert(error.response.data);
+                  }
+
             });
     };
 
@@ -133,8 +156,8 @@ const CreateCategory = () => {
             />
 
             <ImageUrlForm
-                image={image}
-                setImage={setImage}
+                imageUrl={imageUrl}
+                setImageUrl={setImageUrl}
             />
 
 

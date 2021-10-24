@@ -3,7 +3,7 @@ import Resizer from "react-image-file-resizer";
 import axios from "axios";
 import { useSelector } from "react-redux";
 
-const FileUpload = ({ values, setValues, setLoading, singleUpload = false }) => {
+const FileUpload = ({ images, setImages, setLoading, singleUpload = false }) => {
 
     const { user } = useSelector((state) => ({ ...state }));
 
@@ -12,13 +12,12 @@ const FileUpload = ({ values, setValues, setLoading, singleUpload = false }) => 
         // resize
         let files = e.target.files; // 3
 
-        let allFilesLen = files.length + values.length;
+        let allFilesLen = files.length + images.length;
         if(singleUpload && allFilesLen > 1){
+            e.target.value = null;
             alert("upload only one file");
             return;
         }
-        
-        let allUploadedFiles = values.images;
 
         if (files) {
             setLoading(true);
@@ -45,9 +44,9 @@ const FileUpload = ({ values, setValues, setLoading, singleUpload = false }) => 
                             .then((res) => {
                                 console.log("IMAGE UPLOAD RES DATA", res);
                                 setLoading(false);
-                                allUploadedFiles.push(res.data);
-
-                                setValues({ ...values, images: allUploadedFiles });
+                                let imgObj = res.data;
+                                setImages((prev) => [...prev, imgObj]);
+                                
                             })
                             .catch((err) => {
                                 setLoading(false);
@@ -57,6 +56,8 @@ const FileUpload = ({ values, setValues, setLoading, singleUpload = false }) => 
                     "base64"
                 );
             }
+            e.target.value = null;
+            
         }
         // send back to server to upload to cloudinary
         // set url to images[] in the parent component state - ProductCreate
@@ -77,11 +78,10 @@ const FileUpload = ({ values, setValues, setLoading, singleUpload = false }) => 
             )
             .then((res) => {
                 setLoading(false);
-                const { images } = values;
                 let filteredImages = images.filter((item) => {
                     return item.public_id !== public_id;
                 });
-                setValues({ ...values, images: filteredImages });
+                setImages( filteredImages );
             })
             .catch((err) => {
                 console.log(err);
@@ -92,8 +92,7 @@ const FileUpload = ({ values, setValues, setLoading, singleUpload = false }) => 
     return (
         <>
             <div className={`grid  gap-6 ${singleUpload ? "grid-cols-1" : "grid-cols-2 sm:grid-cols-3"} x  mt-1`}>
-                {values.images &&
-                    values.images.map((image) => (
+                {images && images.map((image) => (
                         // <Badge
                         //     count="X"
                         //     key={image.public_id}
@@ -122,7 +121,7 @@ const FileUpload = ({ values, setValues, setLoading, singleUpload = false }) => 
             </div>
             {/* "flex items-center  px-3 py-2 bg-blue-600 text-white text-sm uppercase font-medium rounded hover:bg-blue-500 focus:outline-none focus:bg-blue-500" */}
             <div className="float-right">
-                <label className="mt-3 flex cursor-pointer items-center px-2 py-1 bg-blue-600 text-white text-sm uppercase font-medium rounded hover:bg-blue-500 focus:outline-none focus:bg-blue-500">
+                <label className="mt-1 flex cursor-pointer items-center px-2 py-1 bg-blue-600 text-white text-sm uppercase font-medium rounded hover:bg-blue-500 focus:outline-none focus:bg-blue-500">
                     Choose File
                     <input
                         type="file"

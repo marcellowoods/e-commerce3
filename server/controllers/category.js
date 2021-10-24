@@ -15,8 +15,9 @@ exports.create = async (req, res) => {
         }).save());
 
     } catch (err) {
-        // console.log(err);
-        res.status(400).send("Create category failed");
+        console.log(err);
+        
+        res.status(400).send("Create category failed, category may already exist");
     }
 };
 
