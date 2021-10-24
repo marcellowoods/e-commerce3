@@ -136,6 +136,7 @@ const CreateCategory = () => {
                 history.push(`/categories`);
             })
             .catch((error) => {
+                //https://itnext.io/javascript-error-handling-from-express-js-to-react-810deb5e5e28
                 if(error.response) { 
                     /*errthe request was made and the server responded
                     with a status code that falls out of the range of 2xx */
