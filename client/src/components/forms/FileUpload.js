@@ -122,7 +122,7 @@ const FileUpload = ({ images, setImages, setLoading, singleUpload = false }) => 
             {/* "flex items-center  px-3 py-2 bg-blue-600 text-white text-sm uppercase font-medium rounded hover:bg-blue-500 focus:outline-none focus:bg-blue-500" */}
             <div className="float-right">
                 <label className="mt-1 flex cursor-pointer items-center px-2 py-1 bg-blue-600 text-white text-sm uppercase font-medium rounded hover:bg-blue-500 focus:outline-none focus:bg-blue-500">
-                    Choose File
+                    {singleUpload ? "Choose File" : "Choose Files"}
                     <input
                         type="file"
                         multiple
