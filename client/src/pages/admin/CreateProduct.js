@@ -212,6 +212,16 @@ const ImagesForm = ({ imagesUrl, setImagesUrl }) => {
 
     }, [uploadedImages])
 
+    useEffect(() => {
+        //clear uploadedImages after uploading product
+        if(imagesUrl.length == 0 && uploadedImages.length > 0){
+            setUploadedImages([]);
+        }
+
+    }, [imagesUrl])
+
+    
+
     return (
         <div className="p-4">
             <label htmlFor="price" className="block text-sm font-medium text-gray-700">
@@ -250,7 +260,7 @@ const ImagesForm = ({ imagesUrl, setImagesUrl }) => {
 const CreateProduct = () => {
 
     const [price, setPrice] = useState("");
-    const [imagesUrl, setImagesUrl] = useState("");
+    const [imagesUrl, setImagesUrl] = useState([]);
     const [name, setName] = useState("");
     const [description, setDescription] = useState("");
     const [categories, setCategories] = useState([]);
@@ -289,6 +299,14 @@ const CreateProduct = () => {
         }, user.token)
         .then((res) => {
             console.log(res)
+            alert("product created");
+            setPrice("");
+            setImagesUrl([]);
+            setName("");
+            setDescription("");
+            // setCategories([]);
+            setSelectedCategory(categories[0]);
+            setQuantity(1);
             // history.push(`/categories`);
         })
         .catch((error) => {
