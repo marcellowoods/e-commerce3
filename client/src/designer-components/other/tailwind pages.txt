@@ -1,3 +1,5 @@
 https://www.tailwindtoolbox.com/templates/nordic-store
 
 https://tailwindcomponents.com/component/account-card
+
+https://tailwind-starter-kit.vercel.app/docs/forms

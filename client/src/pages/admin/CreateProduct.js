@@ -1,8 +1,10 @@
 import React, { useState, Fragment, useEffect } from "react";
+import { useDispatch, useSelector } from "react-redux";
 import { Listbox, Transition } from '@headlessui/react'
 import { CheckIcon, SelectorIcon } from '@heroicons/react/solid'
 import FileUpload from "../../components/forms/FileUpload"
 import { getCategories } from "../../functions/category";
+import { createProduct as createProductRequest } from "../../functions/product"
 
 function classNames(...classes) {
     return classes.filter(Boolean).join(' ')
@@ -60,6 +62,36 @@ const NameForm = ({ name, setName }) => {
                     type="text"
                     name="name"
                     id="name"
+                    className="focus:ring-indigo-500 focus:border-indigo-500 block w-full  pr-12 sm:text-sm border-gray-300 rounded-md  ease-linear transition-all duration-150"
+                />
+
+            </div>
+        </div>
+    )
+}
+
+const QuantityForm = ({ quantity, setQuantity }) => {
+
+    const handleChange = (e) => {
+        const val = e.target.value;
+        if(val >= 1){
+            setQuantity(e.target.value)
+        }
+    }
+
+    return (
+        <div className="p-4">
+            <label htmlFor="quantity" className="block text-sm font-medium text-gray-700">
+                Quantity
+            </label>
+            <div className="mt-1 relative rounded-md shadow-sm">
+
+                <input
+                    value={quantity}
+                    type="number"
+                    onChange={handleChange}
+                    name="quantity"
+                    id="quantity"
                     className="focus:ring-indigo-500 focus:border-indigo-500 block w-full  pr-12 sm:text-sm border-gray-300 rounded-md  ease-linear transition-all duration-150"
                 />
 
@@ -223,6 +255,9 @@ const CreateProduct = () => {
     const [description, setDescription] = useState("");
     const [categories, setCategories] = useState([]);
     const [selectedCategory, setSelectedCategory] = useState({});
+    const [quantity, setQuantity] = useState(1);
+
+    const { user } = useSelector((state) => ({ ...state }));
 
     const fetchAllCategories = () => {
         // setIsLoading(true);
@@ -233,14 +268,37 @@ const CreateProduct = () => {
         });
     }
 
+    useEffect(() => {
+
+        fetchAllCategories();
+    }, [])
+
     const onSelectCategory = (id) => {
         setSelectedCategory(categories.find((cObj) => cObj._id == id))
     }
-    
-    useEffect(() => {
-        
-        fetchAllCategories();
-    }, [])
+
+    const handleSubmit = () => {
+
+        createProductRequest({
+            title: name,
+            price,
+            quantity,
+            description,
+            images: imagesUrl,
+            category: selectedCategory._id
+        }, user.token)
+        .then((res) => {
+            console.log(res)
+            // history.push(`/categories`);
+        })
+        .catch((error) => {
+            //https://itnext.io/javascript-error-handling-from-express-js-to-react-810deb5e5e28
+            if(error.response) { 
+                console.log(error.response.data.err)
+                alert(error.response.data.err);
+              }
+        });
+    };
 
 
     return (
@@ -251,12 +309,18 @@ const CreateProduct = () => {
                 name={name}
                 setName={setName}
             />
+
             <PriceForm
                 price={price}
                 setPrice={setPrice}
             />
 
-            <ImagesForm 
+            <QuantityForm
+                quantity={quantity}
+                setQuantity={setQuantity}
+            />
+
+            <ImagesForm
                 imagesUrl={imagesUrl}
                 setImagesUrl={setImagesUrl}
             />
@@ -271,6 +335,12 @@ const CreateProduct = () => {
                 description={description}
                 setDescription={setDescription}
             />
+
+            <div className="p-4 float-right">
+                <button onClick={handleSubmit} className="flex items-center  px-3 py-2 bg-blue-600 text-white text-sm uppercase font-medium rounded hover:bg-blue-500 focus:outline-none focus:bg-blue-500">
+                    <span>Submit</span>
+                </button>
+            </div>
 
         </div>
     )
