@@ -1,1 +1,3 @@
 https://castillostore.com/product/casio-g-shock-ga-2100-1a1er/
+
+https://dev.to/eons/detect-page-refresh-tab-close-and-route-change-with-react-router-v5-3pd

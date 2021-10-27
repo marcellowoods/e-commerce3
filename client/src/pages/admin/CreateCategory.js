@@ -32,13 +32,9 @@ const NameForm = ({ name, setName }) => {
 
 const ImageUrlForm = ({ imageUrl, setImageUrl }) => {
 
-    // const [values, setValues] = useState(
+    // const [uploadedImages, setUploadedImages] = useState(
     //     {
     //         images: [
-    //             {url: "https://media.gq-magazine.co.uk/photos/5fca181eea319833403830dc/master/w_2121,c_limit/04112020_Watches_14.jpg",
-    //             public_id: 123},
-    //             {url: "https://media.gq-magazine.co.uk/photos/5fca181eea319833403830dc/master/w_2121,c_limit/04112020_Watches_14.jpg",
-    //             public_id: 123},
     //             {url: "https://media.gq-magazine.co.uk/photos/5fca181eea319833403830dc/master/w_2121,c_limit/04112020_Watches_14.jpg",
     //             public_id: 123},
     //             {url: "https://media.gq-magazine.co.uk/photos/5fca181eea319833403830dc/master/w_2121,c_limit/04112020_Watches_14.jpg",

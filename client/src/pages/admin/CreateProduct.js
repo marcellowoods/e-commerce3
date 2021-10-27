@@ -186,17 +186,13 @@ const CategoryForm = ({ categories, selectedCategory, onSelectCategory }) => {
 
 const ImagesForm = ({ imagesUrl, setImagesUrl }) => {
 
-    // const [values, setValues] = useState(
+    // const [uploadedImages, setUploadedImages] = useState(
     //     {
     //         images: [
     //             {url: "https://media.gq-magazine.co.uk/photos/5fca181eea319833403830dc/master/w_2121,c_limit/04112020_Watches_14.jpg",
     //             public_id: 123},
     //             {url: "https://media.gq-magazine.co.uk/photos/5fca181eea319833403830dc/master/w_2121,c_limit/04112020_Watches_14.jpg",
-    //             public_id: 123},
-    //             {url: "https://media.gq-magazine.co.uk/photos/5fca181eea319833403830dc/master/w_2121,c_limit/04112020_Watches_14.jpg",
-    //             public_id: 123},
-    //             {url: "https://media.gq-magazine.co.uk/photos/5fca181eea319833403830dc/master/w_2121,c_limit/04112020_Watches_14.jpg",
-    //             public_id: 123},
+    //             public_id: 123}
     //         ]
     //     }
     // )
@@ -219,7 +215,6 @@ const ImagesForm = ({ imagesUrl, setImagesUrl }) => {
         }
 
     }, [imagesUrl])
-
     
 
     return (
@@ -227,19 +222,6 @@ const ImagesForm = ({ imagesUrl, setImagesUrl }) => {
             <label htmlFor="price" className="block text-sm font-medium text-gray-700">
                 Images
             </label>
-            {/* <div className="mt-1 relative rounded-md shadow-sm">
-
-                <input
-                    value={imageUrl}
-                    onChange={(e) => setImageUrl(e.target.value)}
-                    type="text"
-                    name="name"
-                    placeholder="paste a link or upload image"
-                    id="name"
-                    className="focus:ring-indigo-500 focus:border-indigo-500 block w-full  pr-12 sm:text-sm border-gray-300 rounded-md  ease-linear transition-all duration-150"
-                />
-
-            </div> */}
 
             <div className="pb-4">
                 <FileUpload
