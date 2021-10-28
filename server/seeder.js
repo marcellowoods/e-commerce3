@@ -11,6 +11,7 @@
 // dotenv.config()
 
 const { Product } = require("./models/product");
+const Category = require("./models/category");
 
 const mongoose = require("mongoose");
 require("dotenv").config();
@@ -42,14 +43,15 @@ const getCloudinaryImages = async () => {
     const imageUrls = [];
     await cloudinary.v2.search.expression(
         `folder:${folderName}/*` // add your folder
-    ).sort_by('public_id', 'desc').max_results(30).execute().then(
+    ).sort_by('public_id', 'desc').execute().then(
         (result) => {
 
             const imagesArray = result.resources;
-            imagesArray.forEach((imgObj) => imageUrls.push({url: imgObj.url, public_id: imgObj.public_id }))
+            imagesArray.forEach((imgObj) => imageUrls.push({ url: imgObj.url, public_id: imgObj.public_id }))
         }
     );
-    
+
+    // console.log(imageUrls);
     return imageUrls;
 }
 
@@ -57,7 +59,7 @@ const getDbImages = async () => {
 
     const imageUrls = [];
 
-    const aggregate = await Product.aggregate([
+    const productImages = await Product.aggregate([
         { "$unwind": `$images` },
         {
             "$group": {
@@ -66,24 +68,53 @@ const getDbImages = async () => {
         }
     ]).exec();
 
-    aggregate.forEach((imgObj) => imageUrls.push(imgObj._id));
+    const categoryImages = await Category.aggregate([
+        {
+            "$group": {
+                "_id": `$image`,
+            }
+        }
+    ]).exec();
+
+    productImages.forEach((imgObj) => imageUrls.push(imgObj._id));
+    categoryImages.forEach((imgObj) => imageUrls.push(imgObj._id));
+    // console.log(imageUrls)
     return imageUrls;
 }
 
-const removeRedundantImages = async () => {
-    
+const getRedundantImages = async () => {
+
     const cloudinaryImages = await getCloudinaryImages();
     const dbImages = await getDbImages();
 
     // console.log(dbImages);
     // console.log(cloudinaryImages);
 
-    const redundantImages = cloudinaryImages.filter(({url, public_id}) => {
+    const redundantImages = cloudinaryImages.filter(({ url, public_id }) => {
         return !dbImages.includes(url);
     })
 
-    console.log(redundantImages);
+    return redundantImages;
 
+}
+
+const removeRedundantImages = async () => {
+
+    //each image in cloudinary which is not used in category or product should be removed
+    //this is necessary to for cloudinary cleanup 
+    //beacause admins could have uploaded images but did not submit a product or category
+
+    // array of objects {url, public_id}
+    const redundantImages = await getRedundantImages();
+
+    redundantImages.forEach(({ public_id }) => {
+        let image_id = public_id;
+
+        cloudinary.uploader.destroy(image_id);
+
+    });
+
+    // console.log(redundantImages);
 }
 
 // const importData = async () => {
