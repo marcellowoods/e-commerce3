@@ -49,21 +49,41 @@ const getCloudinaryImages = async () => {
             imagesArray.forEach((imgObj) => imageUrls.push(imgObj.url))
         }
     );
-    console.log(imageUrls);
+    
+    return imageUrls;
 }
 
 const getDbImages = async () => {
+
+    const imageUrls = [];
+
     const aggregate = await Product.aggregate([
         { "$unwind": `$images` },
         {
             "$group": {
                 "_id": `$images`,
-                // "count": { $sum: 1 },
-                // "name": { $last: `$${property}.name` }
             }
         }
     ]).exec();
-    console.log(aggregate)
+
+    aggregate.forEach((imgObj) => imageUrls.push(imgObj._id));
+    return imageUrls;
+}
+
+const removeRedundantImages = async () => {
+    
+    const cloudinaryImages = await getCloudinaryImages();
+    const dbImages = await getDbImages();
+
+    console.log(dbImages);
+    console.log(cloudinaryImages);
+
+    const redundantImages = cloudinaryImages.filter(imgUrl => {
+        return !dbImages.includes(imgUrl);
+    })
+
+    console.log(redundantImages);
+
 }
 
 // const importData = async () => {
@@ -111,5 +131,6 @@ const getDbImages = async () => {
 // }
 
 // getCloudinaryImages();
-getDbImages();
+// getDbImages();
+removeRedundantImages();
 
