@@ -10,9 +10,21 @@
 
 // dotenv.config()
 
+const { Product } = require("./models/product");
+
 const mongoose = require("mongoose");
 require("dotenv").config();
 const cloudinary = require("cloudinary");
+
+mongoose
+    .connect(process.env.MONGO_URI, {
+        useNewUrlParser: true,
+        useCreateIndex: true,
+        useFindAndModify: false,
+        useUnifiedTopology: true
+    })
+    .then(() => console.log("DB CONNECTED"))
+    .catch((err) => console.log("DB CONNECTION ERR", err));
 
 //https://stackoverflow.com/questions/45771817/specifying-folder-option-does-not-upload-image-to-folder-in-cloudinary
 //https://support.cloudinary.com/hc/en-us/articles/202521082-How-to-list-all-images-within-a-folder-
@@ -25,7 +37,7 @@ cloudinary.config({
 
 const folderName = "e3";
 
-const getImages = async () => {
+const getCloudinaryImages = async () => {
     //https://support.cloudinary.com/hc/en-us/articles/202521082-How-to-list-all-images-within-a-folder-
     const imageUrls = [];
     await cloudinary.v2.search.expression(
@@ -40,16 +52,19 @@ const getImages = async () => {
     console.log(imageUrls);
 }
 
-
-// mongoose
-//     .connect(process.env.MONGO_URI, {
-//         useNewUrlParser: true,
-//         useCreateIndex: true,
-//         useFindAndModify: false,
-//         useUnifiedTopology: true
-//     })
-//     .then(() => console.log("DB CONNECTED"))
-//     .catch((err) => console.log("DB CONNECTION ERR", err));
+const getDbImages = async () => {
+    const aggregate = await Product.aggregate([
+        { "$unwind": `$images` },
+        {
+            "$group": {
+                "_id": `$images`,
+                // "count": { $sum: 1 },
+                // "name": { $last: `$${property}.name` }
+            }
+        }
+    ]).exec();
+    console.log(aggregate)
+}
 
 // const importData = async () => {
 //     try {
@@ -95,6 +110,6 @@ const getImages = async () => {
 //     importData()
 // }
 
-getImages();
-
+// getCloudinaryImages();
+getDbImages();
 
