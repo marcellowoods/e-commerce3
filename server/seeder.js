@@ -44,9 +44,9 @@ const getCloudinaryImages = async () => {
         `folder:${folderName}/*` // add your folder
     ).sort_by('public_id', 'desc').max_results(30).execute().then(
         (result) => {
-            // console.log(result)
+
             const imagesArray = result.resources;
-            imagesArray.forEach((imgObj) => imageUrls.push(imgObj.url))
+            imagesArray.forEach((imgObj) => imageUrls.push({url: imgObj.url, public_id: imgObj.public_id }))
         }
     );
     
@@ -75,11 +75,11 @@ const removeRedundantImages = async () => {
     const cloudinaryImages = await getCloudinaryImages();
     const dbImages = await getDbImages();
 
-    console.log(dbImages);
-    console.log(cloudinaryImages);
+    // console.log(dbImages);
+    // console.log(cloudinaryImages);
 
-    const redundantImages = cloudinaryImages.filter(imgUrl => {
-        return !dbImages.includes(imgUrl);
+    const redundantImages = cloudinaryImages.filter(({url, public_id}) => {
+        return !dbImages.includes(url);
     })
 
     console.log(redundantImages);
