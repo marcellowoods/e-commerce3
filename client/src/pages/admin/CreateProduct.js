@@ -239,6 +239,9 @@ const ImagesForm = ({ imagesUrl, setImagesUrl }) => {
 //more forms
 //https://tailwindcomponents.com/component/account-card
 //https://tailwindcomponents.com/components/forms?page=2
+
+//TODO
+//https://dev.to/eons/detect-page-refresh-tab-close-and-route-change-with-react-router-v5-3pd
 const CreateProduct = () => {
 
     const [price, setPrice] = useState("");

@@ -5,17 +5,9 @@ import { useSelector } from "react-redux";
 
 const FileUpload = ({ images, setImages, setLoading, singleUpload = false }) => {
 
-    //https://dev.to/eons/detect-page-refresh-tab-close-and-route-change-with-react-router-v5-3pd
-
     const { user } = useSelector((state) => ({ ...state }));
 
-    const alertUser = e => {
-        e.preventDefault()
-        e.returnValue = ''
-      }
-
     const cleanupImages = () => {
-        //remove images from cloudianry if product has not been created
 
         setImages(prevImages => {
             prevImages.forEach(({ public_id }) => {
@@ -40,12 +32,9 @@ const FileUpload = ({ images, setImages, setLoading, singleUpload = false }) => 
     }
 
     useEffect(() => {
+        //remove images from cloudianry if product has not been created
 
-        window.addEventListener('beforeunload', alertUser)
-
-        
         return () => {
-            window.removeEventListener('beforeunload', alertUser)
             cleanupImages();
         }
     }, [])
