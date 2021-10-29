@@ -41,7 +41,7 @@ const NavigationItems = ({ closeMobileNav=null }) => {
 
     }
 
-    const cName = "text-left mt-3 focus:outline-none color-main-light hover:text-gray-900 sm:mx-3 sm:mt-0";
+    const cName = "text-left text-lg mt-3 focus:outline-none color-main-light hover:text-gray-900 sm:mx-3 sm:mt-0";
 
     return (
         <div className=" flex flex-col sm:flex-row">

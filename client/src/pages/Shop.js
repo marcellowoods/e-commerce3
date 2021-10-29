@@ -222,7 +222,7 @@ const PageComponent = () => {
                 <AllProduct products={products} />
             </div> */}
 
-            <div className="my-5">
+            <div className="my-5 sm:my-10">
                 <div className="container mx-auto max-w-7xl px-6">
 
                     <CategoryMenu
