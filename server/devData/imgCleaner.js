@@ -30,7 +30,7 @@ cloudinary.config({
 
 const getCloudinaryImages = async () => {
     //https://support.cloudinary.com/hc/en-us/articles/202521082-How-to-list-all-images-within-a-folder-
-    
+
     const imageUrls = [];
     const folderName = process.env.CLOUDINARY_FOLDER;
 
@@ -104,7 +104,7 @@ const removeRedundantImages = async () => {
 
     });
 
-    // console.log(redundantImages);
+    console.log("ok");
 }
 
 //ex node imgCleaner -get
