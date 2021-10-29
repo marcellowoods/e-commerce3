@@ -12,8 +12,11 @@ cloudinary.config({
 
 // req.files.file.path
 exports.upload = async (req, res) => {
+
+    const folderName = process.env.CLOUDINARY_FOLDER;
+
     let result = await cloudinary.v2.uploader.upload(req.body.image, {
-        folder: 'e3',
+        folder: folderName,
         public_id: `${Date.now()}`,
         resource_type: "auto", // jpeg, png
     });
