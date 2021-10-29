@@ -103,7 +103,7 @@ const NavbarRender = ({ mobileNavbarToggle, cartModalToggle, isAdmin }) => {
 
                     {
                         isAdmin && (
-                            <div className="pr-9">
+                            <div className="pr-6">
        
                             </div>
                         )
