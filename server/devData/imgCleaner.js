@@ -40,7 +40,7 @@ const getCloudinaryImages = async () => {
         (result) => {
 
             const imagesArray = result.resources;
-            imagesArray.forEach((imgObj) => imageUrls.push({ url: imgObj.url, public_id: imgObj.public_id }))
+            imagesArray.forEach((imgObj) => imageUrls.push({ url: imgObj.secure_url, public_id: imgObj.public_id }))
         }
     );
 
@@ -87,6 +87,7 @@ const getRedundantImages = async () => {
     return redundantImages;
 
 }
+
 
 const removeRedundantImages = async () => {
 
