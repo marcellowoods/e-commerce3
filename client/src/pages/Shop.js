@@ -8,6 +8,7 @@ import { CheckIcon, SelectorIcon } from '@heroicons/react/solid'
 import ProductShopCard from "../components/cards/ProductShopCard"
 import LoadingPage from "./LoadingPage";
 import { getCategories } from "../functions/category";
+import { getProductsByCount } from "../functions/product";
 
 const apiURL = process.env.REACT_APP_API_URL;
 
@@ -149,31 +150,37 @@ const PageComponent = () => {
     }, [selectedCategory]);
 
     const fetchProducts = () => {
-        let items = [];
+        // let items = [];
 
-        items.push({
-            id: Math.floor(Math.random() * 1000000),
-            quantity: 4,
-            pName: "casio",
-            pPrice: 100,
-            pImages: ["https://images.unsplash.com/photo-1495856458515-0637185db551?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=750&q=80",
-                "https://images.unsplash.com/photo-1495856458515-0637185db551?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=750&q=80",
-                "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQ6CiNQLY45qBnDNkz5Gca7tsUWtDgVb94g2g&usqp=CAU"]
-        })
+        // items.push({
+        //     id: Math.floor(Math.random() * 1000000),
+        //     quantity: 4,
+        //     pName: "casio",
+        //     pPrice: 100,
+        //     pImages: ["https://images.unsplash.com/photo-1495856458515-0637185db551?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=750&q=80",
+        //         "https://images.unsplash.com/photo-1495856458515-0637185db551?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=750&q=80",
+        //         "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQ6CiNQLY45qBnDNkz5Gca7tsUWtDgVb94g2g&usqp=CAU"]
+        // })
 
-        for (let i = 0; i < 15; i++) {
-            items.push({
-                id: Math.floor(Math.random() * 1000000),
-                quantity: 2,
-                pName: "swatch",
-                pPrice: 2000,
-                pImages: ["https://images.unsplash.com/photo-1495856458515-0637185db551?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=750&q=80",
-                    "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQ6CiNQLY45qBnDNkz5Gca7tsUWtDgVb94g2g&usqp=CAU",
-                    "https://images.unsplash.com/photo-1495856458515-0637185db551?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=750&q=80",
-                    'https://m.media-amazon.com/images/I/71gdBQP+qGL._UY741_.jpg']
-            });
-        }
-        setProducts(items);
+        // for (let i = 0; i < 15; i++) {
+        //     items.push({
+        //         id: Math.floor(Math.random() * 1000000),
+        //         quantity: 2,
+        //         pName: "swatch",
+        //         pPrice: 2000,
+        //         pImages: ["https://images.unsplash.com/photo-1495856458515-0637185db551?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=750&q=80",
+        //             "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQ6CiNQLY45qBnDNkz5Gca7tsUWtDgVb94g2g&usqp=CAU",
+        //             "https://images.unsplash.com/photo-1495856458515-0637185db551?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=750&q=80",
+        //             'https://m.media-amazon.com/images/I/71gdBQP+qGL._UY741_.jpg']
+        //     });
+        // }
+        // setProducts(items);
+
+        getProductsByCount().then((c) => {
+            console.log(c.data);
+            setProducts(c.data);
+            // setLoading(false);
+        });
     }
 
     // const fetchData = async () => {
@@ -201,13 +208,13 @@ const PageComponent = () => {
         <div key={"products"} className="grid gap-6 grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 mt-6">
             {products && products.map((p) => (
                 <ProductShopCard
-                    key={p.id}
-                    id={p.id}
-                    quantity={3}
-                    images={p.pImages}
-                    imageUrl={p.pImages[0]}
-                    price={p.pPrice}
-                    name={p.pName}
+                    key={p._id}
+                    id={p._id}
+                    quantity={p.quantity}
+                    images={p.images}
+                    imageUrl={p.images[0]}
+                    price={p.price}
+                    name={p.title}
                     onAddClick={(id) => { console.log(`added ${id} to cart`) }}
                     onCardClick={pushToProductPage}
                 />
