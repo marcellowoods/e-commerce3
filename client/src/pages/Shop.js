@@ -140,10 +140,10 @@ const PageComponent = () => {
             const path = SHOP_PATHNAME + selectedCategory.slug;
             history.replace({ pathname: path });
 
-            setTimeout(() => {
-                fetchProducts();
-                setIsLoading(false);
-            }, 300);
+
+            fetchProducts();
+            
+
 
         }
         fetchProducts();
@@ -176,9 +176,11 @@ const PageComponent = () => {
         // }
         // setProducts(items);
 
-        getProductsByCount().then((c) => {
+        setIsLoading(true);
+        getProductsByCount(5).then((c) => {
             console.log(c.data);
             setProducts(c.data);
+            setIsLoading(false);
             // setLoading(false);
         });
     }
