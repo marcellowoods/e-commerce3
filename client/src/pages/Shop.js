@@ -137,21 +137,19 @@ const PageComponent = () => {
 
 
         if (selectedCategory) {
-            setIsLoading(true);
-
             //https://stackoverflow.com/questions/56053810/url-change-without-re-rendering-in-react-router
             //https://reactjs.org/docs/reconciliation.html
             const path = SHOP_PATHNAME + selectedCategory.slug;
             history.replace({ pathname: path });
 
             fetchProducts();
-
         }
-        fetchProducts();
+
     }, [selectedCategory]);
 
 
     const fetchProducts = async () => {
+        console.log("fetching products")
         try {
             setIsLoading(true);
             let {data} = await getProductsByCount(5);

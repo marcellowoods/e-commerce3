@@ -18,13 +18,16 @@ const ProductShopSlider = ({ images, onPointerDown, onPointerUp }) => {
             dotsClass="slick-dots transform translate-y-3"
             {...settings}>
             {images.map((img) => {
-                return <img
-                    onPointerDown={(e) => onPointerDown(e.screenX, e.screenY)}
-                    onPointerUp={(e) => onPointerUp(e.screenX, e.screenY)}
-                    className="flex items-end justify-end h-56 w-full object-cover object-center cursor-pointer"
-                    src={img}
-                    alt=""
-                />
+                return (
+                    <img
+                        key={img}
+                        onPointerDown={(e) => onPointerDown(e.screenX, e.screenY)}
+                        onPointerUp={(e) => onPointerUp(e.screenX, e.screenY)}
+                        className="flex items-end justify-end h-56 w-full object-cover object-center cursor-pointer"
+                        src={img}
+                        alt=""
+                    />
+                )
             })}
         </Slider>
     );
