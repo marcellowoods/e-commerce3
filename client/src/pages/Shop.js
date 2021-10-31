@@ -114,8 +114,6 @@ const PageComponent = () => {
     useEffect(() => {
 
         fetchAllCategories();
-        console.log("refetch")
-        // fetchData();
     }, []);
 
     useDidMountEffect(() => {
