@@ -1,9 +1,10 @@
 import ReactPaginate from 'react-paginate';
 
-const getPagination = ({ pageCount, onPageChange }) => {
+const getPagination = ({ pageCount, onPageChange, curPage }) => {
     return (
         
             <ReactPaginate
+                forcePage={curPage}
                 previousLabel={"Previous"}
                 nextLabel={"Next"}
                 breakLabel={"..."}

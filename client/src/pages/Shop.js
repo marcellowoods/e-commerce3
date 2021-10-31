@@ -8,7 +8,7 @@ import { CheckIcon, SelectorIcon } from '@heroicons/react/solid'
 import ProductShopCard from "../components/cards/ProductShopCard"
 import LoadingPage from "./LoadingPage";
 import { getCategories } from "../functions/category";
-import { getProductsByCount } from "../functions/product";
+import { getProducts } from "../functions/product";
 
 const apiURL = process.env.REACT_APP_API_URL;
 
@@ -93,6 +93,8 @@ const PageComponent = () => {
     const [products, setProducts] = useState(null);
     const [selectedCategory, setSelectedCategory] = useState(null);
     const [allCategories, setAllCategories] = useState(null);
+    const [page, setPage] = useState(0);
+    const [pageCount, setPageCount] = useState(0);
 
     const [isLoading, setIsLoading] = useState(false);
 
@@ -101,7 +103,7 @@ const PageComponent = () => {
     const fetchAllCategories = async () => {
 
         try {
-            let {data} = await getCategories();
+            let { data } = await getCategories();
             if (data) {
                 setAllCategories(data);
             }
@@ -131,16 +133,33 @@ const PageComponent = () => {
 
     // console.log('render')
 
-    useEffect(() => {
+    useDidMountEffect(() => {
 
 
-        if (selectedCategory) {
-            //https://stackoverflow.com/questions/56053810/url-change-without-re-rendering-in-react-router
-            //https://reactjs.org/docs/reconciliation.html
-            const path = SHOP_PATHNAME + selectedCategory.slug;
-            history.replace({ pathname: path });
+        //https://stackoverflow.com/questions/56053810/url-change-without-re-rendering-in-react-router
+        //https://reactjs.org/docs/reconciliation.html
+        // const path = SHOP_PATHNAME + selectedCategory.slug;
+        // history.replace({ pathname: path });
 
-            fetchProducts();
+        fetchProducts();
+
+
+    }, [page]);
+
+    useDidMountEffect(() => {
+
+        if (page === 0) {
+            if (selectedCategory) {
+                //https://stackoverflow.com/questions/56053810/url-change-without-re-rendering-in-react-router
+                //https://reactjs.org/docs/reconciliation.html
+                const path = SHOP_PATHNAME + selectedCategory.slug;
+                history.replace({ pathname: path });
+
+                fetchProducts();
+            }
+        } else {
+            setPage(0);
+
         }
 
     }, [selectedCategory]);
@@ -150,9 +169,16 @@ const PageComponent = () => {
         console.log("fetching products")
         try {
             setIsLoading(true);
-            let {data} = await getProductsByCount(5);
+            console.log(page);
+            let { data } = await getProducts(null, null, page + 1);
+
             if (data) {
-                setProducts(data);
+                const perPage = 5;
+                console.log(data)
+                setProducts(data.data);
+                const { total } = data.metadata[0];
+                const countPages = Math.ceil(total / perPage);
+                setPageCount(countPages);
                 setIsLoading(false);
             }
         } catch (error) {
@@ -161,12 +187,6 @@ const PageComponent = () => {
             alert(error);
         }
     };
-
-    if (products == null || categoies == null || selectedCategory == null) {
-        return (
-            <LoadingPage />
-        )
-    }
 
     const pushToProductPage = (id) => {
         history.push(PRODUCT_PATHNAME + id)
@@ -191,6 +211,13 @@ const PageComponent = () => {
         </div>
     )
 
+    if (products == null || categoies == null || selectedCategory == null) {
+
+        return (
+            <LoadingPage />
+        )
+    }
+
     return (
         <Fragment>
             {/* <div class="container mx-auto px-6">
@@ -213,8 +240,9 @@ const PageComponent = () => {
                 {/* https://github.com/AdeleD/react-paginate */}
                 <div className="p-6">
                     {getPagination({
-                        pageCount: 5,
-                        onPageChange: (p) => console.log(p)
+                        curPage: page,
+                        pageCount,
+                        onPageChange: ({ selected }) => setPage(selected)
                     })}
                 </div>
 
