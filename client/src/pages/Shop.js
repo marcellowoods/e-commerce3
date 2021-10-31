@@ -98,13 +98,17 @@ const PageComponent = () => {
 
     // console.log(categorySlug);
 
-    const fetchAllCategories = () => {
-        // setIsLoading(true);
-        getCategories().then((c) => {
-            console.log(c.data);
-            setAllCategories(c.data);
-            // setLoading(false);
-        });
+    const fetchAllCategories = async () => {
+
+        try {
+            let {data} = await getCategories();
+            if (data) {
+                setAllCategories(data);
+            }
+        } catch (error) {
+            console.log(error);
+            alert(error);
+        }
     }
 
     useEffect(() => {
@@ -118,7 +122,7 @@ const PageComponent = () => {
 
         if (allCategories) {
             if (categorySlug) {
-                const categoryObj =  allCategories.find(c => c.slug == categorySlug);
+                const categoryObj = allCategories.find(c => c.slug == categorySlug);
                 setSelectedCategory(categoryObj);
             } else {
                 setSelectedCategory(allCategories[0]);
@@ -140,61 +144,27 @@ const PageComponent = () => {
             const path = SHOP_PATHNAME + selectedCategory.slug;
             history.replace({ pathname: path });
 
-
             fetchProducts();
-            
-
 
         }
         fetchProducts();
     }, [selectedCategory]);
 
-    const fetchProducts = () => {
-        // let items = [];
 
-        // items.push({
-        //     id: Math.floor(Math.random() * 1000000),
-        //     quantity: 4,
-        //     pName: "casio",
-        //     pPrice: 100,
-        //     pImages: ["https://images.unsplash.com/photo-1495856458515-0637185db551?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=750&q=80",
-        //         "https://images.unsplash.com/photo-1495856458515-0637185db551?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=750&q=80",
-        //         "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQ6CiNQLY45qBnDNkz5Gca7tsUWtDgVb94g2g&usqp=CAU"]
-        // })
-
-        // for (let i = 0; i < 15; i++) {
-        //     items.push({
-        //         id: Math.floor(Math.random() * 1000000),
-        //         quantity: 2,
-        //         pName: "swatch",
-        //         pPrice: 2000,
-        //         pImages: ["https://images.unsplash.com/photo-1495856458515-0637185db551?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=750&q=80",
-        //             "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQ6CiNQLY45qBnDNkz5Gca7tsUWtDgVb94g2g&usqp=CAU",
-        //             "https://images.unsplash.com/photo-1495856458515-0637185db551?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=750&q=80",
-        //             'https://m.media-amazon.com/images/I/71gdBQP+qGL._UY741_.jpg']
-        //     });
-        // }
-        // setProducts(items);
-
-        setIsLoading(true);
-        getProductsByCount(5).then((c) => {
-            console.log(c.data);
-            setProducts(c.data);
+    const fetchProducts = async () => {
+        try {
+            setIsLoading(true);
+            let {data} = await getProductsByCount(5);
+            if (data) {
+                setProducts(data);
+                setIsLoading(false);
+            }
+        } catch (error) {
             setIsLoading(false);
-            // setLoading(false);
-        });
-    }
-
-    // const fetchData = async () => {
-    //     try {
-    //         let responseData = await productByCategory(catId);
-    //         if (responseData && responseData.Products) {
-    //             setProducts(responseData.Products);
-    //         }
-    //     } catch (error) {
-    //         console.log(error);
-    //     }
-    // };
+            console.log(error);
+            alert(error);
+        }
+    };
 
     if (products == null || categoies == null || selectedCategory == null) {
         return (

@@ -73,14 +73,24 @@ const Home = () => {
     let history = useHistory();
 
     const [categories, setCategories] = useState([]);
-    const [loading, setLoading] = useState(false);
+    const [isLoading, setIsLoading] = useState(false);
+
+    const fetchAllCategories = async () => {
+        try {
+            setIsLoading(true);
+            let {data} = await getCategories();
+            if (data) {
+                setCategories(data);
+                setIsLoading(false);
+            }
+        } catch (error) {
+            console.log(error);
+            alert(error);
+        }
+    }
 
     useEffect(() => {
-        setLoading(true);
-        getCategories().then((c) => {
-            setCategories(c.data);
-            setLoading(false);
-        });
+        fetchAllCategories();
     }, []);
 
     const handleClick = (slugy) => {
@@ -91,7 +101,7 @@ const Home = () => {
         window.scrollTo(0, 0)
     }, [])
 
-    if(loading){
+    if(isLoading){
         return (
             <LoadingPage />
         )
