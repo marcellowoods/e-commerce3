@@ -260,7 +260,12 @@ const CreateProduct = () => {
             const categories = c.data;
             setCategories(categories);
             setSelectedCategory(categories[0]);
-        });
+        }).catch((error) => {
+            if(error.response) { 
+                console.log(error.response.data)
+                alert(error.response.data);
+            }
+        });;
     }
 
     useEffect(() => {
