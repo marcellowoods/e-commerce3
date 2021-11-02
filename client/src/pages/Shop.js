@@ -136,37 +136,9 @@ const useDidMountEffect = (func, deps) => {
 //     return /^-?\d+$/.test(value);
 // }
 
-const SetStatesFromPath = (settersArray) => {
-
-    //example settersArray
-    // [
-    //     {
-    //         isState: isNumeric,
-    //         setState: (pageStr) => {
-    //             const p = parseInt(pageStr);
-    //             setPage(p - 1);
-    //         }
-    //     }
-    // ]
-
-    const setStates = (pathname) => {
-        const arr = pathname.split('/');
-        arr.forEach((param) => {
-
-            const setterFound = settersArray.find(setter => setter.isState(param) == true);
-            if (setterFound) {
-                setterFound.setState(param);
-            }
-        })
-    }
-
-    return setStates;
-
-}
-
 const PageComponent = ({ location }) => {
 
-    const { categoryParam, pageParam } = useParams();
+    const { categoryParam, typeParam, pageParam } = useParams();
 
     const history = useHistory();
     const [products, setProducts] = useState(null);
@@ -177,45 +149,8 @@ const PageComponent = ({ location }) => {
 
     const [page, setPage] = useState(0);
     const [pageCount, setPageCount] = useState(0);
-    const stateFromPathSetter = useRef(null);
 
     const [isLoading, setIsLoading] = useState(false);
-
-    const showLocation = () => {
-        const pathname = location.pathname;
-        const arr = pathname.split('/');
-        arr.forEach((param) => {
-            // console.log(isNumeric(param));
-            // console.log(param);
-            // if (isNumeric(param)) {
-            //     console.log("set page")
-            //     const p = parseInt(param);
-            //     setPage(p - 1);
-            // }
-            // console.log(param);
-        })
-    }
-
-    const initStateSetter = () => {
-
-        const setterArray = [
-            {
-                isState: (s) => s.startsWith('page-'),
-                setState: (s) => {
-                    const p = parseInt(s.split("-")[1]);
-                    setPage(p - 1);
-                }
-            },
-            {
-                isState: (s) => s === "new" || s === "best-sellers",
-                setState: (s) => {
-                    setSelectedFiter(s);
-                }
-            }
-        ]
-
-        stateFromPathSetter.current = SetStatesFromPath(setterArray);
-    }
 
 
     const fetchAllCategories = async () => {
@@ -234,10 +169,12 @@ const PageComponent = ({ location }) => {
     useEffect(() => {
 
         fetchAllCategories();
-        initStateSetter();
+
     }, []);
 
     useDidMountEffect(() => {
+
+        console.log(typeParam);
 
         if (allCategories) {
             if (categoryParam) {
@@ -246,9 +183,16 @@ const PageComponent = ({ location }) => {
             } else {
                 setSelectedCategory(allCategories[0]);
             }
+
+            if (typeParam) {
+                setSelectedFiter(typeParam);
+            }
+            if (pageParam) {
+                setPage(parseInt(pageParam) - 1);
+            } 
             // setPage(3);
             // showLocation();
-            stateFromPathSetter.current(location.pathname)
+            // stateFromPathSetter.current(location.pathname)
 
             // console.log(pageParam);
 
@@ -263,12 +207,11 @@ const PageComponent = ({ location }) => {
             //https://stackoverflow.com/questions/56053810/url-change-without-re-rendering-in-react-router
             //https://reactjs.org/docs/reconciliation.html
             let path = SHOP_PATHNAME + selectedCategory.slug;
-            if (selectedFilter === "best sellers") {
-                path += "/best-sellers";
-            }
-            if (page !== 0) {
-                path += ("/page-" + (page + 1));
-            }
+
+            path += "/" + selectedFilter;
+            
+            path += ("/" + (page + 1));
+            
             history.replace({ pathname: path });
 
             fetchProducts();
