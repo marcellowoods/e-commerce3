@@ -74,6 +74,53 @@ const CategoryMenu = ({ allCategories, selectedCategory, setSelectedCategory }) 
     )
 }
 
+const SimpleFilterMenu = ({ selectedFilter, setSelectedFiter }) => {
+
+    const [allFilters, setAllFilters] = useState(["new", "best sellers"]);
+
+    return (
+        <Menu style={{ zIndex: 2 }} as="div" className="relative inline-block text-left">
+            <div>
+                <Menu.Button className="inline-flex justify-center w-full rounded-md border border-gray-300 shadow-sm px-4 py-2 bg-white text-sm font-medium text-gray-700 hover:bg-gray-50 focus:outline-none  focus:ring-indigo-500">
+                    <h3 className="text-gray-700 text-2xl font-medium">{selectedFilter}</h3>
+                    <SelectorIcon className="-mr-2 ml-1 mt-2 h-6 w-6" aria-hidden="true" />
+                </Menu.Button>
+            </div>
+
+            <Transition
+                as={Fragment}
+                enter="transition ease-out duration-300"
+                enterFrom="transform opacity-0 "
+                enterTo="transform opacity-100"
+                leave="transition ease-out duration-300"
+                leaveFrom="transform opacity-100"
+                leaveTo="transform opacity-0 "
+            >
+                <Menu.Items style={{ maxHeight: "300px" }} className="overflow-y-auto origin-top-right absolute  mt-2 w-56 rounded-md shadow-lg bg-white ring-1 ring-black ring-opacity-5 focus:outline-none">
+                    <div className="py-1">
+                        {allFilters.map((categoryObj) => (
+                            <Menu.Item key={categoryObj}>
+                                {({ active }) => (
+                                    <a
+                                        onClick={() => setSelectedFiter(categoryObj)}
+                                        className={classNames(
+                                            active ? 'bg-gray-100 text-gray-900' : 'text-gray-700',
+                                            selectedFilter == categoryObj ? 'bg-gray-100' : "",
+                                            'block text-center  px-4 py-4 text-md cursor-pointer'
+                                        )}
+                                    >
+                                        {categoryObj} 
+                                    </a>
+                                )}
+                            </Menu.Item>
+                        ))}
+                    </div>
+                </Menu.Items>
+            </Transition>
+        </Menu>
+    )
+}
+
 let categoies = ["watches", "keyboards", "laptops"];
 
 const useDidMountEffect = (func, deps) => {
@@ -85,9 +132,9 @@ const useDidMountEffect = (func, deps) => {
     }, deps);
 }
 
-function isNumeric(value) {
-    return /^-?\d+$/.test(value);
-}
+// function isNumeric(value) {
+//     return /^-?\d+$/.test(value);
+// }
 
 const SetStatesFromPath = (settersArray) => {
 
@@ -125,6 +172,9 @@ const PageComponent = ({ location }) => {
     const [products, setProducts] = useState(null);
     const [selectedCategory, setSelectedCategory] = useState(null);
     const [allCategories, setAllCategories] = useState(null);
+
+    const [selectedFilter, setSelectedFiter] = useState("new");
+
     const [page, setPage] = useState(0);
     const [pageCount, setPageCount] = useState(0);
     const stateFromPathSetter = useRef(null);
@@ -137,11 +187,11 @@ const PageComponent = ({ location }) => {
         arr.forEach((param) => {
             // console.log(isNumeric(param));
             // console.log(param);
-            if (isNumeric(param)) {
-                console.log("set page")
-                const p = parseInt(param);
-                setPage(p - 1);
-            }
+            // if (isNumeric(param)) {
+            //     console.log("set page")
+            //     const p = parseInt(param);
+            //     setPage(p - 1);
+            // }
             // console.log(param);
         })
     }
@@ -150,10 +200,16 @@ const PageComponent = ({ location }) => {
 
         const setterArray = [
             {
-                isState: isNumeric,
-                setState: (pageStr) => {
-                    const p = parseInt(pageStr);
+                isState: (s) => s.startsWith('page-'),
+                setState: (s) => {
+                    const p = parseInt(s.split("-")[1]);
                     setPage(p - 1);
+                }
+            },
+            {
+                isState: (s) => s === "new" || s === "best-sellers",
+                setState: (s) => {
+                    setSelectedFiter(s);
                 }
             }
         ]
@@ -200,14 +256,6 @@ const PageComponent = ({ location }) => {
 
     }, [allCategories])
 
-    // console.log('render')
-
-    // useDidMountEffect(() => {
-
-    //     fetchProducts();
-
-    // }, [page]);
-
     useDidMountEffect(() => {
 
         console.log("fetching")
@@ -215,8 +263,11 @@ const PageComponent = ({ location }) => {
             //https://stackoverflow.com/questions/56053810/url-change-without-re-rendering-in-react-router
             //https://reactjs.org/docs/reconciliation.html
             let path = SHOP_PATHNAME + selectedCategory.slug;
+            if (selectedFilter === "best sellers") {
+                path += "/best-sellers";
+            }
             if (page !== 0) {
-                path += ("/" + (page + 1));
+                path += ("/page-" + (page + 1));
             }
             history.replace({ pathname: path });
 
@@ -224,7 +275,7 @@ const PageComponent = ({ location }) => {
         }
 
 
-    }, [selectedCategory, page]);
+    }, [selectedCategory, page, selectedFilter]);
 
 
 
@@ -287,7 +338,7 @@ const PageComponent = ({ location }) => {
             <LoadingPage />
         )
     }
-
+    
     return (
         <Fragment>
             {/* <div class="container mx-auto px-6">
@@ -295,13 +346,23 @@ const PageComponent = ({ location }) => {
             </div> */}
 
             <div className="my-5 sm:my-10">
-                <div className="container mx-auto max-w-7xl px-6">
+                <div className="container mx-auto max-w-7xl px-6 ">
 
+                    <div className="flex flex-row">
                     <CategoryMenu
                         allCategories={allCategories}
                         selectedCategory={selectedCategory}
                         setSelectedCategory={handleCategoryChange}
                     />
+                    
+                    <div className="pl-2">
+                    <SimpleFilterMenu
+
+                        selectedFilter={selectedFilter}
+                        setSelectedFiter={setSelectedFiter}
+                    />
+                    </div>
+                    </div>
                     {/* xl:grid-cols-4 */}
                     {isLoading ? <LoadingPage /> : renderProducts()}
 
