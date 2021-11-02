@@ -85,9 +85,13 @@ const useDidMountEffect = (func, deps) => {
     }, deps);
 }
 
-const PageComponent = () => {
+function isNumeric(value) {
+    return /^-?\d+$/.test(value);
+}
 
-    const { categorySlug } = useParams();
+const PageComponent = ({ location }) => {
+
+    const { categoryParam, pageParam } = useParams();
 
     const history = useHistory();
     const [products, setProducts] = useState(null);
@@ -98,7 +102,22 @@ const PageComponent = () => {
 
     const [isLoading, setIsLoading] = useState(false);
 
-    // console.log(categorySlug);
+    const showLocation = () => {
+        const pathname = location.pathname;
+        const arr = pathname.split('/');
+        arr.forEach((param) => {
+            // console.log(isNumeric(param));
+            // console.log(param);
+            if (isNumeric(param)) {
+                console.log("set page")
+                const p = parseInt(param);
+                setPage(p - 1);
+            }
+            // console.log(param);
+        })
+
+    }
+
 
     const fetchAllCategories = async () => {
 
@@ -121,60 +140,60 @@ const PageComponent = () => {
     useDidMountEffect(() => {
 
         if (allCategories) {
-            if (categorySlug) {
-                const categoryObj = allCategories.find(c => c.slug == categorySlug);
+            if (categoryParam) {
+                const categoryObj = allCategories.find(c => c.slug == categoryParam);
                 setSelectedCategory(categoryObj);
             } else {
                 setSelectedCategory(allCategories[0]);
             }
+            // setPage(3);
+            showLocation();
+
+            // console.log(pageParam);
+
         }
 
     }, [allCategories])
 
     // console.log('render')
 
-    useDidMountEffect(() => {
+    // useDidMountEffect(() => {
 
+    //     fetchProducts();
 
-        //https://stackoverflow.com/questions/56053810/url-change-without-re-rendering-in-react-router
-        //https://reactjs.org/docs/reconciliation.html
-        // const path = SHOP_PATHNAME + selectedCategory.slug;
-        // history.replace({ pathname: path });
-
-        fetchProducts();
-
-
-    }, [page]);
+    // }, [page]);
 
     useDidMountEffect(() => {
 
-        if (page === 0) {
-            if (selectedCategory) {
-                //https://stackoverflow.com/questions/56053810/url-change-without-re-rendering-in-react-router
-                //https://reactjs.org/docs/reconciliation.html
-                const path = SHOP_PATHNAME + selectedCategory.slug;
-                history.replace({ pathname: path });
 
-                fetchProducts();
+        if (selectedCategory) {
+            //https://stackoverflow.com/questions/56053810/url-change-without-re-rendering-in-react-router
+            //https://reactjs.org/docs/reconciliation.html
+            let path = SHOP_PATHNAME + selectedCategory.slug;
+            if(page !== 0){
+                path += ("/" + (page + 1));
             }
-        } else {
-            setPage(0);
+            history.replace({ pathname: path });
 
+            fetchProducts();
         }
 
-    }, [selectedCategory]);
+
+    }, [selectedCategory, page]);
+
+
 
 
     const fetchProducts = async () => {
-        console.log("fetching products")
+        // console.log("fetching products")
         try {
             setIsLoading(true);
-            console.log(page);
+            // console.log(page);
             let { data } = await getProducts(null, null, page + 1);
 
             if (data) {
                 const perPage = 5;
-                console.log(data)
+                // console.log(data)
                 setProducts(data.data);
                 const { total } = data.metadata[0];
                 const countPages = Math.ceil(total / perPage);
@@ -190,6 +209,12 @@ const PageComponent = () => {
 
     const pushToProductPage = (id) => {
         history.push(PRODUCT_PATHNAME + id)
+    }
+
+    const handleCategoryChange = (category) => {
+
+        setSelectedCategory(category);
+        setPage(0);
     }
 
     const renderProducts = () => (
@@ -230,7 +255,7 @@ const PageComponent = () => {
                     <CategoryMenu
                         allCategories={allCategories}
                         selectedCategory={selectedCategory}
-                        setSelectedCategory={setSelectedCategory}
+                        setSelectedCategory={handleCategoryChange}
                     />
                     {/* xl:grid-cols-4 */}
                     {isLoading ? <LoadingPage /> : renderProducts()}

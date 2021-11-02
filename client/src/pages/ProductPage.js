@@ -5,7 +5,7 @@ import ProductCard from "../components/cards/ProductCard.js"
 
 const ProductPageDesign = () => {
 
-    const { productSlug } = useParams();
+    const { categoryParam } = useParams();
 
     const product = {
         id: Math.floor(Math.random() * 1000000),
