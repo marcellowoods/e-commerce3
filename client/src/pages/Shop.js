@@ -89,6 +89,34 @@ function isNumeric(value) {
     return /^-?\d+$/.test(value);
 }
 
+const SetStatesFromPath = (settersArray) => {
+
+    //example settersArray
+    // [
+    //     {
+    //         isState: isNumeric,
+    //         setState: (pageStr) => {
+    //             const p = parseInt(pageStr);
+    //             setPage(p - 1);
+    //         }
+    //     }
+    // ]
+
+    const setStates = (pathname) => {
+        const arr = pathname.split('/');
+        arr.forEach((param) => {
+
+            const setterFound = settersArray.find(setter => setter.isState(param) == true);
+            if (setterFound) {
+                setterFound.setState(param);
+            }
+        })
+    }
+
+    return setStates;
+
+}
+
 const PageComponent = ({ location }) => {
 
     const { categoryParam, pageParam } = useParams();
@@ -99,6 +127,7 @@ const PageComponent = ({ location }) => {
     const [allCategories, setAllCategories] = useState(null);
     const [page, setPage] = useState(0);
     const [pageCount, setPageCount] = useState(0);
+    const stateFromPathSetter = useRef(null);
 
     const [isLoading, setIsLoading] = useState(false);
 
@@ -115,7 +144,21 @@ const PageComponent = ({ location }) => {
             }
             // console.log(param);
         })
+    }
 
+    const initStateSetter = () => {
+
+        const setterArray = [
+            {
+                isState: isNumeric,
+                setState: (pageStr) => {
+                    const p = parseInt(pageStr);
+                    setPage(p - 1);
+                }
+            }
+        ]
+
+        stateFromPathSetter.current = SetStatesFromPath(setterArray);
     }
 
 
@@ -135,6 +178,7 @@ const PageComponent = ({ location }) => {
     useEffect(() => {
 
         fetchAllCategories();
+        initStateSetter();
     }, []);
 
     useDidMountEffect(() => {
@@ -147,7 +191,8 @@ const PageComponent = ({ location }) => {
                 setSelectedCategory(allCategories[0]);
             }
             // setPage(3);
-            showLocation();
+            // showLocation();
+            stateFromPathSetter.current(location.pathname)
 
             // console.log(pageParam);
 
@@ -165,12 +210,12 @@ const PageComponent = ({ location }) => {
 
     useDidMountEffect(() => {
 
-
+        console.log("fetching")
         if (selectedCategory) {
             //https://stackoverflow.com/questions/56053810/url-change-without-re-rendering-in-react-router
             //https://reactjs.org/docs/reconciliation.html
             let path = SHOP_PATHNAME + selectedCategory.slug;
-            if(page !== 0){
+            if (page !== 0) {
                 path += ("/" + (page + 1));
             }
             history.replace({ pathname: path });
