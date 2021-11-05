@@ -141,7 +141,7 @@ const PageComponent = () => {
             let { data } = await getProducts(null, null, page + 1);
 
             if (data) {
-                const perPage = 5;
+                const perPage = 6;
                 // console.log(data)
                 setProducts(data.data);
                 const { total } = data.metadata[0];
@@ -185,20 +185,22 @@ const PageComponent = () => {
         </div>
     )
 
-    const renderLoadCards = () => (
+    const renderLoadCards = () => {
+        let n = products.length || 6;
 
-        <div key={"products"} className="grid gap-6 grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 mt-6">
-            {
-                products && products.map((p) => (
-                    <ProductLoadCard
-                        key={p._id}
-                    />
-                ))
-            }
-        </div>
+        return (
+            <div key={"products"} className="grid gap-6 grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 mt-6">
+                {
+                    Array.from({ length: n }, (_, i) => (
+                        <ProductLoadCard
+                            key={i}
+                        />
+                    ))
+                }
+            </div>
+        )
 
-
-    )
+    }
 
     if (products == null || allCategories == null || selectedCategory == null) {
 
@@ -232,8 +234,7 @@ const PageComponent = () => {
                         </div>
                     </div>
                     {/* xl:grid-cols-4 */}
-                    {/* {isProductsLoading ? <LoadingPage /> : renderProducts()} */}
-                    {renderLoadCards()}
+                    {isProductsLoading ? renderLoadCards() : renderProducts()}
 
                 </div>
 

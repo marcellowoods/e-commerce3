@@ -96,7 +96,7 @@ exports.list = async (req, res) => {
         // createdAt/updatedAt, desc/asc, 3
         const { sort, order, page } = req.body;
         const currentPage = page || 1;
-        const perPage = 5; // 3
+        const perPage = 6; // 3
 
         const skip = (currentPage - 1) * perPage;
 
