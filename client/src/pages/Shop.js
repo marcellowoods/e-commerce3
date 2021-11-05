@@ -3,7 +3,8 @@ import { useHistory, useParams } from "react-router-dom";
 // import Tridi from 'react-tridi';
 import 'react-tridi/dist/index.css';
 import getPagination from "../components/navigation/getPagination";
-import ProductShopCard from "../components/cards/ProductShopCard"
+import ProductShopCard from "../components/cards/ProductShopCard";
+import ProductLoadCard from "../components/cards/ProductLoadCard";
 import LoadingPage from "./LoadingPage";
 import { getCategories } from "../functions/category";
 import { getProducts } from "../functions/product";
@@ -44,7 +45,7 @@ const PageComponent = () => {
     const [page, setPage] = useState(0);
     const [pageCount, setPageCount] = useState(0);
 
-    const [isLoading, setIsLoading] = useState(false);
+    const [isProductsLoading, setIsProductsLoading] = useState(false);
 
 
     const fetchAllCategories = async () => {
@@ -99,7 +100,7 @@ const PageComponent = () => {
                 if (isNumeric(pageParam)) {
                     setPage(parseInt(pageParam) - 1);
                 } else {
-                    
+
                     alert("wrong url");
                     history.push('/');
                     return;
@@ -135,7 +136,7 @@ const PageComponent = () => {
     const fetchProducts = async () => {
         // console.log("fetching products")
         try {
-            setIsLoading(true);
+            setIsProductsLoading(true);
             // console.log(page);
             let { data } = await getProducts(null, null, page + 1);
 
@@ -146,10 +147,10 @@ const PageComponent = () => {
                 const { total } = data.metadata[0];
                 const countPages = Math.ceil(total / perPage);
                 setPageCount(countPages);
-                setIsLoading(false);
+                setIsProductsLoading(false);
             }
         } catch (error) {
-            setIsLoading(false);
+            setIsProductsLoading(false);
             console.log(error);
             alert(error);
         }
@@ -184,6 +185,21 @@ const PageComponent = () => {
         </div>
     )
 
+    const renderLoadCards = () => (
+
+        <div key={"products"} className="grid gap-6 grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 mt-6">
+            {
+                products && products.map((p) => (
+                    <ProductLoadCard
+                        key={p._id}
+                    />
+                ))
+            }
+        </div>
+
+
+    )
+
     if (products == null || allCategories == null || selectedCategory == null) {
 
         return (
@@ -216,7 +232,8 @@ const PageComponent = () => {
                         </div>
                     </div>
                     {/* xl:grid-cols-4 */}
-                    {isLoading ? <LoadingPage /> : renderProducts()}
+                    {/* {isProductsLoading ? <LoadingPage /> : renderProducts()} */}
+                    {renderLoadCards()}
 
                 </div>
 
