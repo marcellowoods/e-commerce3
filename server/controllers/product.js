@@ -100,12 +100,21 @@ exports.list = async (req, res) => {
 
         const skip = (currentPage - 1) * perPage;
 
+        let sortObj = null;
+        if(sort == "best sellers"){
+            sortObj = { sold: -1 };
+        }else if(sort == "new"){
+            sortObj = { createdDate: -1 };
+        }
+
+        console.log(sortObj)
+
         const data = await Product.aggregate([
             // { $match: { ...match } },
             {
                 $facet: {
                     metadata: [{ $count: 'total' }],
-                    data: [{ $skip: skip }, { $limit: perPage }]
+                    data: [{ $sort: sortObj }, { $skip: skip }, { $limit: perPage }]
                 }
             }
         ]).exec();

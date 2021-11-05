@@ -139,7 +139,7 @@ const PageComponent = () => {
         try {
             setIsProductsLoading(true);
             // console.log(page);
-            let { data } = await getProducts(null, null, page + 1);
+            let { data } = await getProducts(selectedType.name, null, page + 1);
 
             if (data) {
                 const perPage = PRODUCTS_PER_PAGE;
@@ -200,7 +200,6 @@ const PageComponent = () => {
                 }
             </div>
         )
-
     }
 
     if (products == null || allCategories == null || selectedCategory == null) {
