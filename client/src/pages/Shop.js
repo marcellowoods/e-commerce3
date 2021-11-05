@@ -12,6 +12,7 @@ import ElementsMenu from "../components/menus/ElementMenu";
 
 const SHOP_PATHNAME = "/shop/";
 const PRODUCT_PATHNAME = "/product/";
+const PRODUCTS_PER_PAGE = 6;
 
 const useDidMountEffect = (func, deps) => {
     const didMount = useRef(false);
@@ -141,7 +142,7 @@ const PageComponent = () => {
             let { data } = await getProducts(null, null, page + 1);
 
             if (data) {
-                const perPage = 6;
+                const perPage = PRODUCTS_PER_PAGE;
                 // console.log(data)
                 setProducts(data.data);
                 const { total } = data.metadata[0];
@@ -186,7 +187,7 @@ const PageComponent = () => {
     )
 
     const renderLoadCards = () => {
-        let n = products.length || 6;
+        let n = products.length || PRODUCTS_PER_PAGE;
 
         return (
             <div key={"products"} className="grid gap-6 grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 mt-6">
