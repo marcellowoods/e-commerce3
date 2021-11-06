@@ -2,7 +2,8 @@ import React, { useState, useEffect } from 'react'
 import { useHistory, useParams, useLocation } from "react-router-dom";
 import ProductCard from "../components/cards/ProductCard.js"
 import { getProduct } from "../functions/product";
-
+import { addToCart } from "../actions/cartActions";
+import { useDispatch, useSelector } from 'react-redux'
 
 const ProductPageDesign = () => {
 
@@ -123,6 +124,8 @@ const ProductPage = () => {
     const { productSlugParam } = useParams();
     const [product, setProduct] = useState(null);
 
+    const dispatch = useDispatch()
+
     const fetchProduct = async () => {
 
         try {
@@ -136,6 +139,12 @@ const ProductPage = () => {
         }
     }
 
+    const handleAddToCart = () => {
+        if(product !== null){
+            dispatch(addToCart(product.slug, 1));
+        }
+    }
+
     useEffect(() => {
 
         fetchProduct();
@@ -146,7 +155,7 @@ const ProductPage = () => {
     }
 
     return (
-        <ProductCard product={product}/>
+        <ProductCard product={product} handleAddToCart={handleAddToCart}/>
     )
 }
 
