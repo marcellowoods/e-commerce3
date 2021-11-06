@@ -131,7 +131,7 @@ const PageComponent = () => {
         }
 
 
-    }, [selectedCategory, page, selectedType]);
+    }, [selectedCategory, selectedType, page]);
 
 
     const fetchProducts = async () => {
@@ -178,7 +178,7 @@ const PageComponent = () => {
             {products && products.map((p) => (
                 <ProductShopCard
                     key={p._id}
-                    id={p._id}
+                    id={p.slug}
                     quantity={p.quantity}
                     images={p.images}
                     imageUrl={p.images[0]}

@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react'
 import { useHistory, useParams, useLocation } from "react-router-dom";
 import ProductCard from "../components/cards/ProductCard.js"
+import { getProduct } from "../functions/product";
 
 
 const ProductPageDesign = () => {
@@ -68,8 +69,8 @@ const ProductPageDesign = () => {
     )
 }
 
-const product = {
-    name: 'smart watch',
+const testProduct = {
+    title: 'smart watch',
     price: '$192',
     breadcrumbs: [
         { id: 1, name: 'watches', href: '/watches' },
@@ -118,6 +119,31 @@ const product = {
 }
 
 const ProductPage = () => {
+
+    const { productSlugParam } = useParams();
+    const [product, setProduct] = useState(null);
+
+    const fetchProduct = async () => {
+
+        try {
+            let { data } = await getProduct(productSlugParam);
+            if (data) {
+                setProduct(data);
+            }
+        } catch (error) {
+            console.log(error);
+            alert(error);
+        }
+    }
+
+    useEffect(() => {
+
+        fetchProduct();
+    }, [productSlugParam]);
+
+    if(product == null){
+        return <h1>product</h1>
+    }
 
     return (
         <ProductCard product={product}/>

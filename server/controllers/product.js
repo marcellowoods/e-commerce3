@@ -107,7 +107,6 @@ exports.list = async (req, res) => {
             sortObj = { createdDate: -1 };
         }
 
-        console.log(sortObj)
 
         const data = await Product.aggregate([
             // { $match: { ...match } },

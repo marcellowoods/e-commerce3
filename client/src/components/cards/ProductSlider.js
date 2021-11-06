@@ -40,7 +40,8 @@ const ProductSlider = ({ images }) => {
         scale = '';
     }
 
-    let translate = nImages > 10 ? 'translate-y-8' : 'translate-y-6'
+    // let translate = nImages > 10 ? 'translate-y-8' : 'translate-y-8'
+    let translate = 'translate-y-8';
 
     const settings = {
         customPaging: function (i) {

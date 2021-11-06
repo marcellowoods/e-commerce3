@@ -169,7 +169,7 @@ const BreadCrumbs = ({ breadcrumbs, name }) => {
 //https://tailwindui.com/components/ecommerce/components/product-overviews
 const ProductCard = ({ product }) => {
 
-    const { details, highlights, description, sizes, colors, images, breadcrumbs, price, name } = product;
+    const { details, highlights, description, sizes, colors, images, breadcrumbs, price, title: name } = product;
 
     const [selectedColor, setSelectedColor] = useState(null);
     const [selectedSize, setSelectedSize] = useState(null);
@@ -192,7 +192,7 @@ const ProductCard = ({ product }) => {
                 {breadcrumbs && <BreadCrumbs breadcrumbs={breadcrumbs} name={name} />}
 
                 {/* Image gallery */}
-                <div className="mt-6 max-w-xl mx-auto sm:px-6 lg:max-w-2xl px-4 lg:px-8 ">
+                <div className="max-w-xl mx-auto sm:px-6 lg:max-w-2xl px-4 lg:px-8 ">
                     <div className="w-full max-w-lg mx-auto rounded-md  overflow-hidden">
                         {/* <img
                             src={product.images[1].src}
@@ -205,7 +205,7 @@ const ProductCard = ({ product }) => {
                             onPointerDown={() => { }}
                             onPointerUp={() => { }}
                         />
-                        <div className=" py-7">
+                        <div className="py-12">
 
                         </div>
 
@@ -222,8 +222,6 @@ const ProductCard = ({ product }) => {
                     <div className="mt-4 lg:mt-0 lg:row-span-3">
                         <h2 className="sr-only">Product information</h2>
                         <p className="text-3xl text-gray-900">{price}</p>
-
-
 
                         <form className="mt-10">
 
@@ -247,8 +245,6 @@ const ProductCard = ({ product }) => {
                                     />
                                 )
                             }
-
-
 
                             <button
                                 type="submit"
