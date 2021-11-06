@@ -1,19 +1,31 @@
-let initialState = [];
+import { CART_ADD_ITEM, CART_REMOVE_ITEM } from '../constants/cartConstants'
 
-// load cart items from local storage
-if (typeof window !== "undefined") {
-    if (localStorage.getItem("cart")) {
-        initialState = JSON.parse(localStorage.getItem("cart"));
-    } else {
-        initialState = [];
-    }
+export const cartReducer = (state = { cartItems: [] }, action) => {
+  switch (action.type) {
+    case CART_ADD_ITEM:
+      const item = action.payload
+
+      const existItem = state.cartItems.find((x) => x.product === item.product)
+
+      if (existItem) {
+        return {
+          ...state,
+          cartItems: state.cartItems.map((x) =>
+            x.product === existItem.product ? item : x
+          ),
+        }
+      } else {
+        return {
+          ...state,
+          cartItems: [...state.cartItems, item],
+        }
+      }
+    case CART_REMOVE_ITEM:
+      return {
+        ...state,
+        cartItems: state.cartItems.filter((x) => x.product !== action.payload),
+      }
+    default:
+      return state
+  }
 }
-
-export const cartReducer = (state = initialState, action) => {
-    switch (action.type) {
-        case "ADD_TO_CART":
-            return action.payload;
-        default:
-            return state;
-    }
-};

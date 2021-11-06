@@ -1,9 +1,6 @@
 import axios from 'axios'
 import { CART_ADD_ITEM, CART_REMOVE_ITEM } from '../constants/cartConstants'
 
-//https://github.com/AyaBellazreg/React-Shopping-Cart/tree/master/Shopping-Cart/src/components
-//https://medium.com/@ayabellazreg/make-a-simple-shopping-cart-app-using-react-redux-part-2-88117cf1c069
-
 export const addToCart = (id, qty) => async (dispatch, getState) => {
     const { data } = await axios.get(`/api/products/${id}`)
 
