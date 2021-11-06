@@ -70,7 +70,7 @@ const PageComponent = () => {
 
     useDidMountEffect(() => {
 
-        console.log(typeParam);
+        // console.log(typeParam);
 
         if (allCategories) {
             if (categoryParam) {
@@ -167,6 +167,12 @@ const PageComponent = () => {
         setPage(0);
     }
 
+    const handleTypeChange = (type) => {
+
+        setSelectedType(type);
+        setPage(0);
+    }
+
     const renderProducts = () => (
         <div key={"products"} className="grid gap-6 grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 mt-6">
             {products && products.map((p) => (
@@ -229,7 +235,7 @@ const PageComponent = () => {
                             <ElementsMenu
                                 allElements={selectedTypes}
                                 selectedElement={selectedType}
-                                setSelectedElement={setSelectedType}
+                                setSelectedElement={handleTypeChange}
                             />
                         </div>
                     </div>
