@@ -1,4 +1,4 @@
-const { Product } = require("../models/product");
+const  Product  = require("../models/product");
 const Category = require("../models/category");
 
 const mongoose = require("mongoose");
@@ -38,7 +38,7 @@ const insertProducts = async () => {
         // await Product.deleteMany()
 
         const sampleProducts = products.map((product) => {
-            return {...product, slug: slugifyLower(product.title)}
+            return {...product, slug: slugifyLower(product.name)}
         })
 
         await Product.insertMany(sampleProducts)
@@ -70,8 +70,7 @@ const destroyProducts = async () => {
 //     importData()
 // }
 
-//ex node seeder -insert-products
-
+//ex node seeder insert-products
 const runWithArg = async (arg) => {
 
     if (arg === 'insert-products') {
@@ -82,9 +81,5 @@ const runWithArg = async (arg) => {
 }
 
 runWithArg(process.argv[2]);
-
-
-// getCloudinaryImages();
-// getDbImages();
 
 

@@ -3,7 +3,7 @@ const { ObjectId } = mongoose.Schema;
 
 const productSchema = new mongoose.Schema(
     {
-        title: {
+        name: {
             type: String,
             trim: true,
             required: true,
@@ -54,24 +54,4 @@ const productSchema = new mongoose.Schema(
     { timestamps: true }
 );
 
-// module.exports = mongoose.model("Product", productSchema);
-
-const findProperties = {
-    "subs": "subs.slug",
-    "category": "category.slug",
-}
-
-let addFieldsObj = {
-    rating: {
-        $ifNull: [{
-            $floor: { $avg: "$ratings.star" }, // floor value of 3.33 will be 3
-        }, "no rating yet"]
-    }
-}
-
-//https://stackoverflow.com/questions/23802834/multilingual-data-modeling-on-mongodb
-exports.findProperties = findProperties;
-
-exports.addFieldsObj = addFieldsObj;
-
-exports.Product = mongoose.model("Product", productSchema);
+module.exports = mongoose.model("Product", productSchema);

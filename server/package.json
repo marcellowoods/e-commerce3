@@ -6,8 +6,8 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "start": "nodemon server.js",
-    "img:clean": "node devData/imgCleaner -d",
-    "img:get": "node devData/imgCleaner -get"
+    "img:clean": "node devData/imgCleaner d",
+    "img:get": "node devData/imgCleaner get"
   },
   "keywords": [],
   "author": "",

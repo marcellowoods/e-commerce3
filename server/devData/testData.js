@@ -3,7 +3,7 @@ const makeProduct = (name, price) => {
         images: ["https://res.cloudinary.com/dilzsg1if/image/upload/v1635503647/e3/1635503647198.jpg",
             "https://res.cloudinary.com/dilzsg1if/image/upload/v1635503647/e3/1635503647208.jpg"],
 
-        title: name,
+        name: name,
         price: price,
         quantity: 3,
         description: "very slick digital watch",

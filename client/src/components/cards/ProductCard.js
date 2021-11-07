@@ -169,7 +169,7 @@ const BreadCrumbs = ({ breadcrumbs, name }) => {
 //https://tailwindui.com/components/ecommerce/components/product-overviews
 const ProductCard = ({ product, handleAddToCart }) => {
 
-    const { details, highlights, description, sizes, colors, images, breadcrumbs, price, title: name } = product;
+    const { details, highlights, description, sizes, colors, images, breadcrumbs, price, name } = product;
 
     const [selectedColor, setSelectedColor] = useState(null);
     const [selectedSize, setSelectedSize] = useState(null);

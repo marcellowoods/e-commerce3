@@ -183,7 +183,7 @@ const PageComponent = () => {
                     images={p.images}
                     imageUrl={p.images[0]}
                     price={p.price}
-                    name={p.title}
+                    name={p.name}
                     onAddClick={(id) => { console.log(`added ${id} to cart`) }}
                     onCardClick={pushToProductPage}
                 />

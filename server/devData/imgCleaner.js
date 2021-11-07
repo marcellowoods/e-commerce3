@@ -108,12 +108,12 @@ const removeRedundantImages = async () => {
     console.log("ok");
 }
 
-//ex node imgCleaner -get
+//ex node imgCleaner get
 const runWithArg = async (arg)  => {
 
-    if (arg === '-d') {
+    if (arg === 'd') {
         removeRedundantImages();
-    } else if(arg === '-get') {
+    } else if(arg === 'get') {
         let redundantImgs = await getRedundantImages();
         console.log(redundantImgs);
     }

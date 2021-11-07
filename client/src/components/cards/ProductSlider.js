@@ -68,7 +68,7 @@ const ProductSlider = ({ images }) => {
                 {images.map((img) => {
                     return (
                         <img
-
+                            key={img}
                             src={img}
                             alt=""
                         />
