@@ -1,12 +1,11 @@
 import axios from 'axios'
-import { CART_ADD_ITEM, CART_REMOVE_ITEM } from '../constants/cartConstants'
 
 export const addToCart = (id, qty) => async (dispatch, getState) => {
     // console.log("add to cart");
     const { data } = await axios.get(`${process.env.REACT_APP_API}/product/${id}`);
 
     dispatch({
-        type: CART_ADD_ITEM,
+        type: "CART_ADD_ITEM",
         payload: {
             slug: data.slug,
             product: data._id,
@@ -32,7 +31,7 @@ export const getCartTotal = (cartItems) => {
 
 export const removeFromCart = (id) => (dispatch, getState) => {
     dispatch({
-        type: CART_REMOVE_ITEM,
+        type: "CART_REMOVE_ITEM",
         payload: id,
     })
 
@@ -92,7 +91,7 @@ export const filterCart = () => async (dispatch, getState) => {
 
                     //cart_add_item replaces item, no need for removing it first
                     dispatch({
-                        type: CART_ADD_ITEM,
+                        type: "CART_ADD_ITEM",
                         payload: updatedItem,
                     })
                 }
