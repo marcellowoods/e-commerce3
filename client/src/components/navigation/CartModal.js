@@ -3,31 +3,6 @@ import { useHistory } from "react-router-dom";
 import { getItemDeleteIcon } from "../../assets/icons";
 import { useDispatch, useSelector } from "react-redux";
 import { addToCart, getCartTotal, removeFromCart } from "../../actions/cartActions";
-// import { cartListProduct } from "./FetchApi";
-// import { isAuthenticate } from "../auth/fetchApi";
-// import { cartList } from "../productDetails/Mixins";
-// import { subTotal, quantity, totalCost } from "./Mixins";
-
-// const apiURL = process.env.REACT_APP_API_URL;
-
-
-////////////test data
-const items = [
-    {
-        quantity: 2,
-        pName: "rolex",
-        pPrice: 2000,
-        pImages: ["https://images.unsplash.com/photo-1593642632823-8f785ba67e45?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1189&q=80"]
-    },
-    {
-        quantity: 3,
-        pName: "swatch",
-        pPrice: 500,
-        pImages: ["https://images.unsplash.com/photo-1593642632823-8f785ba67e45?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1189&q=80"]
-    }
-];
-// const products = items;
-////////////test data
 
 const CartModalItem = ({
     price,
