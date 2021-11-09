@@ -2,7 +2,7 @@ import React, { Fragment, useContext, useEffect, useState } from "react";
 import { useHistory } from "react-router-dom";
 import { getCartIcon } from "../../assets/icons";
 import { useDispatch, useSelector } from "react-redux";
-import { addToCart, removeFromCart } from "../../actions/cartActions";
+import { addToCart, getCartTotal, removeFromCart } from "../../actions/cartActions";
 // import { cartListProduct } from "./FetchApi";
 // import { isAuthenticate } from "../auth/fetchApi";
 // import { cartList } from "../productDetails/Mixins";
@@ -17,48 +17,6 @@ const items = [
         quantity: 2,
         pName: "rolex",
         pPrice: 2000,
-        pImages: ["https://images.unsplash.com/photo-1593642632823-8f785ba67e45?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1189&q=80"]
-    },
-    {
-        quantity: 3,
-        pName: "swatch",
-        pPrice: 500,
-        pImages: ["https://images.unsplash.com/photo-1593642632823-8f785ba67e45?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1189&q=80"]
-    },
-    {
-        quantity: 3,
-        pName: "swatch",
-        pPrice: 500,
-        pImages: ["https://images.unsplash.com/photo-1593642632823-8f785ba67e45?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1189&q=80"]
-    },
-    {
-        quantity: 3,
-        pName: "swatch",
-        pPrice: 500,
-        pImages: ["https://images.unsplash.com/photo-1593642632823-8f785ba67e45?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1189&q=80"]
-    },
-    {
-        quantity: 3,
-        pName: "swatch",
-        pPrice: 500,
-        pImages: ["https://images.unsplash.com/photo-1593642632823-8f785ba67e45?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1189&q=80"]
-    },
-    {
-        quantity: 3,
-        pName: "swatch",
-        pPrice: 500,
-        pImages: ["https://images.unsplash.com/photo-1593642632823-8f785ba67e45?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1189&q=80"]
-    },
-    {
-        quantity: 3,
-        pName: "swatch",
-        pPrice: 500,
-        pImages: ["https://images.unsplash.com/photo-1593642632823-8f785ba67e45?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1189&q=80"]
-    },
-    {
-        quantity: 3,
-        pName: "swatch",
-        pPrice: 500,
         pImages: ["https://images.unsplash.com/photo-1593642632823-8f785ba67e45?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1189&q=80"]
     },
     {
@@ -195,10 +153,6 @@ const CartModal = (props) => {
                         </div>
                     }
 
-                    {/* <a onClick={cartModalOpen} className="cursor-pointer flex items-center justify-center mt-4 px-3 py-2 bg-blue-600 text-white text-sm uppercase font-medium rounded hover:bg-blue-500 focus:outline-none focus:bg-blue-500">
-                        <svg className="transform rotate-180 h-5 w-5 mx-2" fill="none" strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" viewBox="0 0 24 24" stroke="currentColor"><path d="M17 8l4 4m0 0l-4 4m4-4H3"></path></svg>
-                        <span>Continue shopping</span>
-                    </a> */}
                     {/* promo code */}
                     {/* <div className="mt-8">
                     <form className="flex items-center justify-center">
@@ -209,6 +163,12 @@ const CartModal = (props) => {
                         </button>
                     </form>
                 </div> */}
+
+
+                    {/* <hr className="my-3" /> */}
+                    <h3 className="text-right text-lg text-gray-600">total {getCartTotal(products)}</h3>
+                    <hr className="my-3" />
+
                     <a onClick={handleCheckout} className={`cursor-pointer ${hasProducts() ? '' : 'cursor-not-allowed'} flex items-center justify-center mt-4 px-3 py-2 bg-blue-600 text-white text-sm uppercase font-medium rounded hover:bg-blue-500 focus:outline-none focus:bg-blue-500`}>
                         <span>
                             Checkout
