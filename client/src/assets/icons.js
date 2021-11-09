@@ -78,6 +78,25 @@ let getAdminIcon = (width = 25, height = 25, cName = "") => {
     )
 }
 
+let getItemDeleteIcon = (width = 19, height = 19, cName = "") => {
+
+    return (
+        <svg width={`${width}px`} height={`${height}px`} className={`${cName}  hover:text-black`} version="1.1" viewBox="0 0 256 256" xmlns="http://www.w3.org/2000/svg">
+
+        <g transform="translate(128 128) scale(.72)" >
+            <g transform="translate(-175.05 -175.05) scale(3.89)" fill="#ec0000" strokeLinecap="round">
+                <path d="m24.959 68.04c-0.768 0-1.536-0.293-2.121-0.879-1.172-1.171-1.172-3.071 0-4.242l40.081-40.081c1.172-1.172 3.07-1.172 4.242 0 1.172 1.171 1.172 3.071 0 4.242l-40.08 40.081c-0.586 0.586-1.354 0.879-2.122 0.879z" />
+                <path d="m65.04 68.04c-0.768 0-1.535-0.293-2.121-0.879l-40.081-40.08c-1.172-1.171-1.172-3.071 0-4.242 1.171-1.172 3.071-1.172 4.242 0l40.081 40.081c1.172 1.171 1.172 3.071 0 4.242-0.586 0.585-1.353 0.878-2.121 0.878z" />
+                <path d="m45 90c-24.813 0-45-20.187-45-45s20.187-45 45-45 45 20.187 45 45-20.187 45-45 45zm0-84c-21.505 0-39 17.495-39 39s17.495 39 39 39 39-17.495 39-39-17.495-39-39-39z" />
+            </g>
+        </g>
+    </svg>
+    )
+}
+
+
+
+
 
 
 
@@ -88,5 +107,6 @@ export {
     getProfileIcon,
     getMobileToggleIcon,
     getSettingsIcon,
-    getAdminIcon
+    getAdminIcon,
+    getItemDeleteIcon
 }

@@ -1,6 +1,6 @@
 import React, { Fragment, useContext, useEffect, useState } from "react";
 import { useHistory } from "react-router-dom";
-import { getCartIcon } from "../../assets/icons";
+import { getItemDeleteIcon } from "../../assets/icons";
 import { useDispatch, useSelector } from "react-redux";
 import { addToCart, getCartTotal, removeFromCart } from "../../actions/cartActions";
 // import { cartListProduct } from "./FetchApi";
@@ -37,7 +37,6 @@ const CartModalItem = ({
     quantity,
     countInStock,
     imageLink,
-    removeCartProduct
 }) => {
 
     const dispatch = useDispatch();
@@ -47,7 +46,10 @@ const CartModalItem = ({
         if (newQty <= countInStock) {
             dispatch(addToCart(slug, newQty));
         }
+    }
 
+    const removeItem = () => {
+        dispatch(removeFromCart(productId));
     }
 
     const decreateQty = () => {
@@ -55,9 +57,11 @@ const CartModalItem = ({
         if (newQty >= 1) {
             dispatch(addToCart(slug, newQty));
         } else {
-            dispatch(removeFromCart(productId));
+            removeItem();
         }
     }
+
+
 
     return (
         <div className="flex justify-between mt-6">
@@ -79,7 +83,16 @@ const CartModalItem = ({
                         >
                             <svg className="h-5 w-5" fill="none" strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" viewBox="0 0 24 24" stroke="currentColor"><path d="M15 12H9m12 0a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
                         </button>
+
                     </div>
+                    <button
+                        onClick={removeItem}
+                        className="text-gray-500 mt-2 focus:outline-none focus:text-gray-600"
+                    >
+                        {getItemDeleteIcon()}
+
+                    </button>
+
                 </div>
             </div>
             <span className="text-gray-600">{price}$</span>
@@ -166,7 +179,7 @@ const CartModal = (props) => {
 
 
                     {/* <hr className="my-3" /> */}
-                    <h3 className="text-right text-lg text-gray-600">total {getCartTotal(products)}</h3>
+                    <h3 className="text-right text-lg text-gray-600">total {getCartTotal(products)}$</h3>
                     <hr className="my-3" />
 
                     <a onClick={handleCheckout} className={`cursor-pointer ${hasProducts() ? '' : 'cursor-not-allowed'} flex items-center justify-center mt-4 px-3 py-2 bg-blue-600 text-white text-sm uppercase font-medium rounded hover:bg-blue-500 focus:outline-none focus:bg-blue-500`}>
