@@ -20,6 +20,7 @@ import Orders from "./pages/user/Orders";
 import Settings from "./pages/user/Settings";
 import CreateProduct from "./pages/admin/CreateProduct";
 import CreateCategory from "./pages/admin/CreateCategory";
+import ListProducts from "./pages/admin/ListProducts";
 import Home from "./pages/Home"
 
 
@@ -82,7 +83,8 @@ function App() {
                 
                 <AdminRoute exact path="/admin/create-product" component={CreateProduct} />
                 <AdminRoute exact path="/admin/create-category" component={CreateCategory} />
-
+                <AdminRoute exact path="/admin/list-products" component={ListProducts} />
+                
 
             </Switch>
         </Fragment>

@@ -14,13 +14,11 @@ const getItemClassName = (isActive) => (
     `${isActive ? 'color-main-bold' : 'color-main-light'} focus:outline-none group flex rounded-md items-center w-full px-3 py-3 text-md`
 )
 
+
 const AdminDropdownRender = ({
     handleOrdersClicked,
-    handleCreateProductClicked,
-    handleUpdateProductClicked,
-    handleCreateCategoryClicked,
-    handleUpdateCategoryClicked
-
+    handleProductsClicked,
+    handleCategoriesClicked,
 }) => {
 
     return (
@@ -58,10 +56,10 @@ const AdminDropdownRender = ({
                             <Menu.Item>
                                 {({ active }) => (
                                     <button
-                                        onClick={handleCreateProductClicked}
+                                        onClick={handleProductsClicked}
                                         className={getItemClassName(active)}
                                     >
-                                        Create Product
+                                        Products
                                     </button>
                                 )}
                             </Menu.Item>
@@ -69,32 +67,10 @@ const AdminDropdownRender = ({
                             <Menu.Item>
                                 {({ active }) => (
                                     <button
-                                        onClick={handleUpdateProductClicked}
+                                        onClick={handleCategoriesClicked}
                                         className={getItemClassName(active)}
                                     >
-                                        Update Product
-                                    </button>
-                                )}
-                            </Menu.Item>
-
-                            <Menu.Item>
-                                {({ active }) => (
-                                    <button
-                                        onClick={handleCreateCategoryClicked}
-                                        className={getItemClassName(active)}
-                                    >
-                                        Create Category
-                                    </button>
-                                )}
-                            </Menu.Item>
-
-                            <Menu.Item>
-                                {({ active }) => (
-                                    <button
-                                        onClick={handleUpdateCategoryClicked}
-                                        className={getItemClassName(active)}
-                                    >
-                                        Update Category
+                                        Categories
                                     </button>
                                 )}
                             </Menu.Item>
@@ -124,29 +100,20 @@ const AdminDropdown = () => {
         history.push("/admin/orders");
     }
 
-    const handleCreateProductClicked = () => {
-        history.push("/admin/create-product");
+    const handleProductsClicked = () => {
+        history.push("/admin/list-products");
     }
 
-    const handleUpdateProductClicked = () => {
-        history.push("/admin/update-product");
+    const handleCategoriesClicked = () => {
+        history.push("/admin/list-categories");
     }
 
-    const handleCreateCategoryClicked = () => {
-        history.push("/admin/create-category");
-    }
-
-    const handleUpdateCategoryClicked = () => {
-        history.push("/admin/update-category");
-    }
 
     return (
         <AdminDropdownRender
             handleOrdersClicked={handleOrdersClicked}
-            handleCreateProductClicked={handleCreateProductClicked}
-            handleUpdateProductClicked={handleUpdateProductClicked}
-            handleCreateCategoryClicked={handleCreateCategoryClicked}
-            handleUpdateCategoryClicked={handleUpdateCategoryClicked}
+            handleProductsClicked={handleProductsClicked}
+            handleCategoriesClicked={handleCategoriesClicked}
         />
     )
 
