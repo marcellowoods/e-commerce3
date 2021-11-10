@@ -26,12 +26,26 @@ exports.create = async (req, res) => {
 };
 
 exports.listAll = async (req, res) => {
-    let products = await Product.find({})
-        .limit(parseInt(req.params.count))
+
+    let products = null;
+
+    let limitCount = req.params.count;
+
+    if(limitCount){
+        products = await Product.find({})
+        .limit(parseInt(limitCount))
         .populate("category")
         .populate("subs")
         .sort([["createdAt", "desc"]])
         .exec();
+    }else{
+        products = await Product.find({})
+        .populate("category")
+        .populate("subs")
+        .sort([["createdAt", "desc"]])
+        .exec();
+    }
+
     res.json(products);
 };
 
