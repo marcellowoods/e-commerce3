@@ -1,4 +1,5 @@
 import React, { useState, Fragment, useEffect } from "react";
+import { getAllProducts } from "../../functions/product";
 
 /* This example requires Tailwind CSS v2.0+ */
 const products = [
@@ -11,10 +12,11 @@ const products = [
     },
 ]
 
+
+
 const ProductsTable = () => {
 
     return (
-
 
         <div className="flex flex-col">
             <div className="-my-2 overflow-x-auto sm:-mx-6 lg:-mx-8">
@@ -91,6 +93,32 @@ const ProductsTable = () => {
 }
 
 const ListProducts = () => {
+
+    const [allProudcts, setAllProducts] = useState(null);
+
+    const fetchAllProducts = async (isMounted) => {
+
+        try {
+            let { data } = await getAllProducts();
+            if (data) {
+                if (isMounted) {
+                    setAllProducts(data);
+                }
+
+            }
+        } catch (error) {
+            console.log(error);
+            alert(error);
+        }
+    }
+
+    useEffect(() => {
+        const isMounted = true;
+        fetchAllProducts(isMounted);
+        return () => {
+            isMounted = false;
+        }
+    })
 
     return (
         <div className="pt-4 sm:pt-16 container mx-auto max-w-2xl">

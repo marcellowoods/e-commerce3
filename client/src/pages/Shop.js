@@ -9,6 +9,7 @@ import LoadingPage from "./LoadingPage";
 import { getCategories } from "../functions/category";
 import { getProducts } from "../functions/product";
 import ElementsMenu from "../components/menus/ElementMenu";
+import { useAsyncDidMount } from "../auxiliary/reactUtils"
 
 const SHOP_PATHNAME = "/shop/";
 const PRODUCT_PATHNAME = "/product/";
@@ -127,34 +128,52 @@ const PageComponent = () => {
 
             history.replace({ pathname: path });
 
-            fetchProducts();
+            // fetchProducts(isActive);
         }
 
 
     }, [selectedCategory, selectedType, page]);
 
+    const fetchPr = async () => {
+        return getProducts(selectedType.name, null, page + 1);
+    }
 
-    const fetchProducts = async () => {
+    const onSuccessProducts = (data) => {
+        const products = data.data;
+        const perPage = PRODUCTS_PER_PAGE;
+        // console.log(data)
+        setProducts(products.data);
+        const { total } = products.metadata[0];
+        const countPages = Math.ceil(total / perPage);
+        setPageCount(countPages);
+    }
+
+    useAsyncDidMount(fetchPr, onSuccessProducts, setIsProductsLoading, [selectedCategory, selectedType, page]);
+
+    const fetchProducts = async (isActive) => {
+
         // console.log("fetching products")
-        try {
-            setIsProductsLoading(true);
-            // console.log(page);
-            let { data } = await getProducts(selectedType.name, null, page + 1);
+        // try {
+        //     setIsProductsLoading(true);
+        //     // console.log(page);
+        //     let { data } = 
 
-            if (data) {
-                const perPage = PRODUCTS_PER_PAGE;
-                // console.log(data)
-                setProducts(data.data);
-                const { total } = data.metadata[0];
-                const countPages = Math.ceil(total / perPage);
-                setPageCount(countPages);
-                setIsProductsLoading(false);
-            }
-        } catch (error) {
-            setIsProductsLoading(false);
-            console.log(error);
-            alert(error);
-        }
+        //     if (data) {
+        //         const perPage = PRODUCTS_PER_PAGE;
+        //         // console.log(data)
+        //         setProducts(data.data);
+        //         const { total } = data.metadata[0];
+        //         const countPages = Math.ceil(total / perPage);
+        //         setPageCount(countPages);
+        //         setIsProductsLoading(false);
+        //     }
+        // } catch (error) {
+        //     setIsProductsLoading(false);
+        //     console.log(error);
+        //     alert(error);
+        // }
+
+
     };
 
     const pushToProductPage = (id) => {
