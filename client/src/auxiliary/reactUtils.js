@@ -23,9 +23,9 @@ const useAsync = (asyncFn, onSuccess, setIsLoading = null, inputs = []) => {
             setIsLoading(true)
         }
         asyncFn().then(data => {
-            console.log(data);
+
             if (isActive) {
-                onSuccess(data);
+                onSuccess(data.data);
                 if (setIsLoading !== null) {
                     setIsLoading(false)
                 }
@@ -50,7 +50,7 @@ const useAsyncDidMount = (asyncFn, onSuccess, setIsLoading = null, inputs = []) 
     const didMountRef = useRef(false);
 
     useEffect(() => {
-        
+
         let isActive = true;
 
         if (didMountRef.current) {
@@ -58,9 +58,9 @@ const useAsyncDidMount = (asyncFn, onSuccess, setIsLoading = null, inputs = []) 
                 setIsLoading(true)
             }
             asyncFn().then(data => {
-                console.log(data);
+
                 if (isActive) {
-                    onSuccess(data);
+                    onSuccess(data.data);
                     if (setIsLoading !== null) {
                         setIsLoading(false)
                     }

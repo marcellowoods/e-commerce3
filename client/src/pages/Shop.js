@@ -9,7 +9,7 @@ import LoadingPage from "./LoadingPage";
 import { getCategories } from "../functions/category";
 import { getProducts } from "../functions/product";
 import ElementsMenu from "../components/menus/ElementMenu";
-import { useAsyncDidMount } from "../auxiliary/reactUtils"
+import { useAsyncDidMount, useAsync } from "../auxiliary/reactUtils"
 
 const SHOP_PATHNAME = "/shop/";
 const PRODUCT_PATHNAME = "/product/";
@@ -49,25 +49,12 @@ const PageComponent = () => {
 
     const [isProductsLoading, setIsProductsLoading] = useState(false);
 
-
-    const fetchAllCategories = async () => {
-
-        try {
-            let { data } = await getCategories();
-            if (data) {
-                setAllCategories(data);
-            }
-        } catch (error) {
-            console.log(error);
-            alert(error);
-        }
-    }
-
-    useEffect(() => {
-
-        fetchAllCategories();
-
-    }, []);
+    useAsync(
+        getCategories,
+        setAllCategories,
+        null,
+        []
+    );
 
     useDidMountEffect(() => {
 
@@ -116,7 +103,6 @@ const PageComponent = () => {
 
     useDidMountEffect(() => {
 
-        // console.log("fetching")
         if (selectedCategory) {
             //https://stackoverflow.com/questions/56053810/url-change-without-re-rendering-in-react-router
             //https://reactjs.org/docs/reconciliation.html
@@ -127,19 +113,17 @@ const PageComponent = () => {
             path += ("/" + (page + 1));
 
             history.replace({ pathname: path });
-
-            // fetchProducts(isActive);
         }
 
 
     }, [selectedCategory, selectedType, page]);
 
-    const fetchPr = async () => {
+    const fetchProducts = async () => {
         return getProducts(selectedType.name, null, page + 1);
     }
 
     const onSuccessProducts = (data) => {
-        const products = data.data;
+        const products = data;
         const perPage = PRODUCTS_PER_PAGE;
         // console.log(data)
         setProducts(products.data);
@@ -148,33 +132,12 @@ const PageComponent = () => {
         setPageCount(countPages);
     }
 
-    useAsyncDidMount(fetchPr, onSuccessProducts, setIsProductsLoading, [selectedCategory, selectedType, page]);
-
-    const fetchProducts = async (isActive) => {
-
-        // console.log("fetching products")
-        // try {
-        //     setIsProductsLoading(true);
-        //     // console.log(page);
-        //     let { data } = 
-
-        //     if (data) {
-        //         const perPage = PRODUCTS_PER_PAGE;
-        //         // console.log(data)
-        //         setProducts(data.data);
-        //         const { total } = data.metadata[0];
-        //         const countPages = Math.ceil(total / perPage);
-        //         setPageCount(countPages);
-        //         setIsProductsLoading(false);
-        //     }
-        // } catch (error) {
-        //     setIsProductsLoading(false);
-        //     console.log(error);
-        //     alert(error);
-        // }
-
-
-    };
+    useAsyncDidMount(
+        fetchProducts,
+        onSuccessProducts,
+        setIsProductsLoading,
+        [selectedCategory, selectedType, page]
+    );
 
     const pushToProductPage = (id) => {
         history.push(PRODUCT_PATHNAME + id)
