@@ -1,5 +1,7 @@
 import React, { useState, Fragment, useEffect } from "react";
 import { getAllProducts } from "../../functions/product";
+import { useAsync } from "../../auxiliary/reactUtils"
+import LoadingPage from "../LoadingPage";
 
 /* This example requires Tailwind CSS v2.0+ */
 const products = [
@@ -14,7 +16,7 @@ const products = [
 
 
 
-const ProductsTable = () => {
+const ProductsTable = ({products}) => {
 
     return (
 
@@ -54,7 +56,7 @@ const ProductsTable = () => {
                                         <td className="px-6 py-4 whitespace-nowrap">
                                             <div className="flex items-center">
                                                 <div className="flex-shrink-0 h-10 w-10">
-                                                    <img className="h-10 w-10 rounded-full" src={product.image} alt="" />
+                                                    <img className="h-10 w-10 rounded-full" src={product.images[0]} alt="" />
                                                 </div>
                                                 <div className="ml-4">
                                                     <div className="text-sm font-medium text-gray-900">{product.name}</div>
@@ -95,30 +97,24 @@ const ProductsTable = () => {
 const ListProducts = () => {
 
     const [allProudcts, setAllProducts] = useState(null);
+    const [isProductsLoading, setIsProductsLoading] = useState(false);
 
-    const fetchAllProducts = async (isMounted) => {
+    useAsync(
+        getAllProducts,
+        setAllProducts,
+        setIsProductsLoading,
+        []
+    );
 
-        try {
-            let { data } = await getAllProducts();
-            if (data) {
-                if (isMounted) {
-                    setAllProducts(data);
-                }
-
-            }
-        } catch (error) {
-            console.log(error);
-            alert(error);
+    const renderProducts = () => {
+        if(isProductsLoading){
+            return <LoadingPage/>
         }
+        if(allProudcts && allProudcts.length){
+            return <ProductsTable products={allProudcts}/>;
+        }
+        return <></>
     }
-
-    useEffect(() => {
-        const isMounted = true;
-        fetchAllProducts(isMounted);
-        return () => {
-            isMounted = false;
-        }
-    })
 
     return (
         <div className="pt-4 sm:pt-16 container mx-auto max-w-2xl">
@@ -129,7 +125,8 @@ const ListProducts = () => {
                 </button>
             </div>
 
-            <ProductsTable />
+            {renderProducts()}
+
         </div>
     )
 
