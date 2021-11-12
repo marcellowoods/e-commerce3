@@ -1,22 +1,10 @@
 import React, { useState, Fragment, useEffect } from "react";
-import { getAllProducts } from "../../functions/product";
+import { useSelector } from "react-redux";
+import { getAllProducts, removeProduct } from "../../functions/product";
 import { useAsync } from "../../auxiliary/reactUtils"
 import LoadingPage from "../LoadingPage";
 
-/* This example requires Tailwind CSS v2.0+ */
-const products = [
-    {
-        name: 'Casio',
-        price: 23,
-        quantity: 5,
-        image:
-            'https://m.media-amazon.com/images/I/61WixzlVuXL._UL1280_.jpg',
-    },
-]
-
-
-
-const ProductsTable = ({products}) => {
+const ProductsTable = ({ products, handleProductRemove, handleProductEdit }) => {
 
     return (
 
@@ -73,12 +61,18 @@ const ProductsTable = ({products}) => {
 
 
                                         <td className="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
-                                            <a href="#" className="text-indigo-600 hover:text-indigo-900">
+                                            <button
+                                                onClick={() => handleProductEdit(product.slug)}
+                                                className="text-indigo-600 hover:text-indigo-900"
+                                            >
                                                 Edit
-                                            </a>
-                                            <a href="#" className="pl-2 text-red-600 hover:text-red-900">
+                                            </button>
+                                            <button
+                                                onClick={() => handleProductRemove(product.slug)}
+                                                className="pl-2 text-red-600 hover:text-red-900"
+                                            >
                                                 Delete
-                                            </a>
+                                            </button>
                                         </td>
 
 
@@ -98,20 +92,44 @@ const ListProducts = () => {
 
     const [allProudcts, setAllProducts] = useState(null);
     const [isProductsLoading, setIsProductsLoading] = useState(false);
+    const [reloadProductsFlag, setReloadProductsFlag] = useState(false);
+
+    const { user } = useSelector((state) => ({ ...state }));
+
+    const reloadProducts = () => {
+        setReloadProductsFlag(prevState => {
+            return !prevState;
+        });
+    }
 
     useAsync(
         getAllProducts,
         setAllProducts,
         setIsProductsLoading,
-        []
+        [reloadProductsFlag]
     );
 
+    const handleProductRemove = async (slug) => {
+        await removeProduct(slug, user.token);
+        reloadProducts();
+    }
+
+    const handleProductEdit = (slug) => {
+
+    }
+
     const renderProducts = () => {
-        if(isProductsLoading){
-            return <LoadingPage/>
+        if (isProductsLoading) {
+            return <LoadingPage />
         }
-        if(allProudcts && allProudcts.length){
-            return <ProductsTable products={allProudcts}/>;
+        if (allProudcts && allProudcts.length) {
+            return (
+                <ProductsTable
+                    handleProductRemove={handleProductRemove}
+                    products={allProudcts}
+                    handleProductEdit={handleProductEdit}
+                />
+            );
         }
         return <></>
     }
