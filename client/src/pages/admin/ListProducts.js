@@ -1,5 +1,6 @@
 import React, { useState, Fragment, useEffect } from "react";
 import { useSelector } from "react-redux";
+import { useHistory } from "react-router-dom";
 import { getAllProducts, removeProduct } from "../../functions/product";
 import { useAsync } from "../../auxiliary/reactUtils"
 import LoadingPage from "../LoadingPage";
@@ -94,6 +95,8 @@ const ListProducts = () => {
     const [isProductsLoading, setIsProductsLoading] = useState(false);
     const [reloadProductsFlag, setReloadProductsFlag] = useState(false);
 
+    const history = useHistory();
+
     const { user } = useSelector((state) => ({ ...state }));
 
     const reloadProducts = () => {
@@ -118,6 +121,10 @@ const ListProducts = () => {
 
     }
 
+    const handleCreateProduct = () => {
+        history.push("/admin/create-product");
+    }
+
     const renderProducts = () => {
         if (isProductsLoading) {
             return <LoadingPage />
@@ -138,7 +145,10 @@ const ListProducts = () => {
         <div className="pt-4 sm:pt-16 container mx-auto max-w-2xl">
             <div className="p-4 items-center flex justify-between">
                 <h1 className="text-2xl	font-medium	">Products</h1>
-                <button className="inline-flex items-center justify-center w-10 h-10  text-indigo-100 transition-colors duration-150 bg-indigo-700 rounded-lg focus:shadow-outline hover:bg-indigo-800">
+                <button
+                    onClick={handleCreateProduct}
+                    className="inline-flex items-center justify-center w-10 h-10  text-indigo-100 transition-colors duration-150 bg-indigo-700 rounded-lg focus:shadow-outline hover:bg-indigo-800"
+                >
                     <svg className="w-4 h-4 fill-current" viewBox="0 0 20 20"><path d="M10 3a1 1 0 011 1v5h5a1 1 0 110 2h-5v5a1 1 0 11-2 0v-5H4a1 1 0 110-2h5V4a1 1 0 011-1z" clipRule="evenodd" fillRule="evenodd"></path></svg>
                 </button>
             </div>
