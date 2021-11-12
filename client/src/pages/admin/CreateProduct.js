@@ -5,6 +5,7 @@ import { CheckIcon, SelectorIcon } from '@heroicons/react/solid'
 import FileUpload from "../../components/forms/FileUpload"
 import { getCategories } from "../../functions/category";
 import { createProduct as createProductRequest } from "../../functions/product"
+import { useAsync } from "../../auxiliary/reactUtils"
 
 function classNames(...classes) {
     return classes.filter(Boolean).join(' ')
@@ -254,24 +255,15 @@ const CreateProduct = () => {
 
     const { user } = useSelector((state) => ({ ...state }));
 
-    const fetchAllCategories = () => {
-        // setIsLoading(true);
-        getCategories().then((c) => {
-            const categories = c.data;
+    useAsync(
+        getCategories,
+        (categories) => {
             setCategories(categories);
             setSelectedCategory(categories[0]);
-        }).catch((error) => {
-            if(error.response) { 
-                console.log(error.response.data)
-                alert(error.response.data);
-            }
-        });;
-    }
-
-    useEffect(() => {
-
-        fetchAllCategories();
-    }, [])
+        },
+        null,
+        []
+    );
 
     const onSelectCategory = (id) => {
         setSelectedCategory(categories.find((cObj) => cObj._id == id))
