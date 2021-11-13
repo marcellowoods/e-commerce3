@@ -5,7 +5,7 @@ import { Listbox, Transition } from '@headlessui/react'
 import { CheckIcon, SelectorIcon } from '@heroicons/react/solid'
 import FileUpload from "../../components/forms/FileUpload"
 import { getCategories } from "../../functions/category";
-import { getProduct, updateProduct } from "../../functions/product"
+import { getProductForEdit, updateProduct } from "../../functions/product"
 import { useAsync, useAsyncDidMount } from "../../auxiliary/reactUtils"
 import LoadingPage from "../LoadingPage";
 
@@ -282,8 +282,8 @@ const EditProduct = () => {
     );
 
     useAsyncDidMount(
-        async () => getProduct(productSlugParam),
-        setProductParams,
+        async () => getProductForEdit(productSlugParam, user.token),
+        ({product, imagesWithIds}) => {setProductParams(product)},
         setIsProductLoading,
         [categories]
     );
