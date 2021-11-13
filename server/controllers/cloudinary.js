@@ -34,3 +34,24 @@ exports.remove = (req, res) => {
         res.send("ok");
     });
 };
+
+
+exports.getCloudinaryImages = async () => {
+    //https://support.cloudinary.com/hc/en-us/articles/202521082-How-to-list-all-images-within-a-folder-
+
+    const imageUrls = [];
+    const folderName = process.env.CLOUDINARY_FOLDER;
+
+    await cloudinary.v2.search.expression(
+        `folder:${folderName}/*` // add your folder
+    ).sort_by('public_id', 'desc').execute().then(
+        (result) => {
+
+            const imagesArray = result.resources;
+            imagesArray.forEach((imgObj) => imageUrls.push({ url: imgObj.secure_url, public_id: imgObj.public_id }))
+        }
+    );
+
+    // console.log(imageUrls);
+    return imageUrls;
+}

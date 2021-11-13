@@ -2,6 +2,10 @@ const Product = require("../models/product");
 
 const slugify = require("slugify");
 
+const {
+    getCloudinaryImages
+} = require("./cloudinary");
+
 // translations.load();
 
 let slugifyLower = (str) => {
@@ -31,19 +35,19 @@ exports.listAll = async (req, res) => {
 
     let limitCount = req.params.count;
 
-    if(limitCount){
+    if (limitCount) {
         products = await Product.find({})
-        .limit(parseInt(limitCount))
-        .populate("category")
-        .populate("subs")
-        .sort([["createdAt", "desc"]])
-        .exec();
-    }else{
+            .limit(parseInt(limitCount))
+            .populate("category")
+            .populate("subs")
+            .sort([["createdAt", "desc"]])
+            .exec();
+    } else {
         products = await Product.find({})
-        .populate("category")
-        .populate("subs")
-        .sort([["createdAt", "desc"]])
-        .exec();
+            .populate("category")
+            .populate("subs")
+            .sort([["createdAt", "desc"]])
+            .exec();
     }
 
     res.json(products);
@@ -68,6 +72,23 @@ exports.read = async (req, res) => {
         .exec();
     res.json(product);
 };
+
+//send product with cloudinary images public ids for update
+exports.readAdmin = async (req, res) => {
+    const product = await Product.findOne({ slug: req.params.slug })
+        .populate("category")
+        .populate("subs")
+        .exec();
+
+    const cloudinaryImages = await getCloudinaryImages();
+    const imagesUrl = product.images;
+    const imagesWithIds = imagesUrl.map(imgUrl => {
+        return cloudinaryImages.find(({url}) => url == imgUrl)}
+    );
+
+    res.json({product, imagesWithIds});
+};
+
 
 exports.update = async (req, res) => {
 
@@ -95,7 +116,7 @@ exports.update = async (req, res) => {
 exports.list = async (req, res) => {
     // console.table(req.body);
     try {
-        
+
         // createdAt/updatedAt, desc/asc, 3
         const { sort, order, page } = req.body;
         const currentPage = page || 1;
@@ -104,9 +125,9 @@ exports.list = async (req, res) => {
         const skip = (currentPage - 1) * perPage;
 
         let sortObj = null;
-        if(sort == "best sellers"){
+        if (sort == "best sellers") {
             sortObj = { sold: -1 };
-        }else if(sort == "new"){
+        } else if (sort == "new") {
             sortObj = { createdDate: -1 };
         }
 

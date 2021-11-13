@@ -10,6 +10,7 @@ const {
     listAll,
     remove,
     read,
+    readAdmin,
     update,
     list,
     productsCount,
@@ -25,6 +26,7 @@ router.get("/products/total", productsCount);
 router.get("/products/:count?", listAll); // products/100
 router.delete("/product/:slug", authCheck, adminCheck, remove);
 router.get("/product/:slug", read);
+router.get("/product-admin/:slug", authCheck, adminCheck, readAdmin);
 router.put("/product/:slug", authCheck, adminCheck, update);
 
 router.post("/products", list);
