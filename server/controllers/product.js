@@ -82,14 +82,17 @@ exports.readAdmin = async (req, res) => {
 
     const cloudinaryImages = await getCloudinaryImages();
     const imagesUrl = product.images;
-    let imagesWithIds = imagesUrl.map(imgUrl => {
-        return cloudinaryImages.find(({url}) => url == imgUrl)}
+
+    let imagesWithIds = [];
+    imagesUrl.forEach(imgUrl => {
+        let imgWithId = cloudinaryImages.find(({ url }) => url == imgUrl);
+        if (imgWithId) {
+            imagesWithIds.push(imgWithId);
+        }
+    }
     );
 
-    imagesWithIds = imagesWithIds.filter((img) => img != null);
-    console.log(imagesWithIds)
-
-    res.json({product, imagesWithIds});
+    res.json({ product, imagesWithIds });
 };
 
 
