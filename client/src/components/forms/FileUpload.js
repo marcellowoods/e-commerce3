@@ -31,13 +31,13 @@ const FileUpload = ({ images, setImages, setLoading, singleUpload = false }) => 
         })
     }
 
-    useEffect(() => {
-        //remove images from cloudianry if product has not been created
+    // useEffect(() => {
+    //     //remove images from cloudianry if product has not been created
 
-        return () => {
-            cleanupImages();
-        }
-    }, [])
+    //     return () => {
+    //         cleanupImages();
+    //     }
+    // }, [])
 
     const fileUploadAndResize = (e) => {
         // console.log(e.target.files);
@@ -120,6 +120,8 @@ const FileUpload = ({ images, setImages, setLoading, singleUpload = false }) => 
                 setLoading(false);
             });
     };
+
+    console.log(images)
 
     return (
         <>

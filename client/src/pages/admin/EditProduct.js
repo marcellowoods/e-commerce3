@@ -6,7 +6,7 @@ import { CheckIcon, SelectorIcon } from '@heroicons/react/solid'
 import FileUpload from "../../components/forms/FileUpload"
 import { getCategories } from "../../functions/category";
 import { getProductForEdit, updateProduct } from "../../functions/product"
-import { useAsync, useAsyncDidMount } from "../../auxiliary/reactUtils"
+import { useAsync, useAsyncDidMount, useDidMountEffect } from "../../auxiliary/reactUtils"
 import LoadingPage from "../LoadingPage";
 
 function classNames(...classes) {
@@ -187,7 +187,7 @@ const CategoryForm = ({ categories, selectedCategory, onSelectCategory }) => {
     )
 }
 
-const ImagesForm = ({ imagesUrl, setImagesUrl }) => {
+const ImagesForm = ({ imagesUrl, setImagesUrl, uploadedImages, setUploadedImages }) => {
 
     // const [uploadedImages, setUploadedImages] = useState(
     //     {
@@ -199,11 +199,9 @@ const ImagesForm = ({ imagesUrl, setImagesUrl }) => {
     //         ]
     //     }
     // )
-
-    const [uploadedImages, setUploadedImages] = useState([]);
     const [loading, setLoading] = useState(false);
 
-    useEffect(() => {
+    useDidMountEffect(() => {
 
         const urls = uploadedImages.map((img) => img.url);
         console.log(urls);
@@ -211,7 +209,7 @@ const ImagesForm = ({ imagesUrl, setImagesUrl }) => {
 
     }, [uploadedImages])
 
-    useEffect(() => {
+    useDidMountEffect(() => {
         //clear uploadedImages after uploading product
         if (imagesUrl.length == 0 && uploadedImages.length > 0) {
             setUploadedImages([]);
@@ -256,6 +254,7 @@ const EditProduct = () => {
     const [categories, setCategories] = useState([]);
     const [selectedCategory, setSelectedCategory] = useState({});
     const [quantity, setQuantity] = useState(1);
+    const [uploadedImages, setUploadedImages] = useState([]);
 
     const [isProductLoading, setIsProductLoading] = useState(true);
 
@@ -283,7 +282,10 @@ const EditProduct = () => {
 
     useAsyncDidMount(
         async () => getProductForEdit(productSlugParam, user.token),
-        ({product, imagesWithIds}) => {setProductParams(product)},
+        ({ product, imagesWithIds }) => {
+            setProductParams(product);
+            setUploadedImages(imagesWithIds)
+        },
         setIsProductLoading,
         [categories]
     );
@@ -323,7 +325,7 @@ const EditProduct = () => {
         //     });
     };
 
-    if(isProductLoading){
+    if (isProductLoading) {
         return <LoadingPage />
     }
 
@@ -349,6 +351,8 @@ const EditProduct = () => {
             <ImagesForm
                 imagesUrl={imagesUrl}
                 setImagesUrl={setImagesUrl}
+                uploadedImages={uploadedImages}
+                setUploadedImages={setUploadedImages}
             />
 
             <CategoryForm
