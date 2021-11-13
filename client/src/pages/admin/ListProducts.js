@@ -118,7 +118,7 @@ const ListProducts = () => {
     }
 
     const handleProductEdit = (slug) => {
-
+        history.push(`/admin/edit-product/${slug}`);
     }
 
     const handleCreateProduct = () => {

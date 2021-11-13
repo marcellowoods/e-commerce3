@@ -19,8 +19,11 @@ import Navigation from "./components/navigation"
 import Orders from "./pages/user/Orders";
 import Settings from "./pages/user/Settings";
 import CreateProduct from "./pages/admin/CreateProduct";
+import EditProduct from "./pages/admin/EditProduct";
 import CreateCategory from "./pages/admin/CreateCategory";
 import ListProducts from "./pages/admin/ListProducts";
+
+
 import Home from "./pages/Home"
 
 
@@ -77,14 +80,16 @@ function App() {
                 <Route exact path="/product/:productSlugParam" component={ProductPage} />
                 <Route exact path="/login" component={Login} />
                 <Route exact path="/register" component={Register} />
-                
+
                 <UserRoute exact path="/user/orders" component={Orders} />
                 <UserRoute exact path="/user/settings" component={Settings} />
-                
+
                 <AdminRoute exact path="/admin/create-product" component={CreateProduct} />
+                <AdminRoute exact path="/admin/edit-product/:productSlugParam" component={EditProduct} />
                 <AdminRoute exact path="/admin/create-category" component={CreateCategory} />
                 <AdminRoute exact path="/admin/list-products" component={ListProducts} />
                 
+
 
             </Switch>
         </Fragment>

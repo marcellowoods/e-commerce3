@@ -1,11 +1,13 @@
 import React, { useState, Fragment, useEffect } from "react";
+import { useHistory, useParams } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { Listbox, Transition } from '@headlessui/react'
 import { CheckIcon, SelectorIcon } from '@heroicons/react/solid'
 import FileUpload from "../../components/forms/FileUpload"
 import { getCategories } from "../../functions/category";
-import { createProduct as createProductRequest } from "../../functions/product"
-import { useAsync } from "../../auxiliary/reactUtils"
+import { getProduct, updateProduct } from "../../functions/product"
+import { useAsync, useAsyncDidMount } from "../../auxiliary/reactUtils"
+import LoadingPage from "../LoadingPage";
 
 function classNames(...classes) {
     return classes.filter(Boolean).join(' ')
@@ -243,7 +245,9 @@ const ImagesForm = ({ imagesUrl, setImagesUrl }) => {
 
 //TODO
 //https://dev.to/eons/detect-page-refresh-tab-close-and-route-change-with-react-router-v5-3pd
-const CreateProduct = () => {
+const EditProduct = () => {
+
+    const { productSlugParam } = useParams();
 
     const [price, setPrice] = useState("");
     const [imagesUrl, setImagesUrl] = useState([]);
@@ -253,7 +257,19 @@ const CreateProduct = () => {
     const [selectedCategory, setSelectedCategory] = useState({});
     const [quantity, setQuantity] = useState(1);
 
+    const [isProductLoading, setIsProductLoading] = useState(true);
+
     const { user } = useSelector((state) => ({ ...state }));
+
+    const setProductParams = (product) => {
+        console.log(product.images);
+        setPrice(product.price);
+        setImagesUrl(product.images);
+        setName(product.name);
+        setDescription(product.description);
+        setSelectedCategory(categories.find(c => c._id == product.category._id));
+        setQuantity(product.quantity);
+    }
 
     useAsync(
         getCategories,
@@ -265,41 +281,51 @@ const CreateProduct = () => {
         []
     );
 
+    useAsyncDidMount(
+        async () => getProduct(productSlugParam),
+        setProductParams,
+        setIsProductLoading,
+        [categories]
+    );
+
     const onSelectCategory = (id) => {
         setSelectedCategory(categories.find((cObj) => cObj._id == id))
     }
 
     const handleSubmit = () => {
 
-        createProductRequest({
-            title: name,
-            price,
-            quantity,
-            description,
-            images: imagesUrl,
-            category: selectedCategory._id
-        }, user.token)
-            .then((res) => {
-                console.log(res)
-                alert("product created");
-                setPrice("");
-                setImagesUrl([]);
-                setName("");
-                setDescription("");
-                // setCategories([]);
-                setSelectedCategory(categories[0]);
-                setQuantity(1);
-                // history.push(`/categories`);
-            })
-            .catch((error) => {
-                //https://itnext.io/javascript-error-handling-from-express-js-to-react-810deb5e5e28
-                if (error.response) {
-                    console.log(error.response.data.err)
-                    alert(error.response.data.err);
-                }
-            });
+        // createProductRequest({
+        //     title: name,
+        //     price,
+        //     quantity,
+        //     description,
+        //     images: imagesUrl,
+        //     category: selectedCategory._id
+        // }, user.token)
+        //     .then((res) => {
+        //         console.log(res)
+        //         alert("product created");
+        //         setPrice("");
+        //         setImagesUrl([]);
+        //         setName("");
+        //         setDescription("");
+        //         // setCategories([]);
+        //         setSelectedCategory(categories[0]);
+        //         setQuantity(1);
+        //         // history.push(`/categories`);
+        //     })
+        //     .catch((error) => {
+        //         //https://itnext.io/javascript-error-handling-from-express-js-to-react-810deb5e5e28
+        //         if (error.response) {
+        //             console.log(error.response.data.err)
+        //             alert(error.response.data.err);
+        //         }
+        //     });
     };
 
+    if(isProductLoading){
+        return <LoadingPage />
+    }
 
     return (
 
@@ -346,6 +372,4 @@ const CreateProduct = () => {
     )
 }
 
-
-
-export default CreateProduct;
+export default EditProduct;
