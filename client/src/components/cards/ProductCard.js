@@ -187,7 +187,7 @@ const ProductCard = ({ product, handleAddToCart }) => {
 
     return (
         <div className="bg-white">
-            <div className="pt-6 px-2">
+            <div className=" px-2">
 
                 {breadcrumbs && <BreadCrumbs breadcrumbs={breadcrumbs} name={name} />}
 

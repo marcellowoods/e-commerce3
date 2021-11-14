@@ -34,13 +34,13 @@ const NavbarRender0 = ({ mobileNavbarToggle, cartModalToggle }) => {
                         {/* <span className="mx-1 text-sm">BG</span> */}
                     </div>
 
-            
+
 
                     <div className="color-main-bold sm:text-center  text-2xl font-semibold">
                         Brand
                     </div>
 
-  
+
 
                     <div className="flex items-center justify-end w-full sm:w-auto">
                         <button onClick={cartModalToggle} className="color-main-light focus:outline-none mx-2">
@@ -95,7 +95,7 @@ const NavbarRender = ({ mobileNavbarToggle, cartModalToggle, isAdmin }) => {
             {/* bg-purple-900 */}
 
             <div className="color-main-bg fixed top-0 w-full z-10">
-                <div className="container mx-auto px-6 py-4  items-center max-w-7xl flex justify-between">
+                <div className="container mx-auto px-6 py-4 items-center max-w-7xl flex justify-between">
 
                     <div className="color-main-bold sm:text-center  text-2xl font-semibold">
                         Brand
@@ -104,7 +104,7 @@ const NavbarRender = ({ mobileNavbarToggle, cartModalToggle, isAdmin }) => {
                     {
                         isAdmin && (
                             <div className="pr-6">
-       
+
                             </div>
                         )
                     }
@@ -139,14 +139,18 @@ const NavbarRender = ({ mobileNavbarToggle, cartModalToggle, isAdmin }) => {
                     </div>
 
                 </div>
-
-            </div>
-            <div style={{ paddingTop: '75px' }}>
-                <nav style={{ paddingTop: '5px' }} className={`hidden sm:flex sm:justify-center sm:items-center `}>
+                <nav className={`hidden pb-4 sm:flex sm:justify-center sm:items-center `}>
                     <NavigationItems />
                 </nav>
 
             </div>
+            <div className="pt-24 sm:pt-32">
+                {/* <nav style={{ paddingTop: '5px' }} className={`hidden sm:flex sm:justify-center sm:items-center `}>
+                    <NavigationItems />
+                </nav> */}
+
+            </div>
+            {/* fixed top-0 w-full z-10 */}
             {/* End Navber Section */}
         </Fragment >
     )
