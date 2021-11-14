@@ -136,7 +136,7 @@ const NavbarRender = ({ mobileNavbarToggle, cartModalToggle, isAdmin }) => {
                 </div>
                 <nav className={`hidden transform -translate-x-2 container mx-auto px-6  items-center max-w-7xl flex pb-4 sm:flex  flex justify-between`}>
                     
-                    <div className="hidden lg:flex pr-64">
+                    <div className="hidden lg:flex pr-72">
                     </div>
                     <div className="">
                         <NavigationItems />
