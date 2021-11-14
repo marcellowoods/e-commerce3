@@ -94,22 +94,17 @@ const NavbarRender = ({ mobileNavbarToggle, cartModalToggle, isAdmin }) => {
             {/* Navbar Section */}
             {/* bg-purple-900 */}
 
-            <div style={{borderBottom: '1px solid', borderColor:"#e0e0e0"}} className=" color-main-bg fixed top-0 w-full z-10">
+            <div style={{ borderBottom: '1px solid', borderColor: "#e0e0e0" }} className=" color-main-bg fixed top-0 w-full z-10">
                 <div className="container mx-auto px-6 py-4 items-center max-w-7xl flex justify-between">
 
+      
+                    <div className="hidden lg:flex pr-16">
+                    </div>
                     <div className="color-main-bold sm:text-center  text-2xl font-semibold">
                         Brand
                     </div>
 
-                    {
-                        isAdmin && (
-                            <div className="pr-6">
 
-                            </div>
-                        )
-                    }
-
-                    <SearchBar cname={"hidden sm:flex searchbar-w relative mx-auto "} />
 
                     <div className="flex items-center justify-end w-full sm:w-auto">
                         <button onClick={cartModalToggle} className="color-main-light focus:outline-none mx-2">
@@ -139,8 +134,17 @@ const NavbarRender = ({ mobileNavbarToggle, cartModalToggle, isAdmin }) => {
                     </div>
 
                 </div>
-                <nav className={`hidden pb-4 sm:flex sm:justify-center sm:items-center `}>
-                    <NavigationItems />
+                <nav className={`hidden transform -translate-x-2 container mx-auto px-6  items-center max-w-7xl flex pb-4 sm:flex  flex justify-between`}>
+                    
+                    <div className="hidden lg:flex pr-64">
+                    </div>
+                    <div className="">
+                        <NavigationItems />
+                    </div>
+                    
+                    <div className="transform translate-x-1">
+                    <SearchBar cname={"hidden sm:flex searchbar-w relative mx-auto "} />
+                    </div>
                 </nav>
 
             </div>
