@@ -94,7 +94,7 @@ const NavbarRender = ({ mobileNavbarToggle, cartModalToggle, isAdmin }) => {
             {/* Navbar Section */}
             {/* bg-purple-900 */}
 
-            <div className="shadow color-main-bg fixed top-0 w-full z-10">
+            <div style={{borderBottom: '1px solid', borderColor:"#e0e0e0"}} className=" color-main-bg fixed top-0 w-full z-10">
                 <div className="container mx-auto px-6 py-4 items-center max-w-7xl flex justify-between">
 
                     <div className="color-main-bold sm:text-center  text-2xl font-semibold">
@@ -144,7 +144,7 @@ const NavbarRender = ({ mobileNavbarToggle, cartModalToggle, isAdmin }) => {
                 </nav>
 
             </div>
-            <div className="pt-24 sm:pt-32">
+            <div className="pt-24 sm:pt-36">
                 {/* <nav style={{ paddingTop: '5px' }} className={`hidden sm:flex sm:justify-center sm:items-center `}>
                     <NavigationItems />
                 </nav> */}
