@@ -1,9 +1,11 @@
 import React, { useState, useEffect } from 'react'
 import { useHistory, useParams, useLocation } from "react-router-dom";
 import ProductCard from "../components/cards/ProductCard.js"
+import LoadingPage from "./LoadingPage";
 import { getProduct } from "../functions/product";
 import { addToCart } from "../actions/cartActions";
 import { useDispatch, useSelector } from 'react-redux'
+import { useAsync } from "../auxiliary/reactUtils"
 
 const ProductPageDesign = () => {
 
@@ -126,18 +128,12 @@ const ProductPage = () => {
 
     const dispatch = useDispatch()
 
-    const fetchProduct = async () => {
-
-        try {
-            let { data } = await getProduct(productSlugParam);
-            if (data) {
-                setProduct(data);
-            }
-        } catch (error) {
-            console.log(error);
-            alert(error);
-        }
-    }
+    useAsync(
+        async () => getProduct(productSlugParam),
+        (data) => setProduct(data),
+        null,
+        [productSlugParam]
+    );
 
     const handleAddToCart = () => {
         if(product !== null){
@@ -146,13 +142,9 @@ const ProductPage = () => {
         }
     }
 
-    useEffect(() => {
-
-        fetchProduct();
-    }, [productSlugParam]);
 
     if(product == null){
-        return <h1>product</h1>
+        return <LoadingPage />
     }
 
     return (
