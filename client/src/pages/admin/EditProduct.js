@@ -9,6 +9,8 @@ import { getProductForEdit, updateProduct } from "../../functions/product"
 import { useAsync, useAsyncDidMount, useDidMountEffect } from "../../auxiliary/reactUtils"
 import LoadingPage from "../LoadingPage";
 
+const LIST_PRODUCTS_PATHNAME = "/admin/list-products";
+
 function classNames(...classes) {
     return classes.filter(Boolean).join(' ')
 }
@@ -246,6 +248,7 @@ const ImagesForm = ({ imagesUrl, setImagesUrl, uploadedImages, setUploadedImages
 const EditProduct = () => {
 
     const { productSlugParam } = useParams();
+    const history = useHistory();
 
     const [price, setPrice] = useState("");
     const [imagesUrl, setImagesUrl] = useState([]);
@@ -294,35 +297,30 @@ const EditProduct = () => {
         setSelectedCategory(categories.find((cObj) => cObj._id == id))
     }
 
-    const handleSubmit = () => {
+    const handleSubmit = async () => {
 
-        // createProductRequest({
-        //     title: name,
-        //     price,
-        //     quantity,
-        //     description,
-        //     images: imagesUrl,
-        //     category: selectedCategory._id
-        // }, user.token)
-        //     .then((res) => {
-        //         console.log(res)
-        //         alert("product created");
-        //         setPrice("");
-        //         setImagesUrl([]);
-        //         setName("");
-        //         setDescription("");
-        //         // setCategories([]);
-        //         setSelectedCategory(categories[0]);
-        //         setQuantity(1);
-        //         // history.push(`/categories`);
-        //     })
-        //     .catch((error) => {
-        //         //https://itnext.io/javascript-error-handling-from-express-js-to-react-810deb5e5e28
-        //         if (error.response) {
-        //             console.log(error.response.data.err)
-        //             alert(error.response.data.err);
-        //         }
-        //     });
+        const productObj = {
+            name,
+            price,
+            quantity,
+            description,
+            images: imagesUrl,
+            category: selectedCategory._id
+        };
+
+        try {
+            const confirmed = window.confirm("Update product?");
+            if(confirmed){
+                setIsProductLoading(true)
+                await updateProduct(productSlugParam, productObj, user.token);
+                setIsProductLoading(false)
+                history.push(LIST_PRODUCTS_PATHNAME);
+            }
+
+        } catch (error) {
+            console.log(error);
+            alert(error);
+        }
     };
 
     if (isProductLoading) {
@@ -368,7 +366,7 @@ const EditProduct = () => {
 
             <div className="p-4 float-right">
                 <button onClick={handleSubmit} className="flex items-center  px-3 py-2 bg-blue-600 text-white text-sm uppercase font-medium rounded hover:bg-blue-500 focus:outline-none focus:bg-blue-500">
-                    <span>Submit</span>
+                    <span>Update</span>
                 </button>
             </div>
 

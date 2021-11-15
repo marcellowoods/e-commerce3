@@ -123,11 +123,18 @@ const PageComponent = () => {
     }
 
     const onSuccessProducts = (data) => {
-        const products = data;
+        
+        const {data: productsData, metadata: productsMetadata} = data;
+
+        if(productsData.length === 0){
+            setProducts([]);
+            setPageCount(0);
+            return;
+        }
         const perPage = PRODUCTS_PER_PAGE;
-        // console.log(data)
-        setProducts(products.data);
-        const { total } = products.metadata[0];
+        
+        setProducts(productsData);
+        const { total } = productsMetadata[0];
         const countPages = Math.ceil(total / perPage);
         setPageCount(countPages);
     }

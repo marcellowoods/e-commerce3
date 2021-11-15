@@ -64,12 +64,6 @@ const destroyProducts = async () => {
     }
 }
 
-// if (process.argv[2] === '-d') {
-//     destroyData()
-// } else {
-//     importData()
-// }
-
 //ex node seeder insert-products
 const runWithArg = async (arg) => {
 

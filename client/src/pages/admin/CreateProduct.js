@@ -272,7 +272,7 @@ const CreateProduct = () => {
     const handleSubmit = () => {
 
         createProductRequest({
-            title: name,
+            name,
             price,
             quantity,
             description,

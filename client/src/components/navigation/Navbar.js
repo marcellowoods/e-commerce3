@@ -94,6 +94,7 @@ const NavbarRender = ({ mobileNavbarToggle, cartModalToggle, isAdmin }) => {
             {/* Navbar Section */}
             {/* bg-purple-900 */}
 
+            {/* style={{ borderBottom: '1px solid', borderColor: "#e0e0e0" }}  */}
             <div style={{ borderBottom: '1px solid', borderColor: "#e0e0e0" }} className=" color-main-bg fixed top-0 w-full z-10">
                 <div className="container mx-auto px-6 py-4 items-center max-w-7xl flex justify-between">
 
