@@ -23,7 +23,7 @@ const AdminDropdownRender = ({
 
     return (
         <div className="text-right">
-            <Menu as="div" className="relative inline-block text-left">
+            <Menu style={{ zIndex: 12 }} as="div" className="relative inline-block text-left">
                 <div>
                     <Menu.Button style={{ paddingTop: "6.5px" }} className="color-main-light hover:text-gray-500 focus:outline-none focus:text-gray-500" aria-label="toggle menu">
                         {getAdminIcon()}
