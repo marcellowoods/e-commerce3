@@ -31,24 +31,21 @@ const ProductSlider = ({ images }) => {
     const nImages = images.length;
 
     let scale = null;
+    let translate = null
 
-    if(nImages < 6){
-        scale = 'scale-200';
-    }else if(nImages >= 6 && nImages <= 7){
-        scale = 'scale-150';
+    if(nImages < 5){
+        scale = 'scale-350';
+        translate = 'translate-y-16'
     }else{
-        scale = '';
+        scale = 'scale-200';
+        translate = 'translate-y-8'
     }
-
-    // let translate = nImages > 10 ? 'translate-y-8' : 'translate-y-8'
-    let translate = 'translate-y-8';
 
     const settings = {
         customPaging: function (i) {
             return (
-                <a >
-                    <img style={{ transform: 'scale(2.9)', padding: '5.5px' }} src={images[i]} />
-                </a>
+
+                <img style={{ transform: 'scale(1.4)'}} src={images[i]} />
             );
         },
         nextArrow: <SampleNextArrow />,
