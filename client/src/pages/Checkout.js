@@ -113,13 +113,54 @@ const OrderItems = () => {
 
     useEffect(() => {
 
-        if(products.length === 0){
+        if (products.length === 0) {
             history.push("/")
         }
     }, [products])
 
     return (
         <Cart products={products} />
+    )
+}
+
+const deliveryMethods = [{ "name": "Econt" }, { "name": "Speedy" }]
+
+const DeliveryMethod = () => {
+
+    const [selectedMethod, setSelectedMethod] = useState(deliveryMethods[0].name)
+
+    const onChangeValue = (event) => {
+        const name = event.target.value;
+        console.log(name)
+        setSelectedMethod(name)
+    }
+
+    const renderMethod = (name) => {
+        return (
+            <button key={name} value={name} onClick={onChangeValue} className="mt-6 flex items-center justify-between w-full bg-white rounded-md border p-4 focus:outline-none">
+                <label className="flex items-center">
+                    <input
+                        checked={selectedMethod === name}
+                        type="radio"
+                        value={name}
+                        className="form-radio cursor-pointer	 h-5 w-5 text-blue-600"
+                        onChange={onChangeValue}
+                    />
+                    <span className="ml-2 cursor-pointer text-sm text-gray-700">{name}</span>
+                </label>
+
+                {/* <span className="text-gray-600 text-sm">$26</span> */}
+            </button>
+        )
+    }
+
+    return (
+        <div>
+            <h4 className="text-sm text-gray-500 font-medium">Delivery method</h4>
+            <div className="mt-6">
+                {deliveryMethods.map(({ name }) => renderMethod(name))}
+            </div>
+        </div>
     )
 }
 
@@ -136,25 +177,9 @@ const Checkout = () => {
                             <button className="flex text-sm text-gray-700 ml-8 focus:outline-none"><span className="flex items-center justify-center border-2 border-blue-500 rounded-full h-5 w-5 mr-2">2</span> Shipping</button>
                             <button className="flex text-sm text-gray-500 ml-8 focus:outline-none" disabled><span className="flex items-center justify-center border-2 border-gray-500 rounded-full h-5 w-5 mr-2">3</span> Payments</button>
                         </div>
-                        <form className="mt-8 lg:w-3/4">
+                        <div className="mt-8 lg:w-3/4">
                             <div>
-                                <h4 className="text-sm text-gray-500 font-medium">Delivery method</h4>
-                                <div className="mt-6">
-                                    <button className="flex items-center justify-between w-full bg-white rounded-md border-2 border-blue-500 p-4 focus:outline-none">
-                                        <label className="flex items-center">
-                                            <input type="radio" className="form-radio h-5 w-5 text-blue-600" checked /><span className ="ml-2 text-sm text-gray-700">MS Delivery</span>
-                                        </label>
-
-                                        <span className="text-gray-600 text-sm">$18</span>
-                                    </button>
-                                    <button className="mt-6 flex items-center justify-between w-full bg-white rounded-md border p-4 focus:outline-none">
-                                        <label className="flex items-center">
-                                            <input type="radio" className="form-radio h-5 w-5 text-blue-600" /><span className ="ml-2 text-sm text-gray-700">DC Delivery</span>
-                                        </label>
-
-                                        <span className="text-gray-600 text-sm">$26</span>
-                                    </button>
-                                </div>
+                                <DeliveryMethod />
                             </div>
                             <div className="mt-8">
                                 <h4 className="text-sm text-gray-500 font-medium">Delivery address</h4>
@@ -190,7 +215,7 @@ const Checkout = () => {
                                     <svg className="h-5 w-5 mx-2" fill="none" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewBox="0 0 24 24" stroke="currentColor"><path d="M17 8l4 4m0 0l-4 4m4-4H3"></path></svg>
                                 </button>
                             </div>
-                        </form>
+                        </div>
                     </div>
                     <div className="w-full mb-8 flex-shrink-0 order-1 lg:w-1/2 lg:mb-0 lg:order-2">
                         <div className="flex justify-center lg:justify-end">
@@ -199,7 +224,7 @@ const Checkout = () => {
                                     <h3 className="text-gray-700 font-medium">Order</h3>
                                     {/* <span className="text-gray-600 text-sm">Edit</span> */}
                                 </div>
-                                <OrderItems/>
+                                <OrderItems />
                             </div>
                         </div>
                     </div>
