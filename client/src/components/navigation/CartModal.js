@@ -3,83 +3,15 @@ import { useHistory } from "react-router-dom";
 import { getItemDeleteIcon } from "../../assets/icons";
 import { useDispatch, useSelector } from "react-redux";
 import { addToCart, getCartTotal, removeFromCart } from "../../actions/cartActions";
-
-const CartModalItem = ({
-    price,
-    productId,
-    name,
-    slug,
-    quantity,
-    countInStock,
-    imageLink,
-}) => {
-
-    const dispatch = useDispatch();
-
-    const increaseQty = () => {
-        const newQty = quantity + 1;
-        if (newQty <= countInStock) {
-            dispatch(addToCart(slug, newQty));
-        }
-    }
-
-    const removeItem = () => {
-        dispatch(removeFromCart(productId));
-    }
-
-    const decreateQty = () => {
-        const newQty = quantity - 1;
-        if (newQty >= 1) {
-            dispatch(addToCart(slug, newQty));
-        } else {
-            removeItem();
-        }
-    }
+import Cart from "../cart/Cart.js"
 
 
-
-    return (
-        <div className="flex justify-between mt-6">
-            <div className="flex">
-                <img className="h-20 w-20 object-cover rounded" src={imageLink} alt="" />
-                <div className="mx-3">
-                    <h3 className="text-sm text-gray-600">{name}</h3>
-                    <div className="flex items-center mt-2">
-                        <button
-                            onClick={increaseQty}
-                            className="text-gray-500 focus:outline-none focus:text-gray-600"
-                        >
-                            <svg className="h-5 w-5" fill="none" strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" viewBox="0 0 24 24" stroke="currentColor"><path d="M12 9v3m0 0v3m0-3h3m-3 0H9m12 0a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
-                        </button>
-                        <span className="text-gray-700 mx-2">{quantity}</span>
-                        <button
-                            onClick={decreateQty}
-                            className="text-gray-500 focus:outline-none focus:text-gray-600"
-                        >
-                            <svg className="h-5 w-5" fill="none" strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" viewBox="0 0 24 24" stroke="currentColor"><path d="M15 12H9m12 0a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
-                        </button>
-
-                    </div>
-                    <button
-                        onClick={removeItem}
-                        className="text-gray-500 mt-2 focus:outline-none focus:text-gray-600"
-                    >
-                        {getItemDeleteIcon()}
-
-                    </button>
-
-                </div>
-            </div>
-            <span className="text-gray-600">{price}$</span>
-        </div>
-    )
-}
 
 //https://www.section.io/engineering-education/creating-a-modal-dialog-with-tailwind-css/
 //https://academind.com/tutorials/reactjs-navbar-side-drawer
 //https://www.youtube.com/watch?v=l6nmysZKHFU
 
-const CartModal = (props) => {
+const CartModal = () => {
     const history = useHistory();
 
     const { drawerCart, cart } = useSelector((state) => ({ ...state }));
@@ -87,14 +19,13 @@ const CartModal = (props) => {
 
     let dispatch = useDispatch();
 
-    // const products = data.cartProduct;
-
     const isCartModalOpen = () => drawerCart == true;
 
     const hasProducts = () => products && products.length !== 0;
 
     const handleCheckout = () => {
-        console.log("handle checkout")
+        history.push('/checkout')
+        closeCartModal();
     }
 
     const closeCartModal = () => {
@@ -117,21 +48,7 @@ const CartModal = (props) => {
                     </div>
                     <hr className="my-3" />
 
-                    {hasProducts() &&
-                        products.map((item, index) => (
-                            <CartModalItem
-
-                                key={index}
-                                productId={item.product}
-                                slug={item.slug}
-                                price={item.price}
-                                name={item.name}
-                                quantity={item.qty}
-                                imageLink={item.image}
-                                countInStock={item.countInStock}
-                            />
-                        )
-                        )}
+                    <Cart products={products}/>
 
                     {!hasProducts() &&
                         <div className="text-2xl flex m-8 justify-center  font-medium text-gray-700">
@@ -152,9 +69,6 @@ const CartModal = (props) => {
                     </form>
                 </div> */}
 
-
-                    {/* <hr className="my-3" /> */}
-                    <h3 className="text-right text-lg text-gray-600">total {getCartTotal(products)}$</h3>
                     <hr className="my-3" />
 
                     <a onClick={handleCheckout} className={`cursor-pointer ${hasProducts() ? '' : 'cursor-not-allowed'} flex items-center justify-center mt-4 px-3 py-2 bg-blue-600 text-white text-sm uppercase font-medium rounded hover:bg-blue-500 focus:outline-none focus:bg-blue-500`}>

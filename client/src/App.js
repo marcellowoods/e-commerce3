@@ -5,17 +5,20 @@ import onAuthStateChanged from "./auxiliary/firebaseAuthState";
 import { useDispatch } from "react-redux";
 import { getOrCreateUser } from "./functions/auth";
 
+import Navigation from "./components/navigation"
+
 import UserRoute from "./components/routes/UserRoute";
 import AdminRoute from "./components/routes/UserRoute";
 
 import LoadingPage from "./pages/LoadingPage";
 import Shop from "./pages/Shop";
 import ProductPage from "./pages/ProductPage";
+import Checkout from "./pages/Checkout";
 
 import Login from "./pages/auth/Login"
 import Register from "./pages/auth/Register";
 
-import Navigation from "./components/navigation"
+
 import Orders from "./pages/user/Orders";
 import Settings from "./pages/user/Settings";
 import CreateProduct from "./pages/admin/CreateProduct";
@@ -80,6 +83,7 @@ function App() {
                 <Route exact path="/product/:productSlugParam" component={ProductPage} />
                 <Route exact path="/login" component={Login} />
                 <Route exact path="/register" component={Register} />
+                <Route exact path="/checkout" component={Checkout} />
 
                 <UserRoute exact path="/user/orders" component={Orders} />
                 <UserRoute exact path="/user/settings" component={Settings} />
