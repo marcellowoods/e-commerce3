@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
+import { useHistory, useParams } from "react-router-dom";
 import Cart from "../components/cart/Cart"
 
 // const Checkout = () => {
@@ -108,6 +109,14 @@ const OrderItems = () => {
 
     const { cart } = useSelector((state) => ({ ...state }));
     const { cartItems: products } = cart;
+    const history = useHistory();
+
+    useEffect(() => {
+
+        if(products.length === 0){
+            history.push("/")
+        }
+    }, [products])
 
     return (
         <Cart products={products} />
