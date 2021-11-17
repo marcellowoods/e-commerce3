@@ -210,6 +210,32 @@ const DeliveryAdress = () => {
     )
 }
 
+const DeliveryDate = () => {
+
+    const [deliveryDate, setDeliveryDate] = useState(null);
+
+    const onChangeValue = (event) => {
+        const d = event.target.value;
+        setDeliveryDate(d)
+    }
+
+    return (
+        <div className="mt-8">
+            <h4 className="text-sm text-gray-500 font-medium">Date</h4>
+            <div className="mt-6 flex">
+                <label className="block flex-1">
+                    <input
+                        onChange={onChangeValue}
+                        value={deliveryDate}
+                        type="date"
+                        className="form-input mt-1 block w-full text-gray-700"
+                        placeholder="Date" />
+                </label>
+            </div>
+        </div>
+    )
+}
+
 const Checkout = () => {
 
     return (
@@ -228,14 +254,7 @@ const Checkout = () => {
                                 <DeliveryMethod />
                             </div>
                             <DeliveryAdress />
-                            <div className="mt-8">
-                                <h4 className="text-sm text-gray-500 font-medium">Date</h4>
-                                <div className="mt-6 flex">
-                                    <label className="block flex-1">
-                                        <input type="date" className="form-input mt-1 block w-full text-gray-700" placeholder="Date" />
-                                    </label>
-                                </div>
-                            </div>
+                            <DeliveryDate />
                             <div className="flex items-center justify-between mt-8">
                                 <button className="flex items-center text-gray-700 text-sm font-medium rounded hover:underline focus:outline-none">
                                     <svg className="h-5 w-5" fill="none" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewBox="0 0 24 24" stroke="currentColor"><path d="M7 16l-4-4m0 0l4-4m-4 4h18"></path></svg>
