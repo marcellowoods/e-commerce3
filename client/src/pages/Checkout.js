@@ -164,6 +164,52 @@ const DeliveryMethod = () => {
     )
 }
 
+
+const DeliveryAdress = () => {
+
+    const [deliveryAdress, setDeliveryAddress] = useState({ city: "", address: "" });
+
+    const handleAdressChange = (event) => {
+        const value = event.target.value;
+        setDeliveryAddress((prev) => {
+            return { ...prev, address: value }
+        })
+    }
+
+    const handleCityChange = (event) => {
+        const value = event.target.value;
+        setDeliveryAddress((prev) => {
+            return { ...prev, city: value }
+        })
+    }
+
+    return (
+        <div className="mt-8">
+            <h4 className="text-sm text-gray-500 font-medium">Delivery address</h4>
+            <div className="mt-6 flex">
+                <label className="block w-3/12">
+                    <input
+                        onChange={handleCityChange}
+                        value={deliveryAdress.city}
+                        type="text"
+                        placeholder="City"
+                        className="form-select text-gray-700 mt-1 block w-full"
+                    />
+                </label>
+                <label className="block flex-1 ml-3">
+                    <input
+                        onChange={handleAdressChange}
+                        value={deliveryAdress.address}
+                        type="text"
+                        className="form-input mt-1 block w-full text-gray-700"
+                        placeholder="Address"
+                    />
+                </label>
+            </div>
+        </div>
+    )
+}
+
 const Checkout = () => {
 
     return (
@@ -181,22 +227,7 @@ const Checkout = () => {
                             <div>
                                 <DeliveryMethod />
                             </div>
-                            <div className="mt-8">
-                                <h4 className="text-sm text-gray-500 font-medium">Delivery address</h4>
-                                <div className="mt-6 flex">
-                                    <label className="block w-3/12">
-                                        <select className="form-select text-gray-700 mt-1 block w-full">
-                                            <option>NY</option>
-                                            <option>DC</option>
-                                            <option>MH</option>
-                                            <option>MD</option>
-                                        </select>
-                                    </label>
-                                    <label className="block flex-1 ml-3">
-                                        <input type="text" className="form-input mt-1 block w-full text-gray-700" placeholder="Address" />
-                                    </label>
-                                </div>
-                            </div>
+                            <DeliveryAdress />
                             <div className="mt-8">
                                 <h4 className="text-sm text-gray-500 font-medium">Date</h4>
                                 <div className="mt-6 flex">
