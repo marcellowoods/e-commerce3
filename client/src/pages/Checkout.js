@@ -123,16 +123,15 @@ const OrderItems = () => {
     )
 }
 
-const deliveryMethods = [{ "name": "Econt" }, { "name": "Speedy" }]
+const deliveryCouriers = [{ "name": "Econt" }, { "name": "Speedy" }];
+const deliveryMethods = [{ "name": "Delivery to home" }, { "name": "Delivery to courrier office" }];
 
-const DeliveryMethod = () => {
-
-    const [selectedMethod, setSelectedMethod] = useState(deliveryMethods[0].name)
+const DeliveryMethod = ({ name, options, selected, setSelected }) => {
 
     const onChangeValue = (event) => {
         const name = event.target.value;
         console.log(name)
-        setSelectedMethod(name)
+        setSelected(name)
     }
 
     const renderMethod = (name) => {
@@ -140,7 +139,7 @@ const DeliveryMethod = () => {
             <button key={name} value={name} onClick={onChangeValue} className="mt-6 flex items-center justify-between w-full bg-white rounded-md border p-4 focus:outline-none">
                 <label className="flex items-center">
                     <input
-                        checked={selectedMethod === name}
+                        checked={selected === name}
                         type="radio"
                         value={name}
                         className="form-radio cursor-pointer	 h-5 w-5 text-blue-600"
@@ -156,9 +155,9 @@ const DeliveryMethod = () => {
 
     return (
         <div>
-            <h4 className="text-sm text-gray-500 font-medium">Delivery method</h4>
+            <h4 className="text-sm text-gray-500 font-medium">{name}</h4>
             <div className="mt-6">
-                {deliveryMethods.map(({ name }) => renderMethod(name))}
+                {options.map(({ name }) => renderMethod(name))}
             </div>
         </div>
     )
@@ -210,6 +209,8 @@ const DeliveryAdress = () => {
     )
 }
 
+
+
 const DeliveryDate = () => {
 
     const [deliveryDate, setDeliveryDate] = useState(null);
@@ -236,7 +237,50 @@ const DeliveryDate = () => {
     )
 }
 
+const CheckoutStates = {
+    "DELIVERY_COURIER": 1,
+    "DELIVERY_METHOD": 2,
+    "DELIVERY_ADDRESS": 3,
+}
+
 const Checkout = () => {
+
+    const [checkoutState, setCheckoutState] = useState(CheckoutStates.DELIVERY_COURIER);
+
+    const [selectedCourier, setSelectedCourier] = useState(null);
+    const [selectedMethod, setSelectedMethod] = useState(null);
+
+    const handleNextClick = () => {
+
+        switch (checkoutState) {
+            case CheckoutStates.DELIVERY_COURIER:
+                if (selectedCourier === null) {
+
+                } else {
+                    setCheckoutState(CheckoutStates.DELIVERY_METHOD)
+                }
+                break;
+            case CheckoutStates.DELIVERY_METHOD:
+                if (selectedMethod === null) {
+
+                } else {
+                    setCheckoutState(CheckoutStates.DELIVERY_ADDRESS)
+                }
+                break;
+        }
+    }
+
+    const handlePrevClick = () => {
+
+        switch (checkoutState) {
+            case CheckoutStates.DELIVERY_ADDRESS:
+                setCheckoutState(CheckoutStates.DELIVERY_METHOD)
+                break;
+            case CheckoutStates.DELIVERY_METHOD:
+                setCheckoutState(CheckoutStates.DELIVERY_COURIER)
+                break;
+        }
+    }
 
     return (
         <div className="container max-w-7xl mx-auto px-2">
@@ -244,24 +288,55 @@ const Checkout = () => {
                 <h3 className="text-gray-700 text-2xl font-medium">Checkout</h3>
                 <div className="flex flex-col lg:flex-row mt-8">
                     <div className="w-full lg:w-1/2 order-2">
-                        <div className="flex items-center">
+                        {/* <div className="flex items-center">
                             <button className="flex text-sm text-blue-500 focus:outline-none"><span className="flex items-center justify-center text-white bg-blue-500 rounded-full h-5 w-5 mr-2">1</span> Contacts</button>
                             <button className="flex text-sm text-gray-700 ml-8 focus:outline-none"><span className="flex items-center justify-center border-2 border-blue-500 rounded-full h-5 w-5 mr-2">2</span> Shipping</button>
                             <button className="flex text-sm text-gray-500 ml-8 focus:outline-none" disabled><span className="flex items-center justify-center border-2 border-gray-500 rounded-full h-5 w-5 mr-2">3</span> Payments</button>
-                        </div>
-                        <div className="mt-8 lg:w-3/4">
-                            <div>
-                                <DeliveryMethod />
-                            </div>
-                            <DeliveryAdress />
-                            <DeliveryDate />
+                        </div> */}
+                        <div className=" lg:w-3/4">
+                            {checkoutState === CheckoutStates.DELIVERY_COURIER && (
+                                <div>
+                                    <DeliveryMethod
+                                        selected={selectedCourier}
+                                        setSelected={setSelectedCourier}
+                                        name={"Delivery Courier"}
+                                        options={deliveryCouriers}
+                                    />
+                                </div>
+                            )
+                            }
+                            {checkoutState === CheckoutStates.DELIVERY_METHOD && (
+                                <div>
+                                    <DeliveryMethod
+                                        selected={selectedMethod}
+                                        setSelected={setSelectedMethod}
+                                        name={"Delivery Method"}
+                                        options={deliveryMethods}
+                                    />
+                                </div>
+                            )
+                            }
+                            {checkoutState === CheckoutStates.DELIVERY_ADDRESS && (
+                                <div>
+                                    <DeliveryAdress />
+                                </div>
+                            )
+                            }
+
+                            {/* <DeliveryDate /> */}
                             <div className="flex items-center justify-between mt-8">
-                                <button className="flex items-center text-gray-700 text-sm font-medium rounded hover:underline focus:outline-none">
+                                <button
+                                    onClick={handlePrevClick}
+                                    className="flex items-center text-gray-700 text-sm font-medium rounded hover:underline focus:outline-none"
+                                >
                                     <svg className="h-5 w-5" fill="none" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewBox="0 0 24 24" stroke="currentColor"><path d="M7 16l-4-4m0 0l4-4m-4 4h18"></path></svg>
                                     <span className="mx-2">Back step</span>
                                 </button>
-                                <button className="flex items-center px-3 py-2 bg-blue-600 text-white text-sm font-medium rounded-md hover:bg-blue-500 focus:outline-none focus:bg-blue-500">
-                                    <span>Payment</span>
+                                <button
+                                    onClick={handleNextClick}
+                                    className="flex items-center px-3 py-2 bg-blue-600 text-white text-sm font-medium rounded-md hover:bg-blue-500 focus:outline-none focus:bg-blue-500"
+                                >
+                                    <span>Next step</span>
                                     <svg className="h-5 w-5 mx-2" fill="none" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewBox="0 0 24 24" stroke="currentColor"><path d="M17 8l4 4m0 0l-4 4m4-4H3"></path></svg>
                                 </button>
                             </div>
