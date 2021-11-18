@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useHistory, useParams } from "react-router-dom";
+import { useDidMountEffect } from "../auxiliary/reactUtils"
 import Cart from "../components/cart/Cart"
 
 // const Checkout = () => {
@@ -123,25 +124,24 @@ const OrderItems = () => {
     )
 }
 
-const deliveryCouriers = [{ "name": "Econt" }, { "name": "Speedy" }];
-const deliveryMethods = [{ "name": "Delivery to home" }, { "name": "Delivery to courrier office" }];
+const deliveryCouriers = [{ name: "Econt", id: "econt" }, { name: "Speedy", id: "speedy" }];
+const deliveryMethods = [{ name: "Delivery to home", id:"home" }, { name: "Delivery to courrier office", id: "office"}];
 
 const DeliveryMethod = ({ name, options, selected, setSelected }) => {
 
     const onChangeValue = (event) => {
-        const name = event.target.value;
-        console.log(name)
-        setSelected(name)
+        const idSelected = event.target.value;
+        setSelected(options.find(({id}) => idSelected === id));
     }
 
-    const renderMethod = (name) => {
+    const renderMethod = (name, id) => {
         return (
-            <button key={name} value={name} onClick={onChangeValue} className="mt-6 flex items-center justify-between w-full bg-white rounded-md border p-4 focus:outline-none">
+            <button key={id} value={id} onClick={onChangeValue} className="mt-6 flex items-center justify-between w-full bg-white rounded-md border p-4 focus:outline-none">
                 <label className="flex items-center">
                     <input
-                        checked={selected === name}
+                        checked={selected ? selected.name === name : false}
                         type="radio"
-                        value={name}
+                        value={id}
                         className="form-radio cursor-pointer	 h-5 w-5 text-blue-600"
                         onChange={onChangeValue}
                     />
@@ -157,7 +157,7 @@ const DeliveryMethod = ({ name, options, selected, setSelected }) => {
         <div>
             <h4 className="text-sm text-gray-500 font-medium">{name}</h4>
             <div className="mt-6">
-                {options.map(({ name }) => renderMethod(name))}
+                {options.map(({ name, id }) => renderMethod(name, id))}
             </div>
         </div>
     )
@@ -249,6 +249,23 @@ const Checkout = () => {
 
     const [selectedCourier, setSelectedCourier] = useState(null);
     const [selectedMethod, setSelectedMethod] = useState(null);
+    const [methodOptions, setMethodOptions] = useState(deliveryMethods);
+    const [courierOptions, setCourierOptions] = useState(deliveryCouriers);
+    
+
+    useDidMountEffect(() => {
+        console.log(selectedCourier);
+        // const options = [{ "name": "Delivery to home" }, { "name": `Delivery to ${selectedCourier.name} office` }];
+        setMethodOptions(prevState => {
+            return prevState.map(({name, id}) => {
+                if(id === 'office'){
+                    return { name: `Delivery to ${selectedCourier.name} office`, id}
+                }else{
+                    return {name, id}
+                }
+            })
+        });
+    }, [selectedCourier])
 
     const handleNextClick = () => {
 
@@ -300,7 +317,7 @@ const Checkout = () => {
                                         selected={selectedCourier}
                                         setSelected={setSelectedCourier}
                                         name={"Delivery Courier"}
-                                        options={deliveryCouriers}
+                                        options={courierOptions}
                                     />
                                 </div>
                             )
@@ -311,7 +328,7 @@ const Checkout = () => {
                                         selected={selectedMethod}
                                         setSelected={setSelectedMethod}
                                         name={"Delivery Method"}
-                                        options={deliveryMethods}
+                                        options={methodOptions}
                                     />
                                 </div>
                             )
