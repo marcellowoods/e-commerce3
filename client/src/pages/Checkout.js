@@ -125,13 +125,13 @@ const OrderItems = () => {
 }
 
 const deliveryCouriers = [{ name: "Econt", id: "econt" }, { name: "Speedy", id: "speedy" }];
-const deliveryMethods = [{ name: "Delivery to home", id:"home" }, { name: "Delivery to courrier office", id: "office"}];
+const deliveryMethods = [{ name: "Delivery to home", id: "home" }, { name: "Delivery to courrier office", id: "office" }];
 
 const DeliveryMethod = ({ name, options, selected, setSelected }) => {
 
     const onChangeValue = (event) => {
         const idSelected = event.target.value;
-        setSelected(options.find(({id}) => idSelected === id));
+        setSelected(options.find(({ id }) => idSelected === id));
     }
 
     const renderMethod = (name, id) => {
@@ -164,9 +164,7 @@ const DeliveryMethod = ({ name, options, selected, setSelected }) => {
 }
 
 
-const DeliveryAdress = () => {
-
-    const [deliveryAdress, setDeliveryAddress] = useState({ city: "", address: "" });
+const DeliveryAdress = ({ deliveryAdress, setDeliveryAddress }) => {
 
     const handleAdressChange = (event) => {
         const value = event.target.value;
@@ -185,7 +183,7 @@ const DeliveryAdress = () => {
     return (
         <div className="mt-8">
             <h4 className="text-sm text-gray-500 font-medium">Delivery address</h4>
-            <div className="mt-6 flex">
+            <div className="mt-4 flex">
                 <label className="block w-3/12">
                     <input
                         onChange={handleCityChange}
@@ -205,6 +203,51 @@ const DeliveryAdress = () => {
                     />
                 </label>
             </div>
+
+        </div>
+    )
+}
+
+const ContactInformation = ({ contactInformation, setContactInformation }) => {
+
+    const handleEmailChange = (event) => {
+        const value = event.target.value;
+        setContactInformation((prev) => {
+            return { ...prev, email: value }
+        })
+    }
+
+    const handlePhoneChange = (event) => {
+        const value = event.target.value;
+        setContactInformation((prev) => {
+            return { ...prev, phone: value }
+        })
+    }
+
+    return (
+        <div className="mt-8">
+            <h4 className="text-sm text-gray-500 font-medium">Contact information</h4>
+            <div className="mt-4 flex">
+                <label className="block w-3/12">
+                    <input
+                        onChange={handlePhoneChange}
+                        value={contactInformation.phone}
+                        type="tel"
+                        placeholder="phone"
+                        className="form-select text-gray-700 mt-1 block w-full"
+                    />
+                </label>
+                <label className="block flex-1 ml-3">
+                    <input
+                        onChange={handleEmailChange}
+                        value={contactInformation.email}
+                        type="email"
+                        className="form-input mt-1 block w-full text-gray-700"
+                        placeholder="email"
+                    />
+                </label>
+            </div>
+
         </div>
     )
 }
@@ -249,19 +292,22 @@ const Checkout = () => {
 
     const [selectedCourier, setSelectedCourier] = useState(null);
     const [selectedMethod, setSelectedMethod] = useState(null);
+    const [deliveryAdress, setDeliveryAddress] = useState({ city: "", address: "" });
+    const [contactInformation, setContactInformation] = useState({ phone: "", email: "" });
+
     const [methodOptions, setMethodOptions] = useState(deliveryMethods);
     const [courierOptions, setCourierOptions] = useState(deliveryCouriers);
-    
+
 
     useDidMountEffect(() => {
         console.log(selectedCourier);
         // const options = [{ "name": "Delivery to home" }, { "name": `Delivery to ${selectedCourier.name} office` }];
         setMethodOptions(prevState => {
-            return prevState.map(({name, id}) => {
-                if(id === 'office'){
-                    return { name: `Delivery to ${selectedCourier.name} office`, id}
-                }else{
-                    return {name, id}
+            return prevState.map(({ name, id }) => {
+                if (id === 'office') {
+                    return { name: `Delivery to ${selectedCourier.name} office`, id }
+                } else {
+                    return { name, id }
                 }
             })
         });
@@ -335,7 +381,15 @@ const Checkout = () => {
                             }
                             {checkoutState === CheckoutStates.DELIVERY_ADDRESS && (
                                 <div>
-                                    <DeliveryAdress />
+                                    <DeliveryAdress
+                                        deliveryAdress={deliveryAdress}
+                                        setDeliveryAddress={setDeliveryAddress}
+                                    />
+                                    <ContactInformation
+                                        contactInformation={contactInformation}
+                                        setContactInformation={setContactInformation}
+                                    />
+
                                 </div>
                             )
                             }
@@ -346,7 +400,7 @@ const Checkout = () => {
                                     onClick={handlePrevClick}
                                     className="flex items-center text-gray-700 text-sm font-medium rounded hover:underline focus:outline-none"
                                 >
-                                    <svg className="h-5 w-5" fill="none" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewBox="0 0 24 24" stroke="currentColor"><path d="M7 16l-4-4m0 0l4-4m-4 4h18"></path></svg>
+                                    <svg className="h-5 w-5" fill="none" strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" viewBox="0 0 24 24" stroke="currentColor"><path d="M7 16l-4-4m0 0l4-4m-4 4h18"></path></svg>
                                     <span className="mx-2">Back step</span>
                                 </button>
                                 <button
@@ -354,7 +408,7 @@ const Checkout = () => {
                                     className="flex items-center px-3 py-2 bg-blue-600 text-white text-sm font-medium rounded-md hover:bg-blue-500 focus:outline-none focus:bg-blue-500"
                                 >
                                     <span>Next step</span>
-                                    <svg className="h-5 w-5 mx-2" fill="none" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewBox="0 0 24 24" stroke="currentColor"><path d="M17 8l4 4m0 0l-4 4m4-4H3"></path></svg>
+                                    <svg className="h-5 w-5 mx-2" fill="none" strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" viewBox="0 0 24 24" stroke="currentColor"><path d="M17 8l4 4m0 0l-4 4m4-4H3"></path></svg>
                                 </button>
                             </div>
                         </div>
