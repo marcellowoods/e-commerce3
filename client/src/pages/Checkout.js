@@ -130,19 +130,24 @@ const deliveryMethods = [{ name: "Delivery to home", id: "home" }, { name: "Deli
 const DeliveryMethod = ({ name, options, selected, setSelected }) => {
 
     const onChangeValue = (event) => {
+        
         const idSelected = event.target.value;
-        setSelected(options.find(({ id }) => idSelected === id));
+        console.log(idSelected);
+        if(idSelected){
+            setSelected(options.find(({ id }) => idSelected === id));
+        }
+        
     }
 
     const renderMethod = (name, id) => {
         return (
-            <button key={id} value={id} onClick={onChangeValue} className="mt-6 flex items-center justify-between w-full bg-white rounded-md border p-4 focus:outline-none">
+            <button key={id} value={id} onClick={onChangeValue} className="mt-6 cursor-pointer flex items-center justify-between w-full bg-white rounded-md border p-4 focus:outline-none">
                 <label className="flex items-center">
                     <input
                         checked={selected ? selected.name === name : false}
                         type="radio"
                         value={id}
-                        className="form-radio cursor-pointer	 h-5 w-5 text-blue-600"
+                        className="form-radio cursor-pointer h-5 w-5 text-blue-600"
                         onChange={onChangeValue}
                     />
                     <span className="ml-2 cursor-pointer text-sm text-gray-700">{name}</span>
