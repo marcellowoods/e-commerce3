@@ -124,19 +124,22 @@ const OrderItems = () => {
     )
 }
 
-const deliveryCouriers = [{ name: "Econt", id: "econt" }, { name: "Speedy", id: "speedy" }];
+const deliveryCouriers = [
+    { name: "Econt", id: "econt", findOffice: "https://www.econt.com/find-office" },
+    { name: "Speedy", id: "speedy", findOffice: "https://www.speedy.bg/bg/speedy-offices" }
+];
 const deliveryMethods = [{ name: "Delivery to home", id: "home" }, { name: "Delivery to courrier office", id: "office" }];
 
 const DeliveryMethod = ({ name, options, selected, setSelected }) => {
 
     const onChangeValue = (event) => {
-        
+
         const idSelected = event.target.value;
         console.log(idSelected);
-        if(idSelected){
+        if (idSelected) {
             setSelected(options.find(({ id }) => idSelected === id));
         }
-        
+
     }
 
     const renderMethod = (name, id) => {
@@ -169,7 +172,7 @@ const DeliveryMethod = ({ name, options, selected, setSelected }) => {
 }
 
 
-const DeliveryAdress = ({ deliveryAdress, setDeliveryAddress }) => {
+const DeliveryAdress = ({ name, deliveryAdress, setDeliveryAddress }) => {
 
     const handleAdressChange = (event) => {
         const value = event.target.value;
@@ -187,7 +190,7 @@ const DeliveryAdress = ({ deliveryAdress, setDeliveryAddress }) => {
 
     return (
         <div className="mt-8">
-            <h4 className="text-sm text-gray-500 font-medium">Delivery address</h4>
+            <h4 className="text-sm text-gray-500 font-medium">{name}</h4>
             <div className="mt-4 flex">
                 <label className="block w-3/12">
                     <input
@@ -208,7 +211,6 @@ const DeliveryAdress = ({ deliveryAdress, setDeliveryAddress }) => {
                     />
                 </label>
             </div>
-
         </div>
     )
 }
@@ -303,9 +305,7 @@ const Checkout = () => {
     const [methodOptions, setMethodOptions] = useState(deliveryMethods);
     const [courierOptions, setCourierOptions] = useState(deliveryCouriers);
 
-
     useDidMountEffect(() => {
-        console.log(selectedCourier);
         // const options = [{ "name": "Delivery to home" }, { "name": `Delivery to ${selectedCourier.name} office` }];
         setMethodOptions(prevState => {
             return prevState.map(({ name, id }) => {
@@ -350,6 +350,52 @@ const Checkout = () => {
         }
     }
 
+    const deliveryAddressComponentName = () => {
+        // if (!selectedMethod || !selectedCourier) {
+        //     return "Delivery Address"
+        // }
+
+        if (selectedMethod.id == "office") {
+            return `${selectedCourier.name} office address`
+        } else {
+            return "Delivery Address"
+        }
+    }
+
+    const getHelperForAddressComponent = () => {
+
+        // if (!selectedMethod || !selectedCourier) {
+        //     return (
+        //         <h3 className="text-gray-700 text-xl font-medium">
+        //             Fill in your address and contact information to finish the order
+        //         </h3>
+        //     );
+        // }
+
+        if (selectedMethod.id == "office") {
+
+            console.log(selectedCourier);
+            return (
+                <h3 className="text-gray-700 text-xl font-medium">
+                    <div>
+                    Find <a className="underline text-blue-500" href={selectedCourier.findOffice}>{selectedCourier.name} office</a>
+                    </div>
+                    <br />
+                    Fill in the office address and your contact information to finish the order
+                </h3>
+
+            )
+
+        } else {
+            return (
+                <h3 className="text-gray-700 text-xl font-medium">
+                    Fill in your address and contact information to finish the order
+                </h3>
+            );
+        }
+
+    }
+
     return (
         <div className="container max-w-7xl mx-auto px-2">
             <div className="container mx-auto px-6">
@@ -361,7 +407,11 @@ const Checkout = () => {
                             <button className="flex text-sm text-gray-700 ml-8 focus:outline-none"><span className="flex items-center justify-center border-2 border-blue-500 rounded-full h-5 w-5 mr-2">2</span> Shipping</button>
                             <button className="flex text-sm text-gray-500 ml-8 focus:outline-none" disabled><span className="flex items-center justify-center border-2 border-gray-500 rounded-full h-5 w-5 mr-2">3</span> Payments</button>
                         </div> */}
+
                         <div className=" lg:w-3/4">
+
+                            {checkoutState === CheckoutStates.DELIVERY_ADDRESS && getHelperForAddressComponent()}
+
                             {checkoutState === CheckoutStates.DELIVERY_COURIER && (
                                 <div>
                                     <DeliveryMethod
@@ -387,6 +437,7 @@ const Checkout = () => {
                             {checkoutState === CheckoutStates.DELIVERY_ADDRESS && (
                                 <div>
                                     <DeliveryAdress
+                                        name={deliveryAddressComponentName()}
                                         deliveryAdress={deliveryAdress}
                                         setDeliveryAddress={setDeliveryAddress}
                                     />
