@@ -153,10 +153,10 @@ const DeliveryMethod = ({ name, options, selected, setSelected }) => {
             <button key={id} value={id} onClick={onChangeValue} className="mt-6 cursor-pointer flex items-center justify-between w-full bg-white rounded-md border p-4 focus:outline-none">
                 <label className="flex items-center">
                     <input
-                        checked={selected ? selected.name === name : false}
+                        checked={selected ? selected.id === id : false}
                         type="radio"
                         value={id}
-                        className="form-radio cursor-pointer h-5 w-5 text-blue-600"
+                        className="form-radio cursor-pointer  h-5 w-5 text-blue-600"
                         onChange={onChangeValue}
                     />
                     <span className="ml-2 cursor-pointer text-sm text-gray-700">{name}</span>
@@ -482,20 +482,10 @@ const ConfirmOrder = ({ isOpen, setIsOpen, deliveryAdress, contactInformation })
                                         <div className="flex justify-between">
                                             <div className="flex">
                                                 <h3>{item.name}</h3>
-                                                <h3 className="pl-2 text-blue-700">x{item.qty}</h3>
+                                                <h3 className="pl-2 font-medium ">x{item.qty}</h3>
                                             </div>
                                             <h3>{item.price}$</h3>
                                         </div>
-                                        // <CartItem
-                                        //     key={index}
-                                        //     productId={item.product}
-                                        //     slug={item.slug}
-                                        //     price={item.price}
-                                        //     name={item.name}
-                                        //     quantity={item.qty}
-                                        //     imageLink={item.image}
-                                        //     countInStock={item.countInStock}
-                                        // />))
                                     ))
                                     }
                                     <hr />
@@ -504,16 +494,35 @@ const ConfirmOrder = ({ isOpen, setIsOpen, deliveryAdress, contactInformation })
                                         <h3>{getCartTotal(products)}$</h3>
                                     </div>
                                     <div className="pt-6">
-                                        Deliver to
-                                        name
-                                        phone
                                         <div className="flex">
-                                            {deliveryAdress.city}
-                                            <div className="pl-2">
+                                            Deliver to
+                                            <p className="font-medium pl-1">
+                                                {contactInformation.name}
+                                            </p>
+                                        </div>
+                                        <div className="flex">
+                                            phone
+                                            <p className="font-medium pl-1">
+                                                {contactInformation.phone}
+                                            </p>
+                                        </div>
+                                        <div className="flex">
+                                            email
+                                            <p className="font-medium pl-1">
+                                                {contactInformation.email}
+                                            </p>
+                                        </div>
+
+
+                                        <div className="flex">
+                                            address
+                                            <div className="font-medium pl-1">
+                                                {deliveryAdress.city}
                                                 {deliveryAdress.address}
                                             </div>
 
                                         </div>
+
 
                                     </div>
                                 </div>
