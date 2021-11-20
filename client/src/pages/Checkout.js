@@ -1,8 +1,14 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, Fragment } from "react";
+
+import { Dialog, Transition } from '@headlessui/react'
+
 import { useDispatch, useSelector } from "react-redux";
 import { useHistory, useParams } from "react-router-dom";
 import { useDidMountEffect } from "../auxiliary/reactUtils"
 import Cart from "../components/cart/Cart"
+import { getCartTotal } from "../actions/cartActions";
+
+
 
 // const Checkout = () => {
 //     return (
@@ -231,9 +237,25 @@ const ContactInformation = ({ contactInformation, setContactInformation }) => {
         })
     }
 
+    const handleNameChange = (event) => {
+        const value = event.target.value;
+        setContactInformation((prev) => {
+            return { ...prev, name: value }
+        })
+    }
+
     return (
         <div className="mt-8">
             <h4 className="text-sm text-gray-500 font-medium">Contact information</h4>
+            <label className="block w-3/12">
+                <input
+                    onChange={handleNameChange}
+                    value={contactInformation.name}
+                    type="text"
+                    placeholder="name"
+                    className="form-select text-gray-700 mt-1 block w-full"
+                />
+            </label>
             <div className="mt-4 flex">
                 <label className="block w-3/12">
                     <input
@@ -293,6 +315,238 @@ const CheckoutStates = {
     "DELIVERY_ADDRESS": 3,
 }
 
+const OrderConfirmed = ({ isOpen, setIsOpen }) => {
+    // let [isOpen, setIsOpen] = useState(true)
+
+    function closeModal() {
+        setIsOpen(false)
+    }
+
+    function openModal() {
+        setIsOpen(true)
+    }
+
+    return (
+        <>
+            {/* <div className="fixed inset-0 flex items-center justify-center">
+                <button
+                    type="button"
+                    onClick={openModal}
+                    className="px-4 py-2 text-sm font-medium text-white bg-black rounded-md bg-opacity-20 hover:bg-opacity-30 focus:outline-none focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-opacity-75"
+                >
+                    Open dialog
+                </button>
+            </div> */}
+
+            <Transition appear show={isOpen} as={Fragment}>
+                <Dialog
+                    as="div"
+                    className="fixed inset-0 z-10 overflow-y-auto"
+                    onClose={closeModal}
+                >
+                    <div className="min-h-screen px-4 text-center">
+                        <Transition.Child
+                            as={Fragment}
+                            enter="ease-out duration-300"
+                            enterFrom="opacity-0"
+                            enterTo="opacity-100"
+                            leave="ease-in duration-200"
+                            leaveFrom="opacity-100"
+                            leaveTo="opacity-0"
+                        >
+                            <Dialog.Overlay className="fixed inset-0" />
+                        </Transition.Child>
+
+                        {/* This element is to trick the browser into centering the modal contents. */}
+                        <span
+                            className="inline-block h-screen align-middle"
+                            aria-hidden="true"
+                        >
+                            &#8203;
+                        </span>
+                        <Transition.Child
+                            as={Fragment}
+                            enter="ease-out duration-300"
+                            enterFrom="opacity-0 scale-95"
+                            enterTo="opacity-100 scale-100"
+                            leave="ease-in duration-200"
+                            leaveFrom="opacity-100 scale-100"
+                            leaveTo="opacity-0 scale-95"
+                        >
+                            <div className="inline-block w-full max-w-md p-6 my-8 overflow-hidden text-left align-middle transition-all transform bg-white shadow-xl rounded-2xl">
+                                <Dialog.Title
+                                    as="h3"
+                                    className="text-lg font-medium leading-6 text-gray-900"
+                                >
+                                    Payment successful
+                                </Dialog.Title>
+                                <div className="mt-2">
+                                    <p className="text-sm text-gray-500">
+                                        Your payment has been successfully submitted. We’ve sent you
+                                        an email with all of the details of your order.
+                                    </p>
+                                </div>
+
+                                <div className="mt-4">
+                                    <button
+                                        type="button"
+                                        className="inline-flex justify-center px-4 py-2 text-sm font-medium text-blue-900 bg-blue-100 border border-transparent rounded-md hover:bg-blue-200 focus:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-blue-500"
+                                        onClick={closeModal}
+                                    >
+                                        Got it, thanks!
+                                    </button>
+                                </div>
+                            </div>
+                        </Transition.Child>
+                    </div>
+                </Dialog>
+            </Transition>
+        </>
+    )
+}
+
+const ConfirmOrder = ({ isOpen, setIsOpen, deliveryAdress, contactInformation }) => {
+    // let [isOpen, setIsOpen] = useState(true)
+
+    function closeModal() {
+        setIsOpen(false)
+    }
+
+    function openModal() {
+        setIsOpen(true)
+    }
+
+    const { cart } = useSelector((state) => ({ ...state }));
+    const { cartItems: products } = cart;
+
+    return (
+        <>
+            {/* <div className="fixed inset-0 flex items-center justify-center">
+                <button
+                    type="button"
+                    onClick={openModal}
+                    className="px-4 py-2 text-sm font-medium text-white bg-black rounded-md bg-opacity-20 hover:bg-opacity-30 focus:outline-none focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-opacity-75"
+                >
+                    Open dialog
+                </button>
+            </div> */}
+
+            <Transition appear show={isOpen} as={Fragment}>
+                <Dialog
+                    as="div"
+                    className="fixed inset-0 z-10 overflow-y-auto"
+                    onClose={closeModal}
+                >
+                    <div className="min-h-screen px-4 text-center">
+                        <Transition.Child
+                            as={Fragment}
+                            enter="ease-out duration-300"
+                            enterFrom="opacity-0"
+                            enterTo="opacity-100"
+                            leave="ease-in duration-200"
+                            leaveFrom="opacity-100"
+                            leaveTo="opacity-0"
+                        >
+                            <Dialog.Overlay className="fixed inset-0" />
+                        </Transition.Child>
+
+                        {/* This element is to trick the browser into centering the modal contents. */}
+                        <span
+                            className="inline-block h-screen align-middle"
+                            aria-hidden="true"
+                        >
+                            &#8203;
+                        </span>
+                        <Transition.Child
+                            as={Fragment}
+                            enter="ease-out duration-300"
+                            enterFrom="opacity-0 scale-95"
+                            enterTo="opacity-100 scale-100"
+                            leave="ease-in duration-200"
+                            leaveFrom="opacity-100 scale-100"
+                            leaveTo="opacity-0 scale-95"
+                        >
+                            <div className="inline-block w-full max-w-md p-6 my-8 overflow-hidden text-left align-middle transition-all transform bg-white shadow-xl rounded-2xl">
+                                <Dialog.Title
+                                    as="h3"
+                                    className="text-lg font-medium leading-6 text-gray-900"
+                                >
+                                    Order
+                                </Dialog.Title>
+                                <div className="mt-2">
+                                    {/* <p className="text-sm text-gray-500">
+                                        Your payment has been successfully submitted. We’ve sent you
+                                        an email with all of the details of your order.
+                                    </p> */}
+                                    {products.map((item, index) => (
+                                        <div className="flex justify-between">
+                                            <div className="flex">
+                                                <h3>{item.name}</h3>
+                                                <h3 className="pl-2 text-blue-700">x{item.qty}</h3>
+                                            </div>
+                                            <h3>{item.price}$</h3>
+                                        </div>
+                                        // <CartItem
+                                        //     key={index}
+                                        //     productId={item.product}
+                                        //     slug={item.slug}
+                                        //     price={item.price}
+                                        //     name={item.name}
+                                        //     quantity={item.qty}
+                                        //     imageLink={item.image}
+                                        //     countInStock={item.countInStock}
+                                        // />))
+                                    ))
+                                    }
+                                    <hr />
+                                    <div className="flex justify-between">
+                                        <h3>total</h3>
+                                        <h3>{getCartTotal(products)}$</h3>
+                                    </div>
+                                    <div className="pt-6">
+                                        Deliver to
+                                        name
+                                        phone
+                                        <div className="flex">
+                                            {deliveryAdress.city}
+                                            <div className="pl-2">
+                                                {deliveryAdress.address}
+                                            </div>
+
+                                        </div>
+
+                                    </div>
+                                </div>
+
+                                <div className="mt-4 float-right">
+                                    <div className="flex">
+                                        <button
+                                            type="button"
+                                            className="inline-flex justify-center px-4 py-2 text-sm font-medium text-red-900 bg-red-100 border border-transparent rounded-md hover:bg-red-200 focus:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-red-500"
+                                            onClick={closeModal}
+                                        >
+                                            Cancel
+                                        </button>
+                                        <div className="pl-2">
+                                            <button
+                                                type="button"
+                                                className="inline-flex justify-center px-4 py-2 text-sm font-medium text-blue-900 bg-blue-100 border border-transparent rounded-md hover:bg-blue-200 focus:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-blue-500"
+                                                onClick={closeModal}
+                                            >
+                                                Confirm
+                                            </button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </Transition.Child>
+                    </div>
+                </Dialog>
+            </Transition>
+        </>
+    )
+}
+
 const Checkout = () => {
 
     const [checkoutState, setCheckoutState] = useState(CheckoutStates.DELIVERY_COURIER);
@@ -300,10 +554,12 @@ const Checkout = () => {
     const [selectedCourier, setSelectedCourier] = useState(null);
     const [selectedMethod, setSelectedMethod] = useState(null);
     const [deliveryAdress, setDeliveryAddress] = useState({ city: "", address: "" });
-    const [contactInformation, setContactInformation] = useState({ phone: "", email: "" });
+    const [contactInformation, setContactInformation] = useState({ phone: "", email: "", name: "" });
 
     const [methodOptions, setMethodOptions] = useState(deliveryMethods);
     const [courierOptions, setCourierOptions] = useState(deliveryCouriers);
+
+    const [isConfirmModalOpen, setIsConfirmModalOpen] = useState(false);
 
     useDidMountEffect(() => {
         // const options = [{ "name": "Delivery to home" }, { "name": `Delivery to ${selectedCourier.name} office` }];
@@ -333,6 +589,15 @@ const Checkout = () => {
 
                 } else {
                     setCheckoutState(CheckoutStates.DELIVERY_ADDRESS)
+                }
+                break;
+            case CheckoutStates.DELIVERY_ADDRESS:
+                if (selectedMethod === null) {
+
+                } else {
+                    // setCheckoutState(CheckoutStates.DELIVERY_ADDRESS);
+                    setIsConfirmModalOpen(true);
+
                 }
                 break;
         }
@@ -376,21 +641,21 @@ const Checkout = () => {
 
             console.log(selectedCourier);
             return (
-                <h3 className="text-gray-700 text-xl font-medium">
+                <h4 className="text-lg text-gray-500 font-medium">
                     <div>
-                    Find <a className="underline text-blue-500" href={selectedCourier.findOffice}>{selectedCourier.name} office</a>
+                        Find <a className="underline text-blue-500" href={selectedCourier.findOffice}>{selectedCourier.name} office</a>
                     </div>
                     <br />
                     Fill in the office address and your contact information to finish the order
-                </h3>
+                </h4>
 
             )
 
         } else {
             return (
-                <h3 className="text-gray-700 text-xl font-medium">
+                <h4 className="text-lg text-gray-500 font-medium">
                     Fill in your address and contact information to finish the order
-                </h3>
+                </h4>
             );
         }
 
@@ -398,6 +663,12 @@ const Checkout = () => {
 
     return (
         <div className="container max-w-7xl mx-auto px-2">
+            <ConfirmOrder
+                deliveryAdress={deliveryAdress}
+                contactInformation={contactInformation}
+                setIsOpen={setIsConfirmModalOpen}
+                isOpen={isConfirmModalOpen}
+            />
             <div className="container mx-auto px-6">
                 <h3 className="text-gray-700 text-2xl font-medium">Checkout</h3>
                 <div className="flex flex-col lg:flex-row mt-8">
