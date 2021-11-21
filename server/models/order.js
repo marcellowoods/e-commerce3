@@ -69,7 +69,8 @@ const orderSchema = new mongoose.Schema(
                 enum: [
                     "home",
                     "office"
-                ]
+                ],
+                required: true
             },
             // postalCode: { type: String, required: true },
             // country: { type: String, required: true },
