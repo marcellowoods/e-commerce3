@@ -42,6 +42,7 @@ const orderSchema = new mongoose.Schema(
                 },
                 count: Number,
                 color: String,
+                price: Number,
             },
         ],
         orderStatus: {
@@ -74,7 +75,8 @@ const orderSchema = new mongoose.Schema(
             },
             // postalCode: { type: String, required: true },
             // country: { type: String, required: true },
-        }
+        },
+        totalCost: Number
     },
     { timestamps: true }
 );

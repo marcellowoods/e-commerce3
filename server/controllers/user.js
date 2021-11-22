@@ -1,9 +1,9 @@
 const User = require("../models/user");
-const { Product } = require("../models/product");
+const Product = require("../models/product");
 const Cart = require("../models/cart");
 const Coupon = require("../models/coupon");
 const Order = require("../models/order");
-const uniqueid = require('uniqid')
+const uniqueid = require('uniqid');
 
 exports.userCart = async (req, res) => {
     // console.log(req.body); // {cart: []}
