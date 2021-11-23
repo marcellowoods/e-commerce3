@@ -6,10 +6,13 @@ const Order = require("../models/order");
 // const uniqueid = require('uniqid');
 const asyncHandler = require('express-async-handler');
 
+// console.log(parseFloat("1.555").toFixed(2));
+
 exports.createOrder = asyncHandler(async (req, res) => {
     const {
         products,
-        deliveryInfo
+        deliveryInfo,
+        totalCost: totalCostFromUser
     } = req.body
 
     if (products && products.length === 0) {
@@ -19,7 +22,6 @@ exports.createOrder = asyncHandler(async (req, res) => {
     } else {
 
         let totalCostFromDb = 0;
-        let totalCostFromUser = cartFromUser.totalCost;
 
         const cartFromUser = products;
         for (let i = 0; i < cartFromUser.length; i++) {
@@ -35,10 +37,10 @@ exports.createOrder = asyncHandler(async (req, res) => {
                 .select("quantity")
                 .exec();
 
-            const priceFromDb = productFromDb.price.toFixed(2);
+            const priceFromDb = +productFromDb.price.toFixed(2);
             const quantityFromDb = productFromDb.quantity;
 
-            const priceFromUser = cartFromUser[i].price.toFixed(2);
+            const priceFromUser = +cartFromUser[i].price.toFixed(2);
             const countFromUser = cartFromUser[i].count;
 
             if (priceFromDb !== priceFromUser) {
@@ -51,10 +53,11 @@ exports.createOrder = asyncHandler(async (req, res) => {
                 return;
             }
 
-            totalCostFromDb += priceFromDb * cartFromUser[i].count;
+            totalCostFromDb += +((priceFromDb * countFromUser).toFixed(2));
+            
         }
 
-        if (totalCostFromDb.toFixed(2) !== totalCostFromUser.toFixed(2)) {
+        if (+totalCostFromDb.toFixed(2) !== +totalCostFromUser.toFixed(2)) {
             throw new Error('price error')
             return;
         }
