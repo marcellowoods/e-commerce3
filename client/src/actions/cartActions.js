@@ -23,10 +23,10 @@ export const addToCart = (id, qty) => async (dispatch, getState) => {
 export const getCartTotal = (cartItems) => {
 
     const totalPrice = cartItems.reduce((total, product) => {
-        return total + (product.price * product.qty)
+        return total + (+product.price.toFixed(2) * product.qty).toFixed(2);
     }, 0);
 
-    return totalPrice;
+    return +totalPrice.toFixed(2);
 }
 
 export const removeFromCart = (id) => (dispatch, getState) => {
