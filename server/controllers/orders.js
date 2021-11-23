@@ -3,16 +3,17 @@ const Product = require("../models/product");
 const Cart = require("../models/cart");
 const Coupon = require("../models/coupon");
 const Order = require("../models/order");
-const uniqueid = require('uniqid');
+// const uniqueid = require('uniqid');
+const asyncHandler = require('express-async-handler');
 
-const createOrder = asyncHandler(async (req, res) => {
+exports.createOrder = asyncHandler(async (req, res) => {
     const {
         products,
         deliveryInfo
     } = req.body
 
     if (products && products.length === 0) {
-        res.status(400)
+        res.status(400);
         throw new Error('No order items')
         return;
     } else {
@@ -39,7 +40,6 @@ const createOrder = asyncHandler(async (req, res) => {
 
             const priceFromUser = cartFromUser[i].price.toFixed(2);
             const countFromUser = cartFromUser[i].count;
-            
 
             if (priceFromDb !== priceFromUser) {
                 throw new Error('price error')
@@ -59,13 +59,11 @@ const createOrder = asyncHandler(async (req, res) => {
             return;
         }
 
-        const order = new Order({
+        const createdOrder = await new Order({
             deliveryInfo,
             products,
             totoalCost: totalCostFromDb,
-        })
-
-        const createdOrder = await order.save();
+        }).save();
 
         let bulkOption = products.map((item) => {
             return {
