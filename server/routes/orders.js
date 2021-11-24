@@ -7,9 +7,11 @@ const { authCheck } = require("../middlewares/auth");
 // controllers
 
 const {
-    createOrder
+    createOrder,
+    userCreateOrder
 } = require("../controllers/orders");
 
-router.post("/order", createOrder); 
+router.post("/order", createOrder);
+router.post("/user-order", authCheck, userCreateOrder);  
 
 module.exports = router;
