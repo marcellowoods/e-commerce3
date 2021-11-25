@@ -7,8 +7,10 @@ import {
     DeliveryMethod,
     DeliveryAdress
 } from "../components/checkout/CheckoutFields";
-import { OrderConfirmed, ConfirmOrder} from "../components/checkout/CheckoutModals";
-
+import { OrderConfirmed, ConfirmOrder } from "../components/checkout/CheckoutModals";
+import { getCartTotal } from "../actions/cartActions";
+import { postOrder, userPostOrder } from "../functions/orders";
+import { useSelector } from "react-redux";
 
 
 const deliveryCouriers = [
@@ -37,6 +39,36 @@ const Checkout = () => {
 
     const [isConfirmModalOpen, setIsConfirmModalOpen] = useState(false);
 
+    const { user, cart } = useSelector((state) => ({ ...state }));
+    const { cartItems } = cart;
+
+    const onConfirmOrderClicked = () => {
+        const products = cartItems.map((p) => {
+            return {
+                productId: p.product,
+                count: p.count,
+                price: p.price
+            }
+        });
+
+        const deliveryInfo = {
+            ...deliveryAdress,
+            ...contactInformation,
+            courrier: selectedCourier.id,
+            method: selectedMethod.id
+        }
+
+        const totalCost = getCartTotal(products);
+        
+        if (user === null) {
+
+            postOrder(products, totalCost, deliveryInfo);
+        }else{
+
+            userPostOrder(products, totalCost, deliveryInfo, user.token)
+        }
+    }
+
     useDidMountEffect(() => {
         // const options = [{ "name": "Delivery to home" }, { "name": `Delivery to ${selectedCourier.name} office` }];
         setMethodOptions(prevState => {
@@ -50,7 +82,7 @@ const Checkout = () => {
         });
     }, [selectedCourier]);
 
-    const onConfirmOrderClicked = () => window.alert("order confirm");
+
 
     const isFieldsMissing = () => {
 
