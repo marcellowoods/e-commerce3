@@ -162,7 +162,7 @@ const ConfirmOrder = ({ isOpen, setIsOpen, deliveryAdress, contactInformation, o
                                         <div className="flex justify-between">
                                             <div className="flex">
                                                 <h3>{item.name}</h3>
-                                                <h3 className="pl-2 font-medium ">x{item.qty}</h3>
+                                                <h3 className="pl-2 font-medium ">x{item.count}</h3>
                                             </div>
                                             <h3>{item.price}$</h3>
                                         </div>

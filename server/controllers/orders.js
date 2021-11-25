@@ -5,8 +5,16 @@ const Coupon = require("../models/coupon");
 const Order = require("../models/order");
 // const uniqueid = require('uniqid');
 const asyncHandler = require('express-async-handler');
+const { roundToTwo } = require("./utils");
 
-// console.log(parseFloat("1.555").toFixed(2));
+getCartTotal = (cartItems) => {
+
+    const totalPrice = cartItems.reduce((total, product) => {
+        return total + (roundToTwo(product.price) * product.count);
+    }, 0);
+
+    return roundToTwo(totalPrice);
+}
 
 exports.createOrder = asyncHandler(async (req, res) => {
     const {
@@ -21,13 +29,12 @@ exports.createOrder = asyncHandler(async (req, res) => {
         return;
     } else {
 
-        let totalCostFromDb = 0;
-
         const cartFromUser = products;
+
+        //check for shenanigans
         for (let i = 0; i < cartFromUser.length; i++) {
 
             // let object = {};
-
             // object.product = cartFromUser[i]._id;
             // object.count = cartFromUser[i].count;
             // object.color = cart[i].color;
@@ -37,10 +44,10 @@ exports.createOrder = asyncHandler(async (req, res) => {
                 .select("quantity")
                 .exec();
 
-            const priceFromDb = +productFromDb.price.toFixed(2);
-            const quantityFromDb = productFromDb.quantity;
+            const priceFromDb = roundToTwo(productFromDb.price);
+            const availableQuantity = productFromDb.quantity;
 
-            const priceFromUser = +cartFromUser[i].price.toFixed(2);
+            const priceFromUser = roundToTwo(cartFromUser[i].price);
             const countFromUser = cartFromUser[i].count;
 
             if (priceFromDb !== priceFromUser) {
@@ -48,16 +55,14 @@ exports.createOrder = asyncHandler(async (req, res) => {
                 return;
             }
 
-            if (countFromUser > quantityFromDb) {
+            if (countFromUser > availableQuantity) {
                 throw new Error('quantity error')
                 return;
             }
-
-            totalCostFromDb += +((priceFromDb * countFromUser).toFixed(2));
-            
         }
+        const totalCost = getCartTotal(cartFromUser);
 
-        if (+totalCostFromDb.toFixed(2) !== +totalCostFromUser.toFixed(2)) {
+        if (totalCost !== totalCostFromUser) {
             throw new Error('price error')
             return;
         }
@@ -65,13 +70,13 @@ exports.createOrder = asyncHandler(async (req, res) => {
         const createdOrder = await new Order({
             deliveryInfo,
             products,
-            totoalCost: totalCostFromDb,
+            totalCost
         }).save();
 
         let bulkOption = products.map((item) => {
             return {
                 updateOne: {
-                    filter: { _id: item.productId }, 
+                    filter: { _id: item.productId },
                     update: { $inc: { quantity: -item.count, sold: +item.count } },
                 },
             };
@@ -132,7 +137,7 @@ exports.userCreateOrder = asyncHandler(async (req, res) => {
             }
 
             totalCostFromDb += +((priceFromDb * countFromUser).toFixed(2));
-            
+
         }
 
         if (+totalCostFromDb.toFixed(2) !== +totalCostFromUser.toFixed(2)) {
@@ -157,7 +162,7 @@ exports.userCreateOrder = asyncHandler(async (req, res) => {
         let bulkOption = products.map((item) => {
             return {
                 updateOne: {
-                    filter: { _id: item.productId }, 
+                    filter: { _id: item.productId },
                     update: { $inc: { quantity: -item.count, sold: +item.count } },
                 },
             };

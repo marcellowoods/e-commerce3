@@ -1,6 +1,7 @@
 import axios from 'axios'
+import { roundToTwo } from "../auxiliary/utils"
 
-export const addToCart = (id, qty) => async (dispatch, getState) => {
+export const addToCart = (id, count) => async (dispatch, getState) => {
     // console.log("add to cart");
     const { data } = await axios.get(`${process.env.REACT_APP_API}/product/${id}`);
 
@@ -13,7 +14,7 @@ export const addToCart = (id, qty) => async (dispatch, getState) => {
             image: data.images[0],
             price: data.price,
             countInStock: data.quantity,
-            qty,
+            count: count,
         },
     })
 
@@ -23,10 +24,10 @@ export const addToCart = (id, qty) => async (dispatch, getState) => {
 export const getCartTotal = (cartItems) => {
 
     const totalPrice = cartItems.reduce((total, product) => {
-        return total + (+product.price.toFixed(2) * product.qty).toFixed(2);
+        return total + (roundToTwo(product.price) * product.count);
     }, 0);
 
-    return +totalPrice.toFixed(2);
+    return roundToTwo(totalPrice);
 }
 
 export const removeFromCart = (id) => (dispatch, getState) => {

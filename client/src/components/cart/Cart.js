@@ -19,7 +19,7 @@ const Cart = ({ products }) => {
                     slug={item.slug}
                     price={item.price}
                     name={item.name}
-                    quantity={item.qty}
+                    quantity={item.count}
                     imageLink={item.image}
                     countInStock={item.countInStock}
                 />))
