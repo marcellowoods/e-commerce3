@@ -92,7 +92,6 @@ exports.createOrder = asyncHandler(async (req, res) => {
 
 exports.userCreateOrder = asyncHandler(async (req, res) => {
     const {
-        user,
         products,
         deliveryInfo,
         totalCost: totalCostFromUser
@@ -145,7 +144,7 @@ exports.userCreateOrder = asyncHandler(async (req, res) => {
             return;
         }
 
-        const user = await User.findOne({ email: user.email }).exec();
+        const user = await User.findOne({ email: req.user.email }).exec();
 
         if (!user) {
             throw new Error('user error')

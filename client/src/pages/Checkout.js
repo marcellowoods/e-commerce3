@@ -43,6 +43,7 @@ const Checkout = () => {
     const { cartItems } = cart;
 
     const onConfirmOrderClicked = () => {
+        
         const products = cartItems.map((p) => {
             return {
                 productId: p.product,
