@@ -1,5 +1,6 @@
 import React, { useEffect, useState, Fragment } from "react";
 import { useDidMountEffect } from "../auxiliary/reactUtils"
+import LoadingPage from "./LoadingPage";
 
 import OrderItems from "../components/checkout/OrderItems";
 import {
@@ -38,12 +39,22 @@ const Checkout = () => {
     const [courierOptions, setCourierOptions] = useState(deliveryCouriers);
 
     const [isConfirmModalOpen, setIsConfirmModalOpen] = useState(false);
+    const [orderSentLoading, setOrderSentLoading] = useState(false);
 
     const { user, cart } = useSelector((state) => ({ ...state }));
     const { cartItems } = cart;
 
-    const onConfirmOrderClicked = () => {
-        
+    //test
+    useEffect(() => {
+        setContactInformation({ phone: "1234", email: "test@mail.com", name: "Somename" })
+        setDeliveryAddress({ city: "some sity", address: "address 2" })
+    }, [])
+
+    const onConfirmOrderClicked = async () => {
+
+        setIsConfirmModalOpen(false);
+        setOrderSentLoading(true);
+
         const products = cartItems.map((p) => {
             return {
                 productId: p.product,
@@ -60,13 +71,23 @@ const Checkout = () => {
         }
 
         const totalCost = getCartTotal(products);
-        
+        let postFn = null;
+
         if (user === null) {
 
-            postOrder(products, totalCost, deliveryInfo);
-        }else{
+            postFn = () => postOrder(products, totalCost, deliveryInfo);
+        } else {
 
-            userPostOrder(products, totalCost, deliveryInfo, user.token)
+            postFn = () => userPostOrder(products, totalCost, deliveryInfo, user.token)
+        }
+        try {
+            let res = await postFn();
+            setOrderSentLoading(false);
+            //clear cart
+            console.log(res);
+        } catch (error) {
+            alert(error);
+            setOrderSentLoading(false);
         }
     }
 
@@ -194,6 +215,10 @@ const Checkout = () => {
             );
         }
 
+    }
+
+    if(orderSentLoading){
+        return <LoadingPage />
     }
 
     return (
