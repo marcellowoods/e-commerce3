@@ -1,4 +1,6 @@
 import React, { useEffect, useState, Fragment } from "react";
+import { useHistory } from "react-router-dom";
+
 import { useDidMountEffect } from "../auxiliary/reactUtils"
 import LoadingPage from "./LoadingPage";
 
@@ -26,7 +28,11 @@ const CheckoutStates = {
     "DELIVERY_ADDRESS": 3,
 }
 
+const SHOP_PATHNAME = "/shop/";
+
 const Checkout = () => {
+
+    const history = useHistory()
 
     const [checkoutState, setCheckoutState] = useState(CheckoutStates.DELIVERY_COURIER);
 
@@ -40,6 +46,7 @@ const Checkout = () => {
 
     const [isConfirmModalOpen, setIsConfirmModalOpen] = useState(false);
     const [orderSentLoading, setOrderSentLoading] = useState(false);
+    const [successfulOrderModal, setSuccessfulOrderModal] = useState(false);
 
     const { user, cart } = useSelector((state) => ({ ...state }));
     const { cartItems } = cart;
@@ -83,6 +90,7 @@ const Checkout = () => {
         try {
             let res = await postFn();
             setOrderSentLoading(false);
+            setSuccessfulOrderModal(true);
             //clear cart
             console.log(res);
         } catch (error) {
@@ -217,6 +225,11 @@ const Checkout = () => {
 
     }
 
+    const contShopping = () => {
+        setSuccessfulOrderModal(true);
+        history.push(SHOP_PATHNAME)
+    }
+
     if(orderSentLoading){
         return <LoadingPage />
     }
@@ -230,6 +243,10 @@ const Checkout = () => {
                 setIsOpen={setIsConfirmModalOpen}
                 isOpen={isConfirmModalOpen}
             />
+            <OrderConfirmed
+                isOpen={successfulOrderModal}
+                closeModal={contShopping}
+             />
             <div className="container mx-auto px-6">
                 <h3 className="text-gray-700 text-2xl font-medium">Checkout</h3>
                 <div className="flex flex-col lg:flex-row mt-8">
