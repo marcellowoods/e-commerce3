@@ -33,7 +33,7 @@ const OrderRow = ({ orderId, orderDate, orderAddress, orderStatus, onDetailsClic
                 {/* <span className="inline-block w-1/3 md:hidden font-bold">Actions</span> */}
                 {/* <button className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-1 px-2 border border-blue-500 rounded">Edit</button>
                 <button className="bg-red-500 hover:bg-red-700 text-white font-bold py-1 px-2 border border-red-500 rounded">Delete</button> */}
-                <button onClick={() => onDetailsClicked(orderId)} className="bg-red-500 hover:bg-red-700 text-white font-bold py-1 px-2 border border-red-500 rounded">
+                <button onClick={() => onDetailsClicked(orderId)} className="bg-blue-500 hover:bg-blue-700 text-white text-md font-bold py-1 px-2  rounded">
                     Details
                 </button>
             </td>
