@@ -1,5 +1,6 @@
 import React from "react";
 
+//test data
 const orders = [
     {
         orderId: 1234,
@@ -41,11 +42,8 @@ const OrderRow = ({ orderId, orderDate, orderAddress, orderStatus, onDetailsClic
     )
 }
 
-const Orders = () => {
+const OrderTable = ({ onDetailsClicked }) => {
 
-    const onDetailsClicked = (orderId) => {
-        console.log(orderId);
-    }
 
     return (
 
@@ -76,6 +74,21 @@ const Orders = () => {
             </table>
         </div>
     )
+
+}
+
+const Orders = () => {
+
+    const onDetailsClicked = (orderId) => {
+        console.log(orderId);
+    }
+
+    return (
+        <OrderTable
+            onDetailsClicked={onDetailsClicked}
+        />
+    )
+
 }
 
 
