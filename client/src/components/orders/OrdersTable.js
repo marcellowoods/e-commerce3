@@ -20,6 +20,8 @@ const OrderRow = ({ orderId, orderDate, orderAddress, orderStatus, onDetailsClic
     )
 }
 
+
+//https://tailwindcomponents.com/component/responsive-table-6
 const OrdersTable = ({ onDetailsClicked, orders }) => {
 
     return (
