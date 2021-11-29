@@ -208,7 +208,7 @@ const PageComponent = () => {
         <Fragment>
 
             <div className="">
-                <div className="container mx-auto max-w-7xl px-6 ">
+                <div className="container mx-auto max-w-7xl px-6">
 
                     <div className="flex flex-col sm:flex-row">
                         <div>
