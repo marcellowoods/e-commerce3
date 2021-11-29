@@ -14,7 +14,7 @@ exports.userCart = async (req, res) => {
     const user = await User.findOne({ email: req.user.email }).exec();
 
     // check if cart with logged in user id already exist
-    let cartExistByThisUser = await Cart.findOne({ orderdBy: user._id }).exec();
+    let cartExistByThisUser = await Cart.findOne({ orderedBy: user._id }).exec();
 
     if (cartExistByThisUser) {
         cartExistByThisUser.remove();
@@ -48,7 +48,7 @@ exports.userCart = async (req, res) => {
     let newCart = await new Cart({
         products,
         cartTotal,
-        orderdBy: user._id,
+        orderedBy: user._id,
     }).save();
 
     console.log("new cart ----> ", newCart);
@@ -58,7 +58,7 @@ exports.userCart = async (req, res) => {
 exports.getUserCart = async (req, res) => {
     const user = await User.findOne({ email: req.user.email }).exec();
 
-    let cart = await Cart.findOne({ orderdBy: user._id })
+    let cart = await Cart.findOne({ orderedBy: user._id })
         .populate("products.product", "_id title price totalAfterDiscount")
         .exec();
 
@@ -70,7 +70,7 @@ exports.emptyCart = async (req, res) => {
     console.log("empty cart");
     const user = await User.findOne({ email: req.user.email }).exec();
 
-    const cart = await Cart.findOneAndRemove({ orderdBy: user._id }).exec();
+    const cart = await Cart.findOneAndRemove({ orderedBy: user._id }).exec();
     res.json(cart);
 };
 
@@ -97,7 +97,7 @@ exports.applyCouponToUserCart = async (req, res) => {
 
     const user = await User.findOne({ email: req.user.email }).exec();
 
-    let { products, cartTotal } = await Cart.findOne({ orderdBy: user._id })
+    let { products, cartTotal } = await Cart.findOne({ orderedBy: user._id })
         .populate("products.product", "_id title price")
         .exec();
 
@@ -112,7 +112,7 @@ exports.applyCouponToUserCart = async (req, res) => {
     console.log("----------> ", totalAfterDiscount);
 
     Cart.findOneAndUpdate(
-        { orderdBy: user._id },
+        { orderedBy: user._id },
         { totalAfterDiscount },
         { new: true }
     ).exec();
@@ -127,12 +127,12 @@ exports.createOrder = async (req, res) => {
 
     const user = await User.findOne({ email: req.user.email }).exec();
 
-    let { products } = await Cart.findOne({ orderdBy: user._id }).exec();
+    let { products } = await Cart.findOne({ orderedBy: user._id }).exec();
 
     let newOrder = await new Order({
         products,
         paymentIntent,
-        orderdBy: user._id,
+        orderedBy: user._id,
     }).save();
 
     // decrement quantity, increment sold
@@ -155,7 +155,7 @@ exports.createOrder = async (req, res) => {
 exports.orders = async (req, res) => {
     let user = await User.findOne({ email: req.user.email }).exec();
 
-    let userOrders = await Order.find({ orderdBy: user._id })
+    let userOrders = await Order.find({ orderedBy: user._id })
         .populate("products.product")
         .exec();
 
@@ -200,7 +200,7 @@ exports.createCashOrder = async (req, res) => {
 
     const user = await User.findOne({ email: req.user.email }).exec();
 
-    let userCart = await Cart.findOne({ orderdBy: user._id }).exec();
+    let userCart = await Cart.findOne({ orderedBy: user._id }).exec();
 
     let finalAmount = 0;
 
@@ -220,7 +220,7 @@ exports.createCashOrder = async (req, res) => {
             created: Date.now(),
             payment_method_types: ["cash"],
         },
-        orderdBy: user._id,
+        orderedBy: user._id,
         orderStatus: "Cash On Delivery",
     }).save();
 

@@ -1,8 +1,11 @@
-import React from "react";
+import React, { useState } from "react";
 import OrdersTable from "../../components/orders/OrdersTable";
+import { getUserOrders } from "../../functions/user"
+import { useAsync } from "../../auxiliary/reactUtils"
+import { useSelector } from "react-redux";
 
 //test data
-const orders = [
+const testOrders = [
     {
         orderId: 1234,
         orderDate: "12",
@@ -25,13 +28,27 @@ const orders = [
 
 const Orders = () => {
 
+    const [orders, setOrders ] = useState([]);
+
+    const { user } = useSelector((state) => ({ ...state }));
+
+
     const onDetailsClicked = (orderId) => {
         console.log(orderId);
     }
 
+    useAsync(
+        async () => getUserOrders(user.token),
+        (s) => console.log(s),
+        null,
+        []
+    );
+
+    // console.log(orders);
+
     return (
         <OrdersTable
-            orders={orders}
+            orders={testOrders}
             onDetailsClicked={onDetailsClicked}
         />
     )
