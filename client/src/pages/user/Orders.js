@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import OrdersTable from "../../components/orders/OrdersTable";
+import OrderDetails from "../../components/orders/OrderDetails";
 import { getUserOrders } from "../../functions/user"
 import { useAsync } from "../../auxiliary/reactUtils"
 import { useSelector } from "react-redux";
@@ -28,29 +29,47 @@ const testOrders = [
 
 const Orders = () => {
 
-    const [orders, setOrders ] = useState([]);
+    const [orders, setOrders] = useState([]);
+    const [isDetailsOpen, setIsDetailsOpen] = useState(false);
+    const [orderSelected, setOrderSelected] = useState(null);
 
     const { user } = useSelector((state) => ({ ...state }));
 
 
     const onDetailsClicked = (orderId) => {
-        console.log(orderId);
+        setIsDetailsOpen((prev) => !prev);
+        setOrderSelected(orders.find(({ _id }) => _id == orderId));
     }
+
 
     useAsync(
         async () => getUserOrders(user.token),
-        (s) => console.log(s),
+        (s) => setOrders(s),
         null,
         []
     );
 
-    // console.log(orders);
-
+    console.log(orders);
+    // ({ isOpen, products, totalCost, setIsOpen, deliveryAdress, contactInformation }) 
     return (
-        <OrdersTable
-            orders={testOrders}
-            onDetailsClicked={onDetailsClicked}
-        />
+        <div>
+            {orderSelected && (
+                <OrderDetails
+                    totalCost={orderSelected.totalCost}
+                    products={orderSelected.products}
+                    isOpen={isDetailsOpen}
+                    setIsOpen={setIsDetailsOpen}
+                    deliveryAdress={"address"}
+                    contactInformation={"info"}
+                />
+            )
+            }
+
+            <OrdersTable
+                orders={orders}
+                onDetailsClicked={onDetailsClicked}
+            />
+        </div>
     )
 
 }

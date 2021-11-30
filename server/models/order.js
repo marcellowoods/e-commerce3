@@ -40,6 +40,7 @@ const orderSchema = new mongoose.Schema(
                     type: ObjectId,
                     ref: "Product",
                 },
+                name: String,
                 count: Number,
                 color: String,
                 price: Number,
