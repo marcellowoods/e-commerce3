@@ -59,8 +59,7 @@ const Orders = () => {
                     products={orderSelected.products}
                     isOpen={isDetailsOpen}
                     setIsOpen={setIsDetailsOpen}
-                    deliveryAdress={"address"}
-                    contactInformation={"info"}
+                    deliveryInfo={orderSelected.deliveryInfo}
                 />
             )
             }

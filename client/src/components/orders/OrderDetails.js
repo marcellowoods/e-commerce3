@@ -4,8 +4,10 @@ import { Dialog, Transition } from '@headlessui/react'
 import { useDispatch, useSelector } from "react-redux";
 import { getCartTotal } from "../../actions/cartActions";
 
-const OrderDetails = ({ isOpen, products, totalCost, setIsOpen, deliveryAdress, contactInformation }) => {
+const OrderDetails = ({ isOpen, products, totalCost, setIsOpen, deliveryInfo }) => {
     // let [isOpen, setIsOpen] = useState(true)
+
+    const { method, city, courrier, address, phone, email, name } = deliveryInfo;
 
     function closeModal() {
         setIsOpen(false)
@@ -81,32 +83,45 @@ const OrderDetails = ({ isOpen, products, totalCost, setIsOpen, deliveryAdress, 
                                         <h3>{totalCost} $</h3>
                                     </div>
                                     <div className="pt-6">
-                                        <div className="flex">
+                                        {/* <div className="flex">
                                             Deliver to
                                             <p className="font-medium pl-1">
-                                                {contactInformation.name}
+                                                {name}
                                             </p>
-                                        </div>
+                                        </div> */}
+
                                         <div className="flex">
                                             phone
                                             <p className="font-medium pl-1">
-                                                {contactInformation.phone}
+                                                {phone}
                                             </p>
                                         </div>
                                         <div className="flex">
                                             email
                                             <p className="font-medium pl-1">
-                                                {contactInformation.email}
+                                                {email}
                                             </p>
                                         </div>
 
 
                                         <div className="flex">
+                                            Courrier
+                                            <p className="font-medium pl-1">
+                                                {courrier}
+                                            </p>
+                                        </div>
+                                        <div className="flex">
+                                            Deliver to
+                                            <p className="font-medium pl-1">
+                                                {method === "office" ? courrier : ""} {method}
+                                            </p>
+                                        </div>
+                                        <div className="flex">
                                             address
                                             <div className="font-medium pl-1">
-                                                {deliveryAdress.city}
+                                                {city}
                                                 {" "}
-                                                {deliveryAdress.address}
+                                                {address}
                                             </div>
 
                                         </div>
