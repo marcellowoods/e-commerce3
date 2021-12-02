@@ -4,6 +4,7 @@ import OrderDetails from "../../components/orders/OrderDetails";
 import { getUserOrders } from "../../functions/user"
 import { useAsync } from "../../auxiliary/reactUtils"
 import { useSelector } from "react-redux";
+import LoadingPage from "../LoadingPage";
 
 //test data
 const testOrders = [
@@ -31,6 +32,7 @@ const Orders = () => {
 
     const [orders, setOrders] = useState([]);
     const [isDetailsOpen, setIsDetailsOpen] = useState(false);
+    const [isLoading, setIsLoading] = useState(false);
     const [orderSelected, setOrderSelected] = useState(null);
 
     const { user } = useSelector((state) => ({ ...state }));
@@ -45,12 +47,17 @@ const Orders = () => {
     useAsync(
         async () => getUserOrders(user.token),
         (s) => setOrders(s),
-        null,
+        setIsLoading,
         []
     );
 
     console.log(orders);
     // ({ isOpen, products, totalCost, setIsOpen, deliveryAdress, contactInformation }) 
+
+    if (isLoading) {
+        return <LoadingPage />
+    }
+
     return (
         <div>
             {orderSelected && (

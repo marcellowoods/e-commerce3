@@ -73,7 +73,7 @@ const OrderDetails = ({ isOpen, products, totalCost, setIsOpen, deliveryInfo }) 
                                                 <h3>{item.name}</h3>
                                                 <h3 className="pl-2 font-medium ">x{item.count}</h3>
                                             </div>
-                                            <h3>{item.price}$</h3>
+                                            <h3>{item.price} $</h3>
                                         </div>
                                     ))
                                     }
