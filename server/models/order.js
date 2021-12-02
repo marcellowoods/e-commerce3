@@ -41,9 +41,9 @@ const orderSchema = new mongoose.Schema(
                     ref: "Product",
                 },
                 name: String,
-                count: Number,
-                color: String,
                 price: Number,
+                selectedCount: Number,
+                selectedColor: String,
             },
         ],
         orderStatus: {

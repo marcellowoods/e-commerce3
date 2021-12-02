@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import OrdersTable from "../../components/orders/OrdersTable";
 import OrderDetails from "../../components/orders/OrderDetails";
-import { getUserOrders } from "../../functions/user"
+import { getOrders } from "../../functions/admin"
 import { useAsync } from "../../auxiliary/reactUtils"
 import { useSelector } from "react-redux";
 import LoadingPage from "../LoadingPage";
@@ -28,7 +28,7 @@ const testOrders = [
     }
 ]
 
-const Orders = () => {
+const UpdateOrders = () => {
 
     const [orders, setOrders] = useState([]);
     const [isDetailsOpen, setIsDetailsOpen] = useState(false);
@@ -45,7 +45,7 @@ const Orders = () => {
 
 
     useAsync(
-        async () => getUserOrders(user.token),
+        async () => getOrders(user.token),
         (s) => setOrders(s),
         setIsLoading,
         []
@@ -79,6 +79,4 @@ const Orders = () => {
 
 }
 
-
-
-export default Orders;
+export default UpdateOrders;

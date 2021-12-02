@@ -43,11 +43,15 @@ const makeOrderCreator = (withUser = false) => {
                     .exec();
 
                 let object = {};
-                object._id = cartFromUser[i]._id;
-                object.count = cartFromUser[i].count;
-                object.color = cartFromUser[i].color;
+                object.product = productFromDb._id;
                 object.name = productFromDb.name;
 
+                object.selectedCount = cartFromUser[i].count;
+
+                if(cartFromUser[i].color){
+                    object.selectedColor = cartFromUser[i].color;
+                }
+                
                 const priceFromDb = roundToTwo(productFromDb.price);
                 object.price = priceFromDb;
 
@@ -70,6 +74,8 @@ const makeOrderCreator = (withUser = false) => {
 
             }
             const totalCost = getCartTotal(cartFromUser);
+
+            console.log(cart);
 
             if (totalCost !== totalCostFromUser) {
                 throw new Error('price error')

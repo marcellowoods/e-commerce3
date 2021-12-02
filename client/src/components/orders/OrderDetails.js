@@ -71,7 +71,7 @@ const OrderDetails = ({ isOpen, products, totalCost, setIsOpen, deliveryInfo }) 
                                         <div className="flex justify-between">
                                             <div className="flex">
                                                 <h3>{item.name}</h3>
-                                                <h3 className="pl-2 font-medium ">x{item.count}</h3>
+                                                <h3 className="pl-2 font-medium ">x{item.selectedCount}</h3>
                                             </div>
                                             <h3>{item.price} $</h3>
                                         </div>

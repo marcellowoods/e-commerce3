@@ -25,7 +25,7 @@ import CreateProduct from "./pages/admin/CreateProduct";
 import EditProduct from "./pages/admin/EditProduct";
 import CreateCategory from "./pages/admin/CreateCategory";
 import ListProducts from "./pages/admin/ListProducts";
-
+import UpdateOrders from "./pages/admin/UpdateOrders";
 
 import Home from "./pages/Home"
 
@@ -88,12 +88,12 @@ function App() {
                 <UserRoute exact path="/user/orders" component={Orders} />
                 <UserRoute exact path="/user/settings" component={Settings} />
 
-                <AdminRoute exact path="/admin/create-product" component={CreateProduct} />
-                <AdminRoute exact path="/admin/edit-product/:productSlugParam" component={EditProduct} />
                 <AdminRoute exact path="/admin/create-category" component={CreateCategory} />
                 <AdminRoute exact path="/admin/list-products" component={ListProducts} />
+                <AdminRoute exact path="/admin/create-product" component={CreateProduct} />
+                <AdminRoute exact path="/admin/edit-product/:productSlugParam" component={EditProduct} />
                 
-
+                <AdminRoute exact path="/admin/update-orders" component={UpdateOrders} />
 
             </Switch>
         </Fragment>

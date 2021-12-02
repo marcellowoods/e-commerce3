@@ -97,7 +97,7 @@ const AdminDropdown = () => {
     const isLoggedIn = user !== null;
 
     const handleOrdersClicked = () => {
-        history.push("/admin/orders");
+        history.push("/admin/update-orders");
     }
 
     const handleProductsClicked = () => {
