@@ -1,8 +1,11 @@
 import React, { Fragment } from "react";
 
 import { Dialog, Transition } from '@headlessui/react'
+import { Link } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { getCartTotal } from "../../actions/cartActions";
+
+const PRODUCT_PAGE_URL = "/product/"
 
 const OrderDetails = ({ isOpen, products, totalCost, setIsOpen, deliveryInfo }) => {
     // let [isOpen, setIsOpen] = useState(true)
@@ -15,6 +18,21 @@ const OrderDetails = ({ isOpen, products, totalCost, setIsOpen, deliveryInfo }) 
 
     function openModal() {
         setIsOpen(true)
+    }
+
+    let renderName = (product, name) => {
+        if (product == null) {
+            return (
+                <h3>{name}</h3>
+            )
+        }
+        const slug = product.slug;
+        const linkString = PRODUCT_PAGE_URL + slug;
+        return (
+            <Link to={linkString}>
+                <h3 className="underline">{name}</h3>
+            </Link>
+        )
     }
 
     return (
@@ -70,7 +88,7 @@ const OrderDetails = ({ isOpen, products, totalCost, setIsOpen, deliveryInfo }) 
                                     {products.map((item, index) => (
                                         <div className="flex justify-between">
                                             <div className="flex">
-                                                <h3>{item.name}</h3>
+                                                {renderName(item.product, item.name)}
                                                 <h3 className="pl-2 font-medium ">x{item.selectedCount}</h3>
                                             </div>
                                             <h3>{item.price} $</h3>
