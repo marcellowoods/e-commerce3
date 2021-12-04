@@ -1,6 +1,7 @@
 import React, { Fragment, useRef, useState } from "react";
-import { Dialog, Transition } from '@headlessui/react'
+import { Dialog, Listbox, Transition } from '@headlessui/react'
 import { ExclamationIcon } from '@heroicons/react/outline'
+import { CheckIcon, SelectorIcon } from '@heroicons/react/solid'
 
 import OrderDetails from "../../components/orders/OrderDetails";
 import { getOrders } from "../../functions/admin"
@@ -9,6 +10,90 @@ import { useSelector } from "react-redux";
 
 import LoadingPage from "../LoadingPage";
 
+const orderStatuses = [
+    "Not Processed",
+    "Processing",
+    "Dispatched",
+    "Cancelled",
+    "Completed",
+];
+
+function classNames(...classes) {
+    return classes.filter(Boolean).join(' ')
+}
+
+const StatusSelect = () => {
+    const [selected, setSelected] = useState(orderStatuses[0])
+
+
+    return (
+        <Listbox value={selected} onChange={setSelected}>
+            {({ open }) => (
+                <>
+                    {/* <Listbox.Label className="block text-sm font-medium text-gray-700">Assigned to</Listbox.Label> */}
+                    <div className="mt-1 relative">
+                        <Listbox.Button className="relative w-full bg-white border border-gray-300 rounded-md shadow-sm pl-3 pr-10 py-2 text-left cursor-default focus:outline-none focus:ring-1 focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm">
+                            <span className="flex items-center">
+                                <span className="ml-2 block truncate">{selected}</span>
+                            </span>
+                            <span className="ml-2 absolute inset-y-0 right-0 flex items-center pr-2 pointer-events-none">
+                                <SelectorIcon className="h-5 w-5 text-gray-400" aria-hidden="true" />
+                            </span>
+                        </Listbox.Button>
+
+                        <Transition
+                            show={open}
+                            as={Fragment}
+                            leave="transition ease-in duration-100"
+                            leaveFrom="opacity-100"
+                            leaveTo="opacity-0"
+                        >
+                            <Listbox.Options className="absolute z-10 mt-1 w-full bg-white shadow-lg max-h-56 rounded-md py-1 text-base ring-1 ring-black ring-opacity-5 overflow-auto focus:outline-none sm:text-sm">
+                                {orderStatuses.map((orderStatus) => (
+                                    <Listbox.Option
+                                        key={orderStatus}
+                                        className={({ active }) =>
+                                            classNames(
+                                                active ? 'text-white bg-indigo-600' : 'text-gray-900',
+                                                'cursor-default select-none relative py-2 pl-2 pr-9'
+                                            )
+                                        }
+                                        value={orderStatus}
+                                    >
+                                        {({ selected, active }) => (
+                                            <>
+                                                <div className="flex items-center">
+                                                    
+                                                    <span
+                                                        className={classNames(selected ? 'font-semibold' : 'font-normal', 'ml-3 block truncate')}
+                                                    >
+                                                        {orderStatus}
+                                                    </span>
+                                                </div>
+
+                                                {selected ? (
+                                                    <span
+                                                        className={classNames(
+                                                            active ? 'text-white' : 'text-indigo-600',
+                                                            'absolute inset-y-0 right-0 flex items-center pr-4'
+                                                        )}
+                                                    >
+                                                        <CheckIcon className="h-5 w-5" aria-hidden="true" />
+                                                    </span>
+                                                ) : null}
+                                            </>
+                                        )}
+                                    </Listbox.Option>
+                                ))}
+                            </Listbox.Options>
+                        </Transition>
+                    </div>
+                </>
+            )}
+        </Listbox>
+    )
+}
+
 const StatusModal = ({ open, setOpen }) => {
     // const [open, setOpen] = useState(true)
 
@@ -16,9 +101,9 @@ const StatusModal = ({ open, setOpen }) => {
 
     return (
         <Transition.Root show={open} as={Fragment}>
-            
+
             {/* initialFocus={cancelButtonRef} */}
-            <Dialog as="div" className="fixed z-10 inset-0 overflow-y-auto"  onClose={setOpen}>
+            <Dialog as="div" className="fixed z-10 inset-0 overflow-y-auto" onClose={setOpen}>
                 <div className="flex items-end justify-center min-h-screen pt-4 px-4 pb-20 text-center sm:block sm:p-0">
                     <Transition.Child
                         as={Fragment}
@@ -47,22 +132,26 @@ const StatusModal = ({ open, setOpen }) => {
                         leaveFrom="opacity-100 translate-y-0 sm:scale-100"
                         leaveTo="opacity-0 translate-y-4 sm:translate-y-0 sm:scale-95"
                     >
-                        <div className="inline-block align-bottom bg-white rounded-lg text-left overflow-hidden shadow-xl transform transition-all sm:my-8 sm:align-middle sm:max-w-lg sm:w-full">
+                        <div className="inline-block align-bottom bg-white rounded-lg text-left shadow-xl transform transition-all sm:my-8 sm:align-middle sm:max-w-lg sm:w-full">
                             <div className="bg-white px-4 pt-5 pb-4 sm:p-6 sm:pb-4">
+                                <div className="pb-6">
+                                <h1>order ID: 61aa01deec0f3411dcc1b146</h1>
+                                </div>
                                 <div className="sm:flex sm:items-start">
-                                    <div className="mx-auto flex-shrink-0 flex items-center justify-center h-12 w-12 rounded-full bg-red-100 sm:mx-0 sm:h-10 sm:w-10">
+                                    {/* <div className="mx-auto flex-shrink-0 flex items-center justify-center h-12 w-12 rounded-full bg-red-100 sm:mx-0 sm:h-10 sm:w-10">
                                         <ExclamationIcon className="h-6 w-6 text-red-600" aria-hidden="true" />
-                                    </div>
+                                    </div> */}
                                     <div className="mt-3 text-center sm:mt-0 sm:ml-4 sm:text-left">
                                         <Dialog.Title as="h3" className="text-lg leading-6 font-medium text-gray-900">
-                                            Deactivate account
+                                            Select new status
                                         </Dialog.Title>
-                                        <div className="mt-2">
+                                        {/* <div className="mt-2">
                                             <p className="text-sm text-gray-500">
                                                 Are you sure you want to deactivate your account? All of your data will be permanently removed.
                                                 This action cannot be undone.
                                             </p>
-                                        </div>
+                                        </div> */}
+                                        <StatusSelect />
                                     </div>
                                 </div>
                             </div>
@@ -72,7 +161,7 @@ const StatusModal = ({ open, setOpen }) => {
                                     className="w-full inline-flex justify-center rounded-md border border-transparent shadow-sm px-4 py-2 bg-red-600 text-base font-medium text-white hover:bg-red-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-red-500 sm:ml-3 sm:w-auto sm:text-sm"
                                     onClick={() => setOpen(false)}
                                 >
-                                    Update
+                                    Save
                                 </button>
                                 <button
                                     type="button"
@@ -110,10 +199,10 @@ const OrderRow = ({ orderId,
                 <span className="inline-block w-1/3 md:hidden font-bold">Created on</span>
                 {orderDate}
             </td>
-            <td className="p-2 md:border md:border-grey-500 text-left block md:table-cell">
+            {/* <td className="p-2 md:border md:border-grey-500 text-left block md:table-cell">
                 <span className="inline-block w-1/3 md:hidden font-bold">Shipping address</span>
                 {orderAddress}
-            </td>
+            </td> */}
             <td className="p-2 md:border md:border-grey-500 text-left block md:table-cell">
                 <span className="inline-block w-1/3 md:hidden font-bold">Status</span>
                 {orderStatus}
@@ -128,7 +217,7 @@ const OrderRow = ({ orderId,
                         className="bg-blue-500 hover:bg-blue-700 text-white text-md font-bold py-1 px-2  rounded">
                         Details
                     </button>
-                    <button onClick={() => onUpdateStatusClicked(orderId)} 
+                    <button onClick={() => onUpdateStatusClicked(orderId)}
                         className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-1 px-2 border border-blue-500 rounded">
                         Update Status
                     </button>
@@ -166,7 +255,7 @@ const OrdersTable = ({ onDetailsClicked, onUpdateStatusClicked, orders }) => {
                     <tr className="border border-grey-500 md:border-none block md:table-row absolute -top-full md:top-auto -left-full md:left-auto  md:relative ">
                         <th className="bg-gray-600 p-2 text-white font-bold md:border md:border-grey-500 text-left block md:table-cell">Order Id</th>
                         <th className="bg-gray-600 p-2 text-white font-bold md:border md:border-grey-500 text-left block md:table-cell">Date</th>
-                        <th className="bg-gray-600 p-2 text-white font-bold md:border md:border-grey-500 text-left block md:table-cell">Address</th>
+                        {/* <th className="bg-gray-600 p-2 text-white font-bold md:border md:border-grey-500 text-left block md:table-cell">Address</th> */}
                         <th className="bg-gray-600 p-2 text-white font-bold md:border md:border-grey-500 text-left block md:table-cell">Status</th>
                         <th className="bg-gray-600 p-2 text-white font-bold md:border md:border-grey-500 text-left block md:table-cell">Total</th>
                         <th className="bg-gray-600 p-2 text-white font-bold md:border md:border-grey-500 text-left block md:table-cell"></th>
@@ -178,7 +267,7 @@ const OrdersTable = ({ onDetailsClicked, onUpdateStatusClicked, orders }) => {
                             <OrderRow
                                 orderId={order._id}
                                 orderDate={getDate(order.createdAt)}
-                                orderAddress={order.deliveryInfo.address}
+                                // orderAddress={order.deliveryInfo.address}
                                 orderStatus={order.orderStatus}
                                 orderTotal={order.totalCost}
                                 onDetailsClicked={onDetailsClicked}
@@ -259,6 +348,8 @@ const UpdateOrders = () => {
             {orderSelected && (
                 <OrderDetails
                     totalCost={orderSelected.totalCost}
+                    orderStatus={orderSelected.orderStatus}
+                    orderId={orderSelected._id}
                     products={orderSelected.products}
                     isOpen={isDetailsOpen}
                     setIsOpen={setIsDetailsOpen}

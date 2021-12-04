@@ -7,7 +7,7 @@ import { getCartTotal } from "../../actions/cartActions";
 
 const PRODUCT_PAGE_URL = "/product/"
 
-const OrderDetails = ({ isOpen, products, totalCost, setIsOpen, deliveryInfo }) => {
+const OrderDetails = ({ isOpen, orderStatus, orderId, products, totalCost, setIsOpen, deliveryInfo }) => {
     // let [isOpen, setIsOpen] = useState(true)
 
     const { method, city, courrier, address, phone, email, name } = deliveryInfo;
@@ -77,10 +77,17 @@ const OrderDetails = ({ isOpen, products, totalCost, setIsOpen, deliveryInfo }) 
                                 <Dialog.Title
                                     as="h3"
                                     className="text-lg font-medium leading-6 text-gray-900"
-                                >
+                                >   
+                                    <div>
                                     Order
+                                    {" " + orderId}
+                                    </div>
+                                    <div>
+                                    Status
+                                    {" " + orderStatus}
+                                    </div>
                                 </Dialog.Title>
-                                <div className="mt-2">
+                                <div className="mt-6">
                                     {/* <p className="text-sm text-gray-500">
                                         Your payment has been successfully submitted. We’ve sent you
                                         an email with all of the details of your order.
