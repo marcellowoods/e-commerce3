@@ -5,7 +5,7 @@ import { CheckIcon, SelectorIcon } from '@heroicons/react/solid'
 
 import OrderDetails from "../../components/orders/OrderDetails";
 import { getOrders } from "../../functions/admin"
-import { useAsync } from "../../auxiliary/reactUtils"
+import { useAsync, useDidMountEffect } from "../../auxiliary/reactUtils"
 import { useSelector } from "react-redux";
 
 import LoadingPage from "../LoadingPage";
@@ -22,9 +22,8 @@ function classNames(...classes) {
     return classes.filter(Boolean).join(' ')
 }
 
-const StatusSelect = () => {
-    const [selected, setSelected] = useState(orderStatuses[0])
-
+const StatusSelect = ({selected, setSelected}) => {
+    // const [selected, setSelected] = useState(orderStatuses[0])
 
     return (
         <Listbox value={selected} onChange={setSelected}>
@@ -94,10 +93,10 @@ const StatusSelect = () => {
     )
 }
 
-const StatusModal = ({ open, setOpen }) => {
+const StatusModal = ({ open, setOpen, onSaveStatusClicked }) => {
     // const [open, setOpen] = useState(true)
 
-    const cancelButtonRef = useRef(null)
+    const cancelButtonRef = useRef(null);
 
     return (
         <Transition.Root show={open} as={Fragment}>
@@ -159,7 +158,7 @@ const StatusModal = ({ open, setOpen }) => {
                                 <button
                                     type="button"
                                     className="w-full inline-flex justify-center rounded-md border border-transparent shadow-sm px-4 py-2 bg-red-600 text-base font-medium text-white hover:bg-red-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-red-500 sm:ml-3 sm:w-auto sm:text-sm"
-                                    onClick={() => setOpen(false)}
+                                    onClick={onSaveStatusClicked}
                                 >
                                     Save
                                 </button>
@@ -316,17 +315,32 @@ const UpdateOrders = () => {
     const [isLoading, setIsLoading] = useState(false);
     const [orderSelected, setOrderSelected] = useState(null);
 
+    const [newOrderStatus, setNewOrderStatus] = useState(false);
+
     const { user } = useSelector((state) => ({ ...state }));
+
+    useDidMountEffect(() => {
+
+        if(orderSelected){
+            setNewOrderStatus(orderSelected.orderStatus);
+        }
+        
+    }, [orderSelected])
 
 
     const onDetailsClicked = (orderId) => {
-        setIsDetailsOpen((prev) => !prev);
+        setIsDetailsOpen(true);
         setOrderSelected(orders.find(({ _id }) => _id == orderId));
     }
 
     const onUpdateStatusClicked = (orderId) => {
-        setIsStatusOpen((prev) => !prev);
+        setIsStatusOpen(true);
         setOrderSelected(orders.find(({ _id }) => _id == orderId));
+    }
+
+    const onSaveStatusClicked = (orderId) => {
+        setIsStatusOpen(false);
+        // setOrderSelected(orders.find(({ _id }) => _id == orderId));
     }
 
 
@@ -361,6 +375,9 @@ const UpdateOrders = () => {
             <StatusModal
                 open={isStatusOpen}
                 setOpen={setIsStatusOpen}
+                onSaveStatusClicked={onSaveStatusClicked}
+                newOrderStatus={newOrderStatus}
+                setNewOrderStatus={setNewOrderStatus}
             />
 
             <OrdersTable
