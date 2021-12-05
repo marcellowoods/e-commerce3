@@ -22,7 +22,7 @@ function classNames(...classes) {
     return classes.filter(Boolean).join(' ')
 }
 
-const StatusSelect = ({selected, setSelected}) => {
+const StatusSelect = ({ selected, setSelected }) => {
     // const [selected, setSelected] = useState(orderStatuses[0])
 
     return (
@@ -62,7 +62,7 @@ const StatusSelect = ({selected, setSelected}) => {
                                         {({ selected, active }) => (
                                             <>
                                                 <div className="flex items-center">
-                                                    
+
                                                     <span
                                                         className={classNames(selected ? 'font-semibold' : 'font-normal', 'ml-3 block truncate')}
                                                     >
@@ -93,7 +93,10 @@ const StatusSelect = ({selected, setSelected}) => {
     )
 }
 
-const StatusModal = ({ open, setOpen, onSaveStatusClicked }) => {
+// newOrderStatus={newOrderStatus}
+// setNewOrderStatus={setNewOrderStatus}
+
+const StatusModal = ({ open, setOpen, orderSelected, onSaveStatusClicked, newOrderStatus, setNewOrderStatus }) => {
     // const [open, setOpen] = useState(true)
 
     const cancelButtonRef = useRef(null);
@@ -134,7 +137,9 @@ const StatusModal = ({ open, setOpen, onSaveStatusClicked }) => {
                         <div className="inline-block align-bottom bg-white rounded-lg text-left shadow-xl transform transition-all sm:my-8 sm:align-middle sm:max-w-lg sm:w-full">
                             <div className="bg-white px-4 pt-5 pb-4 sm:p-6 sm:pb-4">
                                 <div className="pb-6">
-                                <h1>order ID: 61aa01deec0f3411dcc1b146</h1>
+                                    <h3 className="text-lg font-medium leading-6 text-gray-900">
+                                        Order {orderSelected && orderSelected._id}
+                                    </h3>
                                 </div>
                                 <div className="sm:flex sm:items-start">
                                     {/* <div className="mx-auto flex-shrink-0 flex items-center justify-center h-12 w-12 rounded-full bg-red-100 sm:mx-0 sm:h-10 sm:w-10">
@@ -150,7 +155,10 @@ const StatusModal = ({ open, setOpen, onSaveStatusClicked }) => {
                                                 This action cannot be undone.
                                             </p>
                                         </div> */}
-                                        <StatusSelect />
+                                        <StatusSelect
+                                            setSelected={setNewOrderStatus}
+                                            selected={newOrderStatus}
+                                        />
                                     </div>
                                 </div>
                             </div>
@@ -315,16 +323,16 @@ const UpdateOrders = () => {
     const [isLoading, setIsLoading] = useState(false);
     const [orderSelected, setOrderSelected] = useState(null);
 
-    const [newOrderStatus, setNewOrderStatus] = useState(false);
+    const [newOrderStatus, setNewOrderStatus] = useState(null);
 
     const { user } = useSelector((state) => ({ ...state }));
 
     useDidMountEffect(() => {
 
-        if(orderSelected){
+        if (orderSelected) {
             setNewOrderStatus(orderSelected.orderStatus);
         }
-        
+
     }, [orderSelected])
 
 
@@ -374,6 +382,7 @@ const UpdateOrders = () => {
 
             <StatusModal
                 open={isStatusOpen}
+                orderSelected={orderSelected}
                 setOpen={setIsStatusOpen}
                 onSaveStatusClicked={onSaveStatusClicked}
                 newOrderStatus={newOrderStatus}
