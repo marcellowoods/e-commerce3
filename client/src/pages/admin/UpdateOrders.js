@@ -1,11 +1,12 @@
 import React, { Fragment, useRef, useState } from "react";
-import { Dialog, Listbox, Transition } from '@headlessui/react'
-import { ExclamationIcon } from '@heroicons/react/outline'
-import { CheckIcon, SelectorIcon } from '@heroicons/react/solid'
+import { Dialog, Listbox, Transition } from '@headlessui/react';
+import { ExclamationIcon } from '@heroicons/react/outline';
+import { CheckIcon, SelectorIcon } from '@heroicons/react/solid';
 
 import OrderDetails from "../../components/orders/OrderDetails";
-import { getOrders } from "../../functions/admin"
-import { useAsync, useDidMountEffect } from "../../auxiliary/reactUtils"
+import { getOrders } from "../../functions/admin";
+import { changeStatus } from "../../functions/admin";
+import { useAsync, useDidMountEffect } from "../../auxiliary/reactUtils";
 import { useSelector } from "react-redux";
 
 import LoadingPage from "../LoadingPage";
@@ -327,6 +328,15 @@ const UpdateOrders = () => {
 
     const { user } = useSelector((state) => ({ ...state }));
 
+    useAsync(
+        async () => getOrders(user.token),
+        (s) => setOrders(s),
+        setIsLoading,
+        []
+    );
+
+    console.log(orders);
+
     useDidMountEffect(() => {
 
         if (orderSelected) {
@@ -346,20 +356,27 @@ const UpdateOrders = () => {
         setOrderSelected(orders.find(({ _id }) => _id == orderId));
     }
 
-    const onSaveStatusClicked = (orderId) => {
+    const onSaveStatusClicked = async () => {
         setIsStatusOpen(false);
-        // setOrderSelected(orders.find(({ _id }) => _id == orderId));
+        setIsLoading(true);
+
+        try {   
+                if(orderSelected){
+                    await changeStatus(orderSelected._id, newOrderStatus, user.token);
+                    const res = await getOrders(user.token);
+                    setOrders(res.data);
+                }
+                setIsLoading(false);
+                
+        } catch (error) {
+
+            console.log(error);
+            alert(error);
+            setIsLoading(false);
+        }
     }
 
 
-    useAsync(
-        async () => getOrders(user.token),
-        (s) => setOrders(s),
-        setIsLoading,
-        []
-    );
-
-    console.log(orders);
 
     if (isLoading) {
         return <LoadingPage />
