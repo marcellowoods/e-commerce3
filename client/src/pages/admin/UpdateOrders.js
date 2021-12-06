@@ -325,8 +325,13 @@ const UpdateOrders = () => {
     const [orderSelected, setOrderSelected] = useState(null);
 
     const [newOrderStatus, setNewOrderStatus] = useState(null);
+    const [hideCompleted, setHideCompleted] = useState(true);
 
     const { user } = useSelector((state) => ({ ...state }));
+
+    const hideCompletedToggle = () => {
+        setHideCompleted((prev) => !prev)
+    }
 
     useAsync(
         async () => getOrders(user.token),
@@ -360,14 +365,14 @@ const UpdateOrders = () => {
         setIsStatusOpen(false);
         setIsLoading(true);
 
-        try {   
-                if(orderSelected){
-                    await changeStatus(orderSelected._id, newOrderStatus, user.token);
-                    const res = await getOrders(user.token);
-                    setOrders(res.data);
-                }
-                setIsLoading(false);
-                
+        try {
+            if (orderSelected) {
+                await changeStatus(orderSelected._id, newOrderStatus, user.token);
+                const res = await getOrders(user.token);
+                setOrders(res.data);
+            }
+            setIsLoading(false);
+
         } catch (error) {
 
             console.log(error);
@@ -406,12 +411,29 @@ const UpdateOrders = () => {
                 setNewOrderStatus={setNewOrderStatus}
             />
 
+
+            <div className="container max-w-7xl mx-auto pt-12 px-6 flex  items-center">
+
+                <div
+                    onClick={hideCompletedToggle}
+                    className={classNames(hideCompleted ? 'bg-green-400' : "",
+                        "cursor-pointer w-16 h-10 flex items-center bg-gray-300 rounded-full p-1 duration-300 ease-in-out")
+                    }>
+                    <div className={classNames(hideCompleted ? 'translate-x-6' : "",
+                        "bg-white w-8 h-8 rounded-full shadow-md transform duration-300 ease-in-out")}></div>
+                </div>
+
+                <h3 className="pl-2 text-xl font-normal">Hide completed</h3>
+
+            </div >
+
+
             <OrdersTable
                 orders={orders}
                 onDetailsClicked={onDetailsClicked}
                 onUpdateStatusClicked={onUpdateStatusClicked}
             />
-        </div>
+        </div >
     )
 
 }
