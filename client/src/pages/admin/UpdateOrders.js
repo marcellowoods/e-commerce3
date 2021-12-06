@@ -237,7 +237,7 @@ const OrderRow = ({ orderId,
 
 
 //https://tailwindcomponents.com/component/responsive-table-6
-const OrdersTable = ({ onDetailsClicked, onUpdateStatusClicked, orders }) => {
+const OrdersTable = ({ onDetailsClicked, hideCompleted, onUpdateStatusClicked, orders }) => {
 
     const getDate = (dateStr) => {
 
@@ -255,6 +255,20 @@ const OrdersTable = ({ onDetailsClicked, onUpdateStatusClicked, orders }) => {
         return date.toLocaleDateString("bg");
     }
 
+    const getFilteredOrders = () => {
+
+        return orders.filter((order) => {
+            if (hideCompleted) {
+                if (order.orderStatus === "Completed") {
+                    return false;
+                } else {
+                    return true;
+                }
+            }
+            return true;
+        })
+    }
+
     return (
 
         <div className="container max-w-7xl mx-auto pt-6 px-6">
@@ -270,7 +284,7 @@ const OrdersTable = ({ onDetailsClicked, onUpdateStatusClicked, orders }) => {
                     </tr>
                 </thead>
                 <tbody className="block md:table-row-group">
-                    {orders.map((order) => {
+                    {getFilteredOrders().map((order) => {
                         return (
                             <OrderRow
                                 orderId={order._id}
@@ -432,6 +446,7 @@ const UpdateOrders = () => {
 
             <OrdersTable
                 orders={orders}
+                hideCompleted={hideCompleted}
                 onDetailsClicked={onDetailsClicked}
                 onUpdateStatusClicked={onUpdateStatusClicked}
             />
