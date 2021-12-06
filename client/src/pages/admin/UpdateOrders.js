@@ -257,7 +257,7 @@ const OrdersTable = ({ onDetailsClicked, onUpdateStatusClicked, orders }) => {
 
     return (
 
-        <div className="container max-w-7xl mx-auto pt-12 px-6">
+        <div className="container max-w-7xl mx-auto pt-6 px-6">
             <table className="min-w-full border-collapse block md:table">
                 <thead className="block md:table-header-group">
                     <tr className="border border-grey-500 md:border-none block md:table-row absolute -top-full md:top-auto -left-full md:left-auto  md:relative ">
@@ -411,19 +411,21 @@ const UpdateOrders = () => {
                 setNewOrderStatus={setNewOrderStatus}
             />
 
+            {/* https://medium.com/front-end-weekly/build-a-html-toggle-switch-in-just-7-lines-of-code-using-vue-tailwindcss-ed215394fcd */}
+            <div className="container max-w-7xl mx-auto pt-12 px-6">
+                <div className="flex items-center">
+                    <div
+                        onClick={hideCompletedToggle}
+                        className={classNames(hideCompleted ? 'bg-green-400' : "",
+                            "cursor-pointer w-16 h-10 flex items-center bg-gray-300 rounded-full p-1 duration-300 ease-in-out")
+                        }
+                    >
+                        <div className={classNames(hideCompleted ? 'translate-x-6' : "",
+                            "bg-white w-8 h-8 rounded-full shadow-md transform duration-300 ease-in-out")}></div>
+                    </div>
 
-            <div className="container max-w-7xl mx-auto pt-12 px-6 flex  items-center">
-
-                <div
-                    onClick={hideCompletedToggle}
-                    className={classNames(hideCompleted ? 'bg-green-400' : "",
-                        "cursor-pointer w-16 h-10 flex items-center bg-gray-300 rounded-full p-1 duration-300 ease-in-out")
-                    }>
-                    <div className={classNames(hideCompleted ? 'translate-x-6' : "",
-                        "bg-white w-8 h-8 rounded-full shadow-md transform duration-300 ease-in-out")}></div>
+                    <h3 className="pl-2 text-xl font-normal">Hide completed orders</h3>
                 </div>
-
-                <h3 className="pl-2 text-xl font-normal">Hide completed</h3>
 
             </div >
 
