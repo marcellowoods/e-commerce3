@@ -21,3 +21,43 @@ const products = Array.from({length: numProducts}, (_, i) => {
 })
 
 exports.products = products;
+
+const makeOrder = () => {
+
+    const deliveryInfo = {
+        method:"office",
+        city:"some sity",
+        address: "address 2",
+        phone:"1234",
+        email:"test@mail.com",
+        name:"Somename",
+        courrier:"econt",
+    }
+
+    const products = [
+        {
+            product: "61928bd59f81380970810c74",
+            name:"IWC 100",
+            selectedCount:1,
+            price:210
+        }
+    ]
+
+    const totalCost = 210;
+
+    return {
+        deliveryInfo, products, totalCost
+    }
+
+}
+
+const numOrders = 75;
+
+const orders = Array.from({length: numOrders}, (_, i) => {
+    return makeOrder();
+})
+
+exports.orders = orders;
+
+
+
