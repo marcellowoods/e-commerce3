@@ -51,7 +51,7 @@ const makeOrder = () => {
 
 }
 
-const numOrders = 75;
+const numOrders = 35;
 
 const orders = Array.from({length: numOrders}, (_, i) => {
     return makeOrder();

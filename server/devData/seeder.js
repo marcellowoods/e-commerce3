@@ -1,6 +1,6 @@
 const Product = require("../models/product");
 const Category = require("../models/category");
-const Order = require("../models/product");
+const Order = require("../models/order");
 
 const mongoose = require("mongoose");
 const path = require('path')
