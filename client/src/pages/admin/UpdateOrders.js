@@ -444,12 +444,12 @@ const UpdateOrders = () => {
             </div >
 
 
-            <OrdersTable
+            {/* <OrdersTable
                 orders={orders}
                 hideCompleted={hideCompleted}
                 onDetailsClicked={onDetailsClicked}
                 onUpdateStatusClicked={onUpdateStatusClicked}
-            />
+            /> */}
         </div >
     )
 
