@@ -8,6 +8,7 @@ import { getOrders } from "../../functions/admin";
 import { changeStatus } from "../../functions/admin";
 import { useAsync, useDidMountEffect } from "../../auxiliary/reactUtils";
 import { useSelector } from "react-redux";
+import getPagination from "../../components/navigation/getPagination";
 
 import LoadingPage from "../LoadingPage";
 
@@ -331,6 +332,8 @@ const testOrders = [
 const UpdateOrders = () => {
 
     const [orders, setOrders] = useState([]);
+    const [page, setPage] = useState(0);
+    const [pageCount, setPageCount] = useState(6);
 
     const [isDetailsOpen, setIsDetailsOpen] = useState(false);
     const [isStatusOpen, setIsStatusOpen] = useState(false)
@@ -347,9 +350,14 @@ const UpdateOrders = () => {
         setHideCompleted((prev) => !prev)
     }
 
+    const onOrdersLoad = (res) => {
+        const { data, metadata } = res;
+        setOrders(data);
+    }
+
     useAsync(
         async () => getOrders(user.token),
-        (s) => setOrders(s),
+        onOrdersLoad,
         setIsLoading,
         []
     );
@@ -444,12 +452,20 @@ const UpdateOrders = () => {
             </div >
 
 
-            {/* <OrdersTable
+            <OrdersTable
                 orders={orders}
                 hideCompleted={hideCompleted}
                 onDetailsClicked={onDetailsClicked}
                 onUpdateStatusClicked={onUpdateStatusClicked}
-            /> */}
+            />
+
+            <div className="p-6">
+                {getPagination({
+                    curPage: 1,
+                    pageCount,
+                    onPageChange: ({ selected }) => setPage(selected)
+                })}
+            </div>
         </div >
     )
 
