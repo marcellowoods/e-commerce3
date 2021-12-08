@@ -1,6 +1,5 @@
 import React, { Fragment, useRef, useState } from "react";
 import { Dialog, Listbox, Transition } from '@headlessui/react';
-import { ExclamationIcon } from '@heroicons/react/outline';
 import { CheckIcon, SelectorIcon } from '@heroicons/react/solid';
 
 import OrderDetails from "../../components/orders/OrderDetails";
@@ -236,6 +235,7 @@ const OrderRow = ({ orderId,
     )
 }
 
+const ORDERS_PER_PAGE = 6;
 
 //https://tailwindcomponents.com/component/responsive-table-6
 const OrdersTable = ({ onDetailsClicked, hideCompleted, onUpdateStatusClicked, orders }) => {
@@ -256,20 +256,6 @@ const OrdersTable = ({ onDetailsClicked, hideCompleted, onUpdateStatusClicked, o
         return date.toLocaleDateString("bg");
     }
 
-    const getFilteredOrders = () => {
-
-        return orders.filter((order) => {
-            if (hideCompleted) {
-                if (order.orderStatus === "Completed") {
-                    return false;
-                } else {
-                    return true;
-                }
-            }
-            return true;
-        })
-    }
-
     return (
 
         <div className="container max-w-7xl mx-auto pt-6 px-6">
@@ -285,7 +271,7 @@ const OrdersTable = ({ onDetailsClicked, hideCompleted, onUpdateStatusClicked, o
                     </tr>
                 </thead>
                 <tbody className="block md:table-row-group">
-                    {getFilteredOrders().map((order) => {
+                    {orders.map((order) => {
                         return (
                             <OrderRow
                                 orderId={order._id}
@@ -333,7 +319,7 @@ const UpdateOrders = () => {
 
     const [orders, setOrders] = useState([]);
     const [page, setPage] = useState(0);
-    const [pageCount, setPageCount] = useState(6);
+    const [pageCount, setPageCount] = useState(0);
 
     const [isDetailsOpen, setIsDetailsOpen] = useState(false);
     const [isStatusOpen, setIsStatusOpen] = useState(false)
@@ -350,16 +336,28 @@ const UpdateOrders = () => {
         setHideCompleted((prev) => !prev)
     }
 
-    const onOrdersLoad = (res) => {
-        const { data, metadata } = res;
-        setOrders(data);
+    const onSuccessOrders = (data) => {
+
+        const { data: ordersData, metadata: ordersMetadata } = data;
+
+        if (ordersData.length === 0) {
+            setOrders([]);
+            setPageCount(0);
+            return;
+        }
+        const perPage = ORDERS_PER_PAGE;
+
+        setOrders(ordersData);
+        const { total } = ordersMetadata[0];
+        const countPages = Math.ceil(total / perPage);
+        setPageCount(countPages);
     }
 
     useAsync(
-        async () => getOrders(user.token),
-        onOrdersLoad,
+        async () => getOrders(hideCompleted, page + 1, user.token),
+        onSuccessOrders,
         setIsLoading,
-        []
+        [hideCompleted, page]
     );
 
     console.log(orders);
@@ -401,12 +399,6 @@ const UpdateOrders = () => {
             alert(error);
             setIsLoading(false);
         }
-    }
-
-
-
-    if (isLoading) {
-        return <LoadingPage />
     }
 
     return (
@@ -451,17 +443,21 @@ const UpdateOrders = () => {
 
             </div >
 
+            {isLoading ? <LoadingPage /> : (
 
-            <OrdersTable
-                orders={orders}
-                hideCompleted={hideCompleted}
-                onDetailsClicked={onDetailsClicked}
-                onUpdateStatusClicked={onUpdateStatusClicked}
-            />
+                <OrdersTable
+                    orders={orders}
+                    hideCompleted={hideCompleted}
+                    onDetailsClicked={onDetailsClicked}
+                    onUpdateStatusClicked={onUpdateStatusClicked}
+                />
+            )
+            }
 
-            <div className="p-6">
+            <div className={classNames(isLoading ? "transform translate-y-56" : "",
+                "p-6")}>
                 {getPagination({
-                    curPage: 1,
+                    curPage: page,
                     pageCount,
                     onPageChange: ({ selected }) => setPage(selected)
                 })}

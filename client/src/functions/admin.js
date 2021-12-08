@@ -1,11 +1,12 @@
 import axios from "axios";
 
-export const getOrders = async (authtoken) =>
-    await axios.get(`${process.env.REACT_APP_API}/admin/orders`, {
-        headers: {
-            authtoken,
-        },
-    });
+export const getOrders = async (hideCompleted, page, authtoken) =>
+    await axios.post(`${process.env.REACT_APP_API}/admin/orders`, { hideCompleted, page },
+        {
+            headers: {
+                authtoken,
+            },
+        });
 
 export const changeStatus = async (orderId, orderStatus, authtoken) =>
     await axios.put(

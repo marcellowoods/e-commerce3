@@ -8,7 +8,7 @@ const LoadingPage = () => {
 
     return (
         // <h3>Load</h3>
-        <div className="flex h-screen justify-center pt-20">
+        <div className="flex justify-center pt-20">
             <div style={{borderTopColor:"transparent"}}
                 className="w-16 h-16 border-4 border-gray-500 border-solid rounded-full animate-spin"></div>
         </div>
