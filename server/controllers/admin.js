@@ -20,8 +20,7 @@ exports.orders = async (req, res) => {
     try {
 
         // createdAt/updatedAt, desc/asc, 3
-        // const { sort, order, page } = req.body;
-        const page = 1;
+        const { hideCompleted, page } = req.body;
         const currentPage = page || 1;
         const perPage = 6; // 3
 
