@@ -19,7 +19,6 @@ exports.orders = async (req, res) => {
     // console.table(req.body);
     try {
 
-        // createdAt/updatedAt, desc/asc, 3
         const { hideCompleted, page } = req.body;
         const currentPage = page || 1;
         const perPage = 6; // 3
@@ -28,8 +27,13 @@ exports.orders = async (req, res) => {
 
         let sortObj = { createdAt: -1 };
 
+        const match = [];
+        if(hideCompleted){
+            match.push({ $match : { orderStatus : { $ne: "Completed" } } })
+        }
+
         const data = await Order.aggregate([
-            // { $match: { ...match } },
+            ...match,
             {
                 $facet: {
                     metadata: [{ $count: 'total' }],
