@@ -63,6 +63,8 @@ const Orders = () => {
                 <OrderDetails
                     totalCost={orderSelected.totalCost}
                     products={orderSelected.products}
+                    orderId={orderSelected._id}
+                    orderStatus={orderSelected.orderStatus}
                     isOpen={isDetailsOpen}
                     setIsOpen={setIsDetailsOpen}
                     deliveryInfo={orderSelected.deliveryInfo}
