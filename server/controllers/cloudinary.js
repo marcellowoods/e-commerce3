@@ -36,7 +36,7 @@ exports.remove = (req, res) => {
 };
 
 
-exports.getCloudinaryImages = async () => {
+const getCloudinaryImages = async () => {
     //https://support.cloudinary.com/hc/en-us/articles/202521082-How-to-list-all-images-within-a-folder-
 
     const imageUrls = [];
@@ -55,3 +55,26 @@ exports.getCloudinaryImages = async () => {
     // console.log(imageUrls);
     return imageUrls;
 }
+
+exports.getCloudinaryImages = getCloudinaryImages;
+
+exports.getImagesWithIds = async (req, res) => {
+
+    const imagesUrl = req.body.imageUrls;
+
+    const cloudinaryImages = await getCloudinaryImages();
+
+    let imagesWithIds = [];
+    imagesUrl.forEach(imgUrl => {
+        let imgWithId = cloudinaryImages.find(({ url }) => url == imgUrl);
+        if (imgWithId) {
+            //{ url: imgObj.secure_url, public_id: imgObj.public_id }
+            imagesWithIds.push(imgWithId);
+        }
+    }
+    );
+
+    res.json({ imagesWithIds });
+}
+
+
