@@ -1,7 +1,10 @@
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useHistory, useParams } from "react-router-dom";
-import { updateCategory, getCategory } from "../../functions/category"
+import { updateCategory, getCategory } from "../../functions/category";
+import { getImageIds } from "../../functions/cloudinary";
+import { useAsync } from "../../auxiliary/reactUtils"
+import LoadingPage from "../LoadingPage";
 import FileUpload from "../../components/forms/FileUpload";
 
 function classNames(...classes) {
@@ -56,6 +59,17 @@ const ImageUrlForm = ({ imageUrl, setImageUrl, uploadedImages, setUploadedImages
 
     }, [uploadedImages])
 
+    const isInputDisabled = () => uploadedImages.length;
+
+    const onInputChange = (e) => {
+
+        if (isInputDisabled()) {
+            window.alert("remove uploaded image first")
+        } else {
+            setImageUrl(e.target.value)
+        }
+    }
+
     return (
         <div className="p-4">
             <label htmlFor="price" className="block text-sm font-medium text-gray-700">
@@ -65,9 +79,10 @@ const ImageUrlForm = ({ imageUrl, setImageUrl, uploadedImages, setUploadedImages
 
                 <input
                     value={imageUrl}
-                    onChange={(e) => setImageUrl(e.target.value)}
+                    onChange={onInputChange}
                     type="text"
                     name="name"
+                    disabled={isInputDisabled()}
                     placeholder="paste a link or upload image"
                     id="name"
                     className="focus:ring-indigo-500 focus:border-indigo-500 block w-full  pr-12 sm:text-sm border-gray-300 rounded-md  ease-linear transition-all duration-150"
@@ -185,28 +200,37 @@ const EditCategory = () => {
     const [description, setDescription] = useState("");
     const [imageUrl, setImageUrl] = useState("");
     const [uploadedImages, setUploadedImages] = useState([]);
+    const [isCategoryLoading, setIsCategoryLoading] = useState(true);
 
     const { user } = useSelector((state) => ({ ...state }));
 
     const setCategoryParams = (category) => {
         setName(category.name);
-        setImagesUrl(product.images);
+        setImageUrl(category.image);
         setDescription(category.description);
     }
 
-    useAsync(
-        async () => getCategory(categorySlugParam),
-        (category) => {
-            setCategoryParams(category)
-        },
-        null,
-        []
-    );
+    useEffect(async () => {
+
+        try {
+            let {data: category} = await getCategory(categorySlugParam);
+            console.log(category);
+            setCategoryParams(category);
+            let {data: imgsWithIds} = await getImageIds([category.image], user.token);
+            setUploadedImages(imgsWithIds);
+            setIsCategoryLoading(false);
+        } catch (error) {
+            console.error(error);
+            setIsCategoryLoading(false);
+        }
+    }, [])
 
     const handleUpdate = () => {
 
         //(slug, category, authtoken)
-        updateCategory({ name, description, image: imageUrl }, user.token)
+        // (slug, category, authtoken)
+        const updatedCategory = { name, description, imageUrl };
+        updateCategory(categorySlugParam, updatedCategory, user.token)
             .then((res) => {
                 // console.log(res)
                 history.push(`/categories`);
@@ -233,9 +257,14 @@ const EditCategory = () => {
     //     [categories]
     // );
 
+    if (isCategoryLoading) {
+        return <LoadingPage />
+    }
+
     return (
 
         <div className="w-full sm:max-w-lg px-4 mx-auto mt-6">
+
 
             <NameForm
                 name={name}

@@ -74,7 +74,7 @@ exports.getImagesWithIds = async (req, res) => {
     }
     );
 
-    res.json({ imagesWithIds });
+    res.json( imagesWithIds );
 }
 
 
