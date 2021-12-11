@@ -56,6 +56,17 @@ const ImageUrlForm = ({ imageUrl, setImageUrl }) => {
 
     }, [uploadedImages])
 
+    const isInputDisabled = () => uploadedImages.length;
+
+    const onInputChange = (e) => {
+
+        if(isInputDisabled()){
+            window.alert("remove uploaded image first")
+        }else{
+            setImageUrl(e.target.value)
+        }
+    }
+
     return (
         <div className="p-4">
             <label htmlFor="price" className="block text-sm font-medium text-gray-700">
@@ -65,9 +76,10 @@ const ImageUrlForm = ({ imageUrl, setImageUrl }) => {
 
                 <input
                     value={imageUrl}
-                    onChange={(e) => setImageUrl(e.target.value)}
+                    onChange={onInputChange}
                     type="text"
                     name="name"
+                    disabled={isInputDisabled()}
                     placeholder="paste a link or upload image"
                     id="name"
                     className="focus:ring-indigo-500 focus:border-indigo-500 block w-full  pr-12 sm:text-sm border-gray-300 rounded-md  ease-linear transition-all duration-150"
