@@ -213,10 +213,10 @@ const EditCategory = () => {
     useEffect(async () => {
 
         try {
-            let {data: category} = await getCategory(categorySlugParam);
+            let { data: category } = await getCategory(categorySlugParam);
             console.log(category);
             setCategoryParams(category);
-            let {data: imgsWithIds} = await getImageIds([category.image], user.token);
+            let { data: imgsWithIds } = await getImageIds([category.image], user.token);
             setUploadedImages(imgsWithIds);
             setIsCategoryLoading(false);
         } catch (error) {
@@ -225,37 +225,20 @@ const EditCategory = () => {
         }
     }, [])
 
-    const handleUpdate = () => {
+    const handleUpdate = async () => {
 
-        //(slug, category, authtoken)
-        // (slug, category, authtoken)
         const updatedCategory = { name, description, imageUrl };
-        updateCategory(categorySlugParam, updatedCategory, user.token)
-            .then((res) => {
-                // console.log(res)
-                history.push(`/categories`);
-            })
-            .catch((error) => {
-                //https://itnext.io/javascript-error-handling-from-express-js-to-react-810deb5e5e28
-                if (error.response) {
-                    /*errthe request was made and the server responded
-                    with a status code that falls out of the range of 2xx */
-                    console.log(error.response.data)
-                    alert(error.response.data);
-                }
 
-            });
+        try {
+            await updateCategory(categorySlugParam, updatedCategory, user.token);
+            history.push(`/categories`);
+        } catch (error) {
+            if (error.response) {
+                console.log(error.response.data)
+                alert(error.response.data);
+            }
+        }
     };
-
-    // useAsync(
-    //     async () => getProductForEdit(productSlugParam, user.token),
-    //     ({ product, imagesWithIds }) => {
-    //         setProductParams(product);
-    //         setUploadedImages(imagesWithIds)
-    //     },
-    //     setIsProductLoading,
-    //     [categories]
-    // );
 
     if (isCategoryLoading) {
         return <LoadingPage />
