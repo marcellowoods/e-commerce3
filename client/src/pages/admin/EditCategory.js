@@ -227,7 +227,7 @@ const EditCategory = () => {
 
     const handleUpdate = async () => {
 
-        const updatedCategory = { name, description, imageUrl };
+        const updatedCategory = { name, description, image: imageUrl };
 
         try {
             await updateCategory(categorySlugParam, updatedCategory, user.token);
