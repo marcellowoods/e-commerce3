@@ -39,7 +39,7 @@ exports.remove = (req, res) => {
 const getCloudinaryImages = async () => {
     //https://support.cloudinary.com/hc/en-us/articles/202521082-How-to-list-all-images-within-a-folder-
 
-    const imageUrls = [];
+    const allImages = [];
     const folderName = process.env.CLOUDINARY_FOLDER;
 
     await cloudinary.v2.search.expression(
@@ -48,24 +48,24 @@ const getCloudinaryImages = async () => {
         (result) => {
 
             const imagesArray = result.resources;
-            imagesArray.forEach((imgObj) => imageUrls.push({ url: imgObj.secure_url, public_id: imgObj.public_id }))
+            imagesArray.forEach((imgObj) => allImages.push({ url: imgObj.secure_url, public_id: imgObj.public_id }))
         }
     );
 
-    // console.log(imageUrls);
-    return imageUrls;
+    // console.log(allImages);
+    return allImages;
 }
 
 exports.getCloudinaryImages = getCloudinaryImages;
 
 exports.getImagesWithIds = async (req, res) => {
 
-    const imagesUrl = req.body.imageUrls;
+    const imageUrls = req.body.imageUrls;
 
     const cloudinaryImages = await getCloudinaryImages();
 
     let imagesWithIds = [];
-    imagesUrl.forEach(imgUrl => {
+    imageUrls.forEach(imgUrl => {
         let imgWithId = cloudinaryImages.find(({ url }) => url == imgUrl);
         if (imgWithId) {
             //{ url: imgObj.secure_url, public_id: imgObj.public_id }

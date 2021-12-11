@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { useHistory } from "react-router-dom";
-import { createCategory } from "../../functions/category"
+import { useHistory, useParams } from "react-router-dom";
+import { updateCategory, getCategory } from "../../functions/category"
 import FileUpload from "../../components/forms/FileUpload";
 
 function classNames(...classes) {
@@ -179,6 +179,7 @@ const DescriptionForm = ({ description, setDescription }) => {
 const EditCategory = () => {
 
     let history = useHistory();
+    const { categorySlugParam } = useParams();
 
     const [name, setName] = useState("");
     const [description, setDescription] = useState("");
@@ -187,9 +188,25 @@ const EditCategory = () => {
 
     const { user } = useSelector((state) => ({ ...state }));
 
-    const handleSubmit = () => {
+    const setCategoryParams = (category) => {
+        setName(category.name);
+        setImagesUrl(product.images);
+        setDescription(category.description);
+    }
 
-        createCategory({ name, description, image: imageUrl }, user.token)
+    useAsync(
+        async () => getCategory(categorySlugParam),
+        (category) => {
+            setCategoryParams(category)
+        },
+        null,
+        []
+    );
+
+    const handleUpdate = () => {
+
+        //(slug, category, authtoken)
+        updateCategory({ name, description, image: imageUrl }, user.token)
             .then((res) => {
                 // console.log(res)
                 history.push(`/categories`);
@@ -239,8 +256,8 @@ const EditCategory = () => {
             />
 
             <div className="p-4 float-right">
-                <button onClick={handleSubmit} className="flex items-center  px-3 py-2 bg-blue-600 text-white text-sm uppercase font-medium rounded hover:bg-blue-500 focus:outline-none focus:bg-blue-500">
-                    <span>Submit</span>
+                <button onClick={handleUpdate} className="flex items-center  px-3 py-2 bg-blue-600 text-white text-sm uppercase font-medium rounded hover:bg-blue-500 focus:outline-none focus:bg-blue-500">
+                    <span>Update</span>
                 </button>
             </div>
 

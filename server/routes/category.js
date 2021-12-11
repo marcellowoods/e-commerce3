@@ -6,12 +6,12 @@ const { authCheck, adminCheck } = require("../middlewares/auth");
 
 // controller
 const {
-  create,
-  read,
-  update,
-  remove,
-  list,
-  getSubs,
+    create,
+    read,
+    update,
+    remove,
+    list,
+    getSubs,
 } = require("../controllers/category");
 
 // routes
