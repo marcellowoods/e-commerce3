@@ -10,20 +10,16 @@ cloudinary.config({
     api_secret: process.env.CLOUDINARY_API_SECRET,
 });
 
-// req.files.file.path
-exports.upload = async (req, res) => {
+const uploadSingleImage = async (image) => {
 
     const folderName = process.env.CLOUDINARY_FOLDER;
 
-    let result = await cloudinary.v2.uploader.upload(req.body.image, {
+    return await cloudinary.v2.uploader.upload(image, {
         folder: folderName,
         public_id: `${Date.now()}`,
         resource_type: "auto", // jpeg, png
     });
-    res.json({
-        public_id: result.public_id,
-        url: result.secure_url,
-    });
+
 };
 
 const removeSingleImage = async (imageId) => {
@@ -38,22 +34,7 @@ const removeManyImages = async (imagesIdArray) => {
     }
 }
 
-exports.remove = async (req, res) => {
-    let image_id = req.body.public_id;
-
-    try {
-
-        await removeSingleImage(image_id);
-        res.send("ok");
-    } catch (err) {
-        res.json({ success: false, err });
-    }
-
-
-};
-
-
-const getCloudinaryImages = async () => {
+const getAllImages = async () => {
     //https://support.cloudinary.com/hc/en-us/articles/202521082-How-to-list-all-images-within-a-folder-
 
     const allImages = [];
@@ -73,11 +54,7 @@ const getCloudinaryImages = async () => {
     return allImages;
 }
 
-exports.getCloudinaryImages = getCloudinaryImages;
-
-exports.getImagesWithIds = async (req, res) => {
-
-    const imageUrls = req.body.imageUrls;
+const getImagesFromUrls = async (imageUrls) => {
 
     const cloudinaryImages = await getCloudinaryImages();
 
@@ -91,7 +68,17 @@ exports.getImagesWithIds = async (req, res) => {
     }
     );
 
-    res.json(imagesWithIds);
+    return imagesWithIds;
 }
+
+const removeImagesFromUrls = async (imageUrls) => {
+
+    let imgObjs = getImagesFromUrls(imageUrls);
+    let imgIds = imgObjs.map(({public_id}) => public_id);
+
+    await removeManyImages(imgIds);
+}
+
+
 
 

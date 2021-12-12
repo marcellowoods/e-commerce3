@@ -248,7 +248,6 @@ const EditCategory = () => {
 
         <div className="w-full sm:max-w-lg px-4 mx-auto mt-6">
 
-
             <NameForm
                 name={name}
                 setName={setName}
