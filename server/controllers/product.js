@@ -1,5 +1,5 @@
 const Product = require("../models/product");
-
+const { removeImagesFromUrls } = require("./systems/cloudinaryImages");
 const slugify = require("slugify");
 
 const {
@@ -55,9 +55,12 @@ exports.listAll = async (req, res) => {
 
 exports.remove = async (req, res) => {
     try {
+        const slug = req.params.slug;
         const deleted = await Product.findOneAndRemove({
-            slug: req.params.slug,
+            slug
         }).exec();
+        const imagesToRemove = deleted.images;
+        await removeImagesFromUrls(imagesToRemove);
         res.json(deleted);
     } catch (err) {
         console.log(err);
@@ -134,7 +137,8 @@ exports.list = async (req, res) => {
         if (sort == "best sellers") {
             sortObj = { sold: -1 };
         } else if (sort == "new") {
-            sortObj = { createdDate: -1 };
+            console.log("new")
+            sortObj = { createdAt: -1 };
         }
 
 

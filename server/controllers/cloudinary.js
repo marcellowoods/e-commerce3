@@ -15,15 +15,25 @@ exports.upload = async (req, res) => {
 
     const folderName = process.env.CLOUDINARY_FOLDER;
 
-    let result = await cloudinary.v2.uploader.upload(req.body.image, {
-        folder: folderName,
-        public_id: `${Date.now()}`,
-        resource_type: "auto", // jpeg, png
-    });
-    res.json({
-        public_id: result.public_id,
-        url: result.secure_url,
-    });
+    try {
+
+        let result = await cloudinary.v2.uploader.upload(req.body.image, {
+            folder: folderName,
+            public_id: `${Date.now()}`,
+            resource_type: "auto", // jpeg, png
+        });
+
+        res.json({
+            public_id: result.public_id,
+            url: result.secure_url,
+        });
+
+    } catch (err) {
+        // res.json({ success: false, err });
+        console.log(err);
+    }
+
+
 };
 
 const removeSingleImage = async (imageId) => {
