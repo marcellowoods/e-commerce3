@@ -93,6 +93,7 @@ const ListCategories = () => {
     );
 
     const handleCategoryRemove = async (slug) => {
+        setIsCategoriesLoading(true);
         await removeCategory(slug, user.token);
         reloadCategories();
     }
