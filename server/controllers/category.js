@@ -2,6 +2,7 @@ const Category = require("../models/category");
 const Product  = require("../models/product");
 const Sub = require("../models/sub");
 const slugify = require("slugify");
+const { removeImagesFromUrls } = require("./systems/cloudinaryImages");
 
 exports.create = async (req, res) => {
     try {
@@ -51,7 +52,11 @@ exports.update = async (req, res) => {
 
 exports.remove = async (req, res) => {
     try {
-        const deleted = await Category.findOneAndDelete({ slug: req.params.slug });
+        const slug = req.params.slug;
+        const deleted = await Category.findOneAndDelete({ slug });
+        const image = deleted.image;
+        const imagesToRemove = [image];
+        await removeImagesFromUrls(imagesToRemove);
         res.json(deleted);
     } catch (err) {
         res.status(400).send("Category delete failed");
