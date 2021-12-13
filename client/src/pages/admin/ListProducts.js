@@ -113,6 +113,7 @@ const ListProducts = () => {
     );
 
     const handleProductRemove = async (slug) => {
+        setIsProductsLoading(true);
         await removeProduct(slug, user.token);
         reloadProducts();
     }
