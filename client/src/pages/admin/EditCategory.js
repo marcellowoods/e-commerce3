@@ -3,7 +3,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { useHistory, useParams } from "react-router-dom";
 import { updateCategory, getCategory } from "../../functions/category";
 import { getImageIds } from "../../functions/cloudinary";
-import { useAsync } from "../../auxiliary/reactUtils"
+import { useAsync, useDidMountEffect } from "../../auxiliary/reactUtils"
 import LoadingPage from "../LoadingPage";
 import FileUpload from "../../components/forms/FileUpload";
 
@@ -49,6 +49,7 @@ const ImageUrlForm = ({ imageUrl, setImageUrl, uploadedImages, setUploadedImages
     // const [uploadedImages, setUploadedImages] = useState([]);
     const [loading, setLoading] = useState(false);
 
+    // useDidMountEffect to keep the url on load
     useEffect(() => {
         if (uploadedImages.length && uploadedImages[0].url) {
             const url = uploadedImages[0].url
@@ -206,6 +207,7 @@ const EditCategory = () => {
 
     const setCategoryParams = (category) => {
         setName(category.name);
+        console.log(category.image);
         setImageUrl(category.image);
         setDescription(category.description);
     }
@@ -217,7 +219,11 @@ const EditCategory = () => {
             console.log(category);
             setCategoryParams(category);
             let { data: imgsWithIds } = await getImageIds([category.image], user.token);
-            setUploadedImages(imgsWithIds);
+            if(imgsWithIds.length){
+                console.log(imgsWithIds);
+                setUploadedImages(imgsWithIds);
+            }
+
             setIsCategoryLoading(false);
         } catch (error) {
             console.error(error);
