@@ -76,29 +76,6 @@ exports.read = async (req, res) => {
     res.json(product);
 };
 
-//send product with cloudinary images public ids for update
-exports.readAdmin = async (req, res) => {
-    const product = await Product.findOne({ slug: req.params.slug })
-        .populate("category")
-        .populate("subs")
-        .exec();
-
-    const cloudinaryImages = await getCloudinaryImages();
-    const imagesUrl = product.images;
-
-    let imagesWithIds = [];
-    imagesUrl.forEach(imgUrl => {
-        let imgWithId = cloudinaryImages.find(({ url }) => url == imgUrl);
-        if (imgWithId) {
-            imagesWithIds.push(imgWithId);
-        }
-    }
-    );
-
-    res.json({ product, imagesWithIds });
-};
-
-
 exports.update = async (req, res) => {
 
     try {

@@ -5,8 +5,9 @@ import { Listbox, Transition } from '@headlessui/react'
 import { CheckIcon, SelectorIcon } from '@heroicons/react/solid'
 import FileUpload from "../../components/forms/FileUpload"
 import { getCategories } from "../../functions/category";
-import { getProductForEdit, updateProduct } from "../../functions/product"
-import { useAsync, useAsyncDidMount, useDidMountEffect } from "../../auxiliary/reactUtils"
+import { getProduct, updateProduct } from "../../functions/product";
+import { getImageIds } from "../../functions/cloudinary";
+import { useAsync, useAsyncDidMount, useDidMountEffect } from "../../auxiliary/reactUtils";
 import LoadingPage from "../LoadingPage";
 
 const LIST_PRODUCTS_PATHNAME = "/admin/list-products";
@@ -263,35 +264,38 @@ const EditProduct = () => {
 
     const { user } = useSelector((state) => ({ ...state }));
 
-    const setProductParams = (product) => {
+    const setProductParams = (product, categories) => {
         console.log(product.images);
         setPrice(product.price);
         setImagesUrl(product.images);
         setName(product.name);
         setDescription(product.description);
-        setSelectedCategory(categories.find(c => c._id == product.category._id));
+        const productCategory = categories.find(c => c._id == product.category._id);
+        if(productCategory){
+            setSelectedCategory(productCategory);
+        }else{
+            setSelectedCategory(categories[0]);
+        }
         setQuantity(product.quantity);
     }
 
-    useAsync(
-        getCategories,
-        (categories) => {
-            setCategories(categories);
-            setSelectedCategory(categories[0]);
-        },
-        null,
-        []
-    );
+    useEffect(async () => {
 
-    useAsyncDidMount(
-        async () => getProductForEdit(productSlugParam, user.token),
-        ({ product, imagesWithIds }) => {
-            setProductParams(product);
-            setUploadedImages(imagesWithIds)
-        },
-        setIsProductLoading,
-        [categories]
-    );
+        try {
+            let { data: categoriesData } = await getCategories();
+            setCategories(categoriesData);
+            let { data: productData } = await getProduct(productSlugParam, user.token);
+            setProductParams(productData, categoriesData);
+            let { data: imgsWithIds } = await getImageIds(productData.images, user.token);
+            if(imgsWithIds.length){
+                setUploadedImages(imgsWithIds);
+            }
+            setIsProductLoading(false);
+        } catch (error) {
+            console.error(error);
+            setIsProductLoading(false);
+        }
+    }, [])
 
     const onSelectCategory = (id) => {
         setSelectedCategory(categories.find((cObj) => cObj._id == id))
