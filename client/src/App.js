@@ -80,6 +80,9 @@ function App() {
         <Fragment>
 
             <Navigation />
+            <p>
+                We are going to translate this paragraph - how will it be in Polish?
+            </p>
 
             <Switch>
                 <Route exact path="/" component={Home} />
@@ -96,11 +99,11 @@ function App() {
                 <AdminRoute exact path="/admin/list-categories" component={ListCategories} />
                 <AdminRoute exact path="/admin/create-category" component={CreateCategory} />
                 <AdminRoute exact path="/admin/edit-category/:categorySlugParam" component={EditCategory} />
-                
+
                 <AdminRoute exact path="/admin/list-products" component={ListProducts} />
                 <AdminRoute exact path="/admin/create-product" component={CreateProduct} />
                 <AdminRoute exact path="/admin/edit-product/:productSlugParam" component={EditProduct} />
-                
+
                 <AdminRoute exact path="/admin/update-orders" component={UpdateOrders} />
 
             </Switch>
