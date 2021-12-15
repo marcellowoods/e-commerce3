@@ -2,8 +2,12 @@
 import { reauthenticateWithCredential } from "@firebase/auth";
 import React from "react";
 import { useHistory } from "react-router-dom";
+import { useTranslation } from 'react-i18next';
+
 
 const NavigationItems = ({ closeMobileNav=null }) => {
+
+    const { t } = useTranslation();
 
     const history = useHistory();
 
@@ -43,13 +47,14 @@ const NavigationItems = ({ closeMobileNav=null }) => {
 
     const cName = "text-left text-lg mt-3 focus:outline-none color-main-light hover:text-gray-900 sm:mx-3 sm:mt-0";
 
+    
     return (
         <div className=" flex flex-col sm:flex-row">
-            <button id="home" onClick={clickHandler} className={cName} >Home</button>
-            <button id="shop" onClick={clickHandler} className={cName} >Shop</button>
-            <button id="categories" onClick={clickHandler} className={cName}>Categories</button>
-            <button id="contact" onClick={clickHandler} className={cName} >Contact</button>
-            <button id="about" onClick={clickHandler} className={cName} >About</button>
+            <button id="home" onClick={clickHandler} className={cName} >{t('home')}</button>
+            <button id="shop" onClick={clickHandler} className={cName} >{t('shop')}</button>
+            <button id="categories" onClick={clickHandler} className={cName}>{t('categories')}</button>
+            <button id="contact" onClick={clickHandler} className={cName} >{t('contact')}</button>
+            <button id="about" onClick={clickHandler} className={cName} >{t('about')}</button>
         </div>
     );
 };

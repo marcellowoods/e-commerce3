@@ -4,17 +4,20 @@ import { initReactI18next } from 'react-i18next';
 const resources = {
     en: {
         translation: {
-            "translated-paragraph": "We are going to translate this paragraph - how will it be in Polish?"
-        }
-    },
-    pl: {
-        translation: {
-            "translated-paragraph": "Przetlumaczymy ten paragraf - jak to bedzie po Polsku?"
+            "categories": "Categories",
+            "home": "Home",
+            "shop": "Shop",
+            "contact": "Contact",
+            "about": "About",
         }
     },
     bg: {
         translation: {
-            "translated-paragraph": "преведено на бг"
+            "categories": "Категории",
+            "home": "Начало",
+            "shop": "Магазин",
+            "contact": "Контакти",
+            "about": "За нас",
         }
     }
 };
