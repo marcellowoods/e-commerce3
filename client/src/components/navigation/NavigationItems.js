@@ -3,9 +3,10 @@ import { reauthenticateWithCredential } from "@firebase/auth";
 import React from "react";
 import { useHistory } from "react-router-dom";
 import { useTranslation } from 'react-i18next';
+import ChangeLangDropdown from "./ChangeLangDropdown";
 
 
-const NavigationItems = ({ closeMobileNav=null }) => {
+const NavigationItems = ({ closeMobileNav = null }) => {
 
     const { t } = useTranslation();
 
@@ -20,10 +21,10 @@ const NavigationItems = ({ closeMobileNav=null }) => {
     const clickHandler = (e) => {
         const id = e.target.id;
 
-        if(closeMobileNav !== null){
+        if (closeMobileNav !== null) {
             closeMobileNav();
         }
-        
+
 
         switch (id) {
             case "home":
@@ -47,9 +48,12 @@ const NavigationItems = ({ closeMobileNav=null }) => {
 
     const cName = "text-left text-lg mt-3 focus:outline-none color-main-light hover:text-gray-900 sm:mx-3 sm:mt-0";
 
-    
+
     return (
         <div className=" flex flex-col sm:flex-row">
+            <div className="flex sm:hidden">
+                <ChangeLangDropdown />
+            </div>
             <button id="home" onClick={clickHandler} className={cName} >{t('home')}</button>
             <button id="shop" onClick={clickHandler} className={cName} >{t('shop')}</button>
             <button id="categories" onClick={clickHandler} className={cName}>{t('categories')}</button>
