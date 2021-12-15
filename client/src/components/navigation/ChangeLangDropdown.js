@@ -46,7 +46,7 @@ const ElementsMenu = ({ allElements, selectedElement, setSelectedElement, zIndex
                                             'block text-center  px-4 py-4 text-md cursor-pointer'
                                         )}
                                     >
-                                        {elementObj.name}
+                                        {elementObj.altName}
                                     </a>
                                 )}
                             </Menu.Item>
@@ -58,7 +58,7 @@ const ElementsMenu = ({ allElements, selectedElement, setSelectedElement, zIndex
     )
 }
 
-const languages = [{name: "български", id: "bg"}, {name: "english", id: "en"}];
+const languages = [{name: "Language: BG", altName:"български", id: "bg"}, {name: "Language: EN", altName:"english", id: "en"}];
 
 const ChangeLangDropdown = () => {
 

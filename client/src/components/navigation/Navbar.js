@@ -103,7 +103,7 @@ const NavbarRender = ({ mobileNavbarToggle, cartModalToggle, isAdmin }) => {
                         <ChangeLangDropdown />
                     </div>
 
-                    <div className="color-main-bold sm:text-center  text-2xl font-semibold">
+                    <div className="transform lg:-translate-x-12 color-main-bold sm:text-center  text-2xl font-semibold">
                         Brand
                     </div>
 
