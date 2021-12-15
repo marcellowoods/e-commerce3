@@ -33,13 +33,18 @@ import EditCategory from "./pages/admin/EditCategory";
 import UpdateOrders from "./pages/admin/UpdateOrders";
 
 
-import Home from "./pages/Home"
+import Home from "./pages/Home";
+
+
+import { useTranslation } from 'react-i18next';
 
 
 function App() {
 
     const dispatch = useDispatch();
     const [isLoading, setIsLoading] = useState(true);
+
+    const { t } = useTranslation();
 
     let onCurrentUserSuccess = (res, idTokenResult) => {
 
@@ -80,9 +85,7 @@ function App() {
         <Fragment>
 
             <Navigation />
-            <p>
-                We are going to translate this paragraph - how will it be in Polish?
-            </p>
+            <p>{t('translated-paragraph')}</p>
 
             <Switch>
                 <Route exact path="/" component={Home} />

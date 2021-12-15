@@ -11,6 +11,11 @@ const resources = {
         translation: {
             "translated-paragraph": "Przetlumaczymy ten paragraf - jak to bedzie po Polsku?"
         }
+    },
+    bg: {
+        translation: {
+            "translated-paragraph": "преведено на бг"
+        }
     }
 };
 
@@ -18,7 +23,7 @@ i18n
     .use(initReactI18next)
     .init({
         resources,
-        lng: 'pl',
+        lng: 'bg',
         fallbackLng: 'en'
     });
 
