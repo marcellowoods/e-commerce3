@@ -211,7 +211,7 @@ const PageComponent = () => {
                 <div className="container mx-auto max-w-7xl px-6">
 
                     <div className="flex flex-col sm:flex-row">
-                        <div>
+                        <div className="pr-2">
                             <ElementsMenu
                                 allElements={allCategories}
                                 selectedElement={selectedCategory}
