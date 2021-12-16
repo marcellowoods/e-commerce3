@@ -9,6 +9,7 @@ const resources = {
             "shop": "Shop",
             "contact": "Contact",
             "about": "About",
+            "search": "Search"
         }
     },
     bg: {
@@ -18,6 +19,7 @@ const resources = {
             "shop": "Магазин",
             "contact": "Контакти",
             "about": "За нас",
+            "search": "Търсене"
         }
     }
 };
