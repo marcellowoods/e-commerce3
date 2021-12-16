@@ -5,8 +5,10 @@ const getPagination = ({ pageCount, onPageChange, curPage }) => {
         
             <ReactPaginate
                 forcePage={curPage}
-                previousLabel={"Previous"}
-                nextLabel={"Next"}
+                previousLabel={"←"}
+                previousClassName={"text-xl"}
+                nextLabel={"→"}
+                nextClassName={"text-xl"}
                 breakLabel={"..."}
                 breakClassName={""}
                 pageCount={pageCount}
