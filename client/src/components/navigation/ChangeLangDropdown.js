@@ -1,13 +1,15 @@
-import React, {useState, Fragment } from 'react'
+import React, { useState, Fragment } from 'react'
 import 'react-tridi/dist/index.css';
-import { Menu, Transition } from '@headlessui/react'
-import { ChevronDownIcon  } from '@heroicons/react/solid'
+import { Menu, Transition } from '@headlessui/react';
+import { ChevronDownIcon } from '@heroicons/react/solid';
+
+import { useTranslation } from 'react-i18next';
 
 function classNames(...classes) {
     return classes.filter(Boolean).join(' ')
 }
 
-const ElementsMenu = ({ allElements, selectedElement, setSelectedElement, zIndex=3 }) => {
+const ElementsMenu = ({ allElements, selectedElement, setSelectedElement, zIndex = 3 }) => {
 
     //expected elementObj to have name and slug properties
     //allElements = [
@@ -42,7 +44,7 @@ const ElementsMenu = ({ allElements, selectedElement, setSelectedElement, zIndex
                                         onClick={() => setSelectedElement(elementObj)}
                                         className={classNames(
                                             active ? 'bg-gray-100 text-gray-900' : 'text-gray-700',
-                                            selectedElement.slug == elementObj.slug ? 'bg-gray-100' : "",
+                                            selectedElement.id == elementObj.id ? 'bg-gray-100' : "",
                                             'block text-center  px-4 py-4 text-md cursor-pointer'
                                         )}
                                     >
@@ -58,19 +60,26 @@ const ElementsMenu = ({ allElements, selectedElement, setSelectedElement, zIndex
     )
 }
 
-const languages = [{name: "Language: BG", altName:"български", id: "bg"}, {name: "Language: EN", altName:"english", id: "en"}];
+const languages = [{ name: "Language: BG", altName: "български", id: "bg" }, { name: "Language: EN", altName: "english", id: "en" }];
 
 const ChangeLangDropdown = () => {
 
     // const [languages, setLanguages] = useState(["български", "english"]);
-    const [selectedLanguage, setSelectedLanguage] = useState(languages[0]);
+    const { t, i18n } = useTranslation();
+    const languageSelected = languages.find(({id}) => id == i18n.language);
+    const [selectedLanguage, setSelectedLanguage] = useState(languageSelected);
 
+
+    const changeLanguageHandler = (lang) => {
+        i18n.changeLanguage(lang.id);
+        setSelectedLanguage(lang);
+    }
 
     return (
-        <ElementsMenu 
+        <ElementsMenu
             allElements={languages}
             selectedElement={selectedLanguage}
-            setSelectedElement={setSelectedLanguage}
+            setSelectedElement={changeLanguageHandler}
         />
     )
 }
