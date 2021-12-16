@@ -2,8 +2,9 @@
 import { reauthenticateWithCredential } from "@firebase/auth";
 import React from "react";
 import { useHistory } from "react-router-dom";
-import { useTranslation } from 'react-i18next';
 import ChangeLangDropdown from "./ChangeLangDropdown";
+
+import { useTranslation } from 'react-i18next';
 
 
 const NavigationItems = ({ closeMobileNav = null }) => {

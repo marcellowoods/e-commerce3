@@ -9,7 +9,10 @@ const resources = {
             "shop": "Shop",
             "contact": "Contact",
             "about": "About",
-            "search": "Search"
+            "search": "Search",
+            "cart": "Cart",
+            "checkout": "Checkout",
+            "cart is empty": "Cart is empty",
         }
     },
     bg: {
@@ -19,7 +22,10 @@ const resources = {
             "shop": "Магазин",
             "contact": "Контакти",
             "about": "За нас",
-            "search": "Търсене"
+            "search": "Търсене",
+            "cart": "Кошница",
+            "checkout": "Завърши поръчката",
+            "cart is empty": "Кошницата е празна",
         }
     }
 };
