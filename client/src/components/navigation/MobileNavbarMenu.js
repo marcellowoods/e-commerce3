@@ -1,8 +1,10 @@
 import React, { Fragment, useContext, useEffect } from "react";
 import { useHistory } from "react-router-dom";
 import NavigationItems from './NavigationItems';
-import SearchBar from './SearchBar.js'
+import SearchBar from './SearchBar.js';
+import ChangeLangDropdown from "./ChangeLangDropdown";
 import { useDispatch, useSelector } from "react-redux";
+
 
 const MobileNavbarMenu = (props) => {
 
@@ -25,8 +27,12 @@ const MobileNavbarMenu = (props) => {
                 <div
                     className={`${isMobileNavOpen() ? 'translate-x-0 ease-out' : '-translate-x-full ease-in'} z-40 fixed left-0 top-0  w-70 sm:w-full h-full px-6 py-4 transition duration-300 transform overflow-y-auto bg-white  `}>
                     <div className={`p-3`}>
+
                         <SearchBar cname={"mobile-searchbar-w relative py-3"} />
-                        <NavigationItems closeMobileNav={closeMobileNav}/>
+                        <div className="py-2">
+                            <ChangeLangDropdown />
+                        </div>
+                        <NavigationItems closeMobileNav={closeMobileNav} />
                     </div>
                 </div>
                 {isMobileNavOpen() &&

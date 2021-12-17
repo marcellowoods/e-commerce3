@@ -52,9 +52,6 @@ const NavigationItems = ({ closeMobileNav = null }) => {
 
     return (
         <div className=" flex flex-col sm:flex-row">
-            <div className="flex sm:hidden">
-                <ChangeLangDropdown />
-            </div>
             <button id="home" onClick={clickHandler} className={cName} >{t('home')}</button>
             <button id="shop" onClick={clickHandler} className={cName} >{t('shop')}</button>
             <button id="categories" onClick={clickHandler} className={cName}>{t('categories')}</button>
