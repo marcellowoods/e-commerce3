@@ -1,6 +1,11 @@
 import i18n from 'i18next';
 import { initReactI18next } from 'react-i18next';
 
+//to do
+//detect user language
+//https://react.i18next.com/latest/using-with-hooks
+//https://lokalise.com/blog/how-to-internationalize-react-application-using-i18next/
+
 const resources = {
     en: {
         translation: {

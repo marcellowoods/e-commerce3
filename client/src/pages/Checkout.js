@@ -15,6 +15,8 @@ import { getCartTotal } from "../actions/cartActions";
 import { postOrder, userPostOrder } from "../functions/orders";
 import { useSelector } from "react-redux";
 
+import { useTranslation } from 'react-i18next';
+
 
 const deliveryCouriers = [
     { name: "Econt", id: "econt", findOffice: "https://www.econt.com/find-office" },
@@ -32,7 +34,9 @@ const SHOP_PATHNAME = "/shop/";
 
 const Checkout = () => {
 
-    const history = useHistory()
+    const history = useHistory();
+
+    const { t } = useTranslation();
 
     const [checkoutState, setCheckoutState] = useState(CheckoutStates.DELIVERY_COURIER);
 
@@ -104,6 +108,7 @@ const Checkout = () => {
         setMethodOptions(prevState => {
             return prevState.map(({ name, id }) => {
                 if (id === 'office') {
+                    // const text =  t('contact');
                     return { name: `Delivery to ${selectedCourier.name} office`, id }
                 } else {
                     return { name, id }
