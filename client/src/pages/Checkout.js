@@ -108,10 +108,11 @@ const Checkout = () => {
         setMethodOptions(prevState => {
             return prevState.map(({ name, id }) => {
                 if (id === 'office') {
-                    // const text =  t('contact');
-                    return { name: `Delivery to ${selectedCourier.name} office`, id }
+                    const text =  t('delivery to office', {name: selectedCourier.name});
+                    return { name: text, id }
                 } else {
-                    return { name, id }
+                    const text =  t('delivery to home');
+                    return { name: text, id }
                 }
             })
         });
@@ -253,7 +254,7 @@ const Checkout = () => {
                 closeModal={contShopping}
              />
             <div className="container mx-auto px-6">
-                <h3 className="text-gray-700 text-2xl font-medium">Checkout</h3>
+                <h3 className="text-gray-700 text-2xl font-medium">{t('checkout')}</h3>
                 <div className="flex flex-col lg:flex-row mt-8">
                     <div className="w-full lg:w-1/2 order-2">
                         {/* <div className="flex items-center">
@@ -271,7 +272,7 @@ const Checkout = () => {
                                     <DeliveryMethod
                                         selected={selectedCourier}
                                         setSelected={setSelectedCourier}
-                                        name={"Delivery Courier"}
+                                        name={t('delivery courrier')}
                                         options={courierOptions}
                                     />
                                 </div>
@@ -282,7 +283,7 @@ const Checkout = () => {
                                     <DeliveryMethod
                                         selected={selectedMethod}
                                         setSelected={setSelectedMethod}
-                                        name={"Delivery Method"}
+                                        name={t('delivery method')}
                                         options={methodOptions}
                                     />
                                 </div>

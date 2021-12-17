@@ -18,6 +18,11 @@ const resources = {
             "cart": "Cart",
             "checkout": "Checkout",
             "cart is empty": "Cart is empty",
+            "delivery to office": "Delivery to {{name}} office",
+            "delivery to home": "Delivery to home",
+            "delivery courrier": "Delivery Courrier",
+            "delivery method": "Delivery Method",
+            
         }
     },
     bg: {
@@ -29,8 +34,12 @@ const resources = {
             "about": "За нас",
             "search": "Търсене",
             "cart": "Кошница",
-            "checkout": "Завърши поръчката",
+            "checkout": "Поръчка",
             "cart is empty": "Кошницата е празна",
+            "delivery to office": "Доставка до офис на {{name}}",
+            "delivery to home": "Доставка до дома",
+            "delivery courrier": "Куриер за доставка",
+            "delivery method": "Място за доставка",
         }
     }
 };
