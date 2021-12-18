@@ -278,15 +278,25 @@ const CreateProduct = () => {
 
     const { t, i18n } = useTranslation();
 
-    const languagesWithoutEnglish = i18n.languages.filter((lang) => lang != "en");
+    const makeTranslationsObj = () => {
+        const languagesWithoutEnglish = i18n.languages.filter((lang) => lang != "en");
 
-    const [translations, setTranslations] = useState(languagesWithoutEnglish.map(language => {
-        return { language, description: "", name: "" }
-    }));
+        return (
+            languagesWithoutEnglish.map(language => {
+                return { language, description: "", name: "" }
+            })
+        );
+    }
+
+    const [translations, setTranslations] = useState(makeTranslationsObj());
+
+    console.log(translations);
 
     const handleEditTranslations = (language, field, newVal) => {
 
-        let translationObj = translations[language];
+        console.log(translations);
+
+        let translationObj = translations.find((tObj) => tObj.language == language);
         let newTranslationObj = { ...translationObj, [field]: newVal };
 
         setTranslations(prev => {
@@ -299,12 +309,11 @@ const CreateProduct = () => {
 
     const renderTranslations = () => {
 
-
-
         return (
             <div>
                 {translations.map(({ language, description, name }) => {
-
+                    console.log(language);
+                    console.log(description)
                     return (
                         <>
                             <h3 className="pt-12 text-center">{language}</h3>
@@ -343,7 +352,8 @@ const CreateProduct = () => {
             quantity,
             description,
             images: imagesUrl,
-            category: selectedCategory._id
+            category: selectedCategory._id,
+            translations
         }, user.token)
             .then((res) => {
                 console.log(res)
@@ -355,6 +365,7 @@ const CreateProduct = () => {
                 // setCategories([]);
                 setSelectedCategory(categories[0]);
                 setQuantity(1);
+                setTranslations(makeTranslationsObj());
                 // history.push(`/categories`);
             })
             .catch((error) => {
