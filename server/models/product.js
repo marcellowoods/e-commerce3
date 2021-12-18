@@ -58,7 +58,7 @@ const productSchema = new mongoose.Schema(
                 name: {
                     type: String,
                 },
-                desc: {
+                description: {
                     type: String,
                     maxlength: 2000,
                     text: true,
