@@ -238,19 +238,19 @@ const ImagesForm = ({ imagesUrl, setImagesUrl }) => {
     )
 }
 
-const Translation = ({language, description, name, changeValue}) => {
+const Translation = ({ language, description, name, handleEditTranslations }) => {
 
     return (
         <div className="">
 
             <NameForm
                 name={name}
-                setName={(newVal) => changeValue(language, "name", newVal)}
+                setName={(newVal) => handleEditTranslations(language, "name", newVal)}
             />
 
             <DescriptionForm
                 description={description}
-                setDescription={(newVal) => changeValue(language, "description", newVal)}
+                setDescription={(newVal) => handleEditTranslations(language, "description", newVal)}
             />
 
         </div>
@@ -278,12 +278,47 @@ const CreateProduct = () => {
 
     const { t, i18n } = useTranslation();
 
-    const [translations, setTranslations] = useState(i18n.languages.map(language => {
-        return { language, description: "", name: "" } 
+    const languagesWithoutEnglish = i18n.languages.filter((lang) => lang != "en");
+
+    const [translations, setTranslations] = useState(languagesWithoutEnglish.map(language => {
+        return { language, description: "", name: "" }
     }));
 
-    const handleEditTranslations = () => {
+    const handleEditTranslations = (language, field, newVal) => {
 
+        let translationObj = translations[language];
+        let newTranslationObj = { ...translationObj, [field]: newVal };
+
+        setTranslations(prev => {
+
+            let filtered = prev.filter((el) => el.language != language);
+
+            return [...filtered, newTranslationObj];
+        })
+    }
+
+    const renderTranslations = () => {
+
+
+
+        return (
+            <div>
+                {translations.map(({ language, description, name }) => {
+
+                    return (
+                        <>
+                            <h3 className="pt-12 text-center">{language}</h3>
+                            <Translation
+                                language={language}
+                                description={description}
+                                name={name}
+                                handleEditTranslations={handleEditTranslations}
+                            />
+                        </>
+                    )
+                })}
+            </div>
+        )
     }
 
     useAsync(
@@ -369,7 +404,7 @@ const CreateProduct = () => {
 
             <h3 className="pt-12 text-center">translations</h3>
 
-            <Translation />
+            {renderTranslations()}
 
             <div className="p-4 float-right">
                 <button onClick={handleSubmit} className="flex items-center  px-3 py-2 bg-blue-600 text-white text-sm uppercase font-medium rounded hover:bg-blue-500 focus:outline-none focus:bg-blue-500">
