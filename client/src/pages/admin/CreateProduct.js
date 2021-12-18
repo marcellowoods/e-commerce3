@@ -5,7 +5,8 @@ import { CheckIcon, SelectorIcon } from '@heroicons/react/solid'
 import FileUpload from "../../components/forms/FileUpload"
 import { getCategories } from "../../functions/category";
 import { createProduct as createProductRequest } from "../../functions/product"
-import { useAsync } from "../../auxiliary/reactUtils"
+import { useAsync } from "../../auxiliary/reactUtils";
+import { useTranslation } from 'react-i18next';
 
 function classNames(...classes) {
     return classes.filter(Boolean).join(' ')
@@ -237,6 +238,26 @@ const ImagesForm = ({ imagesUrl, setImagesUrl }) => {
     )
 }
 
+const Translation = ({language, description, name, changeValue}) => {
+
+    return (
+        <div className="">
+
+            <NameForm
+                name={name}
+                setName={(newVal) => changeValue(language, "name", newVal)}
+            />
+
+            <DescriptionForm
+                description={description}
+                setDescription={(newVal) => changeValue(language, "description", newVal)}
+            />
+
+        </div>
+    )
+
+}
+
 //more forms
 //https://tailwindcomponents.com/component/account-card
 //https://tailwindcomponents.com/components/forms?page=2
@@ -244,6 +265,8 @@ const ImagesForm = ({ imagesUrl, setImagesUrl }) => {
 //TODO
 //https://dev.to/eons/detect-page-refresh-tab-close-and-route-change-with-react-router-v5-3pd
 const CreateProduct = () => {
+
+    const { user } = useSelector((state) => ({ ...state }));
 
     const [price, setPrice] = useState("");
     const [imagesUrl, setImagesUrl] = useState([]);
@@ -253,7 +276,15 @@ const CreateProduct = () => {
     const [selectedCategory, setSelectedCategory] = useState({});
     const [quantity, setQuantity] = useState(1);
 
-    const { user } = useSelector((state) => ({ ...state }));
+    const { t, i18n } = useTranslation();
+
+    const [translations, setTranslations] = useState(i18n.languages.map(language => {
+        return { language, description: "", name: "" } 
+    }));
+
+    const handleEditTranslations = () => {
+
+    }
 
     useAsync(
         getCategories,
@@ -335,6 +366,10 @@ const CreateProduct = () => {
                 description={description}
                 setDescription={setDescription}
             />
+
+            <h3 className="pt-12 text-center">translations</h3>
+
+            <Translation />
 
             <div className="p-4 float-right">
                 <button onClick={handleSubmit} className="flex items-center  px-3 py-2 bg-blue-600 text-white text-sm uppercase font-medium rounded hover:bg-blue-500 focus:outline-none focus:bg-blue-500">
