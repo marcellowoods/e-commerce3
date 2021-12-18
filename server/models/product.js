@@ -50,6 +50,21 @@ const productSchema = new mongoose.Schema(
         //         postedBy: { type: ObjectId, ref: "User" },
         //     },
         // ],
+        translations: [
+            {
+                language: {
+                    type: String,
+                },
+                name: {
+                    type: String,
+                },
+                desc: {
+                    type: String,
+                    maxlength: 2000,
+                    text: true,
+                },
+            },
+        ],
     },
     { timestamps: true }
 );
