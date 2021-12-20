@@ -11,6 +11,9 @@ import { getProducts } from "../functions/product";
 import ElementsMenu from "../components/menus/ElementMenu";
 import { useAsyncDidMount, useAsync } from "../auxiliary/reactUtils"
 
+import { useTranslation } from 'react-i18next';
+import { getTranslatedField } from "../actions/translateActions";
+
 const SHOP_PATHNAME = "/shop/";
 const PRODUCT_PATHNAME = "/product/";
 const PRODUCTS_PER_PAGE = 6;
@@ -48,6 +51,8 @@ const PageComponent = () => {
     const [pageCount, setPageCount] = useState(0);
 
     const [isProductsLoading, setIsProductsLoading] = useState(false);
+
+    const { t, i18n } = useTranslation();
 
     useAsync(
         getCategories,
@@ -123,16 +128,16 @@ const PageComponent = () => {
     }
 
     const onSuccessProducts = (data) => {
-        
-        const {data: productsData, metadata: productsMetadata} = data;
 
-        if(productsData.length === 0){
+        const { data: productsData, metadata: productsMetadata } = data;
+
+        if (productsData.length === 0) {
             setProducts([]);
             setPageCount(0);
             return;
         }
         const perPage = PRODUCTS_PER_PAGE;
-        
+
         setProducts(productsData);
         const { total } = productsMetadata[0];
         const countPages = Math.ceil(total / perPage);
@@ -164,19 +169,26 @@ const PageComponent = () => {
 
     const renderProducts = () => (
         <div key={"products"} className="grid gap-6 grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 mt-6">
-            {products && products.map((p) => (
-                <ProductShopCard
-                    key={p._id}
-                    id={p.slug}
-                    quantity={p.quantity}
-                    images={p.images}
-                    imageUrl={p.images[0]}
-                    price={p.price}
-                    name={p.name}
-                    onAddClick={(id) => { console.log(`added ${id} to cart`) }}
-                    onCardClick={pushToProductPage}
-                />
-            ))
+            {products && products.map((p) => {
+                const lang = i18n.language;
+                const translatedName = getTranslatedField(p, 'name', lang);
+
+                return (
+                    <ProductShopCard
+                        key={p._id}
+                        id={p.slug}
+                        quantity={p.quantity}
+                        images={p.images}
+                        imageUrl={p.images[0]}
+                        price={p.price}
+                        name={translatedName}
+                        onAddClick={(id) => { console.log(`added ${id} to cart`) }}
+                        onCardClick={pushToProductPage}
+                    />
+                )
+            }
+
+            )
             }
         </div>
     )
