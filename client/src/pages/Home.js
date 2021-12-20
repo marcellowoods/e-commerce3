@@ -2,7 +2,10 @@ import React, { Fragment, useEffect, useState, useRef } from "react";
 import { useHistory, useParams, useLocation } from "react-router-dom";
 import ProductShopCard from "../components/cards/ProductShopCard"
 import { getCategories } from "../functions/category";
-import  LoadingPage from "./LoadingPage";
+import LoadingPage from "./LoadingPage";
+
+import { useTranslation } from 'react-i18next';
+import { getTranslatedField } from "../actions/translateActions";
 
 const CategoryCard = ({ handleClick, description, image, name, slug }) => {
 
@@ -75,10 +78,12 @@ const Home = () => {
     const [categories, setCategories] = useState([]);
     const [isLoading, setIsLoading] = useState(false);
 
+    const { t, i18n } = useTranslation();
+
     const fetchAllCategories = async () => {
         try {
             setIsLoading(true);
-            let {data} = await getCategories();
+            let { data } = await getCategories();
             if (data) {
                 setCategories(data);
                 setIsLoading(false);
@@ -101,7 +106,7 @@ const Home = () => {
         window.scrollTo(0, 0)
     }, [])
 
-    if(isLoading){
+    if (isLoading) {
         return (
             <LoadingPage />
         )
@@ -110,13 +115,20 @@ const Home = () => {
     return (
         <div className="container max-w-7xl mx-auto px-2">
             <div className="grid  grid-cols-1 lg:grid-cols-2">
-                {categories.map(({ description, image, name, slug, _id }) => {
+                {categories.map((c) => {
+
+                    const { description, image, name, slug, _id } = c;
+
+                    const lang = i18n.language;
+                    const translatedName = getTranslatedField(c, 'name', lang);
+                    const translatedDescription = getTranslatedField(c, 'description', lang);
+
                     return (
                         <CategoryCard
                             key={name}
-                            description={description}
+                            description={translatedDescription}
                             image={image}
-                            name={name}
+                            name={translatedName}
                             slug={slug}
                             handleClick={handleClick}
                         />
