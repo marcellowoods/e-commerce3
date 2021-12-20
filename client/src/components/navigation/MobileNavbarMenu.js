@@ -21,6 +21,17 @@ const MobileNavbarMenu = (props) => {
 
     const isMobileNavOpen = () => drawerNav == true;
 
+    useEffect(() => {
+
+        const handleResize = () => {
+            if(document.body.style.overflow != 'unset'){
+                closeMobileNav();
+            }
+        }
+
+        window.addEventListener('resize', handleResize)
+    }, [])
+
     return (
         <Fragment>
             <div className="visible sm:invisible">
