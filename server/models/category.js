@@ -21,6 +21,20 @@ const categorySchema = new mongoose.Schema(
         description: {
             type: String,
         },
+        translations: [
+            {
+                lang: {
+                    type: String,
+                },
+                name: {
+                    type: String,
+                },
+                description: {
+                    type: String,
+                    text: true,
+                },
+            },
+        ],
     },
     { timestamps: true }
 );

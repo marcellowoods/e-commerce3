@@ -52,7 +52,7 @@ const productSchema = new mongoose.Schema(
         // ],
         translations: [
             {
-                language: {
+                lang: {
                     type: String,
                 },
                 name: {

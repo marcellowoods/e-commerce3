@@ -3,6 +3,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { useHistory } from "react-router-dom";
 import { createCategory } from "../../functions/category"
 import FileUpload from "../../components/forms/FileUpload";
+import { useTranslation } from 'react-i18next';
 
 function classNames(...classes) {
     return classes.filter(Boolean).join(' ')
@@ -47,10 +48,10 @@ const ImageUrlForm = ({ imageUrl, setImageUrl }) => {
     const [loading, setLoading] = useState(false);
 
     useEffect(() => {
-        if(uploadedImages.length && uploadedImages[0].url){
+        if (uploadedImages.length && uploadedImages[0].url) {
             const url = uploadedImages[0].url
             setImageUrl(url);
-        }else{
+        } else {
             setImageUrl("");
         }
 
@@ -60,9 +61,9 @@ const ImageUrlForm = ({ imageUrl, setImageUrl }) => {
 
     const onInputChange = (e) => {
 
-        if(isInputDisabled()){
+        if (isInputDisabled()) {
             window.alert("remove uploaded image first")
-        }else{
+        } else {
             setImageUrl(e.target.value)
         }
     }
@@ -123,6 +124,26 @@ const DescriptionForm = ({ description, setDescription }) => {
     )
 }
 
+const Translation = ({ language, description, name, handleEditTranslations }) => {
+
+    return (
+        <div className="">
+
+            <NameForm
+                name={name}
+                setName={(newVal) => handleEditTranslations(language, "name", newVal)}
+            />
+
+            <DescriptionForm
+                description={description}
+                setDescription={(newVal) => handleEditTranslations(language, "description", newVal)}
+            />
+
+        </div>
+    )
+
+}
+
 //more forms
 //https://tailwindcomponents.com/component/account-card
 //https://tailwindcomponents.com/components/forms?page=2
@@ -133,28 +154,80 @@ const CreateCategory = () => {
 
     let history = useHistory();
 
+    const { t, i18n } = useTranslation();
+
     const [name, setName] = useState("");
     const [description, setDescription] = useState("");
     const [imageUrl, setImageUrl] = useState("");
 
     const { user } = useSelector((state) => ({ ...state }));
 
+    const makeTranslationsObj = () => {
+        const languagesWithoutEnglish = i18n.languages.filter((lang) => lang != "en");
+
+        return (
+            languagesWithoutEnglish.map(lang => {
+                return { lang, description: "", name: "" }
+            })
+        );
+    }
+
+    const [translations, setTranslations] = useState(makeTranslationsObj());
+
+    console.log(translations);
+
+    const handleEditTranslations = (forLanguage, field, newVal) => {
+
+        let translationObj = translations.find((tObj) => tObj.lang == forLanguage);
+        let newTranslationObj = { ...translationObj, [field]: newVal };
+
+        setTranslations(prev => {
+
+            let filtered = prev.filter((el) => el.lang != forLanguage);
+
+            return [...filtered, newTranslationObj];
+        })
+    }
+
+    const renderTranslations = () => {
+
+        return (
+            <div>
+                {translations.map(({ lang, description, name }) => {
+
+                    console.log(description)
+                    return (
+                        <>
+                            <h3 className="pt-12 text-center">{lang}</h3>
+                            <Translation
+                                language={lang}
+                                description={description}
+                                name={name}
+                                handleEditTranslations={handleEditTranslations}
+                            />
+                        </>
+                    )
+                })}
+            </div>
+        )
+    }
+
     const handleSubmit = () => {
 
-        createCategory({ name, description, image: imageUrl }, user.token)
+
+        createCategory({ name, description, translations, image: imageUrl }, user.token)
             .then((res) => {
                 // console.log(res)
                 history.push(`/categories`);
             })
             .catch((error) => {
                 //https://itnext.io/javascript-error-handling-from-express-js-to-react-810deb5e5e28
-                if(error.response) { 
+                if (error.response) {
                     /*errthe request was made and the server responded
                     with a status code that falls out of the range of 2xx */
                     console.log(error.response.data)
                     alert(error.response.data);
-                  }
-
+                }
             });
     };
 
@@ -177,6 +250,10 @@ const CreateCategory = () => {
                 description={description}
                 setDescription={setDescription}
             />
+
+            <h3 className="pt-12 text-center">translations</h3>
+
+            {renderTranslations()}
 
             <div className="p-4 float-right">
                 <button onClick={handleSubmit} className="flex items-center  px-3 py-2 bg-blue-600 text-white text-sm uppercase font-medium rounded hover:bg-blue-500 focus:outline-none focus:bg-blue-500">

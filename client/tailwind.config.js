@@ -1,5 +1,6 @@
 //change fonts
 //https://www.themes.dev/blog/typographic-defaults-in-tailwind-css/
+//https://fonts.google.com/
 
 module.exports = {
     purge: ['./src/**/*.{js,jsx,ts,tsx}', './public/index.html'],
@@ -15,7 +16,7 @@ module.exports = {
             },
             fontFamily: {
                 'robo': ['Roboto'],
-                'workSans': ['Work Sans'],
+                'workSans': ['Work Sans']
             }
         }
 

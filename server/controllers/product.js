@@ -17,7 +17,8 @@ exports.create = async (req, res) => {
     try {
         // console.log(req.body);
         req.body.slug = slugifyLower(req.body.name);
-        console.log(req.body);
+        // req.body.lang = req.body.language;
+
         const newProduct = await new Product(req.body).save();
         res.json(newProduct);
     } catch (err) {

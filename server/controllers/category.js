@@ -6,11 +6,14 @@ const { removeImagesFromUrls } = require("./systems/cloudinaryImages");
 
 exports.create = async (req, res) => {
     try {
-        const { name, description, image } = req.body;
+        const { name, description, translations, image } = req.body;
+
+        console.log(translations);
 
         res.json(await new Category({
             name,
             description,
+            translations,
             image,
             slug: slugify(name)
         }).save());

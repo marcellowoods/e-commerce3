@@ -282,21 +282,17 @@ const CreateProduct = () => {
         const languagesWithoutEnglish = i18n.languages.filter((lang) => lang != "en");
 
         return (
-            languagesWithoutEnglish.map(language => {
-                return { language, description: "", name: "" }
+            languagesWithoutEnglish.map(lang => {
+                return { lang, description: "", name: "" }
             })
         );
     }
 
     const [translations, setTranslations] = useState(makeTranslationsObj());
 
-    console.log(translations);
-
     const handleEditTranslations = (language, field, newVal) => {
 
-        console.log(translations);
-
-        let translationObj = translations.find((tObj) => tObj.language == language);
+        let translationObj = translations.find((tObj) => tObj.lang == language);
         let newTranslationObj = { ...translationObj, [field]: newVal };
 
         setTranslations(prev => {
