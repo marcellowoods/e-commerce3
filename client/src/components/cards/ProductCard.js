@@ -336,20 +336,32 @@ const ProductCard0 = ({ product, handleAddToCart }) => {
     )
 }
 
-const ProductCard = ({ handleAddToCart }) => {
+const ProductCard = ({ product: product2, handleAddToCart }) => {
 
     const { t } = useTranslation();
 
     // const { details, highlights, description, sizes, colors, images, breadcrumbs, price, name } = product;
 
+    const { images } = product2;
+
     const [selectedColor, setSelectedColor] = useState(product.colors[0])
-    const [selectedSize, setSelectedSize] = useState(product.sizes[2])
+    const [selectedSize, setSelectedSize] = useState(product.sizes[2]);
+
+    const description = "very cool thing"
 
     return (
         <div className="mx-auto mt-4 lg:max-w-4xl px-4">
-            <div className="w-full grid grid-cols-1 gap-y-8 gap-x-6 items-start sm:grid-cols-12 lg:gap-x-8">
+            <div className="w-full grid grid-cols-1 gap-y-8 gap-x-6 items-end sm:grid-cols-12 lg:gap-x-8">
                 <div className="aspect-w-2 aspect-h-3 rounded-lg bg-gray-100 overflow-hidden sm:col-span-4 lg:col-span-5">
-                    <img src={product.imageSrc} alt={product.imageAlt} className="object-center object-cover" />
+                    {/* <img src={product.imageSrc} alt={product.imageAlt} className="object-center object-cover" /> */}
+                    <ProductSlider
+                        images={images}
+                        onPointerDown={() => { }}
+                        onPointerUp={() => { }}
+                    />
+                    <div className="py-12">
+
+                    </div>
                 </div>
                 <div className="sm:col-span-8 lg:col-span-7">
                     <h2 className="text-2xl font-extrabold text-gray-900 sm:pr-12">{product.name}</h2>
@@ -362,7 +374,7 @@ const ProductCard = ({ handleAddToCart }) => {
                         <p className="text-2xl text-gray-900">{product.price}</p>
 
                         {/* Reviews */}
-                        <div className="mt-6">
+                        {/* <div className="mt-6">
                             <h4 className="sr-only">Reviews</h4>
                             <div className="flex items-center">
                                 <div className="flex items-center">
@@ -382,7 +394,7 @@ const ProductCard = ({ handleAddToCart }) => {
                                     {product.reviewCount} reviews
                                 </a>
                             </div>
-                        </div>
+                        </div> */}
                     </section>
 
                     <section aria-labelledby="options-heading" className="mt-10">
@@ -390,9 +402,20 @@ const ProductCard = ({ handleAddToCart }) => {
                             Product options
                         </h3>
 
-                        <form>
+                        <div>
+                            {
+                                description && (
+                                    <div>
+                                        <h3 className="sr-only">{t("description")}</h3>
+
+                                        <div className="space-y-6">
+                                            <p className="text-base text-gray-900">{description}</p>
+                                        </div>
+                                    </div>
+                                )
+                            }
                             {/* Colors */}
-                            <div>
+                            {/* <div>
                                 <h4 className="text-sm text-gray-900 font-medium">Color</h4>
 
                                 <RadioGroup value={selectedColor} onChange={setSelectedColor} className="mt-4">
@@ -425,10 +448,10 @@ const ProductCard = ({ handleAddToCart }) => {
                                         ))}
                                     </div>
                                 </RadioGroup>
-                            </div>
+                            </div> */}
 
                             {/* Sizes */}
-                            <div className="mt-10">
+                            {/* <div className="mt-10">
                                 <div className="flex items-center justify-between">
                                     <h4 className="text-sm text-gray-900 font-medium">Size</h4>
                                     <a href="#" className="text-sm font-medium text-indigo-600 hover:text-indigo-500">
@@ -487,7 +510,7 @@ const ProductCard = ({ handleAddToCart }) => {
                                         ))}
                                     </div>
                                 </RadioGroup>
-                            </div>
+                            </div> */}
 
                             <button
                                 type="submit"
@@ -495,7 +518,7 @@ const ProductCard = ({ handleAddToCart }) => {
                             >
                                 Add to bag
                             </button>
-                        </form>
+                        </div>
                     </section>
                 </div>
             </div>
