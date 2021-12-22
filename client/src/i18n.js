@@ -22,7 +22,6 @@ const resources = {
             "delivery to home": "Delivery to home",
             "delivery courrier": "Delivery Courrier",
             "delivery method": "Delivery Method",
-            
         }
     },
     bg: {
