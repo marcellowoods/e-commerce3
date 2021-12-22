@@ -3,10 +3,10 @@ import { useDispatch, useSelector } from "react-redux";
 
 import { Menu, Transition } from '@headlessui/react'
 import { getProfileIcon } from "../../assets/icons";
-
 import { useHistory } from "react-router-dom";
-
 import { getAuth, signOut } from "firebase/auth";
+
+import { useTranslation } from 'react-i18next';
 
 const auth = getAuth();
 
@@ -22,6 +22,9 @@ const AccountDropdownRender = ({
     handleRegisterClicked,
     isLoggedIn
 }) => {
+
+    const { t } = useTranslation();
+
     return (
         <div className="text-right">
             <Menu style={{ zIndex: 12 }} as="div" className="relative inline-block text-left">
@@ -49,7 +52,7 @@ const AccountDropdownRender = ({
                                                 onClick={handleOrdersClicked}
                                                 className={getItemClassName(active)}
                                             >
-                                                My Orders
+                                                {t("orders")}
                                             </button>
                                         )}
                                     </Menu.Item>
@@ -60,7 +63,7 @@ const AccountDropdownRender = ({
                                                 onClick={handleSettingsClicked}
                                                 className={getItemClassName(active)}
                                             >
-                                                Settings
+                                                {t("settings")}
                                             </button>
                                         )}
                                     </Menu.Item>
@@ -71,7 +74,7 @@ const AccountDropdownRender = ({
                                                 onClick={handleLogoutClicked}
                                                 className={getItemClassName(active)}
                                             >
-                                                Logout
+                                                {t("logout")}
                                             </button>
                                         )}
                                     </Menu.Item>
@@ -89,7 +92,7 @@ const AccountDropdownRender = ({
                                                 onClick={handleLoginClicked}
                                                 className={getItemClassName(active)}
                                             >
-                                                Login
+                                                {t("login")}
                                             </button>
                                         )}
                                     </Menu.Item>
@@ -100,7 +103,7 @@ const AccountDropdownRender = ({
                                                 onClick={handleRegisterClicked}
                                                 className={getItemClassName(active)}
                                             >
-                                                Register
+                                                {t("register")}
                                             </button>
                                         )}
                                     </Menu.Item>

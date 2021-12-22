@@ -22,6 +22,17 @@ const resources = {
             "delivery to home": "Delivery to home",
             "delivery courrier": "Delivery Courrier",
             "delivery method": "Delivery Method",
+            "orders": "Orders",
+            "settings": "Settings",
+            "logout": "Logout",
+            "login": "Login",
+            "register": "Register",
+            "products": "Products",
+            "categories": "Categories",
+
+            "product information": "Product Information",
+            "description": "Description",
+            "add to bag": "Add to bag"
         }
     },
     bg: {
@@ -39,6 +50,17 @@ const resources = {
             "delivery to home": "Доставка до дома",
             "delivery courrier": "Куриер за доставка",
             "delivery method": "Място за доставка",
+            "orders": "Поръчки",
+            "settings": "Настройки",
+            "logout": "Излез",
+            "login": "Влез",
+            "register": "Регистрация",
+            "products": "Продукти",
+            "categories": "Категории",
+
+            "product information": "Информация за продукт",
+            "description": "Описание",
+            "add to bag": "Добави в кошница"
         }
     }
 };

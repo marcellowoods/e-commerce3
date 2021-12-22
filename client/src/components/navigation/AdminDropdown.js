@@ -3,10 +3,10 @@ import { useDispatch, useSelector } from "react-redux";
 
 import { Menu, Transition } from '@headlessui/react'
 import { getAdminIcon } from "../../assets/icons";
-
 import { useHistory } from "react-router-dom";
-
 import { getAuth, signOut } from "firebase/auth";
+
+import { useTranslation } from 'react-i18next';
 
 const auth = getAuth();
 
@@ -20,6 +20,8 @@ const AdminDropdownRender = ({
     handleProductsClicked,
     handleCategoriesClicked,
 }) => {
+
+    const { t } = useTranslation();
 
     return (
         <div className="text-right">
@@ -48,7 +50,7 @@ const AdminDropdownRender = ({
                                         onClick={handleOrdersClicked}
                                         className={getItemClassName(active)}
                                     >
-                                        Orders
+                                        {t("orders")}
                                     </button>
                                 )}
                             </Menu.Item>
@@ -59,7 +61,7 @@ const AdminDropdownRender = ({
                                         onClick={handleProductsClicked}
                                         className={getItemClassName(active)}
                                     >
-                                        Products
+                                        {t("products")}
                                     </button>
                                 )}
                             </Menu.Item>
@@ -70,7 +72,7 @@ const AdminDropdownRender = ({
                                         onClick={handleCategoriesClicked}
                                         className={getItemClassName(active)}
                                     >
-                                        Categories
+                                        {t("categories")}
                                     </button>
                                 )}
                             </Menu.Item>
