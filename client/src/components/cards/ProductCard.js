@@ -352,7 +352,7 @@ const ProductCard = ({ product: product2, handleAddToCart }) => {
     return (
         <div className="mx-auto mt-4 lg:max-w-4xl px-4">
             <div className="w-full grid grid-cols-1 gap-y-8 gap-x-6 items-end sm:grid-cols-12 lg:gap-x-8">
-                <div className="aspect-w-2 aspect-h-3 rounded-lg bg-gray-100 overflow-hidden sm:col-span-4 lg:col-span-5">
+                <div className="aspect-w-2 aspect-h-3 rounded-lg bg-gray-100 overflow-hidden sm:col-span-4 lg:col-span-7">
                     {/* <img src={product.imageSrc} alt={product.imageAlt} className="object-center object-cover" /> */}
                     <ProductSlider
                         images={images}
@@ -363,7 +363,7 @@ const ProductCard = ({ product: product2, handleAddToCart }) => {
 
                     </div>
                 </div>
-                <div className="sm:col-span-8 lg:col-span-7">
+                <div className="sm:col-span-8 lg:col-span-5">
                     <h2 className="text-2xl font-extrabold text-gray-900 sm:pr-12">{product.name}</h2>
 
                     <section aria-labelledby="information-heading" className="mt-2">
