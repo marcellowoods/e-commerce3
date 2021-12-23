@@ -8,31 +8,6 @@ import { useTranslation } from 'react-i18next';
 
 const shopUrl = '/shop';
 
-const product = {
-    name: 'Basic Tee 6-Pack ',
-    price: '$192',
-    rating: 3.9,
-    reviewCount: 117,
-    href: '#',
-    imageSrc: 'https://tailwindui.com/img/ecommerce-images/product-quick-preview-02-detail.jpg',
-    imageAlt: 'Two each of gray, white, and black shirts arranged on table.',
-    colors: [
-        { name: 'White', class: 'bg-white', selectedClass: 'ring-gray-400' },
-        { name: 'Gray', class: 'bg-gray-200', selectedClass: 'ring-gray-400' },
-        { name: 'Black', class: 'bg-gray-900', selectedClass: 'ring-gray-900' },
-    ],
-    sizes: [
-        { name: 'XXS', inStock: true },
-        { name: 'XS', inStock: true },
-        { name: 'S', inStock: true },
-        { name: 'M', inStock: true },
-        { name: 'L', inStock: true },
-        { name: 'XL', inStock: true },
-        { name: 'XXL', inStock: true },
-        { name: 'XXXL', inStock: false },
-    ],
-}
-
 
 function classNames(...classes) {
     return classes.filter(Boolean).join(' ')
@@ -193,14 +168,15 @@ const BreadCrumbs = ({ breadcrumbs, name }) => {
 
 
 //https://tailwindui.com/components/ecommerce/components/product-overviews
-const ProductCard0 = ({ product, handleAddToCart }) => {
+const ProductCard = ({ product, translatedName, translatedDescription, handleAddToCart }) => {
 
     const { t } = useTranslation();
 
-    const { details, highlights, description, sizes, colors, images, breadcrumbs, price, name } = product;
+    const { details, highlights, sizes, colors, images, breadcrumbs, price } = product;
 
     const [selectedColor, setSelectedColor] = useState(null);
     const [selectedSize, setSelectedSize] = useState(null);
+
 
     useEffect(() => {
         window.scrollTo(0, 0);
@@ -212,142 +188,6 @@ const ProductCard0 = ({ product, handleAddToCart }) => {
             setSelectedSize(sizes[0])
         }
     }, [])
-
-    return (
-        <div className="bg-white">
-            <div className=" px-2">
-
-                {breadcrumbs && <BreadCrumbs breadcrumbs={breadcrumbs} name={name} />}
-
-                {/* Image gallery */}
-                <div className="max-w-xl mx-auto sm:px-6 lg:max-w-2xl px-4 lg:px-8 ">
-                    <div className="w-full max-w-lg mx-auto rounded-md  overflow-hidden">
-                        {/* <img
-                            src={product.images[1].src}
-                            alt={product.images[1].alt}
-                            className=" w-full h-full object-center object-cover"
-                        /> */}
-
-                        <ProductSlider
-                            images={images}
-                            onPointerDown={() => { }}
-                            onPointerUp={() => { }}
-                        />
-                        <div className="py-12">
-
-                        </div>
-
-                    </div>
-                </div>
-
-                {/* Product info */}
-                <div className="max-w-2xl mx-auto  pb-16 px-4 sm:px-6 lg:max-w-xl  lg:pb-24 lg:px-8 lg:grid lg:grid-cols-3 lg:grid-rows-[auto,auto,1fr] lg:gap-x-8">
-                    <div className="pt-4 lg:col-span-2 lg:border-r lg:border-gray-200 lg:pr-8">
-                        <h1 className="text-2xl font-bold tracking-tight text-gray-900 sm:text-3xl">{name}</h1>
-                    </div>
-
-                    {/* Options */}
-                    <div className="pt-4 flo lg:row-span-3">
-                        <h2 className="sr-only">{t("product information")}</h2>
-                        <p className="text-3xl text-gray-900">{price}</p>
-
-                        <div className="mt-10">
-
-
-                            {
-                                colors && (
-                                    <ColorSelector
-                                        selectedColor={selectedColor}
-                                        setSelectedColor={setSelectedColor}
-                                        productColors={product.colors}
-                                    />
-                                )
-                            }
-
-                            {
-                                sizes && (
-                                    <SizeSelector
-                                        selectedSize={selectedSize}
-                                        setSelectedSize={setSelectedSize}
-                                        productSizes={product.sizes}
-                                    />
-                                )
-                            }
-
-                            <button
-                                onClick={handleAddToCart}
-                                type="submit"
-                                className="mt-10 w-full bg-indigo-600 border border-transparent rounded-md py-3 px-8 flex items-center justify-center text-base font-medium text-white hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
-                            >
-                                {t("add to bag")}
-                            </button>
-                        </div>
-                    </div>
-
-                    <div className="py-10 lg:pt-6 lg:pb-16 lg:col-start-1 lg:col-span-2 lg:border-r lg:border-gray-200 lg:pr-8">
-                        {/* Description and details */}
-                        {
-                            description && (
-                                <div>
-                                    <h3 className="sr-only">{t("description")}</h3>
-
-                                    <div className="space-y-6">
-                                        <p className="text-base text-gray-900">{description}</p>
-                                    </div>
-                                </div>
-                            )
-                        }
-
-
-                        {/* {
-                            highlights && (
-                                <div className="mt-10">
-                                    <h3 className="text-sm font-medium text-gray-900">{t("highlights")}</h3>
-
-                                    <div className="mt-4">
-                                        <ul role="list" className="pl-4 list-disc text-sm space-y-2">
-                                            {highlights.map((highlight) => (
-                                                <li key={highlight} className="text-gray-400">
-                                                    <span className="text-gray-600">{highlight}</span>
-                                                </li>
-                                            ))}
-                                        </ul>
-                                    </div>
-                                </div>
-                            )
-                        } */}
-
-                        {/* {
-                            details && (
-                                <div className="mt-10">
-                                    <h2 className="text-sm font-medium text-gray-900">{t("details")}</h2>
-
-                                    <div className="mt-4 space-y-6">
-                                        <p className="text-sm text-gray-600">{product.details}</p>
-                                    </div>
-                                </div>
-                            )
-                        } */}
-
-                    </div>
-                </div>
-            </div>
-        </div>
-    )
-}
-
-const ProductCard = ({ product: product2, handleAddToCart }) => {
-
-    const { t } = useTranslation();
-
-    // const { details, highlights, description, sizes, colors, images, breadcrumbs, price, name } = product;
-
-    const { images } = product2;
-
-    const [selectedColor, setSelectedColor] = useState(product.colors[0])
-    const [selectedSize, setSelectedSize] = useState(product.sizes[2]);
-
-    const description = "very cool thing"
 
     return (
         <div className="mx-auto mt-8 lg:max-w-6xl px-4">
@@ -364,14 +204,27 @@ const ProductCard = ({ product: product2, handleAddToCart }) => {
                     </div>
                 </div>
                 <div className="sm:col-span-5">
-                    <h2 className="text-2xl font-extrabold text-gray-900 sm:pr-12">{product.name}</h2>
+                    <h2 className="text-2xl font-extrabold text-gray-900 sm:pr-12">{translatedName}</h2>
 
                     <section aria-labelledby="information-heading" className="mt-2">
                         <h3 id="information-heading" className="sr-only">
                             Product information
                         </h3>
 
-                        <p className="text-2xl text-gray-900">{product.price}</p>
+                        <p className="text-2xl text-gray-900">{price}</p>
+
+                        {
+                            translatedDescription && (
+                                <div className="mt-10">
+                                    <h3 className="sr-only">{t("description")}</h3>
+
+                                    <div className="space-y-6">
+                                        <p className="text-base text-gray-900">{translatedDescription}</p>
+                                    </div>
+                                </div>
+                            )
+                        }
+
 
                     </section>
 
@@ -380,27 +233,34 @@ const ProductCard = ({ product: product2, handleAddToCart }) => {
                             Product options
                         </h3>
 
-                        <div>
-                            {
-                                description && (
-                                    <div>
-                                        <h3 className="sr-only">{t("description")}</h3>
+                        {
+                            colors && (
+                                <ColorSelector
+                                    selectedColor={selectedColor}
+                                    setSelectedColor={setSelectedColor}
+                                    productColors={colors}
+                                />
+                            )
+                        }
+                        {
+                            sizes && (
+                                <SizeSelector
+                                    selectedSize={selectedSize}
+                                    setSelectedSize={setSelectedSize}
+                                    productSizes={sizes}
+                                />
+                            )
+                        }
 
-                                        <div className="space-y-6">
-                                            <p className="text-base text-gray-900">{description}</p>
-                                        </div>
-                                    </div>
-                                )
-                            }
-
-                            <button
-                                type="submit"
-                                className="mt-6 w-full bg-indigo-600 border border-transparent rounded-md py-3 px-8 flex items-center justify-center text-base font-medium text-white hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
-                            >
-                                Add to bag
-                            </button>
-                        </div>
                     </section>
+
+                    <button
+                        onClick={handleAddToCart}
+                        type="submit"
+                        className="mt-10 w-full bg-indigo-600 border border-transparent rounded-md py-3 px-8 flex items-center justify-center text-base font-medium text-white hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
+                    >
+                        {t("add to bag")}
+                    </button>
                 </div>
             </div>
         </div>

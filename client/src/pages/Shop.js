@@ -9,7 +9,7 @@ import LoadingPage from "./LoadingPage";
 import { getCategories } from "../functions/category";
 import { getProducts } from "../functions/product";
 import ElementsMenu from "../components/menus/ElementMenu";
-import { useAsyncDidMount, useAsync } from "../auxiliary/reactUtils"
+import { useAsyncDidMount, useAsync } from "../auxiliary/reactUtils";
 
 import { useTranslation } from 'react-i18next';
 import { getTranslatedField } from "../actions/translateActions";

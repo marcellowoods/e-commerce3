@@ -4,8 +4,12 @@ import ProductCard from "../components/cards/ProductCard.js"
 import LoadingPage from "./LoadingPage";
 import { getProduct } from "../functions/product";
 import { addToCart } from "../actions/cartActions";
-import { useDispatch, useSelector } from 'react-redux'
-import { useAsync } from "../auxiliary/reactUtils"
+import { useDispatch, useSelector } from 'react-redux';
+import { useAsync, useDidMountEffect } from "../auxiliary/reactUtils";
+
+import { useTranslation } from 'react-i18next';
+import { t } from "i18next";
+import { getTranslatedField } from "../actions/translateActions";
 
 const ProductPageDesign = () => {
 
@@ -126,6 +130,8 @@ const ProductPage = () => {
     const { productSlugParam } = useParams();
     const [product, setProduct] = useState(null);
 
+    const { t, i18n } = useTranslation();
+
     const dispatch = useDispatch()
 
     useAsync(
@@ -135,20 +141,48 @@ const ProductPage = () => {
         [productSlugParam]
     );
 
+    const getTranslatedName = () => {
+
+        let name = null;
+        const lang = i18n.language;
+
+        if(product){
+            name = getTranslatedField(product, 'name', lang);
+        }
+
+        return name;
+    }
+
+    const getTranslatedDescription = () => {
+
+        let description = null;
+        const lang = i18n.language;
+
+        if(product){
+            description = getTranslatedField(product, 'description', lang);
+        }
+
+        return description;
+    }
+
     const handleAddToCart = () => {
-        if(product !== null){
+        if (product !== null) {
             dispatch(addToCart(product.slug, 1));
             dispatch({ type: "DRAWER_CART_TOGGLE", payload: true });
         }
     }
 
 
-    if(product == null){
+    if (product == null) {
         return <LoadingPage />
     }
 
     return (
-        <ProductCard product={product} handleAddToCart={handleAddToCart}/>
+        <ProductCard 
+            product={product}
+            translatedName={getTranslatedName()}
+            translatedDescription={getTranslatedDescription()}
+         handleAddToCart={handleAddToCart} />
     )
 }
 
