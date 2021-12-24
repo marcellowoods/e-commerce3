@@ -190,10 +190,14 @@ const Checkout = () => {
         //     return "Delivery Address"
         // }
 
+        
+
         if (selectedMethod.id == "office") {
-            return `${selectedCourier.name} office address`
+            const text =  t('office address', {name: selectedCourier.name});
+            return text;
         } else {
-            return "Delivery Address"
+            const text =  t("delivery address");
+            return text;
         }
     }
 
@@ -213,10 +217,10 @@ const Checkout = () => {
             return (
                 <h4 className="text-lg text-gray-500 font-medium">
                     <div>
-                        Find <a className="underline text-blue-500" href={selectedCourier.findOffice}>{selectedCourier.name} office</a>
+                    {t("find")} <a className="underline text-blue-500" href={selectedCourier.findOffice}>{selectedCourier.name} {t("office")} </a>
                     </div>
                     <br />
-                    Fill in the office address and your contact information to finish the order
+                    {t("fill in the office address and your contact information to finish the order")}
                 </h4>
 
             )
@@ -224,7 +228,7 @@ const Checkout = () => {
         } else {
             return (
                 <h4 className="text-lg text-gray-500 font-medium">
-                    Fill in your address and contact information to finish the order
+                    {t("fill in your address and contact information to finish the order")}
                 </h4>
             );
         }
@@ -312,13 +316,13 @@ const Checkout = () => {
                                     className="flex items-center text-gray-700 text-sm font-medium rounded hover:underline focus:outline-none"
                                 >
                                     <svg className="h-5 w-5" fill="none" strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" viewBox="0 0 24 24" stroke="currentColor"><path d="M7 16l-4-4m0 0l4-4m-4 4h18"></path></svg>
-                                    <span className="mx-2">Back step</span>
+                                    <span className="mx-2">{t("back")}</span>
                                 </button>
                                 <button
                                     onClick={handleNextClick}
                                     className="flex items-center px-3 py-2 bg-blue-600 text-white text-sm font-medium rounded-md hover:bg-blue-500 focus:outline-none focus:bg-blue-500"
                                 >
-                                    <span>Next step</span>
+                                    <span>{t("next")}</span>
                                     <svg className="h-5 w-5 mx-2" fill="none" strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" viewBox="0 0 24 24" stroke="currentColor"><path d="M17 8l4 4m0 0l-4 4m4-4H3"></path></svg>
                                 </button>
                             </div>

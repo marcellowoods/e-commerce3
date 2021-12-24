@@ -1,4 +1,6 @@
 import React from "react";
+import { useTranslation } from 'react-i18next';
+
 
 const DeliveryMethod = ({ name, options, selected, setSelected }) => {
 
@@ -108,7 +110,9 @@ const DeliveryAdress = ({ name, deliveryAdress, setDeliveryAddress }) => {
     )
 }
 
-const ContactInformation = ({ contactInformation, setContactInformation }) => {
+const ContactInformation = ({name, contactInformation, setContactInformation }) => {
+
+    const { t, i18n } = useTranslation();
 
     const handleEmailChange = (event) => {
         const value = event.target.value;
@@ -133,7 +137,7 @@ const ContactInformation = ({ contactInformation, setContactInformation }) => {
 
     return (
         <div className="mt-8">
-            <h4 className="text-sm text-gray-500 font-medium">Contact information</h4>
+            <h4 className="text-sm text-gray-500 font-medium">{t("contact information")}</h4>
             <label className="mt-4 block w-3/12">
                 <input
                     onChange={handleNameChange}
