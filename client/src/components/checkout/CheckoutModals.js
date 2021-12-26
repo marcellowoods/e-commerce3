@@ -4,6 +4,9 @@ import { Dialog, Transition } from '@headlessui/react'
 import { useDispatch, useSelector } from "react-redux";
 import { getCartTotal } from "../../actions/cartActions";
 
+import { useTranslation } from 'react-i18next';
+import { getTranslatedField } from "../../actions/translateActions";
+
 const OrderConfirmed = ({ isOpen, closeModal }) => {
     // let [isOpen, setIsOpen] = useState(true)
 
@@ -95,7 +98,8 @@ const OrderConfirmed = ({ isOpen, closeModal }) => {
 }
 
 const ConfirmOrder = ({ isOpen, setIsOpen, deliveryAdress, contactInformation, onConfirmClicked }) => {
-    // let [isOpen, setIsOpen] = useState(true)
+
+    const { t, i18n } = useTranslation();
 
     function closeModal() {
         setIsOpen(false)
@@ -151,43 +155,51 @@ const ConfirmOrder = ({ isOpen, setIsOpen, deliveryAdress, contactInformation, o
                                     as="h3"
                                     className="text-lg font-medium leading-6 text-gray-900"
                                 >
-                                    Order
+                                    {t("order")}
                                 </Dialog.Title>
                                 <div className="mt-2">
                                     {/* <p className="text-sm text-gray-500">
                                         Your payment has been successfully submitted. We’ve sent you
                                         an email with all of the details of your order.
                                     </p> */}
-                                    {products.map((item, index) => (
-                                        <div className="flex justify-between">
-                                            <div className="flex">
-                                                <h3>{item.name}</h3>
-                                                <h3 className="pl-2 font-medium ">x{item.count}</h3>
+        
+                                    {products && products.map((item) => {
+                                        const lang = i18n.language;
+                                        const translatedName = getTranslatedField(item, 'name', lang);
+
+                                        return (
+                                            <div className="flex justify-between">
+                                                <div className="flex">
+                                                    <h3>{translatedName}</h3>
+                                                    <h3 className="pl-2 font-medium ">x{item.count}</h3>
+                                                </div>
+                                                <h3>{item.price} {t('lv.')}</h3>
                                             </div>
-                                            <h3>{item.price}$</h3>
-                                        </div>
-                                    ))
+                                        )
+                                    }
+
+                                    )
                                     }
                                     <hr />
                                     <div className="flex justify-between">
-                                        <h3>total</h3>
-                                        <h3>{getCartTotal(products)}$</h3>
+                                        <h3>{t("total")}</h3>
+                                        <h3>{getCartTotal(products)} {t('lv.')}</h3>
                                     </div>
                                     <div className="pt-6">
                                         <div className="flex">
-                                            Deliver to
+                                            {t("deliver to")}
                                             <p className="font-medium pl-1">
                                                 {contactInformation.name}
                                             </p>
                                         </div>
                                         <div className="flex">
-                                            phone
+                                            {t("phone")}
                                             <p className="font-medium pl-1">
                                                 {contactInformation.phone}
                                             </p>
                                         </div>
                                         <div className="flex">
-                                            email
+                                            {t("email")}
                                             <p className="font-medium pl-1">
                                                 {contactInformation.email}
                                             </p>
@@ -195,7 +207,7 @@ const ConfirmOrder = ({ isOpen, setIsOpen, deliveryAdress, contactInformation, o
 
 
                                         <div className="flex">
-                                            address
+                                            {t("address")}
                                             <div className="font-medium pl-1">
                                                 {deliveryAdress.city}
                                                 {" "}
@@ -213,7 +225,7 @@ const ConfirmOrder = ({ isOpen, setIsOpen, deliveryAdress, contactInformation, o
                                             className="inline-flex justify-center px-4 py-2 text-sm font-medium text-red-900 bg-red-100 border border-transparent rounded-md hover:bg-red-200 focus:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-red-500"
                                             onClick={closeModal}
                                         >
-                                            Cancel
+                                            {t("cancel")}
                                         </button>
                                         <div className="pl-2">
                                             <button
@@ -224,7 +236,7 @@ const ConfirmOrder = ({ isOpen, setIsOpen, deliveryAdress, contactInformation, o
                                                     closeModal();
                                                 }}
                                             >
-                                                Confirm
+                                                {t("confirm")}
                                             </button>
                                         </div>
                                     </div>

@@ -18,6 +18,7 @@ const resources = {
             "cart": "Cart",
             "checkout": "Checkout",
             "cart is empty": "Cart is empty",
+            "lv.": "lv.",
 
 
             "delivery to office": "Delivery to {{name}} office",
@@ -36,7 +37,13 @@ const resources = {
                 "Fill in the office address and your contact information to finish the order",
             "fill in your address and contact information to finish the order":
                 "Fill in your address and contact information to finish the order",
-
+            "order": "Order",
+            "total": "total",
+            "deliver to": "Deliver to",
+            "phone": "Phone",
+            "address": "address",
+            "cancel": "Cancel",
+            "confirm": "Confirm",
 
             "settings": "Settings",
             "logout": "Logout",
@@ -61,7 +68,7 @@ const resources = {
             "cart": "Кошница",
             "checkout": "Поръчка",
             "cart is empty": "Кошницата е празна",
-
+            "lv.": "лв.",
 
             "delivery to office": "Доставка до офис на {{name}}",
             "delivery to home": "Доставка до дома",
@@ -79,8 +86,13 @@ const resources = {
                 "Попълнете адреса на офиса и вашите данни за връзка за да завършите поръчката",
             "fill in your address and contact information to finish the order":
                 "Попълнете вашия адрес и данни за връзка за да завършите поръчката",
-
-
+            "order": "Поръчка",
+            "total": "общо",
+            "deliver to": "Доставка за",
+            "phone": "телефон",
+            "address": "адрес",
+            "cancel": "Откажи",
+            "confirm": "Потвърди",
 
             "settings": "Настройки",
             "logout": "Излез",
