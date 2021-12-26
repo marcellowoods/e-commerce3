@@ -44,6 +44,9 @@ const resources = {
             "address": "address",
             "cancel": "Cancel",
             "confirm": "Confirm",
+            "order successful": "Order successful",
+            "your order has been successfully submitted. We’ve sent you an email with all of the details of your order.":
+                "Your order has been successfully submitted. We’ve sent you an email with all of the details of your order.",
 
             "settings": "Settings",
             "logout": "Logout",
@@ -93,6 +96,9 @@ const resources = {
             "address": "адрес",
             "cancel": "Откажи",
             "confirm": "Потвърди",
+            "order successful": "Създадена поръчка",
+            "your order has been successfully submitted. We’ve sent you an email with all of the details of your order.":
+                "Поръчката е създадена успешно, изпратихме ви email с детайлите на вашата поръчка.",
 
             "settings": "Настройки",
             "logout": "Излез",
