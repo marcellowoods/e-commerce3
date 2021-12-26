@@ -276,10 +276,12 @@ const CreateProduct = () => {
     const [selectedCategory, setSelectedCategory] = useState({});
     const [quantity, setQuantity] = useState(1);
 
-    const { t, i18n } = useTranslation();
+    const { t } = useTranslation();
 
     const makeTranslationsObj = () => {
-        const languagesWithoutEnglish = i18n.languages.filter((lang) => lang != "en");
+
+        const languagesWithoutEnglish = ["bg"];
+        
 
         return (
             languagesWithoutEnglish.map(lang => {
@@ -304,6 +306,8 @@ const CreateProduct = () => {
     }
 
     const renderTranslations = () => {
+
+        console.log(translations);
 
         return (
             <div>

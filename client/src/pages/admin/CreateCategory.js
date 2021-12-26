@@ -163,7 +163,7 @@ const CreateCategory = () => {
     const { user } = useSelector((state) => ({ ...state }));
 
     const makeTranslationsObj = () => {
-        const languagesWithoutEnglish = i18n.languages.filter((lang) => lang != "en");
+        const languagesWithoutEnglish = ["bg"];
 
         return (
             languagesWithoutEnglish.map(lang => {
