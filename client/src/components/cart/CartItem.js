@@ -69,7 +69,7 @@ const CartItem = ({
 
                 </div>
             </div>
-            <span className="text-gray-600">{price}$</span>
+            <span className="text-gray-600">{price}</span>
         </div>
     )
 }

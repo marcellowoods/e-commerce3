@@ -211,7 +211,7 @@ const ProductCard = ({ product, translatedName, translatedDescription, handleAdd
                             Product information
                         </h3>
 
-                        <p className="text-2xl text-gray-900">{price}</p>
+                        <p className="text-2xl text-gray-900">{price} {" "} {t("lv.")}</p>
 
                         {
                             translatedDescription && (

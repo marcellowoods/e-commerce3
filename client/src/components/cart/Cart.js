@@ -21,7 +21,7 @@ const Cart = ({ products }) => {
                 const lang = i18n.language;
 
                 const translatedName = getTranslatedField(item, 'name', lang);
-                console.log(translatedName);
+                const price = item.price + " " + t('lv.');
 
                 return (
 
@@ -29,7 +29,7 @@ const Cart = ({ products }) => {
                         key={index}
                         productId={item.product}
                         slug={item.slug}
-                        price={item.price}
+                        price={price}
                         name={translatedName}
                         quantity={item.count}
                         imageLink={item.image}
@@ -40,7 +40,7 @@ const Cart = ({ products }) => {
             )
             }
 
-            <h3 className="text-right text-lg text-gray-600">total {getCartTotal(products)}$</h3>
+            <h3 className="text-right text-lg text-gray-600">total {getCartTotal(products)} {t('lv.')}</h3>
         </div>
     )
 }
