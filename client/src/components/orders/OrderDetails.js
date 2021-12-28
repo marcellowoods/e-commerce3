@@ -5,10 +5,15 @@ import { Link } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { getCartTotal } from "../../actions/cartActions";
 
+import { useTranslation } from 'react-i18next';
+
+
 const PRODUCT_PAGE_URL = "/product/"
 
 const OrderDetails = ({ isOpen, orderStatus, orderId, products, totalCost, setIsOpen, deliveryInfo }) => {
     // let [isOpen, setIsOpen] = useState(true)
+
+    const { t, i18n } = useTranslation();
 
     const { method, city, courrier, address, phone, email, name } = deliveryInfo;
 
@@ -77,14 +82,14 @@ const OrderDetails = ({ isOpen, orderStatus, orderId, products, totalCost, setIs
                                 <Dialog.Title
                                     as="h3"
                                     className="text-lg font-medium leading-6 text-gray-900"
-                                >   
+                                >
                                     <div>
-                                    Order
-                                    {" " + orderId}
+                                        {t("order")}
+                                        {" " + orderId}
                                     </div>
                                     <div>
-                                    Status
-                                    {" " + orderStatus}
+                                        {t("status")}
+                                        {" " + t(orderStatus)}
                                     </div>
                                 </Dialog.Title>
                                 <div className="mt-6">
@@ -98,14 +103,14 @@ const OrderDetails = ({ isOpen, orderStatus, orderId, products, totalCost, setIs
                                                 {renderName(item.product, item.name)}
                                                 <h3 className="pl-2 font-medium ">x{item.selectedCount}</h3>
                                             </div>
-                                            <h3>{item.price} $</h3>
+                                            <h3>{item.price} {" "} {t("lv.")}</h3>
                                         </div>
                                     ))
                                     }
                                     <hr />
                                     <div className="flex justify-between">
-                                        <h3>total</h3>
-                                        <h3>{totalCost} $</h3>
+                                        <h3>{t("total")}</h3>
+                                        <h3>{totalCost} {" "} {t("lv.")}</h3>
                                     </div>
                                     <div className="pt-6">
                                         {/* <div className="flex">
@@ -116,7 +121,7 @@ const OrderDetails = ({ isOpen, orderStatus, orderId, products, totalCost, setIs
                                         </div> */}
 
                                         <div className="flex">
-                                            phone
+                                            {t("phone")}
                                             <p className="font-medium pl-1">
                                                 {phone}
                                             </p>
@@ -130,19 +135,19 @@ const OrderDetails = ({ isOpen, orderStatus, orderId, products, totalCost, setIs
 
 
                                         <div className="flex">
-                                            Courrier
+                                            {t("delivery courrier")}
                                             <p className="font-medium pl-1">
                                                 {courrier}
                                             </p>
                                         </div>
                                         <div className="flex">
-                                            Deliver to
+                                            {t("type")}
                                             <p className="font-medium pl-1">
-                                                {method === "office" ? courrier : ""} {method}
+                                                {method === "office" ? t("delivery to office", {name: courrier}) : t("delivery to home")} 
                                             </p>
                                         </div>
                                         <div className="flex">
-                                            address
+                                            {t("address")}
                                             <div className="font-medium pl-1">
                                                 {city}
                                                 {" "}

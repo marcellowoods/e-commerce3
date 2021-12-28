@@ -57,11 +57,25 @@ const resources = {
 
             "product information": "Product Information",
             "description": "Description",
-            "add to bag": "Add to bag"
+            "add to bag": "Add to bag",
+
+            "order id": "Order Id",
+            "created on": " Created on",
+            "shipping address": "Shipping address",
+            "status": "Status",
+            "details": "Details",
+            "type": "Type"
         }
     },
     bg: {
         translation: {
+
+            "Not Processed": "Не обработена",
+            "Processing": "Обравотва се",
+            "Dispatched": "Изпратена",
+            "Cancelled": "Отменена",
+            "Completed": "Завършена",
+            
             "categories": "Категории",
             "home": "Начало",
             "shop": "Магазин",
@@ -109,10 +123,18 @@ const resources = {
 
             "product information": "Информация за продукт",
             "description": "Описание",
-            "add to bag": "Добави в кошница"
+            "add to bag": "Добави в кошница",
+
+            "order id": "Номер на поръчка",
+            "created on": "Създадена на",
+            "shipping address": "Адрес за доставка",
+            "status": "Статус",
+            "details": "Детайли",
+            "type": "Тип"
         }
     }
 };
+
 
 i18n
     .use(initReactI18next)
