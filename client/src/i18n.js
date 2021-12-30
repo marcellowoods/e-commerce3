@@ -64,7 +64,9 @@ const resources = {
             "shipping address": "Shipping address",
             "status": "Status",
             "details": "Details",
-            "type": "Type"
+            "type": "Type",
+            "new": "new",
+            "best sellers": "best sellers"
         }
     },
     bg: {
@@ -130,7 +132,9 @@ const resources = {
             "shipping address": "Адрес за доставка",
             "status": "Статус",
             "details": "Детайли",
-            "type": "Тип"
+            "type": "Тип",
+            "new": "нови",
+            "best sellers": "най-продавани"
         }
     }
 };

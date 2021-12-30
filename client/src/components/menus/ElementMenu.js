@@ -1,7 +1,8 @@
 import React, { Fragment} from "react";
 import 'react-tridi/dist/index.css';
-import { Menu, Transition } from '@headlessui/react'
-import { CheckIcon, SelectorIcon } from '@heroicons/react/solid'
+import { Menu, Transition } from '@headlessui/react';
+import { CheckIcon, SelectorIcon } from '@heroicons/react/solid';
+import { useTranslation } from 'react-i18next';
 
 function classNames(...classes) {
     return classes.filter(Boolean).join(' ')
@@ -15,6 +16,8 @@ function classNames(...classes) {
 //https://tailwindui.com/components/application-ui/overlays/modals 
 const ElementsMenu = ({ allElements, selectedElement, setSelectedElement, zIndex=3 }) => {
 
+    const { t, i18n } = useTranslation();
+
     //expected elementObj to have name and slug properties
     //allElements = [
     //     { name: "new", slug: "new" },
@@ -25,7 +28,7 @@ const ElementsMenu = ({ allElements, selectedElement, setSelectedElement, zIndex
         <Menu style={{ zIndex }} as="div" className="relative inline-block text-left">
             <div>
                 <Menu.Button className="border-none inline-flex justify-center w-full rounded-md border-gray-300  p-2 bg-white text-sm  text-gray-700 hover:bg-gray-50 focus:outline-none  focus:ring-indigo-500">
-                    <h3 className="text-gray-700 text-2xl font-normal">{selectedElement.name}</h3>
+                    <h3 className="text-gray-700 text-2xl font-normal">{t(selectedElement.name)}</h3>
                     <SelectorIcon className="-mr-2 ml-1 mt-2 h-6 w-6" aria-hidden="true" />
                 </Menu.Button>
             </div>
@@ -52,7 +55,7 @@ const ElementsMenu = ({ allElements, selectedElement, setSelectedElement, zIndex
                                             'block text-center  px-4 py-4 text-md cursor-pointer'
                                         )}
                                     >
-                                        {elementObj.name}
+                                        {t(elementObj.name)}
                                     </a>
                                 )}
                             </Menu.Item>
