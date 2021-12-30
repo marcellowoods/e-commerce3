@@ -1,12 +1,20 @@
 import axios from "axios";
 
+import {
+    getAuth
+} from "firebase/auth";
+
+const auth = getAuth();
+
+const getUserId = () => auth.currentUser.accessToken;
+
 export const userCart = async (cart, authtoken) =>
     await axios.post(
         `${process.env.REACT_APP_API}/user/cart`,
         { cart },
         {
             headers: {
-                authtoken,
+                authtoken: getUserId(),
             },
         }
     );
@@ -14,14 +22,14 @@ export const userCart = async (cart, authtoken) =>
 export const getUserCart = async (authtoken) =>
     await axios.get(`${process.env.REACT_APP_API}/user/cart`, {
         headers: {
-            authtoken,
+            authtoken: getUserId(),
         },
     });
 
 export const emptyUserCart = async (authtoken) =>
     await axios.delete(`${process.env.REACT_APP_API}/user/cart`, {
         headers: {
-            authtoken,
+            authtoken: getUserId(),
         },
     });
 
@@ -31,7 +39,7 @@ export const saveUserAddress = async (authtoken, address) =>
         { address },
         {
             headers: {
-                authtoken,
+                authtoken: getUserId(),
             },
         }
     );
@@ -42,7 +50,7 @@ export const applyCoupon = async (authtoken, coupon) =>
         { coupon },
         {
             headers: {
-                authtoken,
+                authtoken: getUserId(),
             },
         }
     );
@@ -53,7 +61,7 @@ export const createOrder = async (stripeResponse, authtoken) =>
         { stripeResponse },
         {
             headers: {
-                authtoken,
+                authtoken: getUserId(),
             },
         }
     );
@@ -61,15 +69,17 @@ export const createOrder = async (stripeResponse, authtoken) =>
 export const getUserOrders = async (authtoken) =>
     await axios.get(`${process.env.REACT_APP_API}/user/orders`, {
         headers: {
-            authtoken,
+            authtoken: getUserId(),
         },
     });
+
+
 
 
 export const getWishlist = async (authtoken) =>
     await axios.get(`${process.env.REACT_APP_API}/user/wishlist`, {
         headers: {
-            authtoken,
+            authtoken: getUserId(),
         },
     });
 
@@ -79,7 +89,7 @@ export const removeWishlist = async (productId, authtoken) =>
         {},
         {
             headers: {
-                authtoken,
+                authtoken: getUserId(),
             },
         }
     );
@@ -90,7 +100,7 @@ export const addToWishlist = async (productId, authtoken) =>
         { productId },
         {
             headers: {
-                authtoken,
+                authtoken: getUserId(),
             },
         }
     );
@@ -105,7 +115,7 @@ export const createCashOrderForUser = async (
         { couponApplied: couponTrueOrFalse, COD },
         {
             headers: {
-                authtoken,
+                authtoken: getUserId(),
             },
         }
     );
