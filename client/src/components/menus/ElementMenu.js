@@ -3,6 +3,7 @@ import 'react-tridi/dist/index.css';
 import { Menu, Transition } from '@headlessui/react';
 import { CheckIcon, SelectorIcon } from '@heroicons/react/solid';
 import { useTranslation } from 'react-i18next';
+import { getTranslatedField } from "../../actions/translateActions";
 
 function classNames(...classes) {
     return classes.filter(Boolean).join(' ')
@@ -18,6 +19,18 @@ const ElementsMenu = ({ allElements, selectedElement, setSelectedElement, zIndex
 
     const { t, i18n } = useTranslation();
 
+
+    const getTranslatedName = (el) => {
+
+        const language = i18n.language;
+        if(el.translations){
+            return getTranslatedField(el, 'name', language);
+        }else{
+            return t(el.name);
+        }
+        
+    }
+
     //expected elementObj to have name and slug properties
     //allElements = [
     //     { name: "new", slug: "new" },
@@ -28,7 +41,7 @@ const ElementsMenu = ({ allElements, selectedElement, setSelectedElement, zIndex
         <Menu style={{ zIndex }} as="div" className="relative inline-block text-left">
             <div>
                 <Menu.Button className="border-none inline-flex justify-center w-full rounded-md border-gray-300  p-2 bg-white text-sm  text-gray-700 hover:bg-gray-50 focus:outline-none  focus:ring-indigo-500">
-                    <h3 className="text-gray-700 text-2xl font-normal">{t(selectedElement.name)}</h3>
+                    <h3 className="text-gray-700 text-2xl font-normal">{getTranslatedName(selectedElement)}</h3>
                     <SelectorIcon className="-mr-2 ml-1 mt-2 h-6 w-6" aria-hidden="true" />
                 </Menu.Button>
             </div>
@@ -55,7 +68,7 @@ const ElementsMenu = ({ allElements, selectedElement, setSelectedElement, zIndex
                                             'block text-center  px-4 py-4 text-md cursor-pointer'
                                         )}
                                     >
-                                        {t(elementObj.name)}
+                                        {getTranslatedName(elementObj)}
                                     </a>
                                 )}
                             </Menu.Item>
