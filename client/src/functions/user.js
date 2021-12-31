@@ -66,6 +66,8 @@ export const getUserOrders = async (authtoken) =>
     });
 
 
+
+
 export const getWishlist = async (authtoken) =>
     await axios.get(`${process.env.REACT_APP_API}/user/wishlist`, {
         headers: {

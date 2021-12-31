@@ -1,7 +1,7 @@
 import {
     onAuthStateChanged as onAuthStateChangedFirebase,
     getAuth,
-    onIdTokenChanged 
+    // onIdTokenChanged 
     
 } from "firebase/auth";
 
@@ -25,7 +25,7 @@ const auth = getAuth();
 //https://pretagteam.com/question/firebase-authentication-with-angular-how-to-keep-user-session-active-when-tabs-are-closed-onidtokenchanged-vs-onauthstatechanged
 let onAuthStateChanged = (isLoading, setIsLoading, getUserFromServer, onSuccessUserFromServer, onFirebaseLogout) => {
 
-    return onIdTokenChanged(auth, async (user) => {
+    return onAuthStateChangedFirebase(auth, async (user) => {
 
         console.log(user);
 

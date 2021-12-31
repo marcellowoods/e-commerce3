@@ -1,7 +1,7 @@
 import React, { useState, useEffect, Fragment } from "react";
 
 import { Switch, Route } from "react-router-dom";
-import onAuthStateChanged from "./auxiliary/firebaseAuthState";
+import onAuthStateChanged from "./firebase/firebaseAuthState";
 import { useDispatch } from "react-redux";
 import { getOrCreateUser } from "./functions/auth";
 

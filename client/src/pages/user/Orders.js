@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import OrdersTable from "../../components/orders/OrdersTable";
 import OrderDetails from "../../components/orders/OrderDetails";
 import { getUserOrders } from "../../functions/user"
+import  getUserId  from "../../firebase/getUserId"
 import { useAsync } from "../../auxiliary/reactUtils"
 import { useSelector } from "react-redux";
 import LoadingPage from "../LoadingPage";
@@ -35,9 +36,6 @@ const Orders = () => {
     const [isLoading, setIsLoading] = useState(false);
     const [orderSelected, setOrderSelected] = useState(null);
 
-    const { user } = useSelector((state) => ({ ...state }));
-
-
     const onDetailsClicked = (orderId) => {
         setIsDetailsOpen((prev) => !prev);
         setOrderSelected(orders.find(({ _id }) => _id == orderId));
@@ -45,7 +43,10 @@ const Orders = () => {
 
 
     useAsync(
-        async () => getUserOrders(user.token),
+        async () => {
+            const token = await getUserId();
+            return getUserOrders(token);
+        },
         (s) => setOrders(s),
         setIsLoading,
         []
