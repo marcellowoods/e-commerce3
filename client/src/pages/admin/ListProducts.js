@@ -114,7 +114,8 @@ const ListProducts = () => {
 
     const handleProductRemove = async (slug) => {
         setIsProductsLoading(true);
-        await removeProduct(slug, user.token);
+        const userToken = await user.getToken();
+        await removeProduct(slug, userToken);
         reloadProducts();
     }
 

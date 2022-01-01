@@ -14,7 +14,7 @@ const RatingModal = ({ children }) => {
   //https://reactrouter.com/web/example/auth-workflow
   let handleClick = () => {
     
-    if(user && user.token){
+    if(user){
         setModalVisible(true)
     }else{
 

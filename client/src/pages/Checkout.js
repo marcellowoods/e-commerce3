@@ -89,7 +89,8 @@ const Checkout = () => {
             postFn = () => postOrder(products, totalCost, deliveryInfo);
         } else {
 
-            postFn = () => userPostOrder(products, totalCost, deliveryInfo, user.token)
+            const userToken = await user.getToken();
+            postFn = () => userPostOrder(products, totalCost, deliveryInfo, userToken)
         }
         try {
             let res = await postFn();

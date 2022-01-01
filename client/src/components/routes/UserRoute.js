@@ -11,7 +11,7 @@ const UserRoute = ({ children, ...rest }) => {
     // console.log(location.pathname);
 
     // return user && user.token ? <Route {...rest} /> : <LoadingToRedirect />;
-    return user && user.token ? <Route {...rest} /> : (
+    return user ? <Route {...rest} /> : (
         <Redirect
             to={{
                 pathname: "/login",

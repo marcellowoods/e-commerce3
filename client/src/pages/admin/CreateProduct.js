@@ -238,19 +238,19 @@ const ImagesForm = ({ imagesUrl, setImagesUrl }) => {
     )
 }
 
-const Translation = ({ language, description, name, handleEditTranslations }) => {
+const Translation = ({ lang, description, name, handleEditTranslations }) => {
 
     return (
         <div className="">
 
             <NameForm
                 name={name}
-                setName={(newVal) => handleEditTranslations(language, "name", newVal)}
+                setName={(newVal) => handleEditTranslations(lang, "name", newVal)}
             />
 
             <DescriptionForm
                 description={description}
-                setDescription={(newVal) => handleEditTranslations(language, "description", newVal)}
+                setDescription={(newVal) => handleEditTranslations(lang, "description", newVal)}
             />
 
         </div>
@@ -281,7 +281,7 @@ const CreateProduct = () => {
     const makeTranslationsObj = () => {
 
         const languagesWithoutEnglish = ["bg"];
-        
+
 
         return (
             languagesWithoutEnglish.map(lang => {
@@ -292,14 +292,14 @@ const CreateProduct = () => {
 
     const [translations, setTranslations] = useState(makeTranslationsObj());
 
-    const handleEditTranslations = (language, field, newVal) => {
+    const handleEditTranslations = (lang, field, newVal) => {
 
-        let translationObj = translations.find((tObj) => tObj.lang == language);
+        let translationObj = translations.find((tObj) => tObj.lang == lang);
         let newTranslationObj = { ...translationObj, [field]: newVal };
 
         setTranslations(prev => {
 
-            let filtered = prev.filter((el) => el.language != language);
+            let filtered = prev.filter((el) => el.lang != lang);
 
             return [...filtered, newTranslationObj];
         })
@@ -311,14 +311,14 @@ const CreateProduct = () => {
 
         return (
             <div>
-                {translations.map(({ language, description, name }) => {
-                    console.log(language);
+                {translations.map(({ lang, description, name }) => {
+                    console.log(lang);
                     console.log(description)
                     return (
                         <>
-                            <h3 className="pt-12 text-center">{language}</h3>
+                            <h3 className="pt-12 text-center">{lang}</h3>
                             <Translation
-                                language={language}
+                                lang={lang}
                                 description={description}
                                 name={name}
                                 handleEditTranslations={handleEditTranslations}
@@ -344,39 +344,38 @@ const CreateProduct = () => {
         setSelectedCategory(categories.find((cObj) => cObj._id == id))
     }
 
-    const handleSubmit = () => {
+    const handleSubmit = async () => {
 
-        createProductRequest({
-            name,
-            price,
-            quantity,
-            description,
-            images: imagesUrl,
-            category: selectedCategory._id,
-            translations
-        }, user.token)
-            .then((res) => {
-                console.log(res)
-                alert("product created");
-                setPrice("");
-                setImagesUrl([]);
-                setName("");
-                setDescription("");
-                // setCategories([]);
-                setSelectedCategory(categories[0]);
-                setQuantity(1);
-                setTranslations(makeTranslationsObj());
-                // history.push(`/categories`);
-            })
-            .catch((error) => {
-                //https://itnext.io/javascript-error-handling-from-express-js-to-react-810deb5e5e28
-                if (error.response) {
-                    console.log(error.response.data.err)
-                    alert(error.response.data.err);
-                }
-            });
+        try {
+            const userToken = await user.getToken();
+
+            await createProductRequest({
+                name,
+                price,
+                quantity,
+                description,
+                images: imagesUrl,
+                category: selectedCategory._id,
+                translations
+            }, userToken);
+
+            alert("product created");
+            setPrice("");
+            setImagesUrl([]);
+            setName("");
+            setDescription("");
+            // setCategories([]);
+            setSelectedCategory(categories[0]);
+            setQuantity(1);
+            setTranslations(makeTranslationsObj());
+
+        } catch (error) {
+            if (error.response) {
+                console.log(error.response.data.err)
+                alert(error.response.data.err);
+            }
+        }
     };
-
 
     return (
 

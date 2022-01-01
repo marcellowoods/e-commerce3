@@ -151,7 +151,7 @@ const DescriptionForm = ({ description, setDescription }) => {
 //         e.preventDefault();
 //         // console.log(name);
 //         setLoading(true);
-//         updateCategory(match.params.slug, { name }, user.token)
+//         updateCategory(match.params.slug, { name }, userToken)
 //             .then((res) => {
 //                 // console.log(res)
 //                 setLoading(false);
@@ -215,10 +215,11 @@ const EditCategory = () => {
     useEffect(async () => {
 
         try {
+            const userToken = await user.getToken();
             let { data: category } = await getCategory(categorySlugParam);
             console.log(category);
             setCategoryParams(category);
-            let { data: imgsWithIds } = await getImageIds([category.image], user.token);
+            let { data: imgsWithIds } = await getImageIds([category.image], userToken);
             if(imgsWithIds.length){
                 console.log(imgsWithIds);
                 setUploadedImages(imgsWithIds);
@@ -236,7 +237,8 @@ const EditCategory = () => {
         const updatedCategory = { name, description, image: imageUrl };
 
         try {
-            await updateCategory(categorySlugParam, updatedCategory, user.token);
+            const userToken = user.getToken();
+            await updateCategory(categorySlugParam, updatedCategory, userToken);
             history.push(`/categories`);
         } catch (error) {
             if (error.response) {

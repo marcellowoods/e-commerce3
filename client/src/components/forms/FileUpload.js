@@ -7,30 +7,6 @@ const FileUpload = ({ images, setImages, setLoading, singleUpload = false }) => 
 
     const { user } = useSelector((state) => ({ ...state }));
 
-    const cleanupImages = () => {
-
-        setImages(prevImages => {
-            prevImages.forEach(({ public_id }) => {
-                console.log(public_id);
-                axios
-                    .post(
-                        `${process.env.REACT_APP_API}/removeimage`,
-                        { public_id },
-                        {
-                            headers: {
-                                authtoken: user ? user.token : "",
-                            },
-                        }
-                    )
-                    .catch((err) => {
-                        console.log(err);
-                    });
-
-            })
-            return [];
-        })
-    }
-
     // useEffect(() => {
     //     //remove images from cloudianry if product has not been created
 
@@ -39,10 +15,11 @@ const FileUpload = ({ images, setImages, setLoading, singleUpload = false }) => 
     //     }
     // }, [])
 
-    const fileUploadAndResize = (e) => {
+    const fileUploadAndResize = async (e) => {
         // console.log(e.target.files);
         // resize
         let files = e.target.files; // 3
+        const userToken = await user.getToken();
 
         let allFilesLen = files.length + images.length;
         if (singleUpload && allFilesLen > 1) {
@@ -69,7 +46,7 @@ const FileUpload = ({ images, setImages, setLoading, singleUpload = false }) => 
                                 { image: uri },
                                 {
                                     headers: {
-                                        authtoken: user ? user.token : "",
+                                        authtoken: user ? userToken : "",
                                     },
                                 }
                             )
@@ -95,8 +72,9 @@ const FileUpload = ({ images, setImages, setLoading, singleUpload = false }) => 
         // set url to images[] in the parent component state - ProductCreate
     };
 
-    const handleImageRemove = (public_id) => {
+    const handleImageRemove = async (public_id) => {
         setLoading(true);
+        const userToken = await user.getToken();
         // console.log("remove image", public_id);
         axios
             .post(
@@ -104,7 +82,7 @@ const FileUpload = ({ images, setImages, setLoading, singleUpload = false }) => 
                 { public_id },
                 {
                     headers: {
-                        authtoken: user ? user.token : "",
+                        authtoken: user ? userToken : "",
                     },
                 }
             )

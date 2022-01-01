@@ -31,13 +31,14 @@ let onAuthStateChanged = (isLoading, setIsLoading, getUserFromServer, onSuccessU
 
         if (user) {
             const idTokenResult = await user.getIdTokenResult();
-            console.log("id token");
-            console.log(idTokenResult.token)
+            const getToken = async () => user.getIdToken();
+            // console.log("id token");
+            // console.log(idTokenResult.token)
             // console.log("user", user);
 
             getUserFromServer(idTokenResult.token)
                 .then((res) => {
-                    onSuccessUserFromServer(res, idTokenResult);
+                    onSuccessUserFromServer(res, getToken);
                     if (isLoading) {
                         setIsLoading(false);
                     }

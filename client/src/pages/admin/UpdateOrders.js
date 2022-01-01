@@ -90,7 +90,10 @@ const UpdateOrders = () => {
 
     //fetchOrdersEffect
     useAsync(
-        async () => getOrders(hideCompleted, page + 1, user.token),
+        async () => {
+            const userToken = await user.getToken();
+            return getOrders(hideCompleted, page + 1, userToken);
+        },
         onSuccessOrders,
         setIsLoading,
         [hideCompleted, page]

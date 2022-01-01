@@ -36,6 +36,8 @@ const Orders = () => {
     const [isLoading, setIsLoading] = useState(false);
     const [orderSelected, setOrderSelected] = useState(null);
 
+    const { user } = useSelector((state) => ({ ...state }));
+
     const onDetailsClicked = (orderId) => {
         setIsDetailsOpen((prev) => !prev);
         setOrderSelected(orders.find(({ _id }) => _id == orderId));
@@ -44,8 +46,9 @@ const Orders = () => {
 
     useAsync(
         async () => {
-            const token = await getUserId();
-            return getUserOrders(token);
+            console.log(user);
+            const userToken = await user.getToken();
+            return getUserOrders(userToken);
         },
         (s) => setOrders(s),
         setIsLoading,

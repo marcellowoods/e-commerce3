@@ -19,19 +19,21 @@ const AdminRoute = ({ children, ...rest }) => {
 
     const [adminState, setAdminState] = useState(!user ? STATE.NO_USER : STATE.CHECK_ADMIN);
 
-    useEffect(() => {
-        if (user && user.token) {
-            setAdminState(STATE.CHECK_ADMIN);
-            currentAdmin(user.token)
-                .then((res) => {
-                    console.log("CURRENT ADMIN RES", res);
-                    setAdminState(STATE.IS_ADMIN);
-                })
-                .catch((err) => {
-                    console.log("ADMIN ROUTE ERR", err);
-                    setAdminState(STATE.IS_NOT_ADMIN);
-                });
+    useEffect(async () => {
+        if (user) {
+            try {
+                setAdminState(STATE.CHECK_ADMIN);
+                const token = user.getToken();
+                const isAdmin = currentAdmin(token);
+                setAdminState(STATE.IS_ADMIN);
+
+            } catch (error) {
+                console.log("ADMIN ROUTE ERR", error);
+                setAdminState(STATE.IS_NOT_ADMIN);
+            }
         }
+
+
     }, [user]);
 
     let getComponent = () => {

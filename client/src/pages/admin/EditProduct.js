@@ -282,11 +282,12 @@ const EditProduct = () => {
     useEffect(async () => {
 
         try {
+            const userToken = user.getToken();
             let { data: categoriesData } = await getCategories();
             setCategories(categoriesData);
-            let { data: productData } = await getProduct(productSlugParam, user.token);
+            let { data: productData } = await getProduct(productSlugParam, userToken);
             setProductParams(productData, categoriesData);
-            let { data: imgsWithIds } = await getImageIds(productData.images, user.token);
+            let { data: imgsWithIds } = await getImageIds(productData.images, userToken);
             if(imgsWithIds.length){
                 setUploadedImages(imgsWithIds);
             }
@@ -313,10 +314,11 @@ const EditProduct = () => {
         };
 
         try {
+            const userToken = await user.getToken();
             const confirmed = window.confirm("Update product?");
             if(confirmed){
                 setIsProductLoading(true)
-                await updateProduct(productSlugParam, productObj, user.token);
+                await updateProduct(productSlugParam, productObj, userToken);
                 setIsProductLoading(false)
                 history.push(LIST_PRODUCTS_PATHNAME);
             }

@@ -45,14 +45,14 @@ function App() {
     const dispatch = useDispatch();
     const [isLoading, setIsLoading] = useState(true);
 
-    let onCurrentUserSuccess = (res, idTokenResult) => {
+    let onCurrentUserSuccess = (res, getToken) => {
 
         dispatch({
             type: "LOGGED_IN_USER",
             payload: {
                 name: res.data.name,
                 email: res.data.email,
-                token: idTokenResult.token,
+                getToken: getToken,
                 role: res.data.role,
                 address: res.data.address,
                 _id: res.data._id,
