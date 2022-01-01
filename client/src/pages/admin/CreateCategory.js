@@ -212,23 +212,18 @@ const CreateCategory = () => {
         )
     }
 
-    const handleSubmit = () => {
+    const handleSubmit = async () => {
 
-
-        createCategory({ name, description, translations, image: imageUrl }, user.token)
-            .then((res) => {
-                // console.log(res)
-                history.push(`/categories`);
-            })
-            .catch((error) => {
-                //https://itnext.io/javascript-error-handling-from-express-js-to-react-810deb5e5e28
-                if (error.response) {
-                    /*errthe request was made and the server responded
-                    with a status code that falls out of the range of 2xx */
-                    console.log(error.response.data)
-                    alert(error.response.data);
-                }
-            });
+        try {
+            const userToken = await user.getToken();
+            await createCategory({ name, description, translations, image: imageUrl }, userToken);
+            history.push(`/categories`);
+        } catch (error) {
+            if (error.response) {
+                console.log(error.response.data)
+                alert(error.response.data);
+            }
+        }
     };
 
     return (
