@@ -23,7 +23,7 @@ const AdminRoute = ({ children, ...rest }) => {
         if (user) {
             try {
                 setAdminState(STATE.CHECK_ADMIN);
-                const token = user.getToken();
+                const token = await user.getToken();
                 const isAdmin = currentAdmin(token);
                 setAdminState(STATE.IS_ADMIN);
 
