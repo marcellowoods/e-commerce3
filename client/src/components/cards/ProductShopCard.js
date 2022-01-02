@@ -3,10 +3,11 @@ import React, { useRef } from "react";
 // import 'react-tridi/dist/index.css';
 import { getAddToCartIcon } from "../../assets/icons";
 import ProductShopSlider from "./ProductShopSlider";
+import { useTranslation } from 'react-i18next';
 
 const ProductShopCard = ({ id, name, price, images, imageUrl, onAddClick, onCardClick }) => {
 
-    const lastDrag = useRef(Date.now());
+    const lastDrag = useRef(null);
 
     const onPointerDown = (pointerX, pointerY) => {
 
@@ -22,6 +23,8 @@ const ProductShopCard = ({ id, name, price, images, imageUrl, onAddClick, onCard
             onCardClick(id)
         }
     }
+
+    const { t } = useTranslation();
 
     return (
         <div key={name} className="w-full max-w-sm mx-auto rounded-md shadow-md overflow-hidden">
@@ -66,7 +69,7 @@ const ProductShopCard = ({ id, name, price, images, imageUrl, onAddClick, onCard
                     </h3>
 
                 </div>
-                <span className="text-gray-500 mt-2">${price}</span>
+                <span className="text-gray-500 mt-2">{price} {" "} {t("lv.")}</span>
             </div>
 
             <div className="float-right transform translate-y-4 -translate-x-4">
