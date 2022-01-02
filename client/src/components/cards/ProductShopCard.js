@@ -7,7 +7,7 @@ import { useTranslation } from 'react-i18next';
 
 const ProductShopCard = ({ id, name, price, images, imageUrl, onAddClick, onCardClick }) => {
 
-    const lastDrag = useRef(null);
+    const lastDrag = useRef({x: 0, y: 0});
 
     const onPointerDown = (pointerX, pointerY) => {
 
