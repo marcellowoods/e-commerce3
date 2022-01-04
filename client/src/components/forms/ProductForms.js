@@ -1,6 +1,8 @@
 import React, { useState, Fragment, useEffect } from "react";
-import { Listbox, Transition } from '@headlessui/react'
-import { CheckIcon, SelectorIcon } from '@heroicons/react/solid'
+import { Listbox, Transition } from '@headlessui/react';
+import { CheckIcon, SelectorIcon } from '@heroicons/react/solid';
+import { NameForm, DescriptionForm, TranslationsForm } from "./CommonForms";
+import FileUpload from "./FileUpload";
 
 function classNames(...classes) {
     return classes.filter(Boolean).join(' ')
@@ -44,28 +46,6 @@ const PriceForm = ({ price, setPrice }) => {
     )
 }
 
-const NameForm = ({ name, setName }) => {
-    return (
-        <div className="p-4">
-            <label htmlFor="price" className="block text-sm font-medium text-gray-700">
-                Name
-            </label>
-            <div className="mt-1 relative rounded-md shadow-sm">
-
-                <input
-                    value={name}
-                    onChange={(e) => setName(e.target.value)}
-                    type="text"
-                    name="name"
-                    id="name"
-                    className="focus:ring-indigo-500 focus:border-indigo-500 block w-full  pr-12 sm:text-sm border-gray-300 rounded-md  ease-linear transition-all duration-150"
-                />
-
-            </div>
-        </div>
-    )
-}
-
 const QuantityForm = ({ quantity, setQuantity }) => {
 
     const handleChange = (e) => {
@@ -95,31 +75,6 @@ const QuantityForm = ({ quantity, setQuantity }) => {
         </div>
     )
 }
-
-const DescriptionForm = ({ description, setDescription }) => {
-    return (
-        <div className="p-4">
-            <label htmlFor="price" className="block text-sm font-medium text-gray-700">
-                Description
-            </label>
-            <div className="mt-1 relative rounded-md shadow-sm">
-
-                <textarea
-                    rows={4}
-                    value={description}
-                    onChange={(e) => setDescription(e.target.value)}
-                    type="text"
-                    name="name"
-                    id="name"
-                    className="focus:ring-indigo-500 focus:border-indigo-500 block w-full  pr-12 sm:text-sm border-gray-300 rounded-md  ease-linear transition-all duration-150"
-                />
-
-            </div>
-        </div>
-    )
-}
-
-
 
 const CategoryForm = ({ categories, selectedCategory, onSelectCategory }) => {
 
@@ -180,10 +135,64 @@ const CategoryForm = ({ categories, selectedCategory, onSelectCategory }) => {
     )
 }
 
+const ImagesForm = ({ imagesUrl, setImagesUrl }) => {
+
+    // const [uploadedImages, setUploadedImages] = useState(
+    //     {
+    //         images: [
+    //             {url: "https://media.gq-magazine.co.uk/photos/5fca181eea319833403830dc/master/w_2121,c_limit/04112020_Watches_14.jpg",
+    //             public_id: 123},
+    //             {url: "https://media.gq-magazine.co.uk/photos/5fca181eea319833403830dc/master/w_2121,c_limit/04112020_Watches_14.jpg",
+    //             public_id: 123}
+    //         ]
+    //     }
+    // )
+
+    const [uploadedImages, setUploadedImages] = useState([]);
+    const [loading, setLoading] = useState(false);
+
+    useEffect(() => {
+
+        const urls = uploadedImages.map((img) => img.url);
+        console.log(urls);
+        setImagesUrl(urls);
+
+    }, [uploadedImages])
+
+    useEffect(() => {
+        //clear uploadedImages after uploading product
+        if (imagesUrl.length == 0 && uploadedImages.length > 0) {
+            setUploadedImages([]);
+        }
+
+    }, [imagesUrl])
+
+
+    return (
+        <div className="p-4">
+            <label htmlFor="price" className="block text-sm font-medium text-gray-700">
+                Images
+            </label>
+
+            <div className="pb-4">
+                <FileUpload
+                    images={uploadedImages}
+                    setImages={setUploadedImages}
+                    setLoading={setLoading}
+                    singleUpload={false}
+                />
+            </div>
+
+        </div>
+    )
+}
+
 export {
     PriceForm,
     NameForm,
     QuantityForm,
     DescriptionForm,
-    CategoryForm
+    CategoryForm,
+    TranslationsForm,
+    ImagesForm
 }

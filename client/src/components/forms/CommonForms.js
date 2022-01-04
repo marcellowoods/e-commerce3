@@ -1,10 +1,49 @@
 import React, { useEffect } from "react";
-import {
-    PriceForm,
-    NameForm,
-    QuantityForm,
-    DescriptionForm
-} from "./ProductForms";
+
+const NameForm = ({ name, setName }) => {
+    return (
+        <div className="p-4">
+            <label htmlFor="price" className="block text-sm font-medium text-gray-700">
+                Name
+            </label>
+            <div className="mt-1 relative rounded-md shadow-sm">
+
+                <input
+                    value={name}
+                    onChange={(e) => setName(e.target.value)}
+                    type="text"
+                    name="name"
+                    id="name"
+                    className="focus:ring-indigo-500 focus:border-indigo-500 block w-full  pr-12 sm:text-sm border-gray-300 rounded-md  ease-linear transition-all duration-150"
+                />
+
+            </div>
+        </div>
+    )
+}
+
+const DescriptionForm = ({ description, setDescription }) => {
+    return (
+        <div className="p-4">
+            <label htmlFor="price" className="block text-sm font-medium text-gray-700">
+                Description
+            </label>
+            <div className="mt-1 relative rounded-md shadow-sm">
+
+                <textarea
+                    rows={4}
+                    value={description}
+                    onChange={(e) => setDescription(e.target.value)}
+                    type="text"
+                    name="name"
+                    id="name"
+                    className="focus:ring-indigo-500 focus:border-indigo-500 block w-full  pr-12 sm:text-sm border-gray-300 rounded-md  ease-linear transition-all duration-150"
+                />
+
+            </div>
+        </div>
+    )
+}
 
 const SingleTranslation = ({ lang, description, name, handleEditTranslations }) => {
 
@@ -37,16 +76,16 @@ const makeTranslationsObj = () => {
     );
 }
 
-const Translations = ({ translations, setTranslations }) => {
+const TranslationsForm = ({ translations, setTranslations }) => {
 
     //expects empty translations array
 
     useEffect(() => {
 
-        if(translations.length == 0){
+        if (translations.length == 0) {
             setTranslations(makeTranslationsObj());
         }
-        
+
     }, [translations])
 
     const handleEditTranslations = (lang, field, newVal) => {
@@ -65,8 +104,7 @@ const Translations = ({ translations, setTranslations }) => {
     return (
         <div>
             {translations.map(({ lang, description, name }) => {
-                console.log(lang);
-                console.log(description)
+
                 return (
                     <div key={lang}>
                         <h3 className="pt-12 text-center">{lang}</h3>
@@ -83,4 +121,4 @@ const Translations = ({ translations, setTranslations }) => {
     )
 }
 
-export default Translations;
+export { NameForm, DescriptionForm, TranslationsForm }

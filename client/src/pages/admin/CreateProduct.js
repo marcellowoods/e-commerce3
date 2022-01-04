@@ -11,65 +11,13 @@ import {
     NameForm,
     QuantityForm,
     DescriptionForm,
-    CategoryForm
-} from "../../components/forms/Product/ProductForms";
-
-import TranslationsForm from "../../components/forms/Product/TranslationsForm";
+    CategoryForm,
+    TranslationsForm,
+    ImagesForm
+} from "../../components/forms/ProductForms";
 
 function classNames(...classes) {
     return classes.filter(Boolean).join(' ')
-}
-
-const ImagesForm = ({ imagesUrl, setImagesUrl }) => {
-
-    // const [uploadedImages, setUploadedImages] = useState(
-    //     {
-    //         images: [
-    //             {url: "https://media.gq-magazine.co.uk/photos/5fca181eea319833403830dc/master/w_2121,c_limit/04112020_Watches_14.jpg",
-    //             public_id: 123},
-    //             {url: "https://media.gq-magazine.co.uk/photos/5fca181eea319833403830dc/master/w_2121,c_limit/04112020_Watches_14.jpg",
-    //             public_id: 123}
-    //         ]
-    //     }
-    // )
-
-    const [uploadedImages, setUploadedImages] = useState([]);
-    const [loading, setLoading] = useState(false);
-
-    useEffect(() => {
-
-        const urls = uploadedImages.map((img) => img.url);
-        console.log(urls);
-        setImagesUrl(urls);
-
-    }, [uploadedImages])
-
-    useEffect(() => {
-        //clear uploadedImages after uploading product
-        if (imagesUrl.length == 0 && uploadedImages.length > 0) {
-            setUploadedImages([]);
-        }
-
-    }, [imagesUrl])
-
-
-    return (
-        <div className="p-4">
-            <label htmlFor="price" className="block text-sm font-medium text-gray-700">
-                Images
-            </label>
-
-            <div className="pb-4">
-                <FileUpload
-                    images={uploadedImages}
-                    setImages={setUploadedImages}
-                    setLoading={setLoading}
-                    singleUpload={false}
-                />
-            </div>
-
-        </div>
-    )
 }
 
 //more forms
