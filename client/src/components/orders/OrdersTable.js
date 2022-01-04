@@ -1,4 +1,5 @@
 import React from "react";
+import { getLocaleDate } from './common'
 
 import { useTranslation } from 'react-i18next';
 
@@ -31,21 +32,7 @@ const OrdersTable = ({ onDetailsClicked, orders }) => {
 
     const { t, i18n } = useTranslation();
 
-    const getDate = (dateStr) => {
-
-        let options = {
-            weekday: "long",
-            year: "numeric",
-            month: "2-digit",
-            day: "numeric",
-
-        }
-
-        let date = new Date(dateStr);
-        let d = date.getDate();
-        var m = date.getMonth() + 1;
-        return date.toLocaleDateString("bg");
-    }
+    let lang = i18n.language;
 
     return (
 
@@ -67,7 +54,7 @@ const OrdersTable = ({ onDetailsClicked, orders }) => {
                         return (
                             <OrderRow
                                 orderId={order._id}
-                                orderDate={getDate(order.createdAt)}
+                                orderDate={getLocaleDate(order.createdAt, lang)}
                                 orderAddress={order.deliveryInfo.address}
                                 orderStatus={order.orderStatus}
                                 orderTotal={order.totalCost}
