@@ -146,7 +146,7 @@ const ProductPage = () => {
         let name = null;
         const lang = i18n.language;
 
-        if(product){
+        if (product) {
             name = getTranslatedField(product, 'name', lang);
         }
 
@@ -158,7 +158,7 @@ const ProductPage = () => {
         let description = null;
         const lang = i18n.language;
 
-        if(product){
+        if (product) {
             description = getTranslatedField(product, 'description', lang);
         }
 
@@ -178,11 +178,11 @@ const ProductPage = () => {
     }
 
     return (
-        <ProductCard 
+        <ProductCard
             product={product}
             translatedName={getTranslatedName()}
             translatedDescription={getTranslatedDescription()}
-         handleAddToCart={handleAddToCart} />
+            handleAddToCart={handleAddToCart} />
     )
 }
 
