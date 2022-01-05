@@ -184,8 +184,10 @@ const BraceletSizeSelector = ({ selectedSize, setSelectedSize, productSizes }) =
                 </div>
             </RadioGroup>
             <label>React Slider</label>
+            {/* https://zillow.github.io/react-slider/ */}
             <ReactSlider
-                step={1}
+
+                step={5}
                 min={0}
                 max={75}
                 className="w-full h-3 pr-2 my-4 bg-gray-200 rounded-md cursor-grab"
@@ -195,6 +197,7 @@ const BraceletSizeSelector = ({ selectedSize, setSelectedSize, productSizes }) =
                     setValue(value)
                 }}
             />
+            <span>{value}</span>
         </div>
     )
 }
