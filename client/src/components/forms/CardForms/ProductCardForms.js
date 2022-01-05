@@ -128,15 +128,27 @@ const BraceletSizeSelector = ({ selectedSize, setSelectedSize, productSizes }) =
     // const upperBound = productSizes.upperBound;
     // const stepSize = productSizes.stepSize;
 
+    const lowerBound = 50;
+    const upperBound = 150;
+    const stepSize = 5;
+
+    const maxSliderValue = upperBound - 5;
+    const minSliderValue = lowerBound + 5;
+
+
     const [sizes, setSizes] = useState(
-        [{ value: 50, name: "S" }, { value: 150, name: "L" }, { value: 0, name: "custom" }]
+        [{  name: "S" }, {  name: "L" }, {  name: "custom" }]
     );
+
+    const [sizeValue, setSizeValue] = useState(lowerBound);
+
+    const handleCustomValueChange = (value) => {
+        setSizeValue(value);
+    }
 
     const isCustomSelected = () => selectedSize && selectedSize.name == "custom";
 
-    // console.log(isCustomSelected())
-
-    const [value, setValue] = React.useState(0)
+    const getCustomValue = () => sizes.find((size) => size.name == "custom").value;
 
     useEffect(() => {
         // setSelectedSize(sizes[0]);
@@ -190,24 +202,22 @@ const BraceletSizeSelector = ({ selectedSize, setSelectedSize, productSizes }) =
 
             {/* https://zillow.github.io/react-slider/ */}
             <div
-                className={`${isCustomSelected() ? 'max-h-screen' : 'max-h-0'} py-4 overflow-hidden transition-all duration-300 transform`}
+                className={`${isCustomSelected() ? 'max-h-screen ease-in' : 'max-h-0 ease-in'} py-4 overflow-hidden transition-all transform duration-500`}
             >
                 {/* <label>React Slider</label> */}
 
                 <ReactSlider
 
-                    step={5}
-                    min={0}
-                    max={75}
+                    step={stepSize}
+                    min={minSliderValue}
+                    max={maxSliderValue}
                     className="w-full h-3 pr-2 my-4 bg-gray-200 rounded-md cursor-grab"
                     thumbClassName="absolute w-5 h-5 cursor-grab bg-indigo-500 rounded-full focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 -top-2px"
-                    value={value}
-                    onChange={(value) => {
-                        setValue(value)
-                    }}
+                    value={sizeValue}
+                    onChange={handleCustomValueChange}
                 />
 
-                <span>{value}</span>
+                <span>{sizeValue}</span>
 
             </div>
 
