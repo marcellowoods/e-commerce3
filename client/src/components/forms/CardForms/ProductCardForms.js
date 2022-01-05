@@ -128,9 +128,15 @@ const BraceletSizeSelector = ({ selectedSize, setSelectedSize, productSizes }) =
     // const upperBound = productSizes.upperBound;
     // const stepSize = productSizes.stepSize;
 
+
+
     const [sizes, setSizes] = useState(
         [{ value: 50, name: "S" }, { value: 150, name: "L" }]
     );
+
+    const isCustomSelected = () => selectedSize && selectedSize.value == 150;
+
+    console.log(isCustomSelected())
 
     const [value, setValue] = React.useState(0)
 
@@ -183,21 +189,31 @@ const BraceletSizeSelector = ({ selectedSize, setSelectedSize, productSizes }) =
                     ))}
                 </div>
             </RadioGroup>
-            <label>React Slider</label>
-            {/* https://zillow.github.io/react-slider/ */}
-            <ReactSlider
 
-                step={5}
-                min={0}
-                max={75}
-                className="w-full h-3 pr-2 my-4 bg-gray-200 rounded-md cursor-grab"
-                thumbClassName="absolute w-5 h-5 cursor-grab bg-indigo-500 rounded-full focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 -top-2px"
-                value={value}
-                onChange={(value) => {
-                    setValue(value)
-                }}
-            />
-            <span>{value}</span>
+            {/* https://zillow.github.io/react-slider/ */}
+            <div
+                className={`${isCustomSelected() ? ' max-h-screen' : 'max-h-0'} overflow-hidden transition-all duration-300 transform`}
+            >
+                <label>React Slider</label>
+
+                <ReactSlider
+
+                    step={5}
+                    min={0}
+                    max={75}
+                    className="w-full h-3 pr-2 my-4 bg-gray-200 rounded-md cursor-grab"
+                    thumbClassName="absolute w-5 h-5 cursor-grab bg-indigo-500 rounded-full focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 -top-2px"
+                    value={value}
+                    onChange={(value) => {
+                        setValue(value)
+                    }}
+                />
+
+                <span>{value}</span>
+
+            </div>
+
+
         </div>
     )
 }
