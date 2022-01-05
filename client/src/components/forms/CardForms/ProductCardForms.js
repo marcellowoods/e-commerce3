@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react'
 import { useHistory, useParams } from "react-router-dom";
 import { StarIcon } from '@heroicons/react/solid'
 import { RadioGroup } from '@headlessui/react';
+import ReactSlider from "react-slider"
 
 const shopUrl = '/shop';
 
@@ -119,7 +120,7 @@ const SizeSelector = ({ selectedSize, setSelectedSize, productSizes }) => {
 }
 
 
-
+//https://codesandbox.io/s/react-tailwind-align-range-slider-ghyf0?file=/src/App.tsx:189-232
 const BraceletSizeSelector = ({ selectedSize, setSelectedSize, productSizes }) => {
 
     console.log(productSizes);
@@ -128,8 +129,10 @@ const BraceletSizeSelector = ({ selectedSize, setSelectedSize, productSizes }) =
     // const stepSize = productSizes.stepSize;
 
     const [sizes, setSizes] = useState(
-        [{value: 50, name:"S"}, {value: 150, name:"L"}]
+        [{ value: 50, name: "S" }, { value: 150, name: "L" }]
     );
+
+    const [value, setValue] = React.useState(0)
 
     useEffect(() => {
         // setSelectedSize(sizes[0]);
@@ -158,7 +161,7 @@ const BraceletSizeSelector = ({ selectedSize, setSelectedSize, productSizes }) =
                                 )
                             }
                         >
-                           
+
                             {({ active, checked }) => (
                                 <>
                                     <RadioGroup.Label as="p">{size.name}</RadioGroup.Label>
@@ -180,6 +183,18 @@ const BraceletSizeSelector = ({ selectedSize, setSelectedSize, productSizes }) =
                     ))}
                 </div>
             </RadioGroup>
+            <label>React Slider</label>
+            <ReactSlider
+                step={1}
+                min={0}
+                max={75}
+                className="w-full h-3 pr-2 my-4 bg-gray-200 rounded-md cursor-grab"
+                thumbClassName="absolute w-5 h-5 cursor-grab bg-indigo-500 rounded-full focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 -top-2px"
+                value={value}
+                onChange={(value) => {
+                    setValue(value)
+                }}
+            />
         </div>
     )
 }
