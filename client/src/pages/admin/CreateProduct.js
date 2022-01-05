@@ -14,7 +14,7 @@ import {
     CategoryForm,
     TranslationsForm,
     ImagesForm
-} from "../../components/forms/ProductForms";
+} from "../../components/forms/CRUDForms/ProductForms";
 
 function classNames(...classes) {
     return classes.filter(Boolean).join(' ')

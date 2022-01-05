@@ -2,7 +2,7 @@ import React, { useState, Fragment, useEffect } from "react";
 import { Listbox, Transition } from '@headlessui/react';
 import { CheckIcon, SelectorIcon } from '@heroicons/react/solid';
 import { NameForm, DescriptionForm, TranslationsForm } from "./CommonForms";
-import FileUpload from "./FileUpload";
+import FileUpload from "../FileUpload";
 
 function classNames(...classes) {
     return classes.filter(Boolean).join(' ')

@@ -9,7 +9,7 @@ import {
     DescriptionForm,
     ImageUrlForm,
     TranslationsForm
-} from "../../components/forms/CategoryForms";
+} from "../../components/forms/CRUDForms/CategoryForms";
 
 function classNames(...classes) {
     return classes.filter(Boolean).join(' ')

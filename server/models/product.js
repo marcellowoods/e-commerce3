@@ -42,8 +42,21 @@ const productSchema = new mongoose.Schema(
         },
         color: {
             type: String,
-            enum: ["Black", "Brown", "Silver", "White", "Blue"],
+            // enum: ["Black", "Brown", "Silver", "White", "Blue"],
         },
+        sizes: [
+            {
+                lowerBound: {
+                    type: Number,
+                },
+                upperBound: {
+                    type: Number,
+                },
+                stepSize: {
+                    type: Number,
+                } 
+            },
+        ],
         // ratings: [
         //     {
         //         star: Number,
