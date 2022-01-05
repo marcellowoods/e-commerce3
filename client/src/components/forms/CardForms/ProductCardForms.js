@@ -132,7 +132,7 @@ const BraceletSizeSelector = ({ selectedSize, setSelectedSize, productSizes }) =
     );
 
     useEffect(() => {
-        setSelectedSize(sizes[0]);
+        // setSelectedSize(sizes[0]);
     }, [])
 
     return (
