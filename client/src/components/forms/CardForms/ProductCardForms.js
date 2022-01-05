@@ -123,20 +123,18 @@ const SizeSelector = ({ selectedSize, setSelectedSize, productSizes }) => {
 //https://codesandbox.io/s/react-tailwind-align-range-slider-ghyf0?file=/src/App.tsx:189-232
 const BraceletSizeSelector = ({ selectedSize, setSelectedSize, productSizes }) => {
 
-    console.log(productSizes);
+    // console.log(productSizes);
     // const lowerBound = productSizes.lowerBound;
     // const upperBound = productSizes.upperBound;
     // const stepSize = productSizes.stepSize;
 
-
-
     const [sizes, setSizes] = useState(
-        [{ value: 50, name: "S" }, { value: 150, name: "L" }]
+        [{ value: 50, name: "S" }, { value: 150, name: "L" }, { value: 0, name: "custom" }]
     );
 
-    const isCustomSelected = () => selectedSize && selectedSize.value == 150;
+    const isCustomSelected = () => selectedSize && selectedSize.name == "custom";
 
-    console.log(isCustomSelected())
+    // console.log(isCustomSelected())
 
     const [value, setValue] = React.useState(0)
 
@@ -192,9 +190,9 @@ const BraceletSizeSelector = ({ selectedSize, setSelectedSize, productSizes }) =
 
             {/* https://zillow.github.io/react-slider/ */}
             <div
-                className={`${isCustomSelected() ? ' max-h-screen' : 'max-h-0'} overflow-hidden transition-all duration-300 transform`}
+                className={`${isCustomSelected() ? 'max-h-screen' : 'max-h-0'} py-4 overflow-hidden transition-all duration-300 transform`}
             >
-                <label>React Slider</label>
+                {/* <label>React Slider</label> */}
 
                 <ReactSlider
 
