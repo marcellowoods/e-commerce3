@@ -148,7 +148,17 @@ const BraceletSizeSelector = ({ selectedSize, setSelectedSize, productSizes }) =
 
     const isCustomSelected = () => selectedSize && selectedSize.name == "custom";
 
-    const getCustomValue = () => sizes.find((size) => size.name == "custom").value;
+    const handleSizeSelect = (selected) => {
+
+        if(selected.name == "L"){
+            setSizeValue(upperBound);
+        }else if(selected.name == "S"){
+            setSizeValue(lowerBound);
+        }else{
+            setSizeValue(lowerBound + stepSize);
+        }
+        setSelectedSize(selected);
+    }
 
     useEffect(() => {
         // setSelectedSize(sizes[0]);
@@ -163,7 +173,7 @@ const BraceletSizeSelector = ({ selectedSize, setSelectedSize, productSizes }) =
                 </a>
             </div>
 
-            <RadioGroup value={selectedSize} onChange={setSelectedSize} className="mt-4">
+            <RadioGroup value={selectedSize} onChange={handleSizeSelect} className="mt-4">
                 <RadioGroup.Label className="sr-only">Choose a size</RadioGroup.Label>
                 <div className="grid grid-cols-4 gap-4 sm:grid-cols-8 lg:grid-cols-4">
                     {sizes.map((size) => (
