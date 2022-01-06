@@ -13,7 +13,8 @@ import {
     DescriptionForm,
     CategoryForm,
     TranslationsForm,
-    ImagesForm
+    ImagesForm,
+    SizeForm
 } from "../../components/forms/CRUDForms/ProductForms";
 
 function classNames(...classes) {
@@ -37,6 +38,7 @@ const CreateProduct = () => {
     const [categories, setCategories] = useState([]);
     const [selectedCategory, setSelectedCategory] = useState({});
     const [quantity, setQuantity] = useState(1);
+    const [size, setSize] = useState({ lowerBound: 0, upperBound: 0, stepSize: 0 });
 
     const { t } = useTranslation();
 
@@ -122,6 +124,11 @@ const CreateProduct = () => {
             <DescriptionForm
                 description={description}
                 setDescription={setDescription}
+            />
+
+            <SizeForm
+                size={size}
+                setSize={setSize}
             />
 
             <h3 className="pt-12 text-center">translations</h3>

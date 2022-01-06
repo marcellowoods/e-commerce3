@@ -25,7 +25,7 @@ const ProductCard = ({ product, translatedName, translatedDescription, handleAdd
 
     const { t } = useTranslation();
 
-    const { details, highlights, sizes, colors, images, breadcrumbs, price } = product;
+    const { details, highlights, size, colors, images, breadcrumbs, price } = product;
 
     const [selectedColor, setSelectedColor] = useState(null);
     const [selectedSize, setSelectedSize] = useState(null);
@@ -37,9 +37,6 @@ const ProductCard = ({ product, translatedName, translatedDescription, handleAdd
             setSelectedColor(colors[0])
         }
 
-        if (sizes && sizes.length) {
-            setSelectedSize(sizes[0])
-        }
     }, [])
 
     return (
@@ -96,13 +93,18 @@ const ProductCard = ({ product, translatedName, translatedDescription, handleAdd
                             )
                         }
                         {
-                            sizes && (
-                                <BraceletSizeSelector
-                                    selectedSize={selectedSize}
-                                    setSelectedSize={setSelectedSize}
-                                    productSizes={sizes}
-                                />
-                            )
+                            // size && (
+                            //     <BraceletSizeSelector
+                            //         selectedSize={selectedSize}
+                            //         setSelectedSize={setSelectedSize}
+                            //         productSizes={size}
+                            //     />
+                            // )
+                            <BraceletSizeSelector
+                                selectedSize={selectedSize}
+                                setSelectedSize={setSelectedSize}
+                                productSizes={size}
+                            />
                         }
 
                     </section>

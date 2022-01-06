@@ -211,8 +211,6 @@ const BraceletSizeSelector = ({ selectedSize, setSelectedSize, productSizes }) =
     const minSliderValue = lowerBound + 5;
 
 
-
-
     const [sizes, setSizes] = useState(
         [{ name: "S" }, { name: "L" }, { name: "custom" }]
     );
