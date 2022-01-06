@@ -228,8 +228,8 @@ const BraceletSizeSelector = ({ selectedSize, setSelectedSize, productSizes }) =
     const isCustomSelected = () => selectedSize && selectedSize.name == "custom";
 
     const onSliderClick = () => {
-        
-        if(!isCustomSelected()){
+
+        if (!isCustomSelected()) {
             setInfoModalOpen(true);
         }
     }
@@ -256,11 +256,29 @@ const BraceletSizeSelector = ({ selectedSize, setSelectedSize, productSizes }) =
                 isOpen={infoModalOpen}
                 closeModal={() => setInfoModalOpen(false)}
             />
-            <div className="flex items-center justify-between">
+            <div className="flex items-center ">
                 <h3 className="text-sm text-gray-900 font-medium">Size</h3>
+                <span className="pl-2 text-lg">{sizeValue} {" "} {t("cm")}</span>
                 {/* <a href="#" className="text-sm font-medium text-indigo-600 hover:text-indigo-500">
                     Size guide
                 </a> */}
+            </div>
+
+            <div
+                className={`${isCustomSelected() ? 'max-h-screen ease-in' : 'max-h-0 ease-in'}  overflow-hidden transition-all transform duration-500`}
+            >
+                <ReactSlider
+                    ariaLabel={"text"}
+                    disabled={!isCustomSelected()}
+                    step={stepSize}
+                    min={minSliderValue}
+                    max={maxSliderValue}
+                    className="flex items-center w-full h-3 pr-2 mt-8 mb-4 bg-gray-200 rounded-md cursor-grab"
+                    thumbClassName=" absolute w-5 h-5 cursor-pointer bg-indigo-500 rounded-full focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 -top-2px"
+                    value={sizeValue}
+                    onChange={handleCustomValueChange}
+                />
+
             </div>
 
             <RadioGroup value={selectedSize} onChange={handleSizeSelect} className="mt-4">
@@ -301,27 +319,7 @@ const BraceletSizeSelector = ({ selectedSize, setSelectedSize, productSizes }) =
             </RadioGroup>
 
             {/* https://zillow.github.io/react-slider/ */}
-            {/* <div
-                className={`${isCustomSelected() ? 'max-h-screen ease-in' : 'max-h-0 ease-in'} py-4 overflow-hidden transition-all transform duration-500`}
-            > */}
-            <div onClick={onSliderClick}>
-                {/* <label>React Slider</label> */}
 
-                <ReactSlider
-                    ariaLabel={"text"}
-                    disabled={!isCustomSelected()}
-                    step={stepSize}
-                    min={minSliderValue}
-                    max={maxSliderValue}
-                    className="flex items-center w-full h-3 pr-2 mt-8 mb-4 bg-gray-200 rounded-md cursor-grab"
-                    thumbClassName=" absolute w-5 h-5 cursor-pointer bg-indigo-500 rounded-full focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 -top-2px"
-                    value={sizeValue}
-                    onChange={handleCustomValueChange}
-                />
-
-                <span className="text-lg">{sizeValue} {" "} {t("cm")}</span>
-
-            </div>
 
 
         </div>
