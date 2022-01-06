@@ -131,7 +131,7 @@ const CreateProduct = () => {
                 setSize={setSize}
             />
 
-            <h3 className="pt-12 text-center">translations</h3>
+            <h3 className="pt-12 text-center">translations*</h3>
 
             <TranslationsForm
                 translations={translations}

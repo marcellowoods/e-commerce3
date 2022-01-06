@@ -107,7 +107,7 @@ const TranslationsForm = ({ translations, setTranslations }) => {
 
                 return (
                     <div key={lang}>
-                        <h3 className="pt-12 text-center">{lang}</h3>
+                        <h3 className="pt-4 text-center">{lang}</h3>
                         <SingleTranslation
                             lang={lang}
                             description={description}
