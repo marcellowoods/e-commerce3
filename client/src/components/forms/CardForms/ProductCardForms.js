@@ -1,8 +1,10 @@
-import React, { useState, useEffect } from 'react'
+import React, { Fragment, useState, useEffect } from 'react'
 import { useHistory, useParams } from "react-router-dom";
-import { StarIcon } from '@heroicons/react/solid'
+import { StarIcon } from '@heroicons/react/solid';
 import { RadioGroup } from '@headlessui/react';
-import ReactSlider from "react-slider"
+import ReactSlider from "react-slider";
+import { useTranslation } from 'react-i18next';
+import { Dialog, Transition } from '@headlessui/react';
 
 const shopUrl = '/shop';
 
@@ -119,6 +121,78 @@ const SizeSelector = ({ selectedSize, setSelectedSize, productSizes }) => {
     )
 }
 
+const InfoModal = ({ isOpen, closeModal }) => {
+
+    const { t } = useTranslation();
+
+    return (
+        <>
+            <Transition appear show={isOpen} as={Fragment}>
+                <Dialog
+                    as="div"
+                    className="fixed inset-0 z-10 overflow-y-auto"
+                    onClose={closeModal}
+                >
+                    <div className="min-h-screen px-4 text-center">
+                        <Transition.Child
+                            as={Fragment}
+                            enter="ease-out duration-300"
+                            enterFrom="opacity-0"
+                            enterTo="opacity-100"
+                            leave="ease-in duration-200"
+                            leaveFrom="opacity-100"
+                            leaveTo="opacity-0"
+                        >
+                            <Dialog.Overlay className="fixed inset-0" />
+                        </Transition.Child>
+
+                        {/* This element is to trick the browser into centering the modal contents. */}
+                        <span
+                            className="inline-block h-screen align-middle"
+                            aria-hidden="true"
+                        >
+                            &#8203;
+                        </span>
+                        <Transition.Child
+                            as={Fragment}
+                            enter="ease-out duration-300"
+                            enterFrom="opacity-0 scale-95"
+                            enterTo="opacity-100 scale-100"
+                            leave="ease-in duration-200"
+                            leaveFrom="opacity-100 scale-100"
+                            leaveTo="opacity-0 scale-95"
+                        >
+                            <div className="inline-block w-full max-w-md p-6 my-8 overflow-hidden text-left align-middle transition-all transform bg-white shadow-xl rounded-2xl">
+                                <Dialog.Title
+                                    as="h3"
+                                    className="text-lg font-medium leading-6 text-gray-900"
+                                >
+                                    {/* {t("order successful")} */}
+                                </Dialog.Title>
+                                <div className="mt-2">
+                                    <p className="text-sm text-gray-500">
+                                        {t("select custom if you want to pick a size between small and large")}
+                                    </p>
+                                </div>
+
+                                <div className="mt-4">
+                                    <button
+                                        type="button"
+                                        className="inline-flex justify-center px-4 py-2 text-sm font-medium text-blue-900 bg-blue-100 border border-transparent rounded-md hover:bg-blue-200 focus:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-blue-500"
+                                        onClick={closeModal}
+                                    >
+                                        ok
+                                    </button>
+                                </div>
+                            </div>
+                        </Transition.Child>
+                    </div>
+                </Dialog>
+            </Transition>
+        </>
+    )
+}
+
 
 //https://codesandbox.io/s/react-tailwind-align-range-slider-ghyf0?file=/src/App.tsx:189-232
 const BraceletSizeSelector = ({ selectedSize, setSelectedSize, productSizes }) => {
@@ -136,9 +210,13 @@ const BraceletSizeSelector = ({ selectedSize, setSelectedSize, productSizes }) =
     const minSliderValue = lowerBound + 5;
 
 
+
+
     const [sizes, setSizes] = useState(
-        [{  name: "S" }, {  name: "L" }, {  name: "custom" }]
+        [{ name: "S" }, { name: "L" }, { name: "custom" }]
     );
+
+    const [infoModalOpen, setInfoModalOpen] = useState(false);
 
     const [sizeValue, setSizeValue] = useState(lowerBound);
 
@@ -148,13 +226,20 @@ const BraceletSizeSelector = ({ selectedSize, setSelectedSize, productSizes }) =
 
     const isCustomSelected = () => selectedSize && selectedSize.name == "custom";
 
+    const onSliderClick = () => {
+        
+        if(!isCustomSelected()){
+            setInfoModalOpen(true);
+        }
+    }
+
     const handleSizeSelect = (selected) => {
 
-        if(selected.name == "L"){
+        if (selected.name == "L") {
             setSizeValue(upperBound);
-        }else if(selected.name == "S"){
+        } else if (selected.name == "S") {
             setSizeValue(lowerBound);
-        }else{
+        } else {
             setSizeValue(lowerBound + stepSize);
         }
         setSelectedSize(selected);
@@ -166,11 +251,15 @@ const BraceletSizeSelector = ({ selectedSize, setSelectedSize, productSizes }) =
 
     return (
         <div className="mt-10">
+            <InfoModal
+                isOpen={infoModalOpen}
+                closeModal={() => setInfoModalOpen(false)}
+            />
             <div className="flex items-center justify-between">
                 <h3 className="text-sm text-gray-900 font-medium">Size</h3>
-                <a href="#" className="text-sm font-medium text-indigo-600 hover:text-indigo-500">
+                {/* <a href="#" className="text-sm font-medium text-indigo-600 hover:text-indigo-500">
                     Size guide
-                </a>
+                </a> */}
             </div>
 
             <RadioGroup value={selectedSize} onChange={handleSizeSelect} className="mt-4">
@@ -183,7 +272,7 @@ const BraceletSizeSelector = ({ selectedSize, setSelectedSize, productSizes }) =
                             className={({ active }) =>
                                 classNames(
                                     active ? 'ring-2 ring-indigo-500' : '',
-                                    'group relative border rounded-md py-3 px-4 flex items-center justify-center text-sm font-medium uppercase hover:bg-gray-50 focus:outline-none sm:flex-1 sm:py-6'
+                                    'group cursor-pointer relative border rounded-md py-3 px-4 flex items-center justify-center text-sm font-medium uppercase hover:bg-gray-50 focus:outline-none sm:flex-1 sm:py-6'
                                 )
                             }
                         >
@@ -211,18 +300,20 @@ const BraceletSizeSelector = ({ selectedSize, setSelectedSize, productSizes }) =
             </RadioGroup>
 
             {/* https://zillow.github.io/react-slider/ */}
-            <div
+            {/* <div
                 className={`${isCustomSelected() ? 'max-h-screen ease-in' : 'max-h-0 ease-in'} py-4 overflow-hidden transition-all transform duration-500`}
-            >
+            > */}
+            <div onClick={onSliderClick}>
                 {/* <label>React Slider</label> */}
 
                 <ReactSlider
-
+                    ariaLabel={"text"}
+                    disabled={!isCustomSelected()}
                     step={stepSize}
                     min={minSliderValue}
                     max={maxSliderValue}
-                    className="w-full h-3 pr-2 my-4 bg-gray-200 rounded-md cursor-grab"
-                    thumbClassName="absolute w-5 h-5 cursor-grab bg-indigo-500 rounded-full focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 -top-2px"
+                    className="flex items-center w-full h-3 pr-2 mt-8 mb-4 bg-gray-200 rounded-md cursor-grab"
+                    thumbClassName=" absolute w-5 h-5 cursor-pointer bg-indigo-500 rounded-full focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 -top-2px"
                     value={sizeValue}
                     onChange={handleCustomValueChange}
                 />
