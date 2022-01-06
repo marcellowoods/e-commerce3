@@ -5,6 +5,7 @@ import { RadioGroup } from '@headlessui/react';
 import ReactSlider from "react-slider";
 import { useTranslation } from 'react-i18next';
 import { Dialog, Transition } from '@headlessui/react';
+import { t } from 'i18next';
 
 const shopUrl = '/shop';
 
@@ -318,7 +319,7 @@ const BraceletSizeSelector = ({ selectedSize, setSelectedSize, productSizes }) =
                     onChange={handleCustomValueChange}
                 />
 
-                <span>{sizeValue}</span>
+                <span className="text-lg">{sizeValue} {" "} {t("cm")}</span>
 
             </div>
 
