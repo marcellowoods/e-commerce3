@@ -21,6 +21,10 @@ function classNames(...classes) {
     return classes.filter(Boolean).join(' ')
 }
 
+let makeEmptySize = () => ({ lowerBound: 0, upperBound: 0, stepSize: 0 });
+
+let isSizeNull = (size) => size.lowerBound === 0 || size.upperBound === 0 || size.stepSize === 0;
+
 //more forms
 //https://tailwindcomponents.com/component/account-card
 //https://tailwindcomponents.com/components/forms?page=2
@@ -38,7 +42,7 @@ const CreateProduct = () => {
     const [categories, setCategories] = useState([]);
     const [selectedCategory, setSelectedCategory] = useState({});
     const [quantity, setQuantity] = useState(1);
-    const [size, setSize] = useState({ lowerBound: 0, upperBound: 0, stepSize: 0 });
+    const [size, setSize] = useState(makeEmptySize());
 
     const { t } = useTranslation();
 
@@ -63,12 +67,14 @@ const CreateProduct = () => {
         try {
             const userToken = await user.getToken();
 
+            let s = isSizeNull(size) ? null : size;
+
             await createProductRequest({
                 name,
                 price,
                 quantity,
                 description,
-                size,
+                size: s,
                 images: imagesUrl,
                 category: selectedCategory._id,
                 translations
@@ -79,7 +85,7 @@ const CreateProduct = () => {
             setImagesUrl([]);
             setName("");
             setDescription("");
-            // setCategories([]);
+            setSize(makeEmptySize());
             setSelectedCategory(categories[0]);
             setQuantity(1);
             setTranslations([]);

@@ -208,7 +208,7 @@ const BraceletSizeSelector = ({ selectedSize, setSelectedSize, productSize }) =>
         [{ name: "S" }, { name: "L" }, { name: "custom" }]
     );
 
-    const [infoModalOpen, setInfoModalOpen] = useState(false);
+    // const [infoModalOpen, setInfoModalOpen] = useState(false);
 
     const [sizeValue, setSizeValue] = useState(lowerBound);
 
@@ -217,13 +217,6 @@ const BraceletSizeSelector = ({ selectedSize, setSelectedSize, productSize }) =>
     }
 
     const isCustomSelected = () => selectedSize && selectedSize.name == "custom";
-
-    const onSliderClick = () => {
-
-        if (!isCustomSelected()) {
-            setInfoModalOpen(true);
-        }
-    }
 
     const handleSizeSelect = (selected) => {
 
@@ -237,16 +230,12 @@ const BraceletSizeSelector = ({ selectedSize, setSelectedSize, productSize }) =>
         setSelectedSize(selected);
     }
 
-    useEffect(() => {
-        // setSelectedSize(sizes[0]);
-    }, [])
-
     return (
         <div className="mt-10">
-            <InfoModal
+            {/* <InfoModal
                 isOpen={infoModalOpen}
                 closeModal={() => setInfoModalOpen(false)}
-            />
+            /> */}
             <div className="flex items-center ">
                 <h3 className="text-sm text-gray-900 font-medium">Size</h3>
                 <span className="pl-2 text-lg">{sizeValue} {" "} {t("cm")}</span>
@@ -274,7 +263,7 @@ const BraceletSizeSelector = ({ selectedSize, setSelectedSize, productSize }) =>
 
             <RadioGroup value={selectedSize} onChange={handleSizeSelect} className="mt-4">
                 <RadioGroup.Label className="sr-only">Choose a size</RadioGroup.Label>
-                <div className="grid grid-cols-4 gap-4 sm:grid-cols-3 lg:grid-cols-4">
+                <div className="grid grid-cols-3 gap-4">
                     {sizes.map((size) => (
                         <RadioGroup.Option
                             key={size.name}
