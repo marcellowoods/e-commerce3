@@ -203,31 +203,28 @@ const BraceletSizeSelector = ({ selectedSize, setSelectedSize, productSize }) =>
     const maxSliderValue = upperBound - stepSize;
     const minSliderValue = lowerBound + stepSize;
 
+    const [sizeTypes, setSelectedSizeTypes] =  useState([{ name: "S" }, { name: "L" }, { name: "custom" }]);
 
-    const [sizes, setSizes] = useState(
-        [{ name: "S" }, { name: "L" }, { name: "custom" }]
-    );
+    const [selectedSizeType, setSelectedSizeType] = useState(null);
 
     // const [infoModalOpen, setInfoModalOpen] = useState(false);
 
-    const [sizeValue, setSizeValue] = useState(lowerBound);
-
     const handleCustomValueChange = (value) => {
-        setSizeValue(value);
+        setSelectedSize(value);
     }
 
-    const isCustomSelected = () => selectedSize && selectedSize.name == "custom";
+    const isCustomSelected = () => selectedSizeType && selectedSizeType.name == "custom";
 
     const handleSizeSelect = (selected) => {
 
         if (selected.name == "L") {
-            setSizeValue(upperBound);
+            setSelectedSize(upperBound);
         } else if (selected.name == "S") {
-            setSizeValue(lowerBound);
+            setSelectedSize(lowerBound);
         } else {
-            setSizeValue(lowerBound + stepSize);
+            setSelectedSize(lowerBound + stepSize);
         }
-        setSelectedSize(selected);
+        setSelectedSizeType(selected);
     }
 
     return (
@@ -238,7 +235,7 @@ const BraceletSizeSelector = ({ selectedSize, setSelectedSize, productSize }) =>
             /> */}
             <div className="flex items-center ">
                 <h3 className="text-sm text-gray-900 font-medium">Size</h3>
-                <span className="pl-2 text-lg">{sizeValue} {" "} {t("cm")}</span>
+                <span className="pl-2 text-lg">{selectedSize} {" "} {t("cm")}</span>
                 {/* <a href="#" className="text-sm font-medium text-indigo-600 hover:text-indigo-500">
                     Size guide
                 </a> */}
@@ -255,16 +252,16 @@ const BraceletSizeSelector = ({ selectedSize, setSelectedSize, productSize }) =>
                     max={maxSliderValue}
                     className="flex items-center w-full h-3 pr-2 mt-8 mb-4 bg-gray-200 rounded-md cursor-grab"
                     thumbClassName=" absolute w-5 h-5 cursor-pointer bg-indigo-500 rounded-full focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 -top-2px"
-                    value={sizeValue}
+                    value={selectedSize}
                     onChange={handleCustomValueChange}
                 />
 
             </div>
 
-            <RadioGroup value={selectedSize} onChange={handleSizeSelect} className="mt-4">
+            <RadioGroup value={selectedSizeType} onChange={handleSizeSelect} className="mt-4">
                 <RadioGroup.Label className="sr-only">Choose a size</RadioGroup.Label>
                 <div className="grid grid-cols-3 gap-4">
-                    {sizes.map((size) => (
+                    {sizeTypes.map((size) => (
                         <RadioGroup.Option
                             key={size.name}
                             value={size}

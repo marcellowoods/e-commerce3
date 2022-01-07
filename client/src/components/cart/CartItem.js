@@ -11,6 +11,7 @@ const CartItem = ({
     quantity,
     countInStock,
     imageLink,
+    size
 }) => {
 
     const dispatch = useDispatch();
@@ -18,7 +19,7 @@ const CartItem = ({
     const increaseQty = () => {
         const newQty = quantity + 1;
         if (newQty <= countInStock) {
-            dispatch(addToCart(slug, newQty));
+            dispatch(addToCart(slug, size, newQty));
         }
     }
 
@@ -29,20 +30,26 @@ const CartItem = ({
     const decreateQty = () => {
         const newQty = quantity - 1;
         if (newQty >= 1) {
-            dispatch(addToCart(slug, newQty));
+            dispatch(addToCart(slug, size, newQty));
         } else {
             removeItem();
         }
     }
 
-
+    const renderSize = () => {
+        console.log(size);
+        if(size !== null){
+            return  `(size: ${size})`;
+        }
+        return ""
+    }
 
     return (
         <div className="flex justify-between mt-6">
             <div className="flex">
                 <img className="h-20 w-20 object-cover rounded" src={imageLink} alt="" />
                 <div className="mx-3">
-                    <h3 className="text-sm text-gray-600">{name}</h3>
+                    <h3 className="text-sm text-gray-600">{name} {renderSize()}</h3>
                     <div className="flex items-center mt-2">
                         <button
                             onClick={increaseQty}

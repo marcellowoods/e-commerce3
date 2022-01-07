@@ -1,7 +1,7 @@
 import axios from 'axios'
 import { roundToTwo } from "../auxiliary/utils"
 
-export const addToCart = (id, count) => async (dispatch, getState) => {
+export const addToCart = (id, size, count) => async (dispatch, getState) => {
     // console.log("add to cart");
     const { data } = await axios.get(`${process.env.REACT_APP_API}/product/${id}`);
 
@@ -15,6 +15,7 @@ export const addToCart = (id, count) => async (dispatch, getState) => {
             price: data.price,
             countInStock: data.quantity,
             count: count,
+            size: size,
             translations: data.translations
         },
     })

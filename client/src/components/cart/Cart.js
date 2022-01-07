@@ -32,6 +32,7 @@ const Cart = ({ products }) => {
                         price={price}
                         name={translatedName}
                         quantity={item.count}
+                        size={item.size}
                         imageLink={item.image}
                         countInStock={item.countInStock}
                     />
