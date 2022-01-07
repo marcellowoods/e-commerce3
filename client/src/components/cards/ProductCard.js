@@ -93,18 +93,13 @@ const ProductCard = ({ product, translatedName, translatedDescription, handleAdd
                             )
                         }
                         {
-                            // size && (
-                            //     <BraceletSizeSelector
-                            //         selectedSize={selectedSize}
-                            //         setSelectedSize={setSelectedSize}
-                            //         productSizes={size}
-                            //     />
-                            // )
-                            <BraceletSizeSelector
-                                selectedSize={selectedSize}
-                                setSelectedSize={setSelectedSize}
-                                productSizes={size}
-                            />
+                            size && (
+                                <BraceletSizeSelector
+                                    selectedSize={selectedSize}
+                                    setSelectedSize={setSelectedSize}
+                                    productSize={size}
+                                />
+                            )
                         }
 
                     </section>

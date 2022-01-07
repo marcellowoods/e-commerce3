@@ -196,19 +196,12 @@ const InfoModal = ({ isOpen, closeModal }) => {
 
 
 //https://codesandbox.io/s/react-tailwind-align-range-slider-ghyf0?file=/src/App.tsx:189-232
-const BraceletSizeSelector = ({ selectedSize, setSelectedSize, productSizes }) => {
+const BraceletSizeSelector = ({ selectedSize, setSelectedSize, productSize }) => {
 
-    // console.log(productSizes);
-    // const lowerBound = productSizes.lowerBound;
-    // const upperBound = productSizes.upperBound;
-    // const stepSize = productSizes.stepSize;
+    const { lowerBound, upperBound, stepSize } = productSize;
 
-    const lowerBound = 50;
-    const upperBound = 150;
-    const stepSize = 5;
-
-    const maxSliderValue = upperBound - 5;
-    const minSliderValue = lowerBound + 5;
+    const maxSliderValue = upperBound - stepSize;
+    const minSliderValue = lowerBound + stepSize;
 
 
     const [sizes, setSizes] = useState(
@@ -281,7 +274,7 @@ const BraceletSizeSelector = ({ selectedSize, setSelectedSize, productSizes }) =
 
             <RadioGroup value={selectedSize} onChange={handleSizeSelect} className="mt-4">
                 <RadioGroup.Label className="sr-only">Choose a size</RadioGroup.Label>
-                <div className="grid grid-cols-4 gap-4 sm:grid-cols-8 lg:grid-cols-4">
+                <div className="grid grid-cols-4 gap-4 sm:grid-cols-3 lg:grid-cols-4">
                     {sizes.map((size) => (
                         <RadioGroup.Option
                             key={size.name}

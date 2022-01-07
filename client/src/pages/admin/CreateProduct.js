@@ -68,6 +68,7 @@ const CreateProduct = () => {
                 price,
                 quantity,
                 description,
+                size,
                 images: imagesUrl,
                 category: selectedCategory._id,
                 translations
