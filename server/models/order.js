@@ -43,6 +43,7 @@ const orderSchema = new mongoose.Schema(
                 name: String,
                 price: Number,
                 selectedCount: Number,
+                selectedSize: Number,
                 selectedColor: String,
             },
         ],

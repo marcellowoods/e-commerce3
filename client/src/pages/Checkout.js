@@ -67,11 +67,18 @@ const Checkout = () => {
         setOrderSentLoading(true);
 
         const products = cartItems.map((p) => {
-            return {
+
+            let productObj = {
                 productId: p.product,
                 count: p.count,
                 price: p.price
             }
+
+            if (p.size) {
+                productObj.size = p.size;
+            }
+
+            return productObj;
         });
 
         const deliveryInfo = {
@@ -109,10 +116,10 @@ const Checkout = () => {
         setMethodOptions(prevState => {
             return prevState.map(({ name, id }) => {
                 if (id === 'office') {
-                    const text =  t('delivery to office', {name: selectedCourier.name});
+                    const text = t('delivery to office', { name: selectedCourier.name });
                     return { name: text, id }
                 } else {
-                    const text =  t('delivery to home');
+                    const text = t('delivery to home');
                     return { name: text, id }
                 }
             })
@@ -191,13 +198,13 @@ const Checkout = () => {
         //     return "Delivery Address"
         // }
 
-        
+
 
         if (selectedMethod.id == "office") {
-            const text =  t('office address', {name: selectedCourier.name});
+            const text = t('office address', { name: selectedCourier.name });
             return text;
         } else {
-            const text =  t("delivery address");
+            const text = t("delivery address");
             return text;
         }
     }
@@ -218,7 +225,7 @@ const Checkout = () => {
             return (
                 <h4 className="text-lg text-gray-500 font-medium">
                     <div>
-                    {t("find")} <a className="underline text-blue-500" href={selectedCourier.findOffice}>{selectedCourier.name} {t("office")} </a>
+                        {t("find")} <a className="underline text-blue-500" href={selectedCourier.findOffice}>{selectedCourier.name} {t("office")} </a>
                     </div>
                     <br />
                     {t("fill in the office address and your contact information to finish the order")}
@@ -241,7 +248,7 @@ const Checkout = () => {
         history.push(SHOP_PATHNAME)
     }
 
-    if(orderSentLoading){
+    if (orderSentLoading) {
         return <LoadingPage />
     }
 
@@ -257,7 +264,7 @@ const Checkout = () => {
             <OrderConfirmed
                 isOpen={successfulOrderModal}
                 closeModal={contShopping}
-             />
+            />
             <div className="container mx-auto px-6">
                 <h3 className="text-gray-700 text-2xl font-medium">{t('checkout')}</h3>
                 <div className="flex flex-col lg:flex-row mt-8">

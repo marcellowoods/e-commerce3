@@ -25,17 +25,38 @@ const OrderDetails = ({ isOpen, orderStatus, orderId, products, totalCost, setIs
         setIsOpen(true)
     }
 
-    let renderName = (product, name) => {
+    const renderSize = (product, selectedSize) => {
+
+        if (product.size) {
+            let sizeText = null;
+            const { upperBound, lowerBound, stepSize } = product.size;
+            if (selectedSize == lowerBound) {
+                sizeText = "S";
+            } else if (selectedSize == upperBound) {
+                sizeText = "L";
+            } else {
+                sizeText = "CUSTOM";
+            }
+
+            let text = "size: " + sizeText + "(" + selectedSize + " cm." + ")"
+
+            return text;
+        }
+
+    }
+
+    let renderName = (product, name, selectedSize) => {
+
         if (product == null) {
             return (
-                <h3>{name}</h3>
+                <h3>{name} {selectedSize && renderSize(product, selectedSize)}</h3>
             )
         }
         const slug = product.slug;
         const linkString = PRODUCT_PAGE_URL + slug;
         return (
             <Link to={linkString}>
-                <h3 className="underline">{name}</h3>
+                <h3 className="underline">{name} {selectedSize && renderSize(product, selectedSize)}</h3>
             </Link>
         )
     }
@@ -100,7 +121,7 @@ const OrderDetails = ({ isOpen, orderStatus, orderId, products, totalCost, setIs
                                     {products.map((item, index) => (
                                         <div className="flex justify-between">
                                             <div className="flex">
-                                                {renderName(item.product, item.name)}
+                                                {renderName(item.product, item.name, item.selectedSize)}
                                                 <h3 className="pl-2 font-medium ">x{item.selectedCount}</h3>
                                             </div>
                                             <h3>{item.price} {" "} {t("lv.")}</h3>
@@ -143,7 +164,7 @@ const OrderDetails = ({ isOpen, orderStatus, orderId, products, totalCost, setIs
                                         <div className="flex">
                                             {t("type")}
                                             <p className="font-medium pl-1">
-                                                {method === "office" ? t("delivery to office", {name: courrier}) : t("delivery to home")} 
+                                                {method === "office" ? t("delivery to office", { name: courrier }) : t("delivery to home")}
                                             </p>
                                         </div>
                                         <div className="flex">
@@ -158,29 +179,6 @@ const OrderDetails = ({ isOpen, orderStatus, orderId, products, totalCost, setIs
                                     </div>
                                 </div>
 
-                                {/* <div className="mt-4 float-right">
-                                    <div className="flex">
-                                        <button
-                                            type="button"
-                                            className="inline-flex justify-center px-4 py-2 text-sm font-medium text-red-900 bg-red-100 border border-transparent rounded-md hover:bg-red-200 focus:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-red-500"
-                                            onClick={closeModal}
-                                        >
-                                            Cancel
-                                        </button>
-                                        <div className="pl-2">
-                                            <button
-                                                type="button"
-                                                className="inline-flex justify-center px-4 py-2 text-sm font-medium text-blue-900 bg-blue-100 border border-transparent rounded-md hover:bg-blue-200 focus:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-blue-500"
-                                                onClick={() => {
-                                                    onConfirmClicked();
-                                                    closeModal();
-                                                }}
-                                            >
-                                                Confirm
-                                            </button>
-                                        </div>
-                                    </div>
-                                </div> */}
                             </div>
                         </Transition.Child>
                     </div>

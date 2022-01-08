@@ -48,10 +48,14 @@ const makeOrderCreator = (withUser = false) => {
 
                 object.selectedCount = cartFromUser[i].count;
 
-                if(cartFromUser[i].color){
+                if (cartFromUser[i].color) {
                     object.selectedColor = cartFromUser[i].color;
                 }
-                
+
+                if (cartFromUser[i].size) {
+                    object.selectedSize = cartFromUser[i].size;
+                }
+
                 const priceFromDb = roundToTwo(productFromDb.price);
                 object.price = priceFromDb;
 
