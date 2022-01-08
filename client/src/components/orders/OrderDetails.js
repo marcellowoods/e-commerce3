@@ -38,7 +38,7 @@ const OrderDetails = ({ isOpen, orderStatus, orderId, products, totalCost, setIs
                 sizeText = "CUSTOM";
             }
 
-            let text = "size: " + sizeText + "(" + selectedSize + " cm." + ")"
+            let text = sizeText + " size" + "," + selectedSize + " cm.";
 
             return text;
         }
@@ -49,15 +49,25 @@ const OrderDetails = ({ isOpen, orderStatus, orderId, products, totalCost, setIs
 
         if (product == null) {
             return (
-                <h3>{name} {selectedSize && renderSize(product, selectedSize)}</h3>
+                <div className="flex flex-row">
+                    <h3>{name} {selectedSize && renderSize(product, selectedSize)}</h3>
+                    {selectedSize && (
+                        <h3 className="italic pl-2">{renderSize(product, selectedSize)}</h3>
+                    )}
+                </div>
             )
         }
         const slug = product.slug;
         const linkString = PRODUCT_PAGE_URL + slug;
         return (
-            <Link to={linkString}>
-                <h3 className="underline">{name} {selectedSize && renderSize(product, selectedSize)}</h3>
-            </Link>
+            <div className="flex flex-row">
+                <Link to={linkString}>
+                    <h3 className="underline">{name} </h3>
+                </Link>
+                {selectedSize && (
+                    <h3 className="italic pl-2">{renderSize(product, selectedSize)}</h3>
+                )}
+            </div>
         )
     }
 
