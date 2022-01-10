@@ -33,6 +33,11 @@ export const getCartTotal = (cartItems) => {
     return roundToTwo(totalPrice);
 }
 
+export const clearCart = (dispatch) => {
+    localStorage.setItem('cartItems', []);
+    dispatch({ type: "CART_CLEAR" });
+}
+
 export const removeFromCart = (id) => (dispatch, getState) => {
     dispatch({
         type: "CART_REMOVE_ITEM",

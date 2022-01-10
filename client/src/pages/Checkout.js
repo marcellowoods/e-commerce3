@@ -11,11 +11,12 @@ import {
     DeliveryAdress
 } from "../components/checkout/CheckoutFields";
 import { OrderConfirmed, ConfirmOrder } from "../components/checkout/CheckoutModals";
-import { getCartTotal } from "../actions/cartActions";
+import { getCartTotal, clearCart } from "../actions/cartActions";
 import { postOrder, userPostOrder } from "../functions/orders";
-import { useSelector } from "react-redux";
 
 import { useTranslation } from 'react-i18next';
+
+import { useDispatch, useSelector } from "react-redux";
 
 
 const deliveryCouriers = [
@@ -37,6 +38,8 @@ const Checkout = () => {
     const history = useHistory();
 
     const { t } = useTranslation();
+
+    let dispatch = useDispatch();
 
     const [checkoutState, setCheckoutState] = useState(CheckoutStates.DELIVERY_COURIER);
 
@@ -100,16 +103,22 @@ const Checkout = () => {
             postFn = () => userPostOrder(products, totalCost, deliveryInfo, userToken)
         }
         try {
+            //clear cart
+            clearCart(dispatch);
             let res = await postFn();
+
             setOrderSentLoading(false);
             setSuccessfulOrderModal(true);
-            //clear cart
+
+
             console.log(res);
         } catch (error) {
             alert(error);
             setOrderSentLoading(false);
         }
     }
+
+
 
     useDidMountEffect(() => {
         // const options = [{ "name": "Delivery to home" }, { "name": `Delivery to ${selectedCourier.name} office` }];
@@ -245,6 +254,7 @@ const Checkout = () => {
 
     const contShopping = () => {
         setSuccessfulOrderModal(true);
+        console.log("cont shopping")
         history.push(SHOP_PATHNAME)
     }
 
