@@ -126,10 +126,11 @@ const UpdateOrders = () => {
 
         try {
             if (orderSelected) {
-                await changeStatus(orderSelected._id, newOrderStatus, user.token);
+                const userToken = await user.getToken();
+                await changeStatus(orderSelected._id, newOrderStatus, userToken);
 
                 if(page === 0){
-                    const res = await getOrders(hideCompleted, 1, user.token);
+                    const res = await getOrders(hideCompleted, 1, userToken);
                     onSuccessOrders(res.data);
                 }else{
                     //getOrders gets handled by fetchOrdersEffect;
