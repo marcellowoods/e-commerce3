@@ -6,6 +6,9 @@ import { getCartTotal } from "../../actions/cartActions";
 
 import { useTranslation } from 'react-i18next';
 import { getTranslatedField } from "../../actions/translateActions";
+import { Link } from "react-router-dom";
+
+const PRODUCT_PAGE_URL = "/product/";
 
 const OrderConfirmed = ({ isOpen, closeModal }) => {
 
@@ -80,6 +83,8 @@ const OrderConfirmed = ({ isOpen, closeModal }) => {
     )
 }
 
+
+
 const ConfirmOrder = ({ isOpen, setIsOpen, deliveryAdress, contactInformation, onConfirmClicked }) => {
 
     const { t, i18n } = useTranslation();
@@ -94,6 +99,56 @@ const ConfirmOrder = ({ isOpen, setIsOpen, deliveryAdress, contactInformation, o
 
     const { cart } = useSelector((state) => ({ ...state }));
     const { cartItems: products } = cart;
+
+    const renderSize = (product, selectedSize) => {
+
+        let text = null;
+
+        if (product.sizeBounds) {
+            let sizeText = null;
+            const { upperBound, lowerBound, stepSize } = product.sizeBounds;
+            if (selectedSize == lowerBound) {
+                sizeText = "S";
+            } else if (selectedSize == upperBound) {
+                sizeText = "L";
+            } else {
+                sizeText = t("custom");
+            }
+
+            text = sizeText + " " + t("size") + "," + selectedSize + " " + t("cm.");
+
+        } else {
+
+            text = " " + t("size") + "," + selectedSize + " " + t("cm.");
+
+        }
+
+
+        return text;
+
+    }
+
+    let renderName = (product) => {
+
+        const slug = product.slug;
+        const linkString = PRODUCT_PAGE_URL + slug;
+        
+        const size = product.size;
+
+        const lang = i18n.language;
+        const translatedName = getTranslatedField(product, 'name', lang);
+
+        return (
+            <div className="flex flex-row">
+                <Link to={linkString}>
+                    <h3 className="underline">{translatedName} </h3>
+                </Link>
+                {size && (
+                    <h3 className="italic pl-2">{renderSize(product, size)}</h3>
+                )}
+            </div>
+        )
+    }
 
     return (
         <>
@@ -147,24 +202,19 @@ const ConfirmOrder = ({ isOpen, setIsOpen, deliveryAdress, contactInformation, o
                                     </p> */}
 
                                     {products && products.map((item) => {
-                                        const lang = i18n.language;
-                                        const translatedName = getTranslatedField(item, 'name', lang);
 
                                         return (
                                             <div className="flex justify-between">
                                                 <div className="flex">
-                                                    <h3>{translatedName}</h3>
+                                                    {renderName(item)}
                                                     <h3 className="pl-2 font-medium ">x{item.count}</h3>
                                                 </div>
-                                                <h3>{item.price} {t('lv.')}</h3>
+                                                <h3>{item.price} {" "} {t("lv.")}</h3>
                                             </div>
                                         )
-                                    }
-
-                                    )
-                                    }
+                                    })}
                                     <hr />
-                                    <div className="flex justify-between">
+                                    <div className=" flex justify-between">
                                         <h3>{t("total")}</h3>
                                         <h3>{getCartTotal(products)} {t('lv.')}</h3>
                                     </div>

@@ -40,6 +40,7 @@ const makeOrderCreator = (withUser = false) => {
                     .select("name")
                     .select("price")
                     .select("quantity")
+                    .select("size")
                     .exec();
 
                 let object = {};
@@ -53,7 +54,19 @@ const makeOrderCreator = (withUser = false) => {
                 }
 
                 if (cartFromUser[i].size) {
-                    object.selectedSize = cartFromUser[i].size;
+                    let sizeText = null;
+                    if(!productFromDb.size){
+                        throw new Error('product has no size attribute')
+                    }
+                    const { upperBound, lowerBound } = productFromDb.size;
+                    if (cartFromUser[i].size == lowerBound) {
+                        sizeText = "S";
+                    } else if (selectedSize == upperBound) {
+                        sizeText = "L";
+                    } else {
+                        sizeText = "custom";
+                    }
+                    object.selectedSize = {sizeValue: cartFromUser[i].size, sizeText };
                 }
 
                 const priceFromDb = roundToTwo(productFromDb.price);

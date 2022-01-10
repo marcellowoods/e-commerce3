@@ -25,23 +25,13 @@ const OrderDetails = ({ isOpen, orderStatus, orderId, products, totalCost, setIs
         setIsOpen(true)
     }
 
-    const renderSize = (product, selectedSize) => {
+    const renderSize = (selectedSize) => {
 
-        if (product.size) {
-            let sizeText = null;
-            const { upperBound, lowerBound, stepSize } = product.size;
-            if (selectedSize == lowerBound) {
-                sizeText = "S";
-            } else if (selectedSize == upperBound) {
-                sizeText = "L";
-            } else {
-                sizeText = "CUSTOM";
-            }
+        const {sizeText, sizeValue} = selectedSize;
 
-            let text = sizeText + " size" + "," + selectedSize + " cm.";
+        let text = sizeText + " " + t("size") + "," + sizeValue + " " + t("cm.");;
 
-            return text;
-        }
+        return text;
 
     }
 
@@ -50,9 +40,9 @@ const OrderDetails = ({ isOpen, orderStatus, orderId, products, totalCost, setIs
         if (product == null) {
             return (
                 <div className="flex flex-row">
-                    <h3>{name} {selectedSize && renderSize(product, selectedSize)}</h3>
+                    <h3>{name} {selectedSize && renderSize(selectedSize)}</h3>
                     {selectedSize && (
-                        <h3 className="italic pl-2">{renderSize(product, selectedSize)}</h3>
+                        <h3 className="italic pl-2">{renderSize(selectedSize)}</h3>
                     )}
                 </div>
             )
@@ -65,7 +55,7 @@ const OrderDetails = ({ isOpen, orderStatus, orderId, products, totalCost, setIs
                     <h3 className="underline">{name} </h3>
                 </Link>
                 {selectedSize && (
-                    <h3 className="italic pl-2">{renderSize(product, selectedSize)}</h3>
+                    <h3 className="italic pl-2">{renderSize(selectedSize)}</h3>
                 )}
             </div>
         )
