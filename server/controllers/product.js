@@ -125,7 +125,12 @@ exports.list = async (req, res) => {
             {
                 $facet: {
                     metadata: [{ $count: 'total' }],
-                    data: [{ $sort: sortObj }, { $skip: skip }, { $limit: perPage }]
+                    data: [
+                        { $match: { quantity: { $gte: 1 } } }, //quantity must be greater then equal to one
+                        { $sort: sortObj },
+                        { $skip: skip },
+                        { $limit: perPage }
+                    ]
                 }
             }
         ]).exec();
