@@ -6,6 +6,7 @@
 
 import Navbar from "./Navbar";
 import CartModal from "./CartModal";
+import OrderConfirmedModal from "./OrderConfirmedModal";
 import MobileNavbarMenu from "./MobileNavbarMenu";
 
 const Navigation = () => {
@@ -15,6 +16,7 @@ const Navigation = () => {
             {/* <LoginSignup /> */}
             <CartModal />
             <MobileNavbarMenu />
+            <OrderConfirmedModal />
             {/* All Children pass from here */}
         </div>
     )

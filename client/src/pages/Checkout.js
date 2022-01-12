@@ -104,14 +104,13 @@ const Checkout = () => {
         }
         try {
             //clear cart
-            clearCart(dispatch);
+        
             let res = await postFn();
-
-            setOrderSentLoading(false);
-            setSuccessfulOrderModal(true);
-
-
-            console.log(res);
+            clearCart(dispatch);
+            dispatch({ type: "ORDER_SUCCESS_MODAL_TOGGLE", payload: true });
+            history.push("/");
+            // setOrderSentLoading(false);
+        console.log(res);
         } catch (error) {
             alert(error);
             setOrderSentLoading(false);
@@ -252,12 +251,6 @@ const Checkout = () => {
 
     }
 
-    const contShopping = () => {
-        setSuccessfulOrderModal(true);
-        console.log("cont shopping")
-        history.push(SHOP_PATHNAME)
-    }
-
     if (orderSentLoading) {
         return <LoadingPage />
     }
@@ -271,10 +264,7 @@ const Checkout = () => {
                 setIsOpen={setIsConfirmModalOpen}
                 isOpen={isConfirmModalOpen}
             />
-            <OrderConfirmed
-                isOpen={successfulOrderModal}
-                closeModal={contShopping}
-            />
+
             <div className="container mx-auto px-6">
                 <h3 className="text-gray-700 text-2xl font-medium">{t('checkout')}</h3>
                 <div className="flex flex-col lg:flex-row mt-8">
