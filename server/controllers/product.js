@@ -121,12 +121,11 @@ exports.list = async (req, res) => {
 
 
         const data = await Product.aggregate([
-            // { $match: { ...match } },
+            { $match: { quantity: { $gte: 1 } } }, //quantity must be greater then equal to one
             {
                 $facet: {
                     metadata: [{ $count: 'total' }],
                     data: [
-                        { $match: { quantity: { $gte: 1 } } }, //quantity must be greater then equal to one
                         { $sort: sortObj },
                         { $skip: skip },
                         { $limit: perPage }

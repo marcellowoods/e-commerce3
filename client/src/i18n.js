@@ -67,7 +67,7 @@ const resources = {
             "type": "Type",
             "new": "new",
             "best sellers": "best sellers",
-            "size": "size",
+            "size": "Size",
             "custom": "custom",
             "cm.": "cm.",
         }
@@ -138,7 +138,7 @@ const resources = {
             "type": "Тип",
             "new": "нови",
             "best sellers": "най-продавани",
-            "size": "размер",
+            "size": "Размер",
             "custom": "персонализиран",
             "cm.": "см.",
         }

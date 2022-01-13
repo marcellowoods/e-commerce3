@@ -5,7 +5,7 @@ import { getAddToCartIcon } from "../../assets/icons";
 import ProductShopSlider from "./ProductShopSlider";
 import { useTranslation } from 'react-i18next';
 
-const ProductShopCard = ({ id, name, price, images, imageUrl, onAddClick, onCardClick }) => {
+const ProductShopCard = ({ id, name, price, images, onAddClick, onCardClick }) => {
 
     const lastDrag = useRef({x: 0, y: 0});
 

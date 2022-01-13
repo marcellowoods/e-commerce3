@@ -172,14 +172,14 @@ const PageComponent = () => {
             {products && products.map((p) => {
                 const lang = i18n.language;
                 const translatedName = getTranslatedField(p, 'name', lang);
+                const images = p.images.slice(0, 3);
 
                 return (
                     <ProductShopCard
                         key={p._id}
                         id={p.slug}
                         quantity={p.quantity}
-                        images={p.images}
-                        imageUrl={p.images[0]}
+                        images={images}
                         price={p.price}
                         name={translatedName}
                         onAddClick={(id) => { console.log(`added ${id} to cart`) }}

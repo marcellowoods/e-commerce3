@@ -234,8 +234,8 @@ const BraceletSizeSelector = ({ selectedSize, setSelectedSize, productSize }) =>
                 closeModal={() => setInfoModalOpen(false)}
             /> */}
             <div className="flex items-center ">
-                <h3 className="text-sm text-gray-900 font-medium">Size</h3>
-                <span className="pl-2 text-lg">{selectedSize} {" "} {selectedSize && t("cm.")}</span>
+                <h3 className="text-lg text-gray-900 font-medium">{t("size")}</h3>
+                <span className="pl-2 text-xl">{selectedSize} {" "} {selectedSize && t("cm.")}</span>
                 {/* <a href="#" className="text-sm font-medium text-indigo-600 hover:text-indigo-500">
                     Size guide
                 </a> */}
