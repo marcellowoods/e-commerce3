@@ -2,6 +2,7 @@ import React, { Fragment, useContext, useEffect, useState } from "react";
 import { getItemDeleteIcon } from "../../assets/icons";
 import { useDispatch, useSelector } from "react-redux";
 import { addToCart, removeFromCart } from "../../actions/cartActions";
+import { useTranslation } from 'react-i18next';
 
 const CartItem = ({
     price,
@@ -13,6 +14,8 @@ const CartItem = ({
     imageLink,
     size
 }) => {
+
+    const { t } = useTranslation();
 
     const dispatch = useDispatch();
 
@@ -39,7 +42,9 @@ const CartItem = ({
     const renderSize = () => {
         console.log(size);
         if(size !== null){
-            return  `(size: ${size})`;
+            const textSize = t('size');
+            const textCm = t('cm.');
+            return "(" + textSize + " " + size + textCm + ")";
         }
         return ""
     }

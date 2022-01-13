@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import OrdersTable from "../../components/orders/OrdersTable";
 import OrderDetails from "../../components/orders/OrderDetails";
 import { getUserOrders } from "../../functions/user"
-import  getUserId  from "../../firebase/getUserId"
+import getUserId from "../../firebase/getUserId"
 import { useAsync } from "../../auxiliary/reactUtils"
 import { useSelector } from "react-redux";
 import LoadingPage from "../LoadingPage";
@@ -62,7 +62,7 @@ const Orders = () => {
     }
 
     return (
-        <div>
+        <div className="container max-w-7xl mx-auto py-4 px-6">
             {orderSelected && (
                 <OrderDetails
                     totalCost={orderSelected.totalCost}

@@ -36,35 +36,35 @@ const OrdersTable = ({ onDetailsClicked, orders }) => {
 
     return (
 
-        
-        <div className="container max-w-7xl mx-auto pt-12 px-6">
-            <table className="min-w-full border-collapse block md:table">
-                <thead className="block md:table-header-group">
-                    <tr className="border border-grey-500 md:border-none block md:table-row absolute -top-full md:top-auto -left-full md:left-auto  md:relative ">
-                        <th className="bg-gray-600 p-2 text-white font-bold md:border md:border-grey-500 text-left block md:table-cell">{t("order id")}</th>
-                        <th className="bg-gray-600 p-2 text-white font-bold md:border md:border-grey-500 text-left block md:table-cell">{t("created on")}</th>
-                        <th className="bg-gray-600 p-2 text-white font-bold md:border md:border-grey-500 text-left block md:table-cell">{t("shipping address")}</th>
-                        <th className="bg-gray-600 p-2 text-white font-bold md:border md:border-grey-500 text-left block md:table-cell">{t("status")}</th>
-                        <th className="bg-gray-600 p-2 text-white font-bold md:border md:border-grey-500 text-left block md:table-cell">{t("total")}</th>
-                        <th className="bg-gray-600 p-2 text-white font-bold md:border md:border-grey-500 text-left block md:table-cell"></th>
-                    </tr>
-                </thead>
-                <tbody className="block md:table-row-group">
-                    {orders.map((order) => {
-                        return (
-                            <OrderRow
-                                orderId={order._id}
-                                orderDate={getLocaleDate(order.createdAt, lang)}
-                                orderAddress={order.deliveryInfo.address}
-                                orderStatus={order.orderStatus}
-                                orderTotal={order.totalCost}
-                                onDetailsClicked={onDetailsClicked}
-                            />
-                        )
-                    })}
-                </tbody>
-            </table>
-        </div>
+
+
+        <table className="min-w-full border-collapse block md:table">
+            <thead className="block md:table-header-group">
+                <tr className="border border-grey-500 md:border-none block md:table-row absolute -top-full md:top-auto -left-full md:left-auto  md:relative ">
+                    <th className="bg-gray-600 p-2 text-white font-bold md:border md:border-grey-500 text-left block md:table-cell">{t("order id")}</th>
+                    <th className="bg-gray-600 p-2 text-white font-bold md:border md:border-grey-500 text-left block md:table-cell">{t("created on")}</th>
+                    <th className="bg-gray-600 p-2 text-white font-bold md:border md:border-grey-500 text-left block md:table-cell">{t("shipping address")}</th>
+                    <th className="bg-gray-600 p-2 text-white font-bold md:border md:border-grey-500 text-left block md:table-cell">{t("status")}</th>
+                    <th className="bg-gray-600 p-2 text-white font-bold md:border md:border-grey-500 text-left block md:table-cell">{t("total")}</th>
+                    <th className="bg-gray-600 p-2 text-white font-bold md:border md:border-grey-500 text-left block md:table-cell"></th>
+                </tr>
+            </thead>
+            <tbody className="block md:table-row-group">
+                {orders.map((order) => {
+                    return (
+                        <OrderRow
+                            orderId={order._id}
+                            orderDate={getLocaleDate(order.createdAt, lang)}
+                            orderAddress={order.deliveryInfo.address}
+                            orderStatus={order.orderStatus}
+                            orderTotal={order.totalCost}
+                            onDetailsClicked={onDetailsClicked}
+                        />
+                    )
+                })}
+            </tbody>
+        </table>
+
     )
 
 }
