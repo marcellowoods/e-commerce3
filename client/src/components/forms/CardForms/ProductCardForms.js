@@ -56,7 +56,7 @@ const ColorSelector = ({ selectedColor, setSelectedColor, productColors }) => {
 
 const SizeSelector = ({ selectedSize, setSelectedSize, productSizes }) => {
 
-    console.log(productSizes)
+    const { t } = useTranslation();
 
     return (
         <div className="mt-10">
@@ -203,7 +203,7 @@ const BraceletSizeSelector = ({ selectedSize, setSelectedSize, productSize }) =>
     const maxSliderValue = upperBound - stepSize;
     const minSliderValue = lowerBound + stepSize;
 
-    const [sizeTypes, setSelectedSizeTypes] =  useState([{ name: "S" }, { name: "L" }, { name: "custom" }]);
+    const [sizeTypes, setSelectedSizeTypes] =  useState([{ name: "small" }, { name: "large" }, { name: "custom" }]);
 
     const [selectedSizeType, setSelectedSizeType] = useState(null);
 
@@ -217,9 +217,9 @@ const BraceletSizeSelector = ({ selectedSize, setSelectedSize, productSize }) =>
 
     const handleSizeSelect = (selected) => {
 
-        if (selected.name == "L") {
+        if (selected.name == "large") {
             setSelectedSize(upperBound);
-        } else if (selected.name == "S") {
+        } else if (selected.name == "small") {
             setSelectedSize(lowerBound);
         } else {
             setSelectedSize(lowerBound + stepSize);
@@ -234,7 +234,7 @@ const BraceletSizeSelector = ({ selectedSize, setSelectedSize, productSize }) =>
                 closeModal={() => setInfoModalOpen(false)}
             /> */}
             <div className="flex items-center ">
-                <h3 className="text-lg text-gray-900 font-medium">{t("size")}</h3>
+                <h3 className="text-lg text-transform: capitalize text-gray-900 font-medium">{t("size")}</h3>
                 <span className="pl-2 text-xl">{selectedSize} {" "} {selectedSize && t("cm.")}</span>
                 {/* <a href="#" className="text-sm font-medium text-indigo-600 hover:text-indigo-500">
                     Size guide
@@ -275,7 +275,7 @@ const BraceletSizeSelector = ({ selectedSize, setSelectedSize, productSize }) =>
 
                             {({ active, checked }) => (
                                 <>
-                                    <RadioGroup.Label as="p">{size.name}</RadioGroup.Label>
+                                    <RadioGroup.Label as="p">{t(size.name)}</RadioGroup.Label>
                                     {
                                         (
                                             <div

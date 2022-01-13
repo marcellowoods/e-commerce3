@@ -29,7 +29,7 @@ const OrderDetails = ({ isOpen, orderStatus, orderId, products, totalCost, setIs
 
         const {sizeText, sizeValue} = selectedSize;
 
-        let text = sizeText + " " + t("size") + "," + sizeValue + " " + t("cm.");;
+        let text = t(sizeText) + " " + t("size") + "," + sizeValue + " " + t("cm.");;
 
         return text;
 

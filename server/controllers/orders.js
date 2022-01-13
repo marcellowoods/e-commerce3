@@ -60,9 +60,9 @@ const makeOrderCreator = (withUser = false) => {
                     }
                     const { upperBound, lowerBound } = productFromDb.size;
                     if (cartFromUser[i].size == lowerBound) {
-                        sizeText = "S";
+                        sizeText = "small";
                     } else if (cartFromUser[i].size == upperBound) {
-                        sizeText = "L";
+                        sizeText = "large";
                     } else {
                         sizeText = "custom";
                     }

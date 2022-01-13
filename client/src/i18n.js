@@ -67,9 +67,11 @@ const resources = {
             "type": "Type",
             "new": "new",
             "best sellers": "best sellers",
-            "size": "Size",
+            "size": "size",
             "custom": "custom",
             "cm.": "cm.",
+            "small": "small",
+            "large": "large"
         }
     },
     bg: {
@@ -138,9 +140,11 @@ const resources = {
             "type": "Тип",
             "new": "нови",
             "best sellers": "най-продавани",
-            "size": "Размер",
+            "size": "размер",
             "custom": "персонализиран",
             "cm.": "см.",
+            "small": "малък",
+            "large": "голям"
         }
     }
 };

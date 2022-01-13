@@ -108,14 +108,14 @@ const ConfirmOrder = ({ isOpen, setIsOpen, deliveryAdress, contactInformation, o
             let sizeText = null;
             const { upperBound, lowerBound, stepSize } = product.sizeBounds;
             if (selectedSize == lowerBound) {
-                sizeText = "S";
+                sizeText = "small";
             } else if (selectedSize == upperBound) {
-                sizeText = "L";
+                sizeText = "large";
             } else {
-                sizeText = t("custom");
+                sizeText = "custom";
             }
 
-            text = sizeText + " " + t("size") + "," + selectedSize + " " + t("cm.");
+            text = t(sizeText) + " " + t("size") + "," + selectedSize + " " + t("cm.");
 
         } else {
 
