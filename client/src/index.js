@@ -15,6 +15,9 @@ import './i18n';
 
 //cool deisgn
 //https://www.tissotwatches.com/en-en/t1204073705100.html
+
+//TODO
+//https://expressjs.com/en/advanced/best-practice-security.html
 ReactDOM.render(
     <Provider store={store}>
         <BrowserRouter>
