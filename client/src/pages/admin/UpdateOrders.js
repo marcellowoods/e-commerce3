@@ -10,6 +10,7 @@ import { useSelector } from "react-redux";
 import OrdersTable from "../../components/orders/admin/OrdersTable";
 import OrderStatusModal from "../../components/orders/admin/OrderStatusModal";
 import getPagination from "../../components/navigation/getPagination";
+import { useTranslation } from 'react-i18next';
 
 import LoadingPage from "../LoadingPage";
 
@@ -51,6 +52,8 @@ const testOrders = [
 
 
 const UpdateOrders = () => {
+
+    const { t } = useTranslation();
 
     const [orders, setOrders] = useState([]);
     const [page, setPage] = useState(0);
@@ -186,7 +189,7 @@ const UpdateOrders = () => {
                             "bg-white w-8 h-8 rounded-full shadow-md transform duration-300 ease-in-out")}></div>
                     </div>
 
-                    <h3 className="pl-2 text-xl font-normal">Hide completed orders</h3>
+                    <h3 className="pl-2 text-xl font-normal">{t("hide completed orders")}</h3>
                 </div>
 
             </div >

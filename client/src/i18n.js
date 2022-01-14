@@ -71,7 +71,10 @@ const resources = {
             "custom": "custom",
             "cm.": "cm.",
             "small": "small",
-            "large": "large"
+            "large": "large",
+            "update status": "update status",
+            "new status": "new status",
+            "hide completed orders": "Hide completed orders"
         }
     },
     bg: {
@@ -144,7 +147,10 @@ const resources = {
             "custom": "персонализиран",
             "cm.": "см.",
             "small": "малък",
-            "large": "голям"
+            "large": "голям",
+            "update status": "промени статус",
+            "new status": "нов статус",
+            "hide completed orders": "Скрий завършени поръчки"
         }
     }
 };
