@@ -2,6 +2,7 @@ import React, { useState, Fragment, useEffect } from "react";
 import { Listbox, Transition } from '@headlessui/react';
 import { CheckIcon, SelectorIcon } from '@heroicons/react/solid';
 import { NameForm, DescriptionForm, TranslationsForm } from "./CommonForms";
+import { useDidMountEffect } from "../../../auxiliary/reactUtils";
 import FileUpload from "../FileUpload";
 
 function classNames(...classes) {
@@ -135,7 +136,7 @@ const CategoryForm = ({ categories, selectedCategory, onSelectCategory }) => {
     )
 }
 
-const ImagesForm = ({ imagesUrl, setImagesUrl }) => {
+const ImagesForm = ({ imagesUrl, setImagesUrl, uploadedImages, setUploadedImages }) => {
 
     // const [uploadedImages, setUploadedImages] = useState(
     //     {
@@ -148,10 +149,9 @@ const ImagesForm = ({ imagesUrl, setImagesUrl }) => {
     //     }
     // )
 
-    const [uploadedImages, setUploadedImages] = useState([]);
     const [loading, setLoading] = useState(false);
 
-    useEffect(() => {
+    useDidMountEffect(() => {
 
         const urls = uploadedImages.map((img) => img.url);
         console.log(urls);
@@ -159,7 +159,7 @@ const ImagesForm = ({ imagesUrl, setImagesUrl }) => {
 
     }, [uploadedImages])
 
-    useEffect(() => {
+    useDidMountEffect(() => {
         //clear uploadedImages after uploading product
         if (imagesUrl.length == 0 && uploadedImages.length > 0) {
             setUploadedImages([]);

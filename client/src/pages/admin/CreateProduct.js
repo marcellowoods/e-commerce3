@@ -36,7 +36,10 @@ const CreateProduct = () => {
     const { user } = useSelector((state) => ({ ...state }));
 
     const [price, setPrice] = useState("");
+
     const [imagesUrl, setImagesUrl] = useState([]);
+    const [uploadedImages, setUploadedImages] = useState([]);
+    
     const [name, setName] = useState("");
     const [description, setDescription] = useState("");
     const [categories, setCategories] = useState([]);
@@ -44,6 +47,7 @@ const CreateProduct = () => {
     const [quantity, setQuantity] = useState(1);
     const [size, setSize] = useState(makeEmptySize());
 
+    //todo translate fields
     const { t } = useTranslation();
 
     const [translations, setTranslations] = useState([]);
@@ -120,6 +124,8 @@ const CreateProduct = () => {
             <ImagesForm
                 imagesUrl={imagesUrl}
                 setImagesUrl={setImagesUrl}
+                uploadedImages={uploadedImages}
+                setUploadedImages={setUploadedImages}
             />
 
             <CategoryForm
