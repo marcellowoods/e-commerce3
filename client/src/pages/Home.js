@@ -74,29 +74,29 @@ const Home = () => {
     }
 
     return (
-        <div className="container max-w-7xl mx-auto px-2">
-            <div className="grid  grid-cols-1 lg:grid-cols-2">
-                {categories.map((c) => {
 
-                    const { description, image, name, slug, _id } = c;
+        <div className="grid  grid-cols-1 lg:grid-cols-2">
+            {categories.map((c) => {
 
-                    const lang = i18n.language;
-                    const translatedName = getTranslatedField(c, 'name', lang);
-                    const translatedDescription = getTranslatedField(c, 'description', lang);
+                const { description, image, name, slug, _id } = c;
 
-                    return (
-                        <CategoryCard
-                            key={name}
-                            description={translatedDescription}
-                            image={image}
-                            name={translatedName}
-                            slug={slug}
-                            handleClick={handleClick}
-                        />
-                    )
-                })}
-            </div>
+                const lang = i18n.language;
+                const translatedName = getTranslatedField(c, 'name', lang);
+                const translatedDescription = getTranslatedField(c, 'description', lang);
+
+                return (
+                    <CategoryCard
+                        key={name}
+                        description={translatedDescription}
+                        image={image}
+                        name={translatedName}
+                        slug={slug}
+                        handleClick={handleClick}
+                    />
+                )
+            })}
         </div>
+
     )
 }
 

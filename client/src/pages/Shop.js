@@ -219,41 +219,36 @@ const PageComponent = () => {
     return (
         <Fragment>
 
-            <div className="">
-                <div className="container mx-auto max-w-7xl px-6">
-
-                    <div className="flex flex-col sm:flex-row">
-                        <div className="pr-2">
-                            <ElementsMenu
-                                allElements={allCategories}
-                                selectedElement={selectedCategory}
-                                setSelectedElement={handleCategoryChange}
-                                zIndex={4}
-                            />
-                        </div>
-
-                        <div className="sm:pl-2 pt-2 sm:pt-0">
-                            <ElementsMenu
-                                allElements={selectedTypes}
-                                selectedElement={selectedType}
-                                setSelectedElement={handleTypeChange}
-                            />
-                        </div>
-                    </div>
-                    {/* xl:grid-cols-4 */}
-                    {isProductsLoading ? renderLoadCards() : renderProducts()}
-
+            <div className="flex flex-col sm:flex-row">
+                <div className="pr-2">
+                    <ElementsMenu
+                        allElements={allCategories}
+                        selectedElement={selectedCategory}
+                        setSelectedElement={handleCategoryChange}
+                        zIndex={4}
+                    />
                 </div>
 
-                {/* https://github.com/AdeleD/react-paginate */}
-                <div className="p-6">
-                    {getPagination({
-                        curPage: page,
-                        pageCount,
-                        onPageChange: ({ selected }) => setPage(selected)
-                    })}
+                <div className="sm:pl-2 pt-2 sm:pt-0">
+                    <ElementsMenu
+                        allElements={selectedTypes}
+                        selectedElement={selectedType}
+                        setSelectedElement={handleTypeChange}
+                    />
                 </div>
+            </div>
+            {/* xl:grid-cols-4 */}
+            {isProductsLoading ? renderLoadCards() : renderProducts()}
 
+
+
+            {/* https://github.com/AdeleD/react-paginate */}
+            <div className="p-6">
+                {getPagination({
+                    curPage: page,
+                    pageCount,
+                    onPageChange: ({ selected }) => setPage(selected)
+                })}
             </div>
 
         </Fragment >

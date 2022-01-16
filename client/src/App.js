@@ -85,29 +85,31 @@ function App() {
 
             <Navigation />
 
-            <Switch>
-                <Route exact path="/" component={Home} />
-                <Route exact path="/categories" component={Home} />
-                <Route exact path="/shop/:categoryParam?/:typeParam?/:pageParam?/" component={Shop} />
-                <Route exact path="/product/:productSlugParam" component={ProductPage} />
-                <Route exact path="/login" component={Login} />
-                <Route exact path="/register" component={Register} />
-                <Route exact path="/checkout" component={Checkout} />
+            <div className="container max-w-7xl mx-auto px-2">
+                <Switch>
+                    <Route exact path="/" component={Home} />
+                    <Route exact path="/categories" component={Home} />
+                    <Route exact path="/shop/:categoryParam?/:typeParam?/:pageParam?/" component={Shop} />
+                    <Route exact path="/product/:productSlugParam" component={ProductPage} />
+                    <Route exact path="/login" component={Login} />
+                    <Route exact path="/register" component={Register} />
+                    <Route exact path="/checkout" component={Checkout} />
 
-                <UserRoute exact path="/user/orders" component={Orders} />
-                <UserRoute exact path="/user/settings" component={Settings} />
+                    <UserRoute exact path="/user/orders" component={Orders} />
+                    <UserRoute exact path="/user/settings" component={Settings} />
 
-                <AdminRoute exact path="/admin/list-categories" component={ListCategories} />
-                <AdminRoute exact path="/admin/create-category" component={CreateCategory} />
-                <AdminRoute exact path="/admin/edit-category/:categorySlugParam" component={EditCategory} />
+                    <AdminRoute exact path="/admin/list-categories" component={ListCategories} />
+                    <AdminRoute exact path="/admin/create-category" component={CreateCategory} />
+                    <AdminRoute exact path="/admin/edit-category/:categorySlugParam" component={EditCategory} />
 
-                <AdminRoute exact path="/admin/list-products" component={ListProducts} />
-                <AdminRoute exact path="/admin/create-product" component={CreateProduct} />
-                <AdminRoute exact path="/admin/edit-product/:productSlugParam" component={EditProduct} />
+                    <AdminRoute exact path="/admin/list-products" component={ListProducts} />
+                    <AdminRoute exact path="/admin/create-product" component={CreateProduct} />
+                    <AdminRoute exact path="/admin/edit-product/:productSlugParam" component={EditProduct} />
 
-                <AdminRoute exact path="/admin/update-orders" component={UpdateOrders} />
+                    <AdminRoute exact path="/admin/update-orders" component={UpdateOrders} />
 
-            </Switch>
+                </Switch>
+            </div>
         </Fragment>
     );
 }
