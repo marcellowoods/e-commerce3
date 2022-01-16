@@ -260,7 +260,7 @@ const BraceletSizeSelector = ({ selectedSize, setSelectedSize, productSize }) =>
 
             <RadioGroup value={selectedSizeType} onChange={handleSizeSelect} className="mt-4">
                 <RadioGroup.Label className="sr-only">Choose a size</RadioGroup.Label>
-                <div className="flex flex-col sm:flex-row gap-4">
+                <div className="flex flex-col lg:flex-row gap-4">
                     {sizeTypes.map((size) => (
                         <RadioGroup.Option
                             key={size.name}
