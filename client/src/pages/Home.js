@@ -11,7 +11,7 @@ import { t } from "i18next";
 const CategoryCard = ({ handleClick, description, image, name, slug }) => {
 
     return (
-        <div onClick={() => handleClick(slug)} className="relative cursor-pointer h-64 rounded-lg overflow-hidden bg-cover bg-center m-4" style={{ backgroundImage: `url(${image})` }}>
+        <div onClick={() => handleClick(slug)} className="relative cursor-pointer h-64 rounded-lg overflow-hidden bg-cover bg-center my-4 sm:mx-4" style={{ backgroundImage: `url(${image})` }}>
             {/* <div className="bg-gray-900 bg-opacity-50 flex items-end h-full">
                 <div className="px-10 py-10 max-w-xl">
                     <h2 className="text-2xl text-white font-semibold">{name}</h2>

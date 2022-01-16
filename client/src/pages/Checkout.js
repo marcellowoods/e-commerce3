@@ -104,13 +104,13 @@ const Checkout = () => {
         }
         try {
             //clear cart
-        
+
             let res = await postFn();
             clearCart(dispatch);
             dispatch({ type: "ORDER_SUCCESS_MODAL_TOGGLE", payload: true });
             history.push("/");
             // setOrderSentLoading(false);
-        console.log(res);
+            console.log(res);
         } catch (error) {
             alert(error);
             setOrderSentLoading(false);
@@ -256,7 +256,8 @@ const Checkout = () => {
     }
 
     return (
-        <div className="container max-w-7xl mx-auto px-2">
+
+        <div className="">
             <ConfirmOrder
                 onConfirmClicked={onConfirmOrderClicked}
                 deliveryAdress={deliveryAdress}
@@ -264,86 +265,84 @@ const Checkout = () => {
                 setIsOpen={setIsConfirmModalOpen}
                 isOpen={isConfirmModalOpen}
             />
-
-            <div className="container mx-auto px-6">
-                <h3 className="text-gray-700 text-2xl font-medium">{t('checkout')}</h3>
-                <div className="flex flex-col lg:flex-row mt-8">
-                    <div className="w-full lg:w-1/2 order-2">
-                        {/* <div className="flex items-center">
+            <h3 className="text-gray-700 text-2xl font-medium">{t('checkout')}</h3>
+            <div className="flex flex-col lg:flex-row mt-8">
+                <div className="w-full lg:w-1/2 order-2">
+                    {/* <div className="flex items-center">
                             <button className="flex text-sm text-blue-500 focus:outline-none"><span className="flex items-center justify-center text-white bg-blue-500 rounded-full h-5 w-5 mr-2">1</span> Contacts</button>
                             <button className="flex text-sm text-gray-700 ml-8 focus:outline-none"><span className="flex items-center justify-center border-2 border-blue-500 rounded-full h-5 w-5 mr-2">2</span> Shipping</button>
                             <button className="flex text-sm text-gray-500 ml-8 focus:outline-none" disabled><span className="flex items-center justify-center border-2 border-gray-500 rounded-full h-5 w-5 mr-2">3</span> Payments</button>
                         </div> */}
 
-                        <div className=" lg:w-3/4">
+                    <div className=" lg:w-3/4">
 
-                            {checkoutState === CheckoutStates.DELIVERY_ADDRESS && getHelperForAddressComponent()}
+                        {checkoutState === CheckoutStates.DELIVERY_ADDRESS && getHelperForAddressComponent()}
 
-                            {checkoutState === CheckoutStates.DELIVERY_COURIER && (
-                                <div>
-                                    <DeliveryMethod
-                                        selected={selectedCourier}
-                                        setSelected={setSelectedCourier}
-                                        name={t('delivery courrier')}
-                                        options={courierOptions}
-                                    />
-                                </div>
-                            )
-                            }
-                            {checkoutState === CheckoutStates.DELIVERY_METHOD && (
-                                <div>
-                                    <DeliveryMethod
-                                        selected={selectedMethod}
-                                        setSelected={setSelectedMethod}
-                                        name={t('delivery method')}
-                                        options={methodOptions}
-                                    />
-                                </div>
-                            )
-                            }
-                            {checkoutState === CheckoutStates.DELIVERY_ADDRESS && (
-                                <div>
-                                    <DeliveryAdress
-                                        name={deliveryAddressComponentName()}
-                                        deliveryAdress={deliveryAdress}
-                                        setDeliveryAddress={setDeliveryAddress}
-                                    />
-                                    <ContactInformation
-                                        contactInformation={contactInformation}
-                                        setContactInformation={setContactInformation}
-                                    />
-
-                                </div>
-                            )
-                            }
-
-                            {/* <DeliveryDate /> */}
-                            <div className="flex items-center justify-between mt-8">
-                                <button
-                                    onClick={handlePrevClick}
-                                    className="flex items-center text-gray-700 text-sm font-medium rounded hover:underline focus:outline-none"
-                                >
-                                    <svg className="h-5 w-5" fill="none" strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" viewBox="0 0 24 24" stroke="currentColor"><path d="M7 16l-4-4m0 0l4-4m-4 4h18"></path></svg>
-                                    <span className="mx-2">{t("back")}</span>
-                                </button>
-                                <button
-                                    onClick={handleNextClick}
-                                    className="flex items-center px-3 py-2 bg-blue-600 text-white text-sm font-medium rounded-md hover:bg-blue-500 focus:outline-none focus:bg-blue-500"
-                                >
-                                    <span>{t("next")}</span>
-                                    <svg className="h-5 w-5 mx-2" fill="none" strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" viewBox="0 0 24 24" stroke="currentColor"><path d="M17 8l4 4m0 0l-4 4m4-4H3"></path></svg>
-                                </button>
+                        {checkoutState === CheckoutStates.DELIVERY_COURIER && (
+                            <div>
+                                <DeliveryMethod
+                                    selected={selectedCourier}
+                                    setSelected={setSelectedCourier}
+                                    name={t('delivery courrier')}
+                                    options={courierOptions}
+                                />
                             </div>
+                        )
+                        }
+                        {checkoutState === CheckoutStates.DELIVERY_METHOD && (
+                            <div>
+                                <DeliveryMethod
+                                    selected={selectedMethod}
+                                    setSelected={setSelectedMethod}
+                                    name={t('delivery method')}
+                                    options={methodOptions}
+                                />
+                            </div>
+                        )
+                        }
+                        {checkoutState === CheckoutStates.DELIVERY_ADDRESS && (
+                            <div>
+                                <DeliveryAdress
+                                    name={deliveryAddressComponentName()}
+                                    deliveryAdress={deliveryAdress}
+                                    setDeliveryAddress={setDeliveryAddress}
+                                />
+                                <ContactInformation
+                                    contactInformation={contactInformation}
+                                    setContactInformation={setContactInformation}
+                                />
+
+                            </div>
+                        )
+                        }
+
+                        {/* <DeliveryDate /> */}
+                        <div className="flex items-center justify-between mt-8">
+                            <button
+                                onClick={handlePrevClick}
+                                className="flex items-center text-gray-700 text-sm font-medium rounded hover:underline focus:outline-none"
+                            >
+                                <svg className="h-5 w-5" fill="none" strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" viewBox="0 0 24 24" stroke="currentColor"><path d="M7 16l-4-4m0 0l4-4m-4 4h18"></path></svg>
+                                <span className="mx-2">{t("back")}</span>
+                            </button>
+                            <button
+                                onClick={handleNextClick}
+                                className="flex items-center px-3 py-2 bg-blue-600 text-white text-sm font-medium rounded-md hover:bg-blue-500 focus:outline-none focus:bg-blue-500"
+                            >
+                                <span>{t("next")}</span>
+                                <svg className="h-5 w-5 mx-2" fill="none" strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" viewBox="0 0 24 24" stroke="currentColor"><path d="M17 8l4 4m0 0l-4 4m4-4H3"></path></svg>
+                            </button>
                         </div>
                     </div>
-                    <div className="w-full mb-8 flex-shrink-0 order-1 lg:w-1/2 lg:mb-0 lg:order-2">
-                        <div className="flex justify-center lg:justify-end">
-                            <OrderItems />
-                        </div>
+                </div>
+                <div className="w-full mb-8 flex-shrink-0 order-1 lg:w-1/2 lg:mb-0 lg:order-2">
+                    <div className="flex justify-center lg:justify-end">
+                        <OrderItems />
                     </div>
                 </div>
             </div>
         </div>
+
     )
 }
 

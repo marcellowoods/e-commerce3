@@ -178,13 +178,13 @@ const ProductPage = () => {
     }
 
     return (
-        <div className="pb-10">
-            <ProductCard
-                product={product}
-                translatedName={getTranslatedName()}
-                translatedDescription={getTranslatedDescription()}
-                handleAddToCart={handleAddToCart} />
-        </div>
+
+        <ProductCard
+            product={product}
+            translatedName={getTranslatedName()}
+            translatedDescription={getTranslatedDescription()}
+            handleAddToCart={handleAddToCart} />
+
     )
 }
 
