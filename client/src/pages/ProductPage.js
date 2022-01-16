@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react'
 import { useHistory, useParams, useLocation } from "react-router-dom";
-import ProductCard from "../components/cards/ProductCard.js"
+import ProductCard from "../components/cards/ProductCard.js";
 import LoadingPage from "./LoadingPage";
 import { getProduct } from "../functions/product";
 import { addToCart } from "../actions/cartActions";
