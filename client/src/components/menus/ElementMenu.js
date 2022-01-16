@@ -55,7 +55,7 @@ const ElementsMenu = ({ allElements, selectedElement, setSelectedElement, zIndex
                 leaveFrom="transform opacity-100"
                 leaveTo="transform opacity-0 "
             >
-                <Menu.Items style={{ maxHeight: "300px" }} className="overflow-y-auto origin-top-right absolute  mt-2 w-56 rounded-md shadow-lg bg-white ring-1 ring-black ring-opacity-5 focus:outline-none">
+                <Menu.Items style={{ maxHeight: "300px" }} className="overflow-y-auto origin-top-right absolute  w-56 rounded-md shadow-lg bg-white ring-1 ring-black ring-opacity-5 focus:outline-none">
                     <div className="py-1">
                         {allElements.map((elementObj) => (
                             <Menu.Item key={elementObj.name}>

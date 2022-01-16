@@ -132,19 +132,19 @@ const UpdateOrders = () => {
                 const userToken = await user.getToken();
                 await changeStatus(orderSelected._id, newOrderStatus, userToken);
 
-                if(page === 0){
+                if (page === 0) {
                     const res = await getOrders(hideCompleted, 1, userToken);
                     onSuccessOrders(res.data);
-                }else{
+                } else {
                     //getOrders gets handled by fetchOrdersEffect;
                     setPage(0);
                 }
-                
+
             }
             setIsLoading(false);
 
         } catch (error) {
-            
+
             console.log(error);
             alert(error);
             setIsLoading(false);
@@ -177,22 +177,22 @@ const UpdateOrders = () => {
             />
 
             {/* https://medium.com/front-end-weekly/build-a-html-toggle-switch-in-just-7-lines-of-code-using-vue-tailwindcss-ed215394fcd */}
-            <div className="container max-w-7xl mx-auto pt-12 px-6">
-                <div className="flex items-center">
-                    <div
-                        onClick={hideCompletedToggle}
-                        className={classNames(hideCompleted ? 'bg-green-400' : "",
-                            "cursor-pointer w-16 h-10 flex items-center bg-gray-300 rounded-full p-1 duration-300 ease-in-out")
-                        }
-                    >
-                        <div className={classNames(hideCompleted ? 'translate-x-6' : "",
-                            "bg-white w-8 h-8 rounded-full shadow-md transform duration-300 ease-in-out")}></div>
-                    </div>
 
-                    <h3 className="pl-2 text-xl font-normal">{t("hide completed orders")}</h3>
+            <div className="flex items-center pb-4">
+                <div
+                    onClick={hideCompletedToggle}
+                    className={classNames(hideCompleted ? 'bg-green-400' : "",
+                        "cursor-pointer w-16 h-10 flex items-center bg-gray-300 rounded-full p-1 duration-300 ease-in-out")
+                    }
+                >
+                    <div className={classNames(hideCompleted ? 'translate-x-6' : "",
+                        "bg-white w-8 h-8 rounded-full shadow-md transform duration-300 ease-in-out")}></div>
                 </div>
 
-            </div >
+                <h3 className="pl-2 text-xl font-normal">{t("hide completed orders")}</h3>
+            </div>
+
+
 
             {isLoading ? <LoadingPage /> : (
 

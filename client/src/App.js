@@ -85,7 +85,7 @@ function App() {
 
             <Navigation />
 
-            <div className="container max-w-7xl mx-auto px-4 sm:px-6">
+            <div className="container max-w-7xl mx-auto px-4  pb-24">
                 <Switch>
                     <Route exact path="/" component={Home} />
                     <Route exact path="/categories" component={Home} />

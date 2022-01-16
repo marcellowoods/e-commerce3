@@ -134,7 +134,7 @@ const EditProduct = () => {
 
     return (
 
-        <div className="w-full sm:max-w-lg px-4 mx-auto mt-6">
+        <div className="w-full sm:max-w-lg px-4 mx-auto">
 
             <NameForm
                 name={name}

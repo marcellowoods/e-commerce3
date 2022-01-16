@@ -257,7 +257,7 @@ const Checkout = () => {
 
     return (
 
-        <div className="">
+        <div className="pt-6">
             <ConfirmOrder
                 onConfirmClicked={onConfirmOrderClicked}
                 deliveryAdress={deliveryAdress}

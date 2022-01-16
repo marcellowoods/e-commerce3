@@ -4,7 +4,7 @@ const Settings = () => {
 
     return (
 
-        <div className="flex justify-center pt-12">
+        <div className="flex justify-center">
             settings page
         </div>
     )

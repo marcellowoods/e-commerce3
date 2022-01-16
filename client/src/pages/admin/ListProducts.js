@@ -144,7 +144,7 @@ const ListProducts = () => {
     }
 
     return (
-        <div className="pt-4 sm:pt-16 container mx-auto max-w-2xl">
+        <div className="container mx-auto max-w-2xl">
             <div className="p-4 items-center flex justify-between">
                 <h1 className="text-2xl	font-medium	">Products</h1>
                 <button

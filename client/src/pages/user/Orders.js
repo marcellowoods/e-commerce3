@@ -62,7 +62,7 @@ const Orders = () => {
     }
 
     return (
-        <div className="container max-w-7xl mx-auto py-4 px-6">
+        <div>
             {orderSelected && (
                 <OrderDetails
                     totalCost={orderSelected.totalCost}
