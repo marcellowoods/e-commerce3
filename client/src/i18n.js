@@ -42,6 +42,8 @@ const resources = {
             "deliver to": "Deliver to",
             "phone": "Phone",
             "address": "address",
+            "city": "city",
+            "name": "name",
             "cancel": "Cancel",
             "confirm": "Confirm",
             "order successful": "Order successful",
@@ -118,6 +120,8 @@ const resources = {
             "deliver to": "Доставка за",
             "phone": "телефон",
             "address": "адрес",
+            "city": "град",
+            "name": "име",
             "cancel": "Откажи",
             "confirm": "Потвърди",
             "order successful": "Създадена поръчка",
@@ -150,7 +154,8 @@ const resources = {
             "large": "голям",
             "update status": "промени статус",
             "new status": "нов статус",
-            "hide completed orders": "Скрий завършени поръчки"
+            "hide completed orders": "Скрий завършени поръчки",
+
         }
     }
 };

@@ -69,6 +69,8 @@ const DeliveryDate = ({ deliveryDate, setDeliveryDate }) => {
 
 const DeliveryAdress = ({ name, deliveryAdress, setDeliveryAddress }) => {
 
+    const { t } = useTranslation();
+
     const handleAdressChange = (event) => {
         const value = event.target.value;
         setDeliveryAddress((prev) => {
@@ -85,24 +87,24 @@ const DeliveryAdress = ({ name, deliveryAdress, setDeliveryAddress }) => {
 
     return (
         <div className="mt-8">
-            <h4 className="text-sm text-gray-500 font-medium">{name}</h4>
-            <div className="mt-4 flex">
-                <label className="block w-3/12">
+            <h4 className="text-md text-gray-500 font-medium">{name}</h4>
+            <div className="mt-4 flex flex-col">
+                <label className="block w-44">
                     <input
                         onChange={handleCityChange}
                         value={deliveryAdress.city}
                         type="text"
-                        placeholder="City"
+                        placeholder={t("city")}
                         className="form-select text-gray-700 mt-1 block w-full"
                     />
                 </label>
-                <label className="block flex-1 ml-3">
+                <label className="block flex-1 mt-3">
                     <input
                         onChange={handleAdressChange}
                         value={deliveryAdress.address}
                         type="text"
                         className="form-input mt-1 block w-full text-gray-700"
-                        placeholder="Address"
+                        placeholder={t("address")}
                     />
                 </label>
             </div>
@@ -112,7 +114,7 @@ const DeliveryAdress = ({ name, deliveryAdress, setDeliveryAddress }) => {
 
 const ContactInformation = ({name, contactInformation, setContactInformation }) => {
 
-    const { t, i18n } = useTranslation();
+    const { t } = useTranslation();
 
     const handleEmailChange = (event) => {
         const value = event.target.value;
@@ -137,27 +139,27 @@ const ContactInformation = ({name, contactInformation, setContactInformation }) 
 
     return (
         <div className="mt-8">
-            <h4 className="text-sm text-gray-500 font-medium">{t("contact information")}</h4>
-            <label className="mt-4 block w-3/12">
+            <h4 className="text-md text-gray-500 font-medium">{t("contact information")}</h4>
+            <label className="mt-4 block w-44">
                 <input
                     onChange={handleNameChange}
                     value={contactInformation.name}
                     type="text"
-                    placeholder="name"
+                    placeholder={t("name")}
                     className="form-select text-gray-700 mt-1 block w-full"
                 />
             </label>
-            <div className="mt-3 flex">
-                <label className="block w-3/12">
+            <div className="mt-3 flex flex-col">
+                <label className="block w-44">
                     <input
                         onChange={handlePhoneChange}
                         value={contactInformation.phone}
                         type="tel"
-                        placeholder="phone"
+                        placeholder={t("phone")}
                         className="form-select text-gray-700 mt-1 block w-full"
                     />
                 </label>
-                <label className="block flex-1 ml-3">
+                <label className="block flex-1 mt-3">
                     <input
                         onChange={handleEmailChange}
                         value={contactInformation.email}
