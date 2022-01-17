@@ -3,7 +3,7 @@ import { NameForm, DescriptionForm, TranslationsForm } from "./CommonForms";
 import FileUpload from "../FileUpload";
 
 
-const ImageUrlForm = ({ imageUrl, setImageUrl }) => {
+const ImageUrlForm = ({ imageUrl, setImageUrl, uploadedImages, setUploadedImages }) => {
 
     // const [uploadedImages, setUploadedImages] = useState(
     //     {
@@ -16,9 +16,10 @@ const ImageUrlForm = ({ imageUrl, setImageUrl }) => {
     //     }
     // )
 
-    const [uploadedImages, setUploadedImages] = useState([]);
+    // const [uploadedImages, setUploadedImages] = useState([]);
     const [loading, setLoading] = useState(false);
 
+    // useDidMountEffect to keep the url on load
     useEffect(() => {
         if (uploadedImages.length && uploadedImages[0].url) {
             const url = uploadedImages[0].url

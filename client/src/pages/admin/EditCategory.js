@@ -7,125 +7,13 @@ import { useAsync, useDidMountEffect } from "../../auxiliary/reactUtils"
 import LoadingPage from "../LoadingPage";
 import FileUpload from "../../components/forms/FileUpload";
 
-function classNames(...classes) {
-    return classes.filter(Boolean).join(' ')
-}
+import {
+    NameForm,
+    DescriptionForm,
+    ImageUrlForm,
+    TranslationsForm
+} from "../../components/forms/CRUDForms/CategoryForms";
 
-const NameForm = ({ name, setName }) => {
-    return (
-        <div className="p-4">
-            <label htmlFor="price" className="block text-sm font-medium text-gray-700">
-                Name
-            </label>
-            <div className="mt-1 relative rounded-md shadow-sm">
-
-                <input
-                    value={name}
-                    onChange={(e) => setName(e.target.value)}
-                    type="text"
-                    name="name"
-                    id="name"
-                    className="focus:ring-indigo-500 focus:border-indigo-500 block w-full  pr-12 sm:text-sm border-gray-300 rounded-md  ease-linear transition-all duration-150"
-                />
-
-            </div>
-        </div>
-    )
-}
-
-const ImageUrlForm = ({ imageUrl, setImageUrl, uploadedImages, setUploadedImages }) => {
-
-    // const [uploadedImages, setUploadedImages] = useState(
-    //     {
-    //         images: [
-    //             {url: "https://media.gq-magazine.co.uk/photos/5fca181eea319833403830dc/master/w_2121,c_limit/04112020_Watches_14.jpg",
-    //             public_id: 123},
-    //             {url: "https://media.gq-magazine.co.uk/photos/5fca181eea319833403830dc/master/w_2121,c_limit/04112020_Watches_14.jpg",
-    //             public_id: 123},
-    //         ]
-    //     }
-    // )
-
-    // const [uploadedImages, setUploadedImages] = useState([]);
-    const [loading, setLoading] = useState(false);
-
-    // useDidMountEffect to keep the url on load
-    useEffect(() => {
-        if (uploadedImages.length && uploadedImages[0].url) {
-            const url = uploadedImages[0].url
-            setImageUrl(url);
-        } else {
-            setImageUrl("");
-        }
-
-    }, [uploadedImages])
-
-    const isInputDisabled = () => uploadedImages.length;
-
-    const onInputChange = (e) => {
-
-        if (isInputDisabled()) {
-            window.alert("remove uploaded image first")
-        } else {
-            setImageUrl(e.target.value)
-        }
-    }
-
-    return (
-        <div className="p-4">
-            <label htmlFor="price" className="block text-sm font-medium text-gray-700">
-                Image
-            </label>
-            <div className="mt-1 relative rounded-md shadow-sm">
-
-                <input
-                    value={imageUrl}
-                    onChange={onInputChange}
-                    type="text"
-                    name="name"
-                    disabled={isInputDisabled()}
-                    placeholder="paste a link or upload image"
-                    id="name"
-                    className="focus:ring-indigo-500 focus:border-indigo-500 block w-full  pr-12 sm:text-sm border-gray-300 rounded-md  ease-linear transition-all duration-150"
-                />
-
-            </div>
-
-            <div className="pb-4">
-                <FileUpload
-                    images={uploadedImages}
-                    setImages={setUploadedImages}
-                    setLoading={setLoading}
-                    singleUpload={true}
-                />
-            </div>
-
-        </div>
-    )
-}
-
-const DescriptionForm = ({ description, setDescription }) => {
-    return (
-        <div className="p-4">
-            <label htmlFor="price" className="block text-sm font-medium text-gray-700">
-                Description
-            </label>
-            <div className="mt-1 relative rounded-md shadow-sm">
-
-                <textarea
-                    rows={4}
-                    value={description}
-                    onChange={(e) => setDescription(e.target.value)}
-                    type="text"
-                    name="name"
-                    id="name"
-                    className="focus:ring-indigo-500 focus:border-indigo-500 block w-full  pr-12 sm:text-sm border-gray-300 rounded-md  ease-linear transition-all duration-150"
-                />
-
-            </div>
-        </div>
-    )
-}
 
 //more forms
 //https://tailwindcomponents.com/component/account-card
@@ -144,6 +32,7 @@ const EditCategory = () => {
     const [imageUrl, setImageUrl] = useState("");
     const [uploadedImages, setUploadedImages] = useState([]);
     const [isCategoryLoading, setIsCategoryLoading] = useState(true);
+    const [translations, setTranslations] = useState([]);
 
     const { user } = useSelector((state) => ({ ...state }));
 
@@ -152,6 +41,9 @@ const EditCategory = () => {
         console.log(category.image);
         setImageUrl(category.image);
         setDescription(category.description);
+        if (category.translations) {
+            setTranslations(category.translations);
+        }
     }
 
     useEffect(async () => {
@@ -162,7 +54,7 @@ const EditCategory = () => {
             console.log(category);
             setCategoryParams(category);
             let { data: imgsWithIds } = await getImageIds([category.image], userToken);
-            if(imgsWithIds.length){
+            if (imgsWithIds.length) {
                 console.log(imgsWithIds);
                 setUploadedImages(imgsWithIds);
             }
@@ -176,7 +68,7 @@ const EditCategory = () => {
 
     const handleUpdate = async () => {
 
-        const updatedCategory = { name, description, image: imageUrl };
+        const updatedCategory = { name, description, image: imageUrl, translations };
 
         try {
             const userToken = await user.getToken();
@@ -214,6 +106,13 @@ const EditCategory = () => {
             <DescriptionForm
                 description={description}
                 setDescription={setDescription}
+            />
+
+            <h3 className="pt-12 text-center">translations</h3>
+
+            <TranslationsForm
+                translations={translations}
+                setTranslations={setTranslations}
             />
 
             <div className="p-4 float-right">

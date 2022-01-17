@@ -31,6 +31,7 @@ const CreateCategory = () => {
     const [description, setDescription] = useState("");
     const [imageUrl, setImageUrl] = useState("");
     const [translations, setTranslations] = useState([]);
+    const [uploadedImages, setUploadedImages] = useState([]);
 
     const { user } = useSelector((state) => ({ ...state }));
 
@@ -73,6 +74,8 @@ const CreateCategory = () => {
             <ImageUrlForm
                 imageUrl={imageUrl}
                 setImageUrl={setImageUrl}
+                uploadedImages={uploadedImages}
+                setUploadedImages={setUploadedImages}
             />
 
 

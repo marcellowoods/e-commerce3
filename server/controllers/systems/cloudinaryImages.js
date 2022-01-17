@@ -87,8 +87,12 @@ const getImagesFromUrls = async (imageUrls) => {
 
     try {
         const cloudinaryImages = await getAllImages();
-
+        
+        if(!cloudinaryImages){
+            return []
+        }
         let imagesWithIds = [];
+
         imageUrls.forEach(imgUrl => {
             let imgWithId = cloudinaryImages.find(({ url }) => url == imgUrl);
             if (imgWithId) {

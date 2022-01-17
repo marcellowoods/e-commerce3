@@ -4,6 +4,10 @@ const Sub = require("../models/sub");
 const slugify = require("slugify");
 const { removeImagesFromUrls } = require("./systems/cloudinaryImages");
 
+let slugifyLower = (str) => {
+    return slugify(str, { lower: true });
+}
+
 exports.create = async (req, res) => {
     try {
         const { name, description, translations, image } = req.body;
@@ -40,11 +44,13 @@ exports.read = async (req, res) => {
 };
 
 exports.update = async (req, res) => {
-    const { name, description, image } = req.body;
+
+    req.body.slug = slugifyLower(req.body.name);
+    
     try {
         const updated = await Category.findOneAndUpdate(
             { slug: req.params.slug },
-            { name, description, image, slug: slugify(name) },
+            req.body,
             { new: true }
         );
         res.json(updated);
