@@ -71,7 +71,15 @@ const EditProduct = () => {
         } else {
             setSelectedCategory(categories[0]);
         }
+        if (product.translations) {
+            setTranslations(product.translations);
+        }
+        if (product.size) {
+            setSize(product.size);
+        }
         setQuantity(product.quantity);
+
+
     }
 
     useEffect(async () => {
