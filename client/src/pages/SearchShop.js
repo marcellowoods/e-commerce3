@@ -7,25 +7,16 @@ import ProductShopCard from "../components/cards/ProductShopCard";
 import ProductLoadCard from "../components/cards/ProductLoadCard";
 import LoadingPage from "./LoadingPage";
 import { getCategories } from "../functions/category";
-import { getProducts } from "../functions/product";
+import { getProductByText } from "../functions/product";
 import ElementsMenu from "../components/menus/ElementMenu";
-import { useAsyncDidMount, useAsync } from "../auxiliary/reactUtils";
+import { useAsyncDidMount, useDidMountEffect, useAsync } from "../auxiliary/reactUtils";
 
 import { useTranslation } from 'react-i18next';
 import { getTranslatedField } from "../actions/translateActions";
 
-const SHOP_PATHNAME = "/search-shop/";
+const SHOP_PATHNAME = "/search/";
 const PRODUCT_PATHNAME = "/product/";
 const PRODUCTS_PER_PAGE = 6;
-
-const useDidMountEffect = (func, deps) => {
-    const didMount = useRef(false);
-
-    useEffect(() => {
-        if (didMount.current) func();
-        else didMount.current = true;
-    }, deps);
-}
 
 function isNumeric(value) {
     return /^-?\d+$/.test(value);
@@ -50,55 +41,26 @@ const PageComponent = () => {
 
     const { t, i18n } = useTranslation();
 
-    // useAsync(
-    //     getCategories,
-    //     setAllCategories,
-    //     null,
-    //     []
-    // );
+    useAsync(
+        fetchProductsByText,
+        onSuccessProducts,
+        setIsProductsLoading,
+        [searchText, page]
+    );
 
-    useDidMountEffect(() => {
+    useEffect(() => {
 
         // console.log(typeParam);
-
-        if (allCategories) {
-            if (categoryParam) {
-                const categoryObj = allCategories.find(c => c.slug == categoryParam);
-                if (categoryObj) {
-                    setSelectedCategory(categoryObj);
-                } else {
-                    alert("wrong url");
-                    history.push('/');
-                    return;
-                }
+        if (pageParam) {
+            if (isNumeric(pageParam)) {
+                setPage(parseInt(pageParam) - 1);
             } else {
-                setSelectedCategory(allCategories[0]);
+                alert("wrong url");
+                history.push('/');
+                return;
             }
-
-            if (typeParam) {
-                const typeObj = selectedTypes.find(c => c.slug == typeParam);
-                if (typeObj) {
-                    setSelectedType(typeObj);
-                } else {
-                    alert("wrong url");
-                    history.push('/');
-                    return;
-                }
-            }
-
-            if (pageParam) {
-                if (isNumeric(pageParam)) {
-                    setPage(parseInt(pageParam) - 1);
-                } else {
-
-                    alert("wrong url");
-                    history.push('/');
-                    return;
-                }
-
-            }
-
         }
+
 
     }, [pageParam])
 
@@ -113,7 +75,7 @@ const PageComponent = () => {
     }, [page]);
 
     const fetchProductsByText = async () => {
-        return getProducts(searchText, page + 1);
+        return getProductByText(searchText, page + 1);
     }
 
     const onSuccessProducts = (data) => {
@@ -132,13 +94,6 @@ const PageComponent = () => {
         const countPages = Math.ceil(total / perPage);
         setPageCount(countPages);
     }
-
-    useAsyncDidMount(
-        fetchProducts,
-        onSuccessProducts,
-        setIsProductsLoading,
-        [searchText, page]
-    );
 
     const pushToProductPage = (id) => {
         history.push(PRODUCT_PATHNAME + id)

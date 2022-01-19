@@ -9,7 +9,7 @@ import LoadingPage from "./LoadingPage";
 import { getCategories } from "../functions/category";
 import { getProducts } from "../functions/product";
 import ElementsMenu from "../components/menus/ElementMenu";
-import { useAsyncDidMount, useAsync } from "../auxiliary/reactUtils";
+import { useAsyncDidMount, useDidMountEffect, useAsync } from "../auxiliary/reactUtils";
 
 import { useTranslation } from 'react-i18next';
 import { getTranslatedField } from "../actions/translateActions";
@@ -17,15 +17,6 @@ import { getTranslatedField } from "../actions/translateActions";
 const SHOP_PATHNAME = "/shop/";
 const PRODUCT_PATHNAME = "/product/";
 const PRODUCTS_PER_PAGE = 6;
-
-const useDidMountEffect = (func, deps) => {
-    const didMount = useRef(false);
-
-    useEffect(() => {
-        if (didMount.current) func();
-        else didMount.current = true;
-    }, deps);
-}
 
 function isNumeric(value) {
     return /^-?\d+$/.test(value);
