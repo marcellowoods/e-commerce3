@@ -1,6 +1,7 @@
 const Product = require("../models/product");
 const { removeImagesFromUrls } = require("./systems/cloudinaryImages");
 const slugify = require("slugify");
+const mongoose = require("mongoose");
 
 const {
     getCloudinaryImages
@@ -105,28 +106,35 @@ exports.list = async (req, res) => {
     try {
 
         // createdAt/updatedAt, desc/asc, 3
-        const { sort, order, page } = req.body;
+        const { sort, category, page } = req.body;
         const currentPage = page || 1;
         const perPage = 6; // 3
 
         const skip = (currentPage - 1) * perPage;
+        
 
-        let sortObj = null;
+        let sortObj = [];
         if (sort == "best sellers") {
-            sortObj = { sold: -1 };
+            sortObj.push({ $sort: { sold: -1 } });
+            
         } else if (sort == "new") {
-            console.log("new")
-            sortObj = { createdAt: -1 };
+            sortObj.push({ $sort: { createdAt: -1 } });
+        }
+
+        let categoryMatch = [];
+        if(category){
+            categoryMatch.push({ $match: { category: new mongoose.Types.ObjectId(category)} });
         }
 
 
         const data = await Product.aggregate([
             { $match: { quantity: { $gte: 1 } } }, //quantity must be greater then equal to one
+            ...categoryMatch,
             {
                 $facet: {
                     metadata: [{ $count: 'total' }],
                     data: [
-                        { $sort: sortObj },
+                        ...sortObj,
                         { $skip: skip },
                         { $limit: perPage }
                     ]

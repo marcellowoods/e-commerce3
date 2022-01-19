@@ -124,7 +124,7 @@ const PageComponent = () => {
     }, [selectedCategory, selectedType, page]);
 
     const fetchProducts = async () => {
-        return getProducts(selectedType.name, null, page + 1);
+        return getProducts(selectedType.name, selectedCategory._id, page + 1);
     }
 
     const onSuccessProducts = (data) => {

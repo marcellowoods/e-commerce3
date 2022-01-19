@@ -31,8 +31,6 @@ const CheckoutStates = {
     "DELIVERY_ADDRESS": 3,
 }
 
-const SHOP_PATHNAME = "/shop/";
-
 const Checkout = () => {
 
     const history = useHistory();
@@ -53,7 +51,6 @@ const Checkout = () => {
 
     const [isConfirmModalOpen, setIsConfirmModalOpen] = useState(false);
     const [orderSentLoading, setOrderSentLoading] = useState(false);
-    const [successfulOrderModal, setSuccessfulOrderModal] = useState(false);
 
     const { user, cart } = useSelector((state) => ({ ...state }));
     const { cartItems } = cart;
