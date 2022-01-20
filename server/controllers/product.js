@@ -205,21 +205,43 @@ exports.getProductsByText = async (req, res) => {
 
     const skip = (currentPage - 1) * perPage;
 
-    // const products = await Product.find(keyword)
-    //     .populate("category", "_id name")
-    //     .populate("subs", "_id name")
-    //     .populate("postedBy", "_id name")
-    //     .exec();
 
+    //add fields
+    //https://docs.mongodb.com/manual/reference/operator/aggregation/addFields/#mongodb-pipeline-pipe.-addFields
     const data = await Product.aggregate([
-        { $match: { quantity: { $gte: 1 } } }, //quantity must be greater then equal to one
+
         {
-            $match: {
-                name: {
-                    $regex: query,
-                    $options: 'i',
-                }
+            $addFields: {
+                translationsCopy: "$translations",
             }
+        },
+        {
+            $unwind: {
+                path: `$translationsCopy`,
+                preserveNullAndEmptyArrays: true
+            }
+        },
+        { $match: { quantity: { $gte: 1 } } }, //quantity must be greater then equal to one
+
+        {
+            $match:
+            {
+                $or: [
+                    {
+                        name: {
+                            $regex: query,
+                            $options: 'i',
+                        }
+                    },
+                    {
+                        "translationsCopy.name": {
+                            $regex: query,
+                            $options: 'i',
+                        }
+                    }
+                ]
+            }
+
         },
         {
             $facet: {
@@ -232,7 +254,7 @@ exports.getProductsByText = async (req, res) => {
         }
     ]).exec();
 
-    console.log(data);
+    console.log(data[0].metadata);
 
     res.json(data[0]);
 };
