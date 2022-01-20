@@ -12,6 +12,7 @@ import AdminRoute from "./components/routes/UserRoute";
 
 import LoadingPage from "./pages/LoadingPage";
 import Shop from "./pages/Shop";
+import SearchShop from "./pages/SearchShop";
 import ProductPage from "./pages/ProductPage";
 import Checkout from "./pages/Checkout";
 
@@ -90,6 +91,7 @@ function App() {
                     <Route exact path="/" component={Home} />
                     <Route exact path="/categories" component={Home} />
                     <Route exact path="/shop/:categoryParam?/:typeParam?/:pageParam?/" component={Shop} />
+                    <Route exact path="/search/:textParam?/:pageParam?" component={SearchShop} />
                     <Route exact path="/product/:productSlugParam" component={ProductPage} />
                     <Route exact path="/login" component={Login} />
                     <Route exact path="/register" component={Register} />

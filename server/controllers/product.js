@@ -225,13 +225,14 @@ exports.getProductsByText = async (req, res) => {
             $facet: {
                 metadata: [{ $count: 'total' }],
                 data: [
-                    ...sortObj,
                     { $skip: skip },
                     { $limit: perPage }
                 ]
             }
         }
     ]).exec();
+
+    console.log(data);
 
     res.json(data[0]);
 };

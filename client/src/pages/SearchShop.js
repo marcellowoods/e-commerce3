@@ -29,7 +29,7 @@ const selectedTypes = [
 
 const PageComponent = () => {
 
-    const { searchText, pageParam } = useParams();
+    const { textParam, pageParam } = useParams();
 
     const history = useHistory();
     const [products, setProducts] = useState(null);
@@ -41,11 +41,32 @@ const PageComponent = () => {
 
     const { t, i18n } = useTranslation();
 
+    const fetchProductsByText = async () => {
+        return getProductByText(textParam, page + 1);
+    }
+
+    const onSuccessProducts = (data) => {
+
+        const { data: productsData, metadata: productsMetadata } = data;
+
+        if (productsData.length === 0) {
+            setProducts([]);
+            setPageCount(0);
+            return;
+        }
+        const perPage = PRODUCTS_PER_PAGE;
+
+        setProducts(productsData);
+        const { total } = productsMetadata[0];
+        const countPages = Math.ceil(total / perPage);
+        setPageCount(countPages);
+    }
+
     useAsync(
         fetchProductsByText,
         onSuccessProducts,
         setIsProductsLoading,
-        [searchText, page]
+        [textParam, page]
     );
 
     useEffect(() => {
@@ -66,7 +87,7 @@ const PageComponent = () => {
 
     useDidMountEffect(() => {
 
-        let path = SHOP_PATHNAME + searchText;
+        let path = SHOP_PATHNAME + textParam;
 
         path += ("/" + (page + 1));
 
@@ -74,26 +95,6 @@ const PageComponent = () => {
 
     }, [page]);
 
-    const fetchProductsByText = async () => {
-        return getProductByText(searchText, page + 1);
-    }
-
-    const onSuccessProducts = (data) => {
-
-        const { data: productsData, metadata: productsMetadata } = data;
-
-        if (productsData.length === 0) {
-            setProducts([]);
-            setPageCount(0);
-            return;
-        }
-        const perPage = PRODUCTS_PER_PAGE;
-
-        setProducts(productsData);
-        const { total } = productsMetadata[0];
-        const countPages = Math.ceil(total / perPage);
-        setPageCount(countPages);
-    }
 
     const pushToProductPage = (id) => {
         history.push(PRODUCT_PATHNAME + id)
@@ -153,7 +154,7 @@ const PageComponent = () => {
         )
     }
 
-    if (products == null || allCategories == null || selectedCategory == null) {
+    if (products == null) {
 
         return (
             <LoadingPage />

@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import { useHistory, useParams } from "react-router-dom";
 import "./style.css";
 
 import { useTranslation } from 'react-i18next';
@@ -8,11 +9,14 @@ const SearchBar = ({ cname }) => {
 
     const { t } = useTranslation();
     const [text, setText] = useState("");
+    const history = useHistory();
 
     const handleSubmit = (e) => {
 
         e.preventDefault();
-        console.log(text)
+        console.log(text);
+        const url = "/search/" + text + "/1";
+        history.push(url);
     }
 
     const handleInputChange = (e) => {
