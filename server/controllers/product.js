@@ -208,6 +208,16 @@ exports.getProductsByText = async (req, res) => {
 
     //add fields
     //https://docs.mongodb.com/manual/reference/operator/aggregation/addFields/#mongodb-pipeline-pipe.-addFields
+
+    //How to get all result if unwind field does not exist in mongodb
+    // {
+    //     $unwind:
+    //       {
+    //         path: "$translations",
+    //         preserveNullAndEmptyArrays: true
+    //       }
+    //   }
+
     const data = await Product.aggregate([
 
         {
