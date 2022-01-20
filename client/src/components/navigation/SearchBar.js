@@ -14,8 +14,13 @@ const SearchBar = ({ cname }) => {
     const handleSubmit = (e) => {
 
         e.preventDefault();
-        console.log(text);
-        const url = "/search/" + text + "/1";
+        let url = "";
+        if (text == "") {
+            url = "/shop/";
+        } else {
+            url = "/search/" + text + "/1";
+        }
+        
         history.push(url);
     }
 
