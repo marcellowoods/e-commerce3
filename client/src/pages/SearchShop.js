@@ -99,17 +99,17 @@ const PageComponent = () => {
         history.push(PRODUCT_PATHNAME + id)
     }
 
-    const handleCategoryChange = (category) => {
+    // const handleCategoryChange = (category) => {
 
-        setSelectedCategory(category);
-        setPage(0);
-    }
+    //     setSelectedCategory(category);
+    //     setPage(0);
+    // }
 
-    const handleTypeChange = (type) => {
+    // const handleTypeChange = (type) => {
 
-        setSelectedType(type);
-        setPage(0);
-    }
+    //     setSelectedType(type);
+    //     setPage(0);
+    // }
 
     const renderProducts = () => (
         <div key={"products"} className="grid gap-6 grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 mt-6">

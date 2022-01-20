@@ -31,7 +31,7 @@ router.post("/products", list);
 // related
 router.get("/product/related/:productId", listRelated);
 // filter only by text
-router.get("/search/from-text", getProductsByText);
+router.get("/search/:text/:page", getProductsByText);
 
 
 module.exports = router;

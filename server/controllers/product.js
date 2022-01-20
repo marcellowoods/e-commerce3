@@ -111,19 +111,19 @@ exports.list = async (req, res) => {
         const perPage = 6; // 3
 
         const skip = (currentPage - 1) * perPage;
-        
+
 
         let sortObj = [];
         if (sort == "best sellers") {
             sortObj.push({ $sort: { sold: -1 } });
-            
+
         } else if (sort == "new") {
             sortObj.push({ $sort: { createdAt: -1 } });
         }
 
         let categoryMatch = [];
-        if(category){
-            categoryMatch.push({ $match: { category: new mongoose.Types.ObjectId(category)} });
+        if (category) {
+            categoryMatch.push({ $match: { category: new mongoose.Types.ObjectId(category) } });
         }
 
 
@@ -189,7 +189,8 @@ exports.listRelated = async (req, res) => {
 // SERACH / FILTER
 exports.getProductsByText = async (req, res) => {
 
-    const query = req.query.title;
+    const query = req.params.text;
+    const page = req.params.page;
 
     //using regex
     const keyword = {
@@ -199,16 +200,40 @@ exports.getProductsByText = async (req, res) => {
         },
     }
 
-    //using text search
-    // const keyword = { $text: { $search: query } }
+    const currentPage = page || 1;
+    const perPage = 6; // 3
 
-    const products = await Product.find(keyword)
-        .populate("category", "_id name")
-        .populate("subs", "_id name")
-        .populate("postedBy", "_id name")
-        .exec();
+    const skip = (currentPage - 1) * perPage;
 
-    res.json(products);
+    // const products = await Product.find(keyword)
+    //     .populate("category", "_id name")
+    //     .populate("subs", "_id name")
+    //     .populate("postedBy", "_id name")
+    //     .exec();
+
+    const data = await Product.aggregate([
+        { $match: { quantity: { $gte: 1 } } }, //quantity must be greater then equal to one
+        {
+            $match: {
+                name: {
+                    $regex: query,
+                    $options: 'i',
+                }
+            }
+        },
+        {
+            $facet: {
+                metadata: [{ $count: 'total' }],
+                data: [
+                    ...sortObj,
+                    { $skip: skip },
+                    { $limit: perPage }
+                ]
+            }
+        }
+    ]).exec();
+
+    res.json(data[0]);
 };
 
 

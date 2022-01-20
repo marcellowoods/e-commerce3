@@ -57,7 +57,7 @@ export const getFilters = async (arg) =>
     await axios.post(`${process.env.REACT_APP_API}/search/filters`, arg);
 
 export const getProductByText = async (text, page) =>
-    await axios.get(`${process.env.REACT_APP_API}/search/?title=${text}/?page=${page}`);
+    await axios.get(`${process.env.REACT_APP_API}/search/${text}/${page}`);
 
 
 
