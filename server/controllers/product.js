@@ -248,6 +248,12 @@ exports.getProductsByText = async (req, res) => {
                             $regex: query,
                             $options: 'i',
                         }
+                    },
+                    {
+                        "translationsCopy.description": {
+                            $regex: query,
+                            $options: 'i',
+                        }
                     }
                 ]
             }
