@@ -24,8 +24,12 @@ const MobileNavbarMenu = (props) => {
     useEffect(() => {
 
         const handleResize = () => {
+            
             if (document.body.style.overflow != 'unset') {
-                closeMobileNav();
+                if(window.innerWidth > 630){
+                    closeMobileNav();
+                }
+                
             }
         }
 

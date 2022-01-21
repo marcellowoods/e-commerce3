@@ -1,5 +1,6 @@
-import React, { useState } from "react";
-import { useHistory, useParams } from "react-router-dom";
+import React, { useState, useRef } from "react";
+import { useHistory } from "react-router-dom";
+import { useDispatch, useSelector } from "react-redux";
 import "./style.css";
 
 import { useTranslation } from 'react-i18next';
@@ -11,6 +12,21 @@ const SearchBar = ({ cname }) => {
     const [text, setText] = useState("");
     const history = useHistory();
 
+    const { drawerNav } = useSelector((state) => ({ ...state }));
+    const inputEl = useRef(null);
+
+    let dispatch = useDispatch();
+
+    
+
+    const closeMobileNav = () => {
+        inputEl.current.blur();
+        document.body.style.overflow = 'unset';
+        dispatch({ type: "DRAWER_NAV_TOGGLE", payload: false })
+    }
+
+    const isMobileNavOpen = () => drawerNav == true;
+
     const handleSubmit = (e) => {
 
         e.preventDefault();
@@ -20,6 +36,13 @@ const SearchBar = ({ cname }) => {
         } else {
             url = "/search/" + text + "/1";
         }
+
+        setText("");
+
+        if(isMobileNavOpen()){
+            closeMobileNav();
+        }
+        
         
         history.push(url);
     }
@@ -38,7 +61,7 @@ const SearchBar = ({ cname }) => {
                 </svg>
             </span>
 
-            <input onChange={handleInputChange} value={text}
+            <input ref={inputEl} onChange={handleInputChange} value={text}
                 className="w-full color-main-bold border border-gray-500 rounded-md pl-10 pr-4 py-2 focus:border-blue-500 focus:outline-none focus:shadow-outline" type="text" placeholder={t('search')}>
             </input>
         </form>
