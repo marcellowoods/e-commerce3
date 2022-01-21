@@ -2,6 +2,7 @@ import React, { Fragment, useEffect, useState, useRef } from "react";
 import { useHistory, useParams } from "react-router-dom";
 // import Tridi from 'react-tridi';
 import 'react-tridi/dist/index.css';
+import { XIcon } from '@heroicons/react/solid';
 import getPagination from "../components/navigation/getPagination";
 import ProductShopCard from "../components/cards/ProductShopCard";
 import ProductLoadCard from "../components/cards/ProductLoadCard";
@@ -14,7 +15,8 @@ import { useAsyncDidMount, useDidMountEffect, useAsync } from "../auxiliary/reac
 import { useTranslation } from 'react-i18next';
 import { getTranslatedField } from "../actions/translateActions";
 
-const SHOP_PATHNAME = "/search/";
+const SEARCH_PATHNAME = "/search/";
+const SHOP_PATHNAME = "/shop/";
 const PRODUCT_PATHNAME = "/product/";
 const PRODUCTS_PER_PAGE = 6;
 
@@ -62,6 +64,10 @@ const PageComponent = () => {
         setPageCount(countPages);
     }
 
+    const handleSearchClose = () => {
+        history.push(SHOP_PATHNAME);
+    }
+
     useAsync(
         fetchProductsByText,
         onSuccessProducts,
@@ -87,7 +93,7 @@ const PageComponent = () => {
 
     useDidMountEffect(() => {
 
-        let path = SHOP_PATHNAME + textParam;
+        let path = SEARCH_PATHNAME + textParam;
 
         path += ("/" + (page + 1));
 
@@ -183,6 +189,14 @@ const PageComponent = () => {
                 </div>
             </div> */}
             {/* xl:grid-cols-4 */}
+
+            <button onClick={handleSearchClose}
+                className="border-none inline-flex justify-center items-center rounded-md border-gray-300  p-2 bg-white text-sm  text-gray-700 hover:bg-gray-50 focus:outline-none  focus:ring-indigo-500">
+                <h3 className="text-gray-700 text-2xl font-normal">{textParam}</h3>
+                <XIcon className="-mr-2 ml-1 mt-2 h-6 w-6" aria-hidden="true" />
+            </button>
+
+
             {isProductsLoading ? renderLoadCards() : renderProducts()}
 
 
