@@ -189,90 +189,119 @@ exports.listRelated = async (req, res) => {
 // SERACH / FILTER
 exports.getProductsByText = async (req, res) => {
 
-    const query = req.params.text;
-    const page = req.params.page;
+    try {
+        const query = req.params.text;
+        const page = req.params.page;
 
-    //using regex
-    const keyword = {
-        title: {
-            $regex: query,
-            $options: 'i',
-        },
+        //using regex
+        const keyword = {
+            title: {
+                $regex: query,
+                $options: 'i',
+            },
+        }
+
+        const currentPage = page || 1;
+        const perPage = 6; // 3
+
+        const skip = (currentPage - 1) * perPage;
+
+
+        //add fields
+        //https://docs.mongodb.com/manual/reference/operator/aggregation/addFields/#mongodb-pipeline-pipe.-addFields
+
+        //How to get all result if unwind field does not exist in mongodb
+        // {
+        //     $unwind:
+        //       {
+        //         path: "$translations",
+        //         preserveNullAndEmptyArrays: true
+        //       }
+        //   }
+
+        const data = await Product.aggregate([
+
+            {
+                $addFields: {
+                    translationsCopy: "$translations",
+                }
+            },
+            {
+                $unwind: {
+                    path: `$translationsCopy`,
+                    preserveNullAndEmptyArrays: true
+                }
+            },
+            { $match: { quantity: { $gte: 1 } } }, //quantity must be greater then equal to one
+
+            {
+                $match:
+                {
+                    $or: [
+                        {
+                            name: {
+                                $regex: query,
+                                $options: 'i',
+                            }
+                        },
+                        {
+                            "translationsCopy.name": {
+                                $regex: query,
+                                $options: 'i',
+                            }
+                        },
+                        {
+                            "translationsCopy.description": {
+                                $regex: query,
+                                $options: 'i',
+                            }
+                        }
+                    ]
+                }
+
+            },
+            {
+                $facet: {
+                    metadata: [{ $count: 'total' }],
+                    data: [
+                        { $skip: skip },
+                        { $limit: perPage }
+                    ]
+                }
+            }
+        ]).exec();
+
+        res.json(data[0]);
+
+    } catch (err) {
+        res.status(400).json({
+            err: err.message,
+        });
     }
 
-    const currentPage = page || 1;
-    const perPage = 6; // 3
 
-    const skip = (currentPage - 1) * perPage;
-
-
-    //add fields
-    //https://docs.mongodb.com/manual/reference/operator/aggregation/addFields/#mongodb-pipeline-pipe.-addFields
-
-    //How to get all result if unwind field does not exist in mongodb
-    // {
-    //     $unwind:
-    //       {
-    //         path: "$translations",
-    //         preserveNullAndEmptyArrays: true
-    //       }
-    //   }
-
-    const data = await Product.aggregate([
-
-        {
-            $addFields: {
-                translationsCopy: "$translations",
-            }
-        },
-        {
-            $unwind: {
-                path: `$translationsCopy`,
-                preserveNullAndEmptyArrays: true
-            }
-        },
-        { $match: { quantity: { $gte: 1 } } }, //quantity must be greater then equal to one
-
-        {
-            $match:
-            {
-                $or: [
-                    {
-                        name: {
-                            $regex: query,
-                            $options: 'i',
-                        }
-                    },
-                    {
-                        "translationsCopy.name": {
-                            $regex: query,
-                            $options: 'i',
-                        }
-                    },
-                    {
-                        "translationsCopy.description": {
-                            $regex: query,
-                            $options: 'i',
-                        }
-                    }
-                ]
-            }
-
-        },
-        {
-            $facet: {
-                metadata: [{ $count: 'total' }],
-                data: [
-                    { $skip: skip },
-                    { $limit: perPage }
-                ]
-            }
-        }
-    ]).exec();
-
-    console.log(data[0].metadata);
-
-    res.json(data[0]);
 };
+
+exports.listBySlugs = async (req, res) => {
+
+    try {
+        let slugs = req.params.slugs.split(',');
+
+        console.log(slugs);
+
+        let products = await Product.find(
+            { slug: { $in: slugs } }
+        )
+
+        res.json(products);
+    } catch (err) {
+        res.status(400).json({
+            err: err.message,
+        });
+    }
+
+};
+
+
 
 
