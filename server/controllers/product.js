@@ -288,6 +288,7 @@ exports.listBySlugs = async (req, res) => {
         let slugs = req.params.slugs.split(',');
 
         console.log(slugs);
+        console.log("LIST BY SLUGS")
 
         let products = await Product.find(
             { slug: { $in: slugs } }

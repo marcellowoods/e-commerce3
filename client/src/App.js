@@ -33,8 +33,9 @@ import EditCategory from "./pages/admin/EditCategory";
 
 import UpdateOrders from "./pages/admin/UpdateOrders";
 
-
 import Home from "./pages/Home";
+
+import { filterCart } from "./actions/cartActions";
 
 import {
     onIdTokenChanged
@@ -72,6 +73,8 @@ function App() {
 
     useEffect(() => {
         const unsubscribe = onAuthStateChanged(isLoading, setIsLoading, getOrCreateUser, onCurrentUserSuccess, onFirebaseLogout);
+
+        dispatch(filterCart());
 
         // cleanup
         return () => unsubscribe();

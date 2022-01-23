@@ -99,7 +99,7 @@ const NavbarRender = ({ mobileNavbarToggle, cartModalToggle, isAdmin }) => {
                 <div className="container mx-auto px-6 py-4 items-center max-w-7xl flex justify-between">
 
 
-                    <div className="hidden lg:flex">
+                    <div className="hidden sm:flex">
                         <ChangeLangDropdown />
                     </div>
 
