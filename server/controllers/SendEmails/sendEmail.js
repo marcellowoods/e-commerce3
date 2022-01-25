@@ -8,7 +8,7 @@ const emailTemplateSource = fs.readFileSync(path.join(__dirname, "/template.hbs"
 
 const template = handlebars.compile(emailTemplateSource)
 
-const htmlToSend = template({ message: "you order has been accepted for now" });
+const htmlToSend = template({ message: "still trying out some  nodemailer things" });
 
 const gmailUser = process.env.GMAIL_USER;
 const gmailPass = process.env.GMAIL_PASS;
