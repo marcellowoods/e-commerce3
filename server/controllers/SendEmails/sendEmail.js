@@ -17,12 +17,12 @@ var transporter = nodemailer.createTransport({
     service: 'gmail',
     auth: {
         user: gmailUser,
-        pass: "gmailPass"
+        pass: gmailPass
     }
 });
 
 var mailOptions = {
-    from: 'dankkmemes@gmail.com',
+    from: gmailUser,
     to: 'nigg234234@gmail.com',
     subject: 'trying out the mail send',
     html: htmlToSend
