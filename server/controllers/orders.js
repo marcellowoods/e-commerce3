@@ -7,6 +7,16 @@ const Order = require("../models/order");
 const asyncHandler = require('express-async-handler');
 const { roundToTwo } = require("./utils");
 
+const sendOrderEmail = () => {
+    //https://www.courier.com/blog/how-to-send-emails-with-node-js/
+    //https://www.reddit.com/r/webdev/comments/dnnoit/is_sendgrid_100_emails_per_day_or_month/
+    //https://www.reddit.com/r/laravel/comments/kowllb/best_email_provider_to_use/
+    
+
+    //https://coderrocketfuel.com/article/send-emails-with-node.js-using-mailgun-and-nodemailer
+    //https://app.mailgun.com/app/account/setup
+}
+
 getCartTotal = (cartItems) => {
 
     const totalPrice = cartItems.reduce((total, product) => {
