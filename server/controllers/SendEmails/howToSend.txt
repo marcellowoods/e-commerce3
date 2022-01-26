@@ -1,4 +1,5 @@
 https://stackoverflow.com/questions/45478293/username-and-password-not-accepted-when-using-nodemailer
+https://codeburst.io/sending-an-email-using-nodemailer-gmail-7cfa0712a799
 
 If you have enabled 2-factor authentication on your Google account
 you can't use your regular password to access Gmail programmatically.

@@ -4,7 +4,8 @@ const fs = require("fs")
 const path = require("path");
 require("dotenv").config({path: path.resolve(__dirname, '../../.env')});
 
-const emailTemplateSource = fs.readFileSync(path.join(__dirname, "/template.hbs"), "utf8")
+// const emailTemplateSource = fs.readFileSync(path.join(__dirname, "/template.hbs"), "utf8");
+const emailTemplateSource = fs.readFileSync(path.join(__dirname, "/emailTemplate.hbs"), "utf8");
 
 const template = handlebars.compile(emailTemplateSource)
 
@@ -23,7 +24,7 @@ var transporter = nodemailer.createTransport({
 
 var mailOptions = {
     from: gmailUser,
-    to: 'nigg234234@gmail.com',
+    to: 'dabstone@protonmail.com',
     subject: 'trying out the mail send',
     html: htmlToSend
 };
