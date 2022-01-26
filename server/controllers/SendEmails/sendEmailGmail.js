@@ -13,6 +13,7 @@ const template = handlebars.compile(emailTemplateSource)
 const htmlToSend = template({ message: "still trying out some  nodemailer things" });
 
 const gmailUser = process.env.GMAIL_USER;
+//pass is revoked
 const gmailPass = process.env.GMAIL_PASS;
 
 var transporter = nodemailer.createTransport({
