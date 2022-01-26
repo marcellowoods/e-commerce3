@@ -5,6 +5,7 @@ const path = require("path");
 require("dotenv").config({path: path.resolve(__dirname, '../../.env')});
 
 // const emailTemplateSource = fs.readFileSync(path.join(__dirname, "/template.hbs"), "utf8");
+//https://bbbootstrap.com/snippets/order-confirmation-email-template-19073214
 const emailTemplateSource = fs.readFileSync(path.join(__dirname, "/emailTemplate.hbs"), "utf8");
 
 const template = handlebars.compile(emailTemplateSource)
