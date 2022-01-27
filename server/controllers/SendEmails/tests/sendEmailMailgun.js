@@ -5,13 +5,13 @@ const fs = require("fs")
 const path = require("path");
 require("dotenv").config({path: path.resolve(__dirname, '../../../.env')});
 
-const mailGunAuth = process.env.MAILGUN_AUTH;
+const mailGunAuthToken = process.env.MAILGUN_AUTH;
 
 const emailTemplateSource = fs.readFileSync(path.join(__dirname, "/template.hbs"), "utf8")
 
 const mailgunAuth = {
     auth: {
-        api_key: mailGunAuth,
+        api_key: mailGunAuthToken,
         domain: "One of your domain names listed at your https://mailgun.com/app/domains"
     }
 }
