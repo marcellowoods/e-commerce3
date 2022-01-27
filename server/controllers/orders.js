@@ -81,6 +81,7 @@ const makeOrderCreator = (withUser = false) => {
 
                 const priceFromDb = roundToTwo(productFromDb.price);
                 object.price = priceFromDb;
+                object.priceTimesCount = priceFromDb * object.selectedCount;
 
                 const availableQuantity = productFromDb.quantity;
 

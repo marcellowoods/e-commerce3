@@ -2,7 +2,7 @@ var nodemailer = require('nodemailer');
 const handlebars = require("handlebars")
 const fs = require("fs")
 const path = require("path");
-require("dotenv").config({path: path.resolve(__dirname, '../../../.env')});
+require("dotenv").config({ path: path.resolve(__dirname, '../../../.env') });
 
 
 const mailTrapUser = process.env.MAILTRAP_USER;
@@ -22,7 +22,27 @@ const emailTemplateSource = fs.readFileSync(path.join(__dirname, "/orderEmailTem
 
 const template = handlebars.compile(emailTemplateSource);
 
-const htmlToSend = template({ message: "still trying out some nodemailer things" });
+const products = [
+    { name: "g shock", selectedCount: 3, priceTimesCount: 200,  },
+    { name: "casio", selectedCount: 2, priceTimesCount: 100 },
+];
+const deliveryInfo = {
+    method: "office",
+    city: "some sity",
+    address: "address 2",
+    phone: "1234",
+    email: "test@mail.com",
+    name: "Somename",
+    courrier: "econt",
+};
+const totalCost = 300;
+
+const htmlToSend = template({
+    message: "still trying out some nodemailer things",
+    products,
+    totalCost,
+    deliveryInfo,
+});
 
 var mailOptions = {
     from: "from-example@email.com",
