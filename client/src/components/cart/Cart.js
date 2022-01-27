@@ -4,6 +4,7 @@ import CartItem from "./CartItem";
 
 import { useTranslation } from 'react-i18next';
 import { getTranslatedField } from "../../actions/translateActions";
+import { roundToTwo } from "../../auxiliary/utils";
 
 const Cart = ({ products }) => {
 
@@ -21,7 +22,7 @@ const Cart = ({ products }) => {
                 const lang = i18n.language;
 
                 const translatedName = getTranslatedField(item, 'name', lang);
-                const price = item.price + " " + t('lv.');
+                const price = roundToTwo(item.price * item.count) + " " + t('lv.');
 
                 return (
 

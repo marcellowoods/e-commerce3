@@ -7,6 +7,7 @@ import { getCartTotal } from "../../actions/cartActions";
 import { useTranslation } from 'react-i18next';
 import { getTranslatedField } from "../../actions/translateActions";
 import { Link } from "react-router-dom";
+import { roundToTwo } from "../../auxiliary/utils";
 
 const PRODUCT_PAGE_URL = "/product/";
 
@@ -209,7 +210,7 @@ const ConfirmOrder = ({ isOpen, setIsOpen, deliveryAdress, contactInformation, o
                                                     {renderName(item)}
                                                     <h3 className="pl-2 font-medium ">x{item.count}</h3>
                                                 </div>
-                                                <h3>{item.price} {" "} {t("lv.")}</h3>
+                                                <h3>{roundToTwo(item.price * item.count)} {" "} {t("lv.")}</h3>
                                             </div>
                                         )
                                     })}
