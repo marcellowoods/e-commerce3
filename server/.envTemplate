@@ -1,0 +1,17 @@
+MONGO_URI = string
+PORT=8000
+
+CLOUDINARY_CLOUD_NAME = string
+CLOUDINARY_API_KEY = string
+CLOUDINARY_API_SECRET = string
+CLOUDINARY_FOLDER = string
+
+STRIPE_SECRET=string
+
+GMAIL_USER = string
+GMAIL_PASS = string
+
+MAILTRAP_USER = string
+MAILTRAP_PASS = string
+
+MAILGUN_AUTH = string

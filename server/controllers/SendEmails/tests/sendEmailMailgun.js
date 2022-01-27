@@ -2,13 +2,16 @@ const nodemailer = require("nodemailer")
 const mg = require("nodemailer-mailgun-transport")
 const handlebars = require("handlebars")
 const fs = require("fs")
-const path = require("path")
+const path = require("path");
+require("dotenv").config({path: path.resolve(__dirname, '../../../.env')});
+
+const mailGunAuth = process.env.MAILGUN_AUTH;
 
 const emailTemplateSource = fs.readFileSync(path.join(__dirname, "/template.hbs"), "utf8")
 
 const mailgunAuth = {
     auth: {
-        api_key: "key-12341234123412341234",
+        api_key: mailGunAuth,
         domain: "One of your domain names listed at your https://mailgun.com/app/domains"
     }
 }

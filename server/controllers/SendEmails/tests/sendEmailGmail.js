@@ -2,19 +2,21 @@ var nodemailer = require('nodemailer');
 const handlebars = require("handlebars")
 const fs = require("fs")
 const path = require("path");
-require("dotenv").config({path: path.resolve(__dirname, '../../.env')});
+require("dotenv").config({path: path.resolve(__dirname, '../../../.env')});
+
+const gmailUser = process.env.GMAIL_USER;
+//pass is revoked
+const gmailPass = process.env.GMAIL_PASS;
 
 // const emailTemplateSource = fs.readFileSync(path.join(__dirname, "/template.hbs"), "utf8");
 //https://bbbootstrap.com/snippets/order-confirmation-email-template-19073214
-const emailTemplateSource = fs.readFileSync(path.join(__dirname, "/emailTemplate.hbs"), "utf8");
+const emailTemplateSource = fs.readFileSync(path.join(__dirname, "/orderEmailTemplate.hbs"), "utf8");
 
 const template = handlebars.compile(emailTemplateSource)
 
 const htmlToSend = template({ message: "still trying out some  nodemailer things" });
 
-const gmailUser = process.env.GMAIL_USER;
-//pass is revoked
-const gmailPass = process.env.GMAIL_PASS;
+
 
 var transporter = nodemailer.createTransport({
     service: 'gmail',
