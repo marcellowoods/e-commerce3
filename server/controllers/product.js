@@ -78,6 +78,15 @@ exports.read = async (req, res) => {
     res.json(product);
 };
 
+exports.readById = async (req, res) => {
+    const product = await Product.findById( req.params.id )
+        .populate("category")
+        .populate("subs")
+        .exec();
+    res.json(product);
+};
+
+
 exports.update = async (req, res) => {
 
     try {
@@ -302,6 +311,9 @@ exports.listBySlugs = async (req, res) => {
     }
 
 };
+
+
+
 
 
 

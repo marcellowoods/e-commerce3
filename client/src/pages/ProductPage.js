@@ -167,7 +167,7 @@ const ProductPage = () => {
 
     const handleAddToCart = (selectedSize) => {
         if (product !== null) {
-            dispatch(addToCart(product.slug, selectedSize, 1));
+            dispatch(addToCart(product._id, selectedSize));
             dispatch({ type: "DRAWER_CART_TOGGLE", payload: true });
         }
     }

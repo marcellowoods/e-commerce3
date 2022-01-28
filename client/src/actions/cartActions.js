@@ -1,27 +1,165 @@
 import axios from 'axios'
-import { roundToTwo } from "../auxiliary/utils"
+import { roundToTwo } from "../auxiliary/utils";
 
-export const addToCart = (id, size, count) => async (dispatch, getState) => {
+export const decreaseItemQty = (id) => async (dispatch, getState) => {
     // console.log("add to cart");
-    const { data } = await axios.get(`${process.env.REACT_APP_API}/product/${id}`);
 
-    dispatch({
-        type: "CART_ADD_ITEM",
-        payload: {
-            slug: data.slug,
-            product: data._id,
-            name: data.name,
-            image: data.images[0],
-            price: data.price,
-            countInStock: data.quantity,
-            count: count,
-            sizeBounds: data.size,
-            size: size,
-            translations: data.translations
-        },
-    })
+    const cart = getState().cart.cartItems;
 
-    localStorage.setItem('cartItems', JSON.stringify(getState().cart.cartItems))
+    const compareProducts = (existingProduct) => {
+
+        return existingProduct.product === id;
+    }
+
+    const existItem = cart.find(compareProducts);
+
+    if (!existItem) {
+        return;
+    }
+
+    const { data } = await axios.get(`${process.env.REACT_APP_API}/product-by-id/${id}`);
+
+    let productToAdd = {
+        slug: data.slug,
+        product: data._id,
+        name: data.name,
+        image: data.images[0],
+        price: data.price,
+        countInStock: data.quantity,
+        count: existItem.count - 1,
+        sizeBounds: data.size,
+        size: existItem.size,
+        translations: data.translations
+    };
+
+    if (productToAdd.count >= 1 && productToAdd.count <= productToAdd.countInStock) {
+
+        dispatch({
+            type: "CART_REMOVE_ITEM",
+            payload: productToAdd.product,
+        })
+
+
+        dispatch({
+            type: "CART_ADD_ITEM",
+            payload: productToAdd
+        })
+
+        localStorage.setItem('cartItems', JSON.stringify(getState().cart.cartItems))
+
+    } else {
+        dispatch(removeFromCart(id));
+        
+    }
+
+}
+
+export const increaseItemQty = (id) => async (dispatch, getState) => {
+    // console.log("add to cart");
+
+    const cart = getState().cart.cartItems;
+
+    const compareProducts = (existingProduct) => {
+
+        return existingProduct.product === id;
+    }
+
+    const existItem = cart.find(compareProducts);
+
+    if (!existItem) {
+        return;
+    }
+
+    const { data } = await axios.get(`${process.env.REACT_APP_API}/product-by-id/${id}`);
+
+    console.log(data);
+
+    let productToAdd = {
+        slug: data.slug,
+        product: data._id,
+        name: data.name,
+        image: data.images[0],
+        price: data.price,
+        countInStock: data.quantity,
+        count: existItem.count + 1,
+        sizeBounds: data.size,
+        size: existItem.size,
+        translations: data.translations
+    };
+
+    if (productToAdd.count <= productToAdd.countInStock) {
+
+        dispatch({
+            type: "CART_REMOVE_ITEM",
+            payload: productToAdd.product,
+        })
+
+
+        dispatch({
+            type: "CART_ADD_ITEM",
+            payload: productToAdd
+        })
+
+        localStorage.setItem('cartItems', JSON.stringify(getState().cart.cartItems))
+
+    } else {
+        window.alert("not enough quantity in stock");
+    }
+
+
+}
+
+export const addToCart = (id, size) => async (dispatch, getState) => {
+    // console.log("add to cart");
+    const { data } = await axios.get(`${process.env.REACT_APP_API}/product-by-id/${id}`);
+
+    let productToAdd = {
+        slug: data.slug,
+        product: data._id,
+        name: data.name,
+        image: data.images[0],
+        price: data.price,
+        countInStock: data.quantity,
+        count: 1,
+        sizeBounds: data.size,
+        size: size,
+        translations: data.translations
+    };
+
+    const cart = getState().cart.cartItems;
+
+    const compareProducts = (existingProduct) => {
+
+        return existingProduct.product === productToAdd.product && existingProduct.size == productToAdd.size;
+    }
+
+    const existItem = cart.find(compareProducts);
+
+    if (existItem) {
+        productToAdd.count += existItem.count;
+    }
+
+    if (productToAdd.count <= productToAdd.countInStock) {
+
+        if (existItem) {
+            dispatch({
+                type: "CART_REMOVE_ITEM",
+                payload: productToAdd.product,
+            })
+        }
+
+        dispatch({
+            type: "CART_ADD_ITEM",
+            payload: productToAdd
+        })
+
+        localStorage.setItem('cartItems', JSON.stringify(getState().cart.cartItems))
+
+    } else {
+        window.alert("not enough quantity in stock");
+    }
+
+
 }
 
 export const getCartTotal = (cartItems) => {
@@ -38,7 +176,7 @@ export const clearCart = (dispatch) => {
     dispatch({ type: "CART_CLEAR" });
 }
 
-export const removeFromCart = (id) => (dispatch, getState) => {
+export const removeFromCart = (id, size) => (dispatch, getState) => {
     dispatch({
         type: "CART_REMOVE_ITEM",
         payload: id,

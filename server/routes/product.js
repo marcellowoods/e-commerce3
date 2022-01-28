@@ -13,6 +13,7 @@ const {
     update,
     list,
     productsCount,
+    readById,
     listRelated,
     listBySlugs,
     getProductsByText
@@ -26,6 +27,8 @@ router.post("/product", authCheck, adminCheck, create);
 router.get("/products/:count?", listAll); // products/100
 router.delete("/product/:slug", authCheck, adminCheck, remove);
 router.get("/product/:slug", read);
+router.get("/product-by-id/:id", readById);
+
 router.get("/products/list-by-slugs/:slugs", listBySlugs);
 router.put("/product/:slug", authCheck, adminCheck, update);
 

@@ -1,7 +1,7 @@
 import React, { Fragment, useContext, useEffect, useState } from "react";
 import { getItemDeleteIcon } from "../../assets/icons";
 import { useDispatch, useSelector } from "react-redux";
-import { addToCart, removeFromCart } from "../../actions/cartActions";
+import { increaseItemQty, decreaseItemQty, removeFromCart } from "../../actions/cartActions";
 import { useTranslation } from 'react-i18next';
 
 const CartItem = ({
@@ -20,10 +20,8 @@ const CartItem = ({
     const dispatch = useDispatch();
 
     const increaseQty = () => {
-        const newQty = quantity + 1;
-        if (newQty <= countInStock) {
-            dispatch(addToCart(slug, size, newQty));
-        }
+        dispatch(increaseItemQty(productId));
+        
     }
 
     const removeItem = () => {
@@ -31,12 +29,7 @@ const CartItem = ({
     }
 
     const decreateQty = () => {
-        const newQty = quantity - 1;
-        if (newQty >= 1) {
-            dispatch(addToCart(slug, size, newQty));
-        } else {
-            removeItem();
-        }
+        dispatch(decreaseItemQty(productId));
     }
 
     const renderSize = () => {
