@@ -1,14 +1,16 @@
 import axios from 'axios'
-import { roundToTwo } from "../auxiliary/utils";
+import { roundToTwo, deepEqual } from "../auxiliary/utils";
 
-export const decreaseItemQty = (id) => async (dispatch, getState) => {
+export const decreaseItemQty = (cartObj) => async (dispatch, getState) => {
     // console.log("add to cart");
+
+    const id = cartObj.product;
 
     const cart = getState().cart.cartItems;
 
-    const compareProducts = (existingProduct) => {
+    const compareProducts = (cartObjFromArray) => {
 
-        return existingProduct.product === id;
+        return deepEqual(cartObj, cartObjFromArray);
     }
 
     const existItem = cart.find(compareProducts);
@@ -36,7 +38,7 @@ export const decreaseItemQty = (id) => async (dispatch, getState) => {
 
         dispatch({
             type: "CART_REMOVE_ITEM",
-            payload: productToAdd.product,
+            payload: cartObj,
         })
 
 
@@ -48,20 +50,22 @@ export const decreaseItemQty = (id) => async (dispatch, getState) => {
         localStorage.setItem('cartItems', JSON.stringify(getState().cart.cartItems))
 
     } else {
-        dispatch(removeFromCart(id));
+        dispatch(removeFromCart(cartObj));
         
     }
 
 }
 
-export const increaseItemQty = (id) => async (dispatch, getState) => {
+export const increaseItemQty = (cartObj) => async (dispatch, getState) => {
+
+    const id = cartObj.product;
     // console.log("add to cart");
 
     const cart = getState().cart.cartItems;
 
-    const compareProducts = (existingProduct) => {
+    const compareProducts = (cartObjFromArray) => {
 
-        return existingProduct.product === id;
+        return deepEqual(cartObj, cartObjFromArray);
     }
 
     const existItem = cart.find(compareProducts);
@@ -91,7 +95,7 @@ export const increaseItemQty = (id) => async (dispatch, getState) => {
 
         dispatch({
             type: "CART_REMOVE_ITEM",
-            payload: productToAdd.product,
+            payload: cartObj,
         })
 
 
@@ -128,9 +132,9 @@ export const addToCart = (id, size) => async (dispatch, getState) => {
 
     const cart = getState().cart.cartItems;
 
-    const compareProducts = (existingProduct) => {
+    const compareProducts = (cartProduct) => {
 
-        return existingProduct.product === productToAdd.product && existingProduct.size == productToAdd.size;
+        return cartProduct.product == id && cartProduct.size == size;
     }
 
     const existItem = cart.find(compareProducts);
@@ -144,7 +148,7 @@ export const addToCart = (id, size) => async (dispatch, getState) => {
         if (existItem) {
             dispatch({
                 type: "CART_REMOVE_ITEM",
-                payload: productToAdd.product,
+                payload: existItem,
             })
         }
 
@@ -176,10 +180,11 @@ export const clearCart = (dispatch) => {
     dispatch({ type: "CART_CLEAR" });
 }
 
-export const removeFromCart = (id, size) => (dispatch, getState) => {
+export const removeFromCart = (cartObj) => (dispatch, getState) => {
+
     dispatch({
         type: "CART_REMOVE_ITEM",
-        payload: id,
+        payload: cartObj,
     })
 
     localStorage.setItem('cartItems', JSON.stringify(getState().cart.cartItems))
@@ -188,56 +193,56 @@ export const removeFromCart = (id, size) => (dispatch, getState) => {
 export const filterCart = () => async (dispatch, getState) => {
     //remove products which are no longer available in the database
 
-    console.log("cart action");
+    // console.log("cart action");
 
-    let cartItems = getState().cart.cartItems;
-    if (cartItems.length === 0) {
-        return;
-    }
-    let cartItemsSlugs = cartItems.map(item => item.slug);
+    // let cartItems = getState().cart.cartItems;
+    // if (cartItems.length === 0) {
+    //     return;
+    // }
+    // let cartItemsSlugs = cartItems.map(item => item.slug);
 
-    const { data: products } = await axios.get(`/api/products/list-by-slugs/${cartItemsSlugs}`);
+    // const { data: products } = await axios.get(`/api/products/list-by-slugs/${cartItemsSlugs}`);
 
-    console.log(products);
+    // console.log(products);
 
-    //item.product is item.id
-    cartItems.forEach(item => {
-        let cartElementId = item.product;
-        let desiredQuantity = item.count;
+    // //item.product is item.id
+    // cartItems.forEach(item => {
+    //     let cartElementId = item.product;
+    //     let desiredQuantity = item.count;
 
-        let product = products.find(({ _id }) => _id == cartElementId);
+    //     let product = products.find(({ _id }) => _id == cartElementId);
 
-        if (!product) {
-            console.log("no product found")
+    //     if (!product) {
+    //         console.log("no product found")
 
-            dispatch(removeFromCart(cartElementId));
-        } else {
+    //         dispatch(removeFromCart(item));
+    //     } else {
 
-            let availableQuantity = product.quantity;
+    //         let availableQuantity = product.quantity;
 
-            //no desired quantity, remove product from user cart
-            if (availableQuantity < desiredQuantity) {
-                dispatch(removeFromCart(cartElementId));
-                console.log("no product quantity")
+    //         //no desired quantity, remove product from user cart
+    //         if (availableQuantity < desiredQuantity) {
+    //             dispatch(removeFromCart(item));
+    //             console.log("no product quantity")
 
-                //price has updated, remove product from user cart
-            } else if (product.price !== item.price) {
-                console.log("no product $")
-                dispatch(removeFromCart(cartElementId));
+    //             //price has updated, remove product from user cart
+    //         } else if (product.price !== item.price) {
+    //             console.log("no product $")
+    //             dispatch(removeFromCart(item));
 
-            } else if (availableQuantity !== item.countInStock) {
+    //         } else if (availableQuantity !== item.countInStock) {
 
-                let updatedCount = availableQuantity;
-                let updatedItem = { ...item, countInStock: updatedCount };
+    //             let updatedCount = availableQuantity;
+    //             let updatedItem = { ...item, countInStock: updatedCount };
 
-                dispatch({
-                    type: "CART_ADD_ITEM",
-                    payload: updatedItem,
-                })
-            }
+    //             dispatch({
+    //                 type: "CART_ADD_ITEM",
+    //                 payload: updatedItem,
+    //             })
+    //         }
 
-        }
+    //     }
 
-    });
+    // });
 
 }

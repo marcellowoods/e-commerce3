@@ -27,6 +27,7 @@ const Cart = ({ products }) => {
                 return (
 
                     <CartItem
+                        cartItemObj={item}
                         key={index}
                         productId={item.product}
                         slug={item.slug}

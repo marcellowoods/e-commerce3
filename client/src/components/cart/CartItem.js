@@ -5,10 +5,10 @@ import { increaseItemQty, decreaseItemQty, removeFromCart } from "../../actions/
 import { useTranslation } from 'react-i18next';
 
 const CartItem = ({
+    cartItemObj,
     price,
     productId,
     name,
-    slug,
     quantity,
     countInStock,
     imageLink,
@@ -20,16 +20,16 @@ const CartItem = ({
     const dispatch = useDispatch();
 
     const increaseQty = () => {
-        dispatch(increaseItemQty(productId));
+        dispatch(increaseItemQty(cartItemObj));
         
     }
 
     const removeItem = () => {
-        dispatch(removeFromCart(productId));
+        dispatch(removeFromCart(cartItemObj));
     }
 
     const decreateQty = () => {
-        dispatch(decreaseItemQty(productId));
+        dispatch(decreaseItemQty(cartItemObj));
     }
 
     const renderSize = () => {

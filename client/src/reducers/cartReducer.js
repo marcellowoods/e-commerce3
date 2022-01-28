@@ -1,3 +1,5 @@
+import { deepEqual } from "../auxiliary/utils";
+
 export const cartReducer = (state = { cartItems: [] }, action) => {
     switch (action.type) {
         case "CART_ADD_ITEM":
@@ -10,9 +12,11 @@ export const cartReducer = (state = { cartItems: [] }, action) => {
 
 
         case "CART_REMOVE_ITEM":
+            const itemToRemove = action.payload;
+
             return {
                 ...state,
-                cartItems: state.cartItems.filter(action.payload),
+                cartItems: state.cartItems.filter((cartItem) => !deepEqual(cartItem, action.payload)),
             }
         case "CART_CLEAR":
             return {
