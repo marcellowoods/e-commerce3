@@ -221,13 +221,13 @@ export const filterCart = () => async (dispatch, getState) => {
 
     const { data: productData } = await axios.get(`/api/products/list-by-slugs/${cartItemsSlugs}`);
 
-    const newCartItems = productData.map((data) => {
+    const newCartItems = cartItems.map((cartItem) => {
 
-        const existingCartItem = cartItems.find(item => item.product == data._id);
-        const size = existingCartItem.size ? existingCartItem.size : null;
-        const count = existingCartItem.count;
+        const newProductData = productData.find(data => cartItem.product == data._id);
+        const size = cartItem.size ? cartItem.size : null;
+        const count = cartItem.count;
 
-        const productToAdd = createCartItemFromProduct(size, count, data);
+        const productToAdd = createCartItemFromProduct(size, count, newProductData);
 
         return productToAdd;
     });
