@@ -1,6 +1,41 @@
 import axios from 'axios'
 import { roundToTwo, deepEqual } from "../auxiliary/utils";
 
+const getDesiredItemQantity = (itemId, cartItems) => {
+
+    const filteredItems = cartItems.filter((item) => item.product == itemId);
+    const countSum = filteredItems.reduce((sum, item) => item.count + sum, 0);
+
+    return countSum;
+}
+
+const createCartItemFromProduct = (desiredSize, desiredCount, productData) => {
+
+    const item = {
+        slug: productData.slug,
+        product: productData._id,
+        name: productData.name,
+        image: productData.images[0],
+        price: productData.price,
+        countInStock: productData.quantity,
+        count: desiredCount,
+        sizeBounds: productData.size,
+        size: desiredSize,
+        translations: productData.translations
+    };
+
+    return item;
+
+}
+
+const isStockEnough = (itemId, countToAdd, quantityInStock, cartItems) => {
+
+    const desiredItemQuantity = getDesiredItemQantity(itemId, cartItems);
+
+    return (desiredItemQuantity + countToAdd) <= quantityInStock;
+
+}
+
 export const decreaseItemQty = (cartObj) => async (dispatch, getState) => {
     // console.log("add to cart");
 
@@ -21,37 +56,30 @@ export const decreaseItemQty = (cartObj) => async (dispatch, getState) => {
 
     const { data } = await axios.get(`${process.env.REACT_APP_API}/product-by-id/${id}`);
 
-    let productToAdd = {
-        slug: data.slug,
-        product: data._id,
-        name: data.name,
-        image: data.images[0],
-        price: data.price,
-        countInStock: data.quantity,
-        count: existItem.count - 1,
-        sizeBounds: data.size,
-        size: existItem.size,
-        translations: data.translations
-    };
+    const count = existItem.count - 1;
 
-    if (productToAdd.count >= 1 && productToAdd.count <= productToAdd.countInStock) {
+    const productToAdd = createCartItemFromProduct(existItem.size, count, data);
+
+    const hasQuantity = isStockEnough(id, -1, productToAdd.countInStock, cart);
+
+    if (productToAdd.count >= 1 && hasQuantity) {
+
+        const replaceItem = {
+            newItem: productToAdd,
+            itemToBeReplaced: cartObj
+        }
 
         dispatch({
-            type: "CART_REMOVE_ITEM",
-            payload: cartObj,
+            type: "CART_REPLACE_ITEM",
+            payload: replaceItem,
         })
 
-
-        dispatch({
-            type: "CART_ADD_ITEM",
-            payload: productToAdd
-        })
 
         localStorage.setItem('cartItems', JSON.stringify(getState().cart.cartItems))
 
     } else {
         dispatch(removeFromCart(cartObj));
-        
+
     }
 
 }
@@ -76,32 +104,22 @@ export const increaseItemQty = (cartObj) => async (dispatch, getState) => {
 
     const { data } = await axios.get(`${process.env.REACT_APP_API}/product-by-id/${id}`);
 
-    console.log(data);
+    const count = existItem.count + 1;
 
-    let productToAdd = {
-        slug: data.slug,
-        product: data._id,
-        name: data.name,
-        image: data.images[0],
-        price: data.price,
-        countInStock: data.quantity,
-        count: existItem.count + 1,
-        sizeBounds: data.size,
-        size: existItem.size,
-        translations: data.translations
-    };
+    const productToAdd = createCartItemFromProduct(existItem.size, count, data);
 
-    if (productToAdd.count <= productToAdd.countInStock) {
+    const hasQuantity = isStockEnough(id, 1, productToAdd.countInStock, cart);
+
+    if (hasQuantity) {
+
+        const replaceItem = {
+            newItem: productToAdd,
+            itemToBeReplaced: cartObj
+        }
 
         dispatch({
-            type: "CART_REMOVE_ITEM",
-            payload: cartObj,
-        })
-
-
-        dispatch({
-            type: "CART_ADD_ITEM",
-            payload: productToAdd
+            type: "CART_REPLACE_ITEM",
+            payload: replaceItem,
         })
 
         localStorage.setItem('cartItems', JSON.stringify(getState().cart.cartItems))
@@ -117,18 +135,9 @@ export const addToCart = (id, size) => async (dispatch, getState) => {
     // console.log("add to cart");
     const { data } = await axios.get(`${process.env.REACT_APP_API}/product-by-id/${id}`);
 
-    let productToAdd = {
-        slug: data.slug,
-        product: data._id,
-        name: data.name,
-        image: data.images[0],
-        price: data.price,
-        countInStock: data.quantity,
-        count: 1,
-        sizeBounds: data.size,
-        size: size,
-        translations: data.translations
-    };
+    const count = 1;
+
+    const productToAdd = createCartItemFromProduct(size, count, data);
 
     const cart = getState().cart.cartItems;
 
@@ -143,19 +152,28 @@ export const addToCart = (id, size) => async (dispatch, getState) => {
         productToAdd.count += existItem.count;
     }
 
-    if (productToAdd.count <= productToAdd.countInStock) {
+    const hasQuantity = isStockEnough(id, 1, productToAdd.countInStock, cart);
+
+    if (hasQuantity) {
 
         if (existItem) {
-            dispatch({
-                type: "CART_REMOVE_ITEM",
-                payload: existItem,
-            })
-        }
+            const replaceItem = {
+                newItem: productToAdd,
+                itemToBeReplaced: existItem
+            }
 
-        dispatch({
-            type: "CART_ADD_ITEM",
-            payload: productToAdd
-        })
+            dispatch({
+                type: "CART_REPLACE_ITEM",
+                payload: replaceItem,
+            })
+        }else{
+
+            dispatch({
+                type: "CART_ADD_ITEM",
+                payload: productToAdd
+            })
+
+        }
 
         localStorage.setItem('cartItems', JSON.stringify(getState().cart.cartItems))
 
@@ -191,58 +209,48 @@ export const removeFromCart = (cartObj) => (dispatch, getState) => {
 }
 
 export const filterCart = () => async (dispatch, getState) => {
-    //remove products which are no longer available in the database
 
-    // console.log("cart action");
+    //update cart with latest products in database
 
-    // let cartItems = getState().cart.cartItems;
-    // if (cartItems.length === 0) {
-    //     return;
-    // }
-    // let cartItemsSlugs = cartItems.map(item => item.slug);
+    let cartItems = getState().cart.cartItems;
+    if (cartItems.length === 0) {
+        return;
+    }
 
-    // const { data: products } = await axios.get(`/api/products/list-by-slugs/${cartItemsSlugs}`);
+    let cartItemsSlugs = cartItems.map(item => item.slug);
 
-    // console.log(products);
+    const { data: productData } = await axios.get(`/api/products/list-by-slugs/${cartItemsSlugs}`);
 
-    // //item.product is item.id
-    // cartItems.forEach(item => {
-    //     let cartElementId = item.product;
-    //     let desiredQuantity = item.count;
+    const newCartItems = productData.map((data) => {
 
-    //     let product = products.find(({ _id }) => _id == cartElementId);
+        const existingCartItem = cartItems.find(item => item.product == data._id);
+        const size = existingCartItem.size ? existingCartItem.size : null;
+        const count = existingCartItem.count;
 
-    //     if (!product) {
-    //         console.log("no product found")
+        const productToAdd = createCartItemFromProduct(size, count, data);
 
-    //         dispatch(removeFromCart(item));
-    //     } else {
+        return productToAdd;
+    });
 
-    //         let availableQuantity = product.quantity;
+    const filteredNewItems = newCartItems.filter((item) => {
 
-    //         //no desired quantity, remove product from user cart
-    //         if (availableQuantity < desiredQuantity) {
-    //             dispatch(removeFromCart(item));
-    //             console.log("no product quantity")
+        const hasQuantity = isStockEnough(item.product, 0, item.countInStock, newCartItems);
 
-    //             //price has updated, remove product from user cart
-    //         } else if (product.price !== item.price) {
-    //             console.log("no product $")
-    //             dispatch(removeFromCart(item));
+        return hasQuantity;
+    })
 
-    //         } else if (availableQuantity !== item.countInStock) {
+    clearCart(dispatch);
 
-    //             let updatedCount = availableQuantity;
-    //             let updatedItem = { ...item, countInStock: updatedCount };
+    //item.product is item.id
+    filteredNewItems.forEach(productToAdd => {
 
-    //             dispatch({
-    //                 type: "CART_ADD_ITEM",
-    //                 payload: updatedItem,
-    //             })
-    //         }
+        dispatch({
+            type: "CART_ADD_ITEM",
+            payload: productToAdd
+        })
 
-    //     }
+    });
 
-    // });
+    localStorage.setItem('cartItems', JSON.stringify(getState().cart.cartItems))
 
 }

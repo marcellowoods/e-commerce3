@@ -9,6 +9,13 @@ export const cartReducer = (state = { cartItems: [] }, action) => {
                 ...state,
                 cartItems: [...state.cartItems, item],
             }
+        case "CART_REPLACE_ITEM":
+            const {newItem, itemToBeReplaced} = action.payload;
+
+            return {
+                ...state,
+                cartItems: state.cartItems.map((cartItem) => deepEqual(itemToBeReplaced, cartItem) ? newItem : cartItem),
+            }
 
 
         case "CART_REMOVE_ITEM":
@@ -16,7 +23,7 @@ export const cartReducer = (state = { cartItems: [] }, action) => {
 
             return {
                 ...state,
-                cartItems: state.cartItems.filter((cartItem) => !deepEqual(cartItem, action.payload)),
+                cartItems: state.cartItems.filter((cartItem) => !deepEqual(cartItem, itemToRemove)),
             }
         case "CART_CLEAR":
             return {
