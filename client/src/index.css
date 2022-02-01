@@ -20,7 +20,9 @@ code {
 
 /* white (original design color) */
 .color-main-bg {
+    /* background-color: rgb(203, 203, 203) */
     background-color: rgb(255, 255, 255)
+
 }
 
 .color-main-bold {
