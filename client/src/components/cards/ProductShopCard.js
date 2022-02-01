@@ -73,7 +73,7 @@ const ProductShopCard = ({ id, name, price, images, onAddClick, onCardClick }) =
             </div>
 
             <div className="float-right transform translate-y-4 -translate-x-4">
-                <button onClick={(() => onAddClick(id))} className="focus:outline-none">
+                <button onClick={(() => onCardClick(id))} className="focus:outline-none">
                     {getAddToCartIcon()}
                 </button>
             </div>
