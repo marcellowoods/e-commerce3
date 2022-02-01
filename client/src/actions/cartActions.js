@@ -1,7 +1,8 @@
-import axios from 'axios'
 import { roundToTwo, deepEqual } from "../auxiliary/utils";
+import { getProductById, getProductsBySlugs } from "../functions/product"
 
-const getDesiredItemQantity = (itemId, cartItems) => {
+const getCartItemQantity = (itemId, cartItems) => {
+    //get the quantity of all items with same ids but different params (like color and size)
 
     const filteredItems = cartItems.filter((item) => item.product == itemId);
     const countSum = filteredItems.reduce((sum, item) => item.count + sum, 0);
@@ -18,9 +19,11 @@ const createCartItemFromProduct = (desiredSize, desiredCount, productData) => {
         image: productData.images[0],
         price: productData.price,
         countInStock: productData.quantity,
+
         count: desiredCount,
-        sizeBounds: productData.size,
         size: desiredSize,
+
+        sizeBounds: productData.size,
         translations: productData.translations
     };
 
@@ -30,9 +33,9 @@ const createCartItemFromProduct = (desiredSize, desiredCount, productData) => {
 
 const isStockEnough = (itemId, countToAdd, quantityInStock, cartItems) => {
 
-    const desiredItemQuantity = getDesiredItemQantity(itemId, cartItems);
+    const itemQuantity = getCartItemQantity(itemId, cartItems);
 
-    return (desiredItemQuantity + countToAdd) <= quantityInStock;
+    return (itemQuantity + countToAdd) <= quantityInStock;
 
 }
 
@@ -54,7 +57,7 @@ export const decreaseItemQty = (cartObj) => async (dispatch, getState) => {
         return;
     }
 
-    const { data } = await axios.get(`${process.env.REACT_APP_API}/product-by-id/${id}`);
+    const { data } = await getProductById(id);
 
     const count = existItem.count - 1;
 
@@ -78,6 +81,7 @@ export const decreaseItemQty = (cartObj) => async (dispatch, getState) => {
         localStorage.setItem('cartItems', JSON.stringify(getState().cart.cartItems))
 
     } else {
+
         dispatch(removeFromCart(cartObj));
 
     }
@@ -87,7 +91,6 @@ export const decreaseItemQty = (cartObj) => async (dispatch, getState) => {
 export const increaseItemQty = (cartObj) => async (dispatch, getState) => {
 
     const id = cartObj.product;
-    // console.log("add to cart");
 
     const cart = getState().cart.cartItems;
 
@@ -102,7 +105,7 @@ export const increaseItemQty = (cartObj) => async (dispatch, getState) => {
         return;
     }
 
-    const { data } = await axios.get(`${process.env.REACT_APP_API}/product-by-id/${id}`);
+    const { data } = await getProductById(id);
 
     const count = existItem.count + 1;
 
@@ -132,8 +135,8 @@ export const increaseItemQty = (cartObj) => async (dispatch, getState) => {
 }
 
 export const addToCart = (id, size) => async (dispatch, getState) => {
-    // console.log("add to cart");
-    const { data } = await axios.get(`${process.env.REACT_APP_API}/product-by-id/${id}`);
+
+    const { data } = await getProductById(id);
 
     const count = 1;
 
@@ -194,8 +197,9 @@ export const getCartTotal = (cartItems) => {
 }
 
 export const clearCart = (dispatch) => {
-    localStorage.setItem('cartItems', []);
+
     dispatch({ type: "CART_CLEAR" });
+    localStorage.setItem('cartItems', []);
 }
 
 export const removeFromCart = (cartObj) => (dispatch, getState) => {
@@ -209,8 +213,7 @@ export const removeFromCart = (cartObj) => (dispatch, getState) => {
 }
 
 export const filterCart = () => async (dispatch, getState) => {
-
-    //update cart with latest products in database
+    //update cart with latest products from database
 
     let cartItems = getState().cart.cartItems;
     if (cartItems.length === 0) {
@@ -219,7 +222,7 @@ export const filterCart = () => async (dispatch, getState) => {
 
     let cartItemsSlugs = cartItems.map(item => item.slug);
 
-    const { data: productData } = await axios.get(`/api/products/list-by-slugs/${cartItemsSlugs}`);
+    const { data: productData } = await getProductsBySlugs(cartItemsSlugs);
 
     const newCartItems = cartItems.map((cartItem) => {
 
