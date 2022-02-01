@@ -31,6 +31,28 @@ const createCartItemFromProduct = (desiredSize, desiredCount, productData) => {
 
 }
 
+export const getFilteredCartData = (cartItems) => {
+    //remove cart data that is not needed for creating the order
+    //use this before sending cartItems to the backend
+
+    const products = cartItems.map((p) => {
+
+        let productObj = {
+            productId: p.product,
+            count: p.count,
+            price: p.price
+        }
+
+        if (p.size) {
+            productObj.size = p.size;
+        }
+
+        return productObj;
+    });
+
+    return products;
+}
+
 const isStockEnough = (itemId, countToAdd, quantityInStock, cartItems) => {
 
     const itemQuantity = getCartItemQantity(itemId, cartItems);
@@ -169,7 +191,7 @@ export const addToCart = (id, size) => async (dispatch, getState) => {
                 type: "CART_REPLACE_ITEM",
                 payload: replaceItem,
             })
-        }else{
+        } else {
 
             dispatch({
                 type: "CART_ADD_ITEM",

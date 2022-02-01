@@ -11,7 +11,7 @@ import {
     DeliveryAdress
 } from "../components/checkout/CheckoutFields";
 import { OrderConfirmed, ConfirmOrder } from "../components/checkout/CheckoutModals";
-import { getCartTotal, clearCart } from "../actions/cartActions";
+import { getCartTotal, clearCart, getFilteredCartData } from "../actions/cartActions";
 import { postOrder, userPostOrder } from "../functions/orders";
 
 import { useTranslation } from 'react-i18next';
@@ -66,20 +66,7 @@ const Checkout = () => {
         setIsConfirmModalOpen(false);
         setOrderSentLoading(true);
 
-        const products = cartItems.map((p) => {
-
-            let productObj = {
-                productId: p.product,
-                count: p.count,
-                price: p.price
-            }
-
-            if (p.size) {
-                productObj.size = p.size;
-            }
-
-            return productObj;
-        });
+        const products = getFilteredCartData(cartItems);
 
         const deliveryInfo = {
             ...deliveryAdress,

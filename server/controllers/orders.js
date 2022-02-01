@@ -11,7 +11,7 @@ const sendOrderEmail = () => {
     //https://www.courier.com/blog/how-to-send-emails-with-node-js/
     //https://www.reddit.com/r/webdev/comments/dnnoit/is_sendgrid_100_emails_per_day_or_month/
     //https://www.reddit.com/r/laravel/comments/kowllb/best_email_provider_to_use/
-    
+
 
     //https://coderrocketfuel.com/article/send-emails-with-node.js-using-mailgun-and-nodemailer
     //https://app.mailgun.com/app/account/setup
@@ -24,6 +24,84 @@ getCartTotal = (cartItems) => {
     }, 0);
 
     return roundToTwo(totalPrice);
+}
+
+const getCartItemQantity = (itemId, cartItems) => {
+    //get the quantity of all items with same ids but different params (like color and size)
+
+    const filteredItems = cartItems.filter((item) => item.productId == itemId);
+    const countSum = filteredItems.reduce((sum, item) => item.count + sum, 0);
+
+    return countSum;
+}
+
+const createCartForOrder = async (cartFromUser) => {
+
+    //check for shenanigans
+    
+    //this cart gets added to the order object 
+    const cart = [];
+
+    for (let i = 0; i < cartFromUser.length; i++) {
+
+        let productFromDb = await Product.findById(cartFromUser[i].productId)
+            .select("name")
+            .select("price")
+            .select("quantity")
+            .select("size")
+            .exec();
+
+        let object = {};
+        object.product = productFromDb._id;
+        object.name = productFromDb.name;
+
+        object.selectedCount = cartFromUser[i].count;
+
+        if (cartFromUser[i].color) {
+            object.selectedColor = cartFromUser[i].color;
+        }
+
+        if (cartFromUser[i].size) {
+            let sizeText = null;
+            if (!productFromDb.size) {
+                throw new Error('product has no size attribute')
+            }
+            const { upperBound, lowerBound } = productFromDb.size;
+            if (cartFromUser[i].size == lowerBound) {
+                sizeText = "small";
+            } else if (cartFromUser[i].size == upperBound) {
+                sizeText = "large";
+            } else {
+                sizeText = "custom";
+            }
+            object.selectedSize = { sizeValue: cartFromUser[i].size, sizeText };
+        }
+
+        const priceFromDb = roundToTwo(productFromDb.price);
+        object.price = priceFromDb;
+        object.priceTimesCount = priceFromDb * object.selectedCount;
+
+        const availableQuantity = productFromDb.quantity;
+
+        const priceFromUser = roundToTwo(object.price);
+        const countFromUser = getCartItemQantity(cartFromUser[i].productId, cartFromUser);
+
+        if (priceFromDb !== priceFromUser) {
+            throw new Error('price error')
+            return;
+        }
+
+        if (countFromUser > availableQuantity) {
+            throw new Error('not enough quantity error')
+            return;
+        }
+
+        cart.push(object);
+
+    }
+
+    return cart;
+
 }
 
 const makeOrderCreator = (withUser = false) => {
@@ -41,71 +119,14 @@ const makeOrderCreator = (withUser = false) => {
         } else {
 
             const cartFromUser = products;
-            const cart = [];
+            const cart = await createCartForOrder(cartFromUser);
 
-            //check for shenanigans
-            for (let i = 0; i < cartFromUser.length; i++) {
-
-                let productFromDb = await Product.findById(cartFromUser[i].productId)
-                    .select("name")
-                    .select("price")
-                    .select("quantity")
-                    .select("size")
-                    .exec();
-
-                let object = {};
-                object.product = productFromDb._id;
-                object.name = productFromDb.name;
-
-                object.selectedCount = cartFromUser[i].count;
-
-                if (cartFromUser[i].color) {
-                    object.selectedColor = cartFromUser[i].color;
-                }
-
-                if (cartFromUser[i].size) {
-                    let sizeText = null;
-                    if(!productFromDb.size){
-                        throw new Error('product has no size attribute')
-                    }
-                    const { upperBound, lowerBound } = productFromDb.size;
-                    if (cartFromUser[i].size == lowerBound) {
-                        sizeText = "small";
-                    } else if (cartFromUser[i].size == upperBound) {
-                        sizeText = "large";
-                    } else {
-                        sizeText = "custom";
-                    }
-                    object.selectedSize = {sizeValue: cartFromUser[i].size, sizeText };
-                }
-
-                const priceFromDb = roundToTwo(productFromDb.price);
-                object.price = priceFromDb;
-                object.priceTimesCount = priceFromDb * object.selectedCount;
-
-                const availableQuantity = productFromDb.quantity;
-
-                const priceFromUser = roundToTwo(object.price);
-                const countFromUser = object.count;
-
-                if (priceFromDb !== priceFromUser) {
-                    throw new Error('price error')
-                    return;
-                }
-
-                if (countFromUser > availableQuantity) {
-                    throw new Error('quantity error')
-                    return;
-                }
-
-                cart.push(object);
-
-            }
+            //check for price shenanigans
             const totalCost = getCartTotal(cartFromUser);
 
-            console.log(cart);
-
             if (totalCost !== totalCostFromUser) {
+                console.log(totalCost);
+                console.log(totalCostFromUser);
                 throw new Error('price error')
                 return;
             }
