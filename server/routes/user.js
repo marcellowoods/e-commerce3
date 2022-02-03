@@ -13,7 +13,7 @@ const {
     applyCouponToUserCart,
     createOrder,
     createCashOrder,
-    orders,
+    getOrders,
     addToWishlist,
     wishlist,
     removeFromWishlist
@@ -26,7 +26,7 @@ router.post("/user/address", authCheck, saveAddress);
 
 router.post("/user/order", authCheck, createOrder); // stripe
 router.post("/user/cash-order", authCheck, createCashOrder); // cod
-router.get("/user/orders", authCheck, orders);
+router.get("/user/orders", authCheck, getOrders);
 // coupon
 router.post("/user/cart/coupon", authCheck, applyCouponToUserCart);
 

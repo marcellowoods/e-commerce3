@@ -152,10 +152,11 @@ exports.createOrder = async (req, res) => {
     res.json({ ok: true });
 };
 
-exports.orders = async (req, res) => {
+exports.getOrders = async (req, res) => {
     let user = await User.findOne({ email: req.user.email }).exec();
 
     let userOrders = await Order.find({ orderedBy: user._id })
+        .sort({ createdAt: -1 })
         .populate("products.product")
         .exec();
 
