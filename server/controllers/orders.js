@@ -6,6 +6,8 @@ const Order = require("../models/order");
 // const uniqueid = require('uniqid');
 const asyncHandler = require('express-async-handler');
 const { roundToTwo } = require("./utils");
+const sendOrderCreatedEmail = require("./SendEmails/sendOrderCreatedEmail");
+
 
 const sendOrderEmail = () => {
     //https://www.courier.com/blog/how-to-send-emails-with-node-js/
@@ -38,7 +40,7 @@ const getCartItemQantity = (itemId, cartItems) => {
 const createCartForOrder = async (cartFromUser) => {
 
     //check for shenanigans
-    
+
     //this cart gets added to the order object 
     const cart = [];
 
@@ -147,6 +149,11 @@ const makeOrderCreator = (withUser = false) => {
                     orderedBy: user._id,
                 }).save();
 
+                let order = await createdOrder.populate("products.product").execPopulate();
+
+                sendOrderCreatedEmail(order);
+
+
             } else {
 
                 const createdOrder = await new Order({
@@ -155,7 +162,14 @@ const makeOrderCreator = (withUser = false) => {
                     totalCost
                 }).save();
 
+                let order = await createdOrder.populate("products.product").execPopulate();
+
+                sendOrderCreatedEmail(order);
             }
+
+
+
+
 
             let bulkOption = products.map((item) => {
                 return {
