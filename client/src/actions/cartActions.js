@@ -246,19 +246,36 @@ export const filterCart = () => async (dispatch, getState) => {
 
     const { data: productData } = await getProductsBySlugs(cartItemsSlugs);
 
-    const newCartItems = cartItems.map((cartItem) => {
+    let newCartItems = cartItems.map((cartItem) => {
 
+        
         const newProductData = productData.find(data => cartItem.product == data._id);
-        const size = cartItem.size ? cartItem.size : null;
-        const count = cartItem.count;
+        if(newProductData){
+            const size = cartItem.size ? cartItem.size : null;
+            const count = cartItem.count;
+    
+            const productToAdd = createCartItemFromProduct(size, count, newProductData);
+    
+            return productToAdd;
+        }
 
-        const productToAdd = createCartItemFromProduct(size, count, newProductData);
+        //the product in the user cart does no longer exist in db
+        return null;
 
-        return productToAdd;
     });
+
+    newCartItems = newCartItems.filter((item) => {
+        //product missing from db, remove it
+
+        if(item === null){
+            return false
+        }
+        return true;
+    })
 
     const filteredNewItems = newCartItems.filter((item) => {
 
+        //product has not enough quantity, remove it
         const hasQuantity = isStockEnough(item.product, 0, item.countInStock, newCartItems);
 
         return hasQuantity;
