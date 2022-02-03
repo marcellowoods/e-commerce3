@@ -124,7 +124,7 @@ const OrderDetails = ({ isOpen, orderStatus, orderId, products, totalCost, setIs
                                                 {renderName(item.product, item.name, item.selectedSize)}
                                                 <h3 className="pl-2 font-medium ">x{item.selectedCount}</h3>
                                             </div>
-                                            <h3>{item.price} {" "} {t("lv.")}</h3>
+                                            <h3>{item.priceTimesCount} {" "} {t("lv.")}</h3>
                                         </div>
                                     ))
                                     }
