@@ -66,9 +66,8 @@ const sendOrderCreatedEmail = (order) => {
 
     const {deliveryInfo, products, totalCost} = order;
 
-    const translatedProducts = products.map(product => {
-        const translatedName = getTranslatedField(product.product, "name", language);
-        return {...product, name: translatedName};
+    products.forEach(product => {
+        product.name = getTranslatedField(product.product, "name", language);
     })
 
     console.log("translated")
