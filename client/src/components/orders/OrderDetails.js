@@ -2,8 +2,7 @@ import React, { Fragment } from "react";
 
 import { Dialog, Transition } from '@headlessui/react'
 import { Link } from "react-router-dom";
-import { useDispatch, useSelector } from "react-redux";
-import { getCartTotal } from "../../actions/cartActions";
+import { getTranslatedField } from "../../actions/translateActions";
 
 import { useTranslation } from 'react-i18next';
 
@@ -47,12 +46,16 @@ const OrderDetails = ({ isOpen, orderStatus, orderId, products, totalCost, setIs
                 </div>
             )
         }
+
         const slug = product.slug;
         const linkString = PRODUCT_PAGE_URL + slug;
+        const lang = i18n.language;
+        const translatedName = getTranslatedField(product, 'name', lang);
+
         return (
             <div className="flex flex-row">
                 <Link to={linkString}>
-                    <h3 className="underline">{name} </h3>
+                    <h3 className="underline">{translatedName} </h3>
                 </Link>
                 {selectedSize && (
                     <h3 className="italic pl-2">{renderSize(selectedSize)}</h3>

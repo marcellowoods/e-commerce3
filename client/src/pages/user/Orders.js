@@ -55,8 +55,6 @@ const Orders = () => {
         []
     );
 
-    console.log(orders);
-
     if (isLoading) {
         return <LoadingPage />
     }
