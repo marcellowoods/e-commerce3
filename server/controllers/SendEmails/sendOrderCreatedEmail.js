@@ -59,7 +59,7 @@ const getTranslatedField = (obj, field, forLang) => {
 }
 
 
-
+//https://medium.com/geekculture/how-does-server-side-internationalization-i18n-look-like-6ddbd15147b7
 const sendOrderCreatedEmail = (order) => {
 
     const language = "bg";
