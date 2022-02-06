@@ -2,6 +2,7 @@ var nodemailer = require('nodemailer');
 const handlebars = require("handlebars")
 const fs = require("fs")
 const path = require("path");
+const i18n = require('./../Translations/i18n.js');
 require("dotenv").config({ path: path.resolve(__dirname, '../../.env') });
 
 
@@ -23,7 +24,7 @@ const emailTemplateSource = fs.readFileSync(path.join(__dirname, "/OrderCreateTe
 const template = handlebars.compile(emailTemplateSource);
 
 const products = [
-    { name: "g shock", selectedCount: 3, priceTimesCount: 200,  },
+    { name: "g shock", selectedCount: 3, priceTimesCount: 200, },
     { name: "casio", selectedCount: 2, priceTimesCount: 100 },
 ];
 const deliveryInfo = {
@@ -58,43 +59,74 @@ const getTranslatedField = (obj, field, forLang) => {
 
 }
 
+const TranslatedOrderTemplate = (deliveryInfo, products, totalCost, lang) => {
 
-//https://medium.com/geekculture/how-does-server-side-internationalization-i18n-look-like-6ddbd15147b7
-const sendOrderCreatedEmail = (order) => {
+    const t = i18n(lang);
 
-    const language = "bg";
+    const messageTranslate = t("your order is accepted");
+    const moneyMarkTranslate = t("lv.");
+    const totalTranslate = t("total");
 
-    const {deliveryInfo, products, totalCost} = order;
+    const translatedProducts = products.map(product => {
 
-    products.forEach(product => {
-        product.name = getTranslatedField(product.product, "name", language);
+        const priceTimesCount = product.priceTimesCount + " " + moneyMarkTranslate;
+
+        return {
+            name: getTranslatedField(product.product, "name", lang),
+            selectedCount: product.selectedCount,
+            priceTimesCount,
+        }
+
     })
 
-    console.log("translated")
+    products.forEach(product => {
+        product.name = getTranslatedField(product.product, "name", lang);
+    })
+
     console.log(products);
 
+    // const thankYouMessageTranslate = t("Thank you for your order!");
 
-    // const htmlToSend = template({
-    //     message: "your order has been created",
-    //     translatedProducts,
-    //     totalCost,
-    //     deliveryInfo,
-    // });
 
-    // var mailOptions = {
-    //     from: "from-example@email.com",
-    //     to: "to-example@email.com",
-    //     subject: 'trying out the mail send',
-    //     html: htmlToSend
-    // };
 
-    // transporter.sendMail(mailOptions, function (error, info) {
-    //     if (error) {
-    //         console.log(error);
-    //     } else {
-    //         console.log('Email sent: ' + info.response);
-    //     }
-    // });
+    const htmlToSend = template({
+
+        messageTranslate,
+        moneyMarkTranslate,
+        totalTranslate,
+
+        products: translatedProducts,
+        totalCost,
+        deliveryInfo,
+    });
+
+    return htmlToSend;
+
+}
+
+
+const sendOrderCreatedEmail = (order) => {
+
+    const lang = "bg";
+
+    const { deliveryInfo, products, totalCost } = order;
+
+    const htmlToSend = TranslatedOrderTemplate(deliveryInfo, products, totalCost, lang);
+
+    var mailOptions = {
+        from: "from-example@email.com",
+        to: "to-example@email.com",
+        subject: 'trying out the mail send',
+        html: htmlToSend
+    };
+
+    transporter.sendMail(mailOptions, function (error, info) {
+        if (error) {
+            console.log(error);
+        } else {
+            console.log('Email sent: ' + info.response);
+        }
+    });
 }
 
 module.exports = sendOrderCreatedEmail

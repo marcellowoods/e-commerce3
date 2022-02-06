@@ -77,21 +77,21 @@
                                             brand </h2>
                                     </td>
                                 </tr>
-                                <tr>
+                                {{!-- <tr>
                                     <td align="left"
                                         style="font-family: Open Sans, Helvetica, Arial, sans-serif; font-size: 16px; font-weight: 400; line-height: 24px; padding-top: 25px;">
 
                                         <h2
                                             style="font-size: 30px; font-weight: 800; line-height: 36px; color: #333333; margin: 0;">
-                                            Thank you for your order! </h2>
+                                            {{thankYouMessageTranslate}} </h2>
                                     </td>
-                                </tr>
+                                </tr> --}}
                                 <tr>
                                     <td align="left"
                                         style="font-family: Open Sans, Helvetica, Arial, sans-serif; font-size: 16px; font-weight: 400; line-height: 24px; padding-top: 10px;">
                                         <p
                                             style="font-size: 16px; font-weight: 400; line-height: 24px; color: #777777;">
-                                            {{message}} </p>
+                                            {{messageTranslate}} </p>
                                     </td>
                                 </tr>
                                 <tr>
@@ -120,7 +120,7 @@
                                                 </td>
                                                 <td width="25%" align="left"
                                                     style="font-family: Open Sans, Helvetica, Arial, sans-serif; font-size: 16px; font-weight: 400; line-height: 24px; padding: 15px 10px 5px 10px;">
-                                                    {{priceTimesCount}} lv. </td>
+                                                    {{priceTimesCount}} </td>
                                             </tr>
                                             {{/each}}
                                             {{!-- <tr>
@@ -164,10 +164,10 @@
                                             <tr>
                                                 <td width="75%" align="left"
                                                     style="font-family: Open Sans, Helvetica, Arial, sans-serif; font-size: 16px; font-weight: 800; line-height: 24px; padding: 10px; border-top: 3px solid #eeeeee; border-bottom: 3px solid #eeeeee;">
-                                                    TOTAL </td>
+                                                    {{totalTranslate}} </td>
                                                 <td width="25%" align="left"
                                                     style="font-family: Open Sans, Helvetica, Arial, sans-serif; font-size: 16px; font-weight: 800; line-height: 24px; padding: 10px; border-top: 3px solid #eeeeee; border-bottom: 3px solid #eeeeee;">
-                                                    {{totalCost}} lv. </td>
+                                                    {{totalCost}} {{moneyMarkTranslate}} </td>
                                             </tr>
                                         </table>
                                     </td>
@@ -189,7 +189,7 @@
                                                 <tr>
                                                     <td align="left" valign="top"
                                                         style="font-family: Open Sans, Helvetica, Arial, sans-serif; font-size: 16px; font-weight: 400; line-height: 24px;">
-                                                        <p style="font-weight: 800;">Delivery Address</p>
+                                                        <p style="font-weight: 800;">{{deliveryAddressTranslate}}</p>
                                                         <p>{{deliveryInfo.name}}<br>{{deliveryInfo.phone}}<br>
                                                             {{deliveryInfo.city}}<br>
                                                             {{deliveryInfo.address}}<br>
@@ -262,8 +262,9 @@
                                         <p
                                             style="font-size: 14px; font-weight: 400; line-height: 20px; color: #777777;">
                                             If you didn't create an account using this email address, please ignore this
-                                            email or <a href="#" target="_blank"
-                                                style="color: #777777;">unsusbscribe</a>. </p>
+                                            email or
+                                            <a href="#" target="_blank" style="color: #777777;">unsusbscribe</a>.
+                                        </p>
                                     </td>
                                 </tr>
                             </table>

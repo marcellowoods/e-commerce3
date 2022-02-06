@@ -1,6 +1,7 @@
-const i18next = require('i18next')
+const i18next = require('i18next');
 // if no language parameter is passed, let's try to use the node.js system's locale
-const systemLocale = Intl.DateTimeFormat().resolvedOptions().locale
+// const systemLocale = Intl.DateTimeFormat().resolvedOptions().locale;
+
 i18next
     .init({
         fallbackLng: 'en',
@@ -14,5 +15,5 @@ i18next
         }
     })
 
-module.exports = (lng) => i18next.getFixedT(lng || "en")
+module.exports = (lng) => i18next.getFixedT(lng || "bg")
 // module.exports = (lng) => i18next.getFixedT(lng || systemLocale)

@@ -1,4 +1,10 @@
+const emailTranslations = {
+    "Thank you for your order!": "Благодаря ви за поръчката!",
+    "your order is accepted": "Вашата поръчка е приета"
+}
+
 const translation = {
+    ...emailTranslations,
     "Not Processed": "Не обработена",
     "Processing": "Обравотва се",
     "Dispatched": "Изпратена",

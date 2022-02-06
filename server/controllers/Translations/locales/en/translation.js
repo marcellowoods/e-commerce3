@@ -1,4 +1,10 @@
+const emailTranslations = {
+    "Thank you for your order!": "Thank you for your order!",
+    "your order is accepted": "Your order is accepted"
+}
+
 const translation = {
+    ...emailTranslations,
     "categories": "Categories",
     "home": "Home",
     "shop": "Shop",
