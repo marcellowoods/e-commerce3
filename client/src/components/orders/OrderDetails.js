@@ -26,7 +26,7 @@ const OrderDetails = ({ isOpen, orderStatus, orderId, products, totalCost, setIs
 
     const renderSize = (selectedSize) => {
 
-        const {sizeText, sizeValue} = selectedSize;
+        const { sizeText, sizeValue } = selectedSize;
 
         let text = t(sizeText) + " " + t("size") + "," + sizeValue + " " + t("cm.");;
 
@@ -34,14 +34,17 @@ const OrderDetails = ({ isOpen, orderStatus, orderId, products, totalCost, setIs
 
     }
 
-    let renderName = (product, name, selectedSize) => {
+    let renderName = (product, name, count, selectedSize) => {
 
         if (product == null) {
             return (
-                <div className="flex flex-row">
-                    <h3>{name} {selectedSize && renderSize(selectedSize)}</h3>
+                <div className="">
+                    <div className="flex">
+                        <h3>{name}</h3>
+                        <h3 className="pl-2 font-medium ">x{count}</h3>
+                    </div>
                     {selectedSize && (
-                        <h3 className="italic pl-2">{renderSize(selectedSize)}</h3>
+                        <h3 className="italic">{renderSize(selectedSize)}</h3>
                     )}
                 </div>
             )
@@ -53,12 +56,15 @@ const OrderDetails = ({ isOpen, orderStatus, orderId, products, totalCost, setIs
         const translatedName = getTranslatedField(product, 'name', lang);
 
         return (
-            <div className="flex flex-row">
-                <Link to={linkString}>
-                    <h3 className="underline">{translatedName} </h3>
-                </Link>
+            <div className="">
+                <div className="flex">
+                    <Link to={linkString}>
+                        <h3 className="underline">{translatedName} </h3>
+                    </Link>
+                    <h3 className="pl-2 font-medium ">x{count}</h3>
+                </div>
                 {selectedSize && (
-                    <h3 className="italic pl-2">{renderSize(selectedSize)}</h3>
+                    <h3 className="italic ">{renderSize(selectedSize)}</h3>
                 )}
             </div>
         )
@@ -122,10 +128,9 @@ const OrderDetails = ({ isOpen, orderStatus, orderId, products, totalCost, setIs
                                         an email with all of the details of your order.
                                     </p> */}
                                     {products.map((item, index) => (
-                                        <div className="flex justify-between">
-                                            <div className="flex">
-                                                {renderName(item.product, item.name, item.selectedSize)}
-                                                <h3 className="pl-2 font-medium ">x{item.selectedCount}</h3>
+                                        <div className="flex justify-between items-center">
+                                            <div className="flex pt-2">
+                                                {renderName(item.product, item.name, item.selectedCount, item.selectedSize)}
                                             </div>
                                             <h3>{item.priceTimesCount} {" "} {t("lv.")}</h3>
                                         </div>

@@ -81,10 +81,7 @@ const TranslatedOrderTemplate = (deliveryInfo, products, totalCost, lang) => {
     const moneyMarkTranslate = t("lv.");
     const totalTranslate = t("total");
 
-    //removes undefined fields
-    const products2 = JSON.parse(JSON.stringify(products))
-
-    const translatedProducts = products2.map(product => {
+    const translatedProducts = products.map(product => {
 
         const priceTimesCount = product.priceTimesCount + " " + moneyMarkTranslate;
         let name = getTranslatedField(product.product, "name", lang);
