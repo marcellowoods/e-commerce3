@@ -33,7 +33,7 @@ const CartItem = ({
     }
 
     const renderSize = () => {
-        console.log(size);
+ 
         if(size !== null){
             const textSize = t('size');
             const textCm = t('cm.');

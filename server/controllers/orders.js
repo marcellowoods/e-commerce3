@@ -142,6 +142,8 @@ const makeOrderCreator = (withUser = false) => {
                     return;
                 }
 
+                console.log(cart);
+
                 const createdOrder = await new Order({
                     deliveryInfo,
                     products: cart,

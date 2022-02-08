@@ -59,35 +59,53 @@ const getTranslatedField = (obj, field, forLang) => {
 
 }
 
+
+
 const TranslatedOrderTemplate = (deliveryInfo, products, totalCost, lang) => {
 
     const t = i18n(lang);
+
+    const renderSize = (selectedSize) => {
+
+        const {sizeText, sizeValue} = selectedSize;
+        let text = t(sizeText) + " " + t("size") + "," + sizeValue + " " + t("cm.");;
+        return text;
+    }
+
+    const renderDeliveryMethod = (method, courrier) => {
+
+        return method === "office" ? t("delivery to office", { name: courrier }) : t("delivery to home");
+    }
 
     const messageTranslate = t("your order is accepted");
     const moneyMarkTranslate = t("lv.");
     const totalTranslate = t("total");
 
-    const translatedProducts = products.map(product => {
+    //removes undefined fields
+    const products2 = JSON.parse(JSON.stringify(products))
+
+    const translatedProducts = products2.map(product => {
 
         const priceTimesCount = product.priceTimesCount + " " + moneyMarkTranslate;
+        let name = getTranslatedField(product.product, "name", lang);
+        
+        let size = "";
+
+        if("selectedSize" in product){
+            
+            size = " " + renderSize(product["selectedSize"]);
+        }
 
         return {
-            name: getTranslatedField(product.product, "name", lang),
+            name,
+            size,
             selectedCount: product.selectedCount,
             priceTimesCount,
         }
 
     })
 
-    products.forEach(product => {
-        product.name = getTranslatedField(product.product, "name", lang);
-    })
-
-    console.log(products);
-
-    // const thankYouMessageTranslate = t("Thank you for your order!");
-
-
+    const deliveryTypeTranslate = renderDeliveryMethod(deliveryInfo.method, deliveryInfo.courrier);
 
     const htmlToSend = template({
 
@@ -98,6 +116,7 @@ const TranslatedOrderTemplate = (deliveryInfo, products, totalCost, lang) => {
         products: translatedProducts,
         totalCost,
         deliveryInfo,
+        deliveryTypeTranslate
     });
 
     return htmlToSend;
