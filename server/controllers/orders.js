@@ -6,7 +6,7 @@ const Order = require("../models/order");
 // const uniqueid = require('uniqid');
 const asyncHandler = require('express-async-handler');
 const { roundToTwo } = require("./utils");
-const sendOrderCreatedEmail = require("./SendEmails/sendOrderCreatedEmail");
+const sendOrderCreatedEmail = require("./systems/SendEmails/sendOrderCreatedEmail");
 
 
 const sendOrderEmail = () => {
