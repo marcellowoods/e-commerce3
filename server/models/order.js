@@ -64,6 +64,7 @@ const orderSchema = new mongoose.Schema(
         },
         orderedBy: { type: ObjectId, ref: "User" },
         deliveryInfo: {
+            lang: { type: String },
             courrier: { type: String, required: true },
             address: { type: String, required: true },
             city: { type: String, required: true },
@@ -78,7 +79,7 @@ const orderSchema = new mongoose.Schema(
                     "office"
                 ],
                 required: true
-            },
+            }
             // postalCode: { type: String, required: true },
             // country: { type: String, required: true },
         },

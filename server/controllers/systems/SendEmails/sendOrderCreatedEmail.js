@@ -20,11 +20,9 @@ var transporter = nodemailer.createTransport({
 
 const sendOrderCreatedEmail = (order) => {
 
-    const lang = "bg";
-
     const { deliveryInfo, products, totalCost } = order;
 
-    const htmlToSend = compileTemplate(deliveryInfo, products, totalCost, lang);
+    const htmlToSend = compileTemplate(deliveryInfo, products, totalCost);
 
     var mailOptions = {
         from: "from-example@email.com",

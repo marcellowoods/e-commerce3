@@ -35,7 +35,7 @@ const Checkout = () => {
 
     const history = useHistory();
 
-    const { t } = useTranslation();
+    const { t, i18n } = useTranslation();
 
     let dispatch = useDispatch();
 
@@ -72,7 +72,8 @@ const Checkout = () => {
             ...deliveryAdress,
             ...contactInformation,
             courrier: selectedCourier.id,
-            method: selectedMethod.id
+            method: selectedMethod.id,
+            lang: i18n.language
         }
 
         const totalCost = getCartTotal(products);
@@ -186,11 +187,10 @@ const Checkout = () => {
     }
 
     const deliveryAddressComponentName = () => {
+
         // if (!selectedMethod || !selectedCourier) {
         //     return "Delivery Address"
         // }
-
-
 
         if (selectedMethod.id == "office") {
             const text = t('office address', { name: selectedCourier.name });
@@ -213,7 +213,6 @@ const Checkout = () => {
 
         if (selectedMethod.id == "office") {
 
-            console.log(selectedCourier);
             return (
                 <h4 className="text-lg text-gray-500 font-medium">
                     <div>

@@ -44,7 +44,9 @@ const getTranslatedField = (obj, field, forLang) => {
 
 // const totalCost = 300;
 // const totalCost = "en";
-const compileTemplate = (deliveryInfo, products, totalCost, lang) => {
+const compileTemplate = (deliveryInfo, products, totalCost) => {
+
+    const lang = deliveryInfo.lang;
 
     const t = i18n(lang);
 
