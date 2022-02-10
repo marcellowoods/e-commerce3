@@ -1,10 +1,5 @@
-const emailTranslations = {
-    "Thank you for your order!": "Thank you for your order!",
-    "your order is accepted": "Your order is accepted."
-}
 
 const translation = {
-    ...emailTranslations,
     "categories": "Categories",
     "home": "Home",
     "shop": "Shop",
@@ -30,9 +25,9 @@ const translation = {
     "delivery address": "Delivery Address",
     "contact information": "Contact Information",
     "fill in the office address and your contact information to finish the order":
-    "Fill in the office address and your contact information to finish the order",
+        "Fill in the office address and your contact information to finish the order",
     "fill in your address and contact information to finish the order":
-    "Fill in your address and contact information to finish the order",
+        "Fill in your address and contact information to finish the order",
     "order": "Order",
     "total": "total",
     "deliver to": "Deliver to",
@@ -44,7 +39,7 @@ const translation = {
     "confirm": "Confirm",
     "order successful": "Order successful",
     "your order has been successfully submitted. We’ve sent you an email with all of the details of your order.":
-    "Your order has been successfully submitted. We’ve sent you an email with all of the details of your order.",
+        "Your order has been successfully submitted. We’ve sent you an email with all of the details of your order.",
 
     "settings": "Settings",
     "logout": "Logout",
@@ -75,4 +70,4 @@ const translation = {
     "hide completed orders": "Hide completed orders"
 }
 
-module.exports = translation;
+export default translation;

@@ -8,7 +8,7 @@ import App from './App';
 import { Provider } from "react-redux";
 import { BrowserRouter } from "react-router-dom";
 import store from "./store.js"
-import './i18n';
+import './Translations/i18n';
 
 //REMOVE composeWithDevTools in production
 // const store = createStore(rootReducer, composeWithDevTools());

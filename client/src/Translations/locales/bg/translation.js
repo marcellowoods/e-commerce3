@@ -1,16 +1,11 @@
-const emailTranslations = {
-    "Thank you for your order!": "Благодаря ви за поръчката!",
-    "your order is accepted": "Вашата поръчка е приета."
-}
-
 const translation = {
-    ...emailTranslations,
+
     "Not Processed": "Не обработена",
     "Processing": "Обравотва се",
     "Dispatched": "Изпратена",
     "Cancelled": "Отменена",
     "Completed": "Завършена",
-
+    
     "categories": "Категории",
     "home": "Начало",
     "shop": "Магазин",
@@ -78,6 +73,7 @@ const translation = {
     "update status": "промени статус",
     "new status": "нов статус",
     "hide completed orders": "Скрий завършени поръчки",
+
 }
 
-module.exports = translation;
+export default translation;
