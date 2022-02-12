@@ -6,7 +6,7 @@ const Order = require("../models/order");
 // const uniqueid = require('uniqid');
 const asyncHandler = require('express-async-handler');
 const { roundToTwo } = require("./utils");
-const sendOrderCreatedEmail = require("./systems/SendEmails/sendOrderCreatedEmail");
+const { sendCreatedOrderEmail } = require("./systems/SendEmails/sendOrderEmail");
 
 
 const sendOrderEmail = () => {
@@ -155,7 +155,7 @@ const makeOrderCreator = (withUser = false) => {
 
                 //remove undefined fields
                 const orderFiltered = JSON.parse(JSON.stringify(order))
-                sendOrderCreatedEmail(orderFiltered);
+                sendCreatedOrderEmail(orderFiltered);
 
 
             } else {
@@ -170,7 +170,7 @@ const makeOrderCreator = (withUser = false) => {
 
                 //remove undefined fields
                 const orderFiltered = JSON.parse(JSON.stringify(order))
-                sendOrderCreatedEmail(orderFiltered);
+                sendCreatedOrderEmail(orderFiltered);
             }
 
 

@@ -18,9 +18,9 @@ var transporter = nodemailer.createTransport({
 });
 
 
-const sendOrderCreatedEmail = (order) => {
+const sendOrderEmail = (order, message) => {
 
-    const htmlToSend = compileTemplate(order);
+    const htmlToSend = compileTemplate(order, message);
 
     var mailOptions = {
         from: "from-example@email.com",
@@ -38,4 +38,15 @@ const sendOrderCreatedEmail = (order) => {
     });
 }
 
-module.exports = sendOrderCreatedEmail
+const sendCreatedOrderEmail = (order) => {
+
+    sendOrderEmail(order, "your order is accepted")
+}
+
+const sendShippedOrderEmail = (order) => {
+
+    sendOrderEmail(order, "your order has been shipped")
+}
+
+exports.sendCreatedOrderEmail = sendCreatedOrderEmail;
+exports.sendShippedOrderEmail = sendShippedOrderEmail;

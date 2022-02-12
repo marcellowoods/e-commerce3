@@ -45,9 +45,21 @@ const getTranslatedField = (obj, field, forLang) => {
 // const totalCost = 300;
 // const totalCost = "en";
 
-{/* <td className="p-2 md:border md:border-grey-500 text-left block md:table-cell"><span className="inline-block w-1/3 md:hidden font-bold">{t("order id")}</span>{orderId}</td>
-            <td className="p-2 md:border md:border-grey-500 text-left block md:table-cell"><span className="inline-block w-1/3 md:hidden font-bold">{t("created on")}</span>{orderDate}</td> */}
-const compileTemplate = (order) => {
+
+const getLocaleDate = (dateStr, lang) => {
+
+    let options = {
+        year: "numeric",
+        month: "2-digit",
+        day: "numeric",
+        month: 'long',
+
+    }
+    let date = new Date(dateStr);
+    return date.toLocaleDateString(lang, options);
+}
+
+const compileTemplate = (order, message) => {
 
     const {
         deliveryInfo,
@@ -58,22 +70,6 @@ const compileTemplate = (order) => {
     } = order;
 
     const lang = deliveryInfo.lang;
-
-    const getLocaleDate = (dateStr, lang) => {
-
-        let options = {
-            year: "numeric",
-            month: "2-digit",
-            day: "numeric",
-            month: 'long',
-
-        }
-
-        let date = new Date(dateStr);
-        return date.toLocaleDateString(lang, options);
-    }
-
-    
 
     const t = i18n(lang);
 
@@ -89,7 +85,7 @@ const compileTemplate = (order) => {
         return method === "office" ? t("delivery to office", { name: courrier }) : t("delivery to home");
     }
 
-    const messageTranslate = t("your order is accepted");
+    const messageTranslate = t(message);
 
     const orderIdTranslate = t("order id") + ": " + orderId;
     const orderCreatedAtTranslate = t("created on") + ": " + getLocaleDate(orderCreatedAt, lang);

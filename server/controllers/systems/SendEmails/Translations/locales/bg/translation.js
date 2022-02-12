@@ -1,6 +1,7 @@
 const emailTranslations = {
     "Thank you for your order!": "Благодаря ви за поръчката!",
-    "your order is accepted": "Вашата поръчка е приета."
+    "your order is accepted": "Вашата поръчка е приета.",
+    "your order has been shipped": "Вашата поръчка е изпратена."
 }
 
 const translation = {
