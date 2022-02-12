@@ -44,15 +44,42 @@ const getTranslatedField = (obj, field, forLang) => {
 
 // const totalCost = 300;
 // const totalCost = "en";
-const compileTemplate = (deliveryInfo, products, totalCost) => {
+
+{/* <td className="p-2 md:border md:border-grey-500 text-left block md:table-cell"><span className="inline-block w-1/3 md:hidden font-bold">{t("order id")}</span>{orderId}</td>
+            <td className="p-2 md:border md:border-grey-500 text-left block md:table-cell"><span className="inline-block w-1/3 md:hidden font-bold">{t("created on")}</span>{orderDate}</td> */}
+const compileTemplate = (order) => {
+
+    const {
+        deliveryInfo,
+        products,
+        totalCost,
+        _id: orderId,
+        createdAt: orderCreatedAt,
+    } = order;
 
     const lang = deliveryInfo.lang;
+
+    const getLocaleDate = (dateStr, lang) => {
+
+        let options = {
+            year: "numeric",
+            month: "2-digit",
+            day: "numeric",
+            month: 'long',
+
+        }
+
+        let date = new Date(dateStr);
+        return date.toLocaleDateString(lang, options);
+    }
+
+    
 
     const t = i18n(lang);
 
     const renderSize = (selectedSize) => {
 
-        const {sizeText, sizeValue} = selectedSize;
+        const { sizeText, sizeValue } = selectedSize;
         let text = t(sizeText) + " " + t("size") + "," + sizeValue + " " + t("cm.");;
         return text;
     }
@@ -63,6 +90,10 @@ const compileTemplate = (deliveryInfo, products, totalCost) => {
     }
 
     const messageTranslate = t("your order is accepted");
+
+    const orderIdTranslate = t("order id") + ": " + orderId;
+    const orderCreatedAtTranslate = t("created on") + ": " + getLocaleDate(orderCreatedAt, lang);
+
     const moneyMarkTranslate = t("lv.");
     const totalTranslate = t("total");
 
@@ -70,11 +101,11 @@ const compileTemplate = (deliveryInfo, products, totalCost) => {
 
         const priceTimesCount = product.priceTimesCount + " " + moneyMarkTranslate;
         let name = getTranslatedField(product.product, "name", lang);
-        
+
         let size = "";
 
-        if("selectedSize" in product){
-            
+        if ("selectedSize" in product) {
+
             size = " " + renderSize(product["selectedSize"]);
         }
 
@@ -92,6 +123,8 @@ const compileTemplate = (deliveryInfo, products, totalCost) => {
     const htmlToSend = template({
 
         messageTranslate,
+        orderIdTranslate,
+        orderCreatedAtTranslate,
         moneyMarkTranslate,
         totalTranslate,
 

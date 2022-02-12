@@ -1,7 +1,7 @@
 var nodemailer = require('nodemailer');
 const path = require("path");
 require("dotenv").config({ path: path.resolve(__dirname, '../../.env') });
-const compileTemplate  = require("./compileTemplate");
+const compileTemplate = require("./compileTemplate");
 
 
 const mailTrapUser = process.env.MAILTRAP_USER;
@@ -20,9 +20,7 @@ var transporter = nodemailer.createTransport({
 
 const sendOrderCreatedEmail = (order) => {
 
-    const { deliveryInfo, products, totalCost } = order;
-
-    const htmlToSend = compileTemplate(deliveryInfo, products, totalCost);
+    const htmlToSend = compileTemplate(order);
 
     var mailOptions = {
         from: "from-example@email.com",
