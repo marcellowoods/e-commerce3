@@ -20,7 +20,11 @@ var transporter = nodemailer.createTransport({
 
 const sendOrderEmail = (order, message) => {
 
-    const htmlToSend = compileTemplate(order, message);
+
+    //remove undefined fields
+    const orderFiltered = JSON.parse(JSON.stringify(order));
+
+    const htmlToSend = compileTemplate(orderFiltered, message);
 
     var mailOptions = {
         from: "from-example@email.com",

@@ -153,9 +153,7 @@ const makeOrderCreator = (withUser = false) => {
 
                 let order = await createdOrder.populate("products.product").execPopulate();
 
-                //remove undefined fields
-                const orderFiltered = JSON.parse(JSON.stringify(order))
-                sendCreatedOrderEmail(orderFiltered);
+                sendCreatedOrderEmail(order);
 
 
             } else {
@@ -168,9 +166,7 @@ const makeOrderCreator = (withUser = false) => {
 
                 let order = await createdOrder.populate("products.product").execPopulate();
 
-                //remove undefined fields
-                const orderFiltered = JSON.parse(JSON.stringify(order))
-                sendCreatedOrderEmail(orderFiltered);
+                sendCreatedOrderEmail(order);
             }
 
 

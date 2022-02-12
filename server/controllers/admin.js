@@ -1,5 +1,6 @@
 const Order = require("../models/order");
 const Product = require("../models/product");
+const { sendShippedOrderEmail } = require("./systems/SendEmails/sendOrderEmail");
 
 //orders, orderStatus
 
@@ -28,8 +29,8 @@ exports.orders = async (req, res) => {
         let sortObj = { createdAt: -1 };
 
         const match = [];
-        if(hideCompleted){
-            match.push({ $match : { orderStatus : { $ne: "Completed" } } })
+        if (hideCompleted) {
+            match.push({ $match: { orderStatus: { $ne: "Completed" } } })
         }
 
         const data = await Order.aggregate([
@@ -42,7 +43,7 @@ exports.orders = async (req, res) => {
             }
         ]).exec();
 
-        await Product.populate(data, {path: "data.products.product"});
+        await Product.populate(data, { path: "data.products.product" });
 
         res.json(data[0]);
     } catch (err) {
@@ -51,11 +52,22 @@ exports.orders = async (req, res) => {
 };
 
 exports.orderStatus = async (req, res) => {
-    const { orderId, orderStatus } = req.body;
+    try {
 
-    let updated = await Order
-        .findByIdAndUpdate(orderId, { orderStatus }, { new: true })
-        .exec();
+        const { orderId, orderStatus } = req.body;
 
-    res.json(updated);
+        let updated = await Order
+            .findByIdAndUpdate(orderId, { orderStatus }, { new: true })
+            .populate("products.product")
+            .exec();
+
+        if (updated.orderStatus == "Dispatched") {
+            sendShippedOrderEmail(updated);
+        }
+
+        res.json(updated);
+    } catch (err) {
+        console.log(err);
+    }
+
 };
