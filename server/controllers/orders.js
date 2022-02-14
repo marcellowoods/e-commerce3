@@ -133,6 +133,8 @@ const makeOrderCreator = (withUser = false) => {
                 return;
             }
 
+            let userId = null;
+
             if (withUser) {
 
                 const user = await User.findOne({ email: req.user.email }).exec();
@@ -142,35 +144,20 @@ const makeOrderCreator = (withUser = false) => {
                     return;
                 }
 
-                console.log(cart);
+                userId = user._id;
 
-                const createdOrder = await new Order({
-                    deliveryInfo,
-                    products: cart,
-                    totalCost,
-                    orderedBy: user._id,
-                }).save();
-
-                let order = await createdOrder.populate("products.product").execPopulate();
-
-                sendCreatedOrderEmail(order);
-
-
-            } else {
-
-                const createdOrder = await new Order({
-                    deliveryInfo,
-                    products: cart,
-                    totalCost
-                }).save();
-
-                let order = await createdOrder.populate("products.product").execPopulate();
-
-                sendCreatedOrderEmail(order);
             }
 
+            const createdOrder = await new Order({
+                deliveryInfo,
+                products: cart,
+                totalCost,
+                orderedBy: userId,
+            }).save();
 
+            let order = await createdOrder.populate("products.product").execPopulate();
 
+            // sendCreatedOrderEmail(order);
 
 
             let bulkOption = products.map((item) => {
