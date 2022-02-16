@@ -6,8 +6,6 @@ CLOUDINARY_API_KEY = string
 CLOUDINARY_API_SECRET = string
 CLOUDINARY_FOLDER = string
 
-STRIPE_SECRET=string
-
 GMAIL_USER = string
 GMAIL_PASS = string
 
