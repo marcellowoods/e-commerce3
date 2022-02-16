@@ -22,8 +22,6 @@ import Protect from './Protect'
 //TODO
 //https://expressjs.com/en/advanced/best-practice-security.html
 
-
-
 //with pass
 //create sha512 hash - https://emn178.github.io/online-tools/sha512.html
 ReactDOM.render(

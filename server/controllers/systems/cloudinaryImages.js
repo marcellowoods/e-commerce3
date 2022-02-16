@@ -134,12 +134,5 @@ exports.getImagesFromUrls = getImagesFromUrls;
 exports.removeImagesFromUrls = removeImagesFromUrls;
 
 
-// try {
-
-// } catch (err) {
-//     console.log(err);
-// }
-
-
 
 

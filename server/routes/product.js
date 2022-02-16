@@ -20,7 +20,6 @@ const {
 } = require("../controllers/product");
 
 // routes
-// router.post("/product", authCheck, adminCheck, create);
 router.post("/product", authCheck, adminCheck, create);
 // router.get("/products/total", productsCount);
 
@@ -33,9 +32,7 @@ router.get("/products/list-by-slugs/:slugs", listBySlugs);
 router.put("/product/:slug", authCheck, adminCheck, update);
 
 router.post("/products", list);
-// related
 router.get("/product/related/:productId", listRelated);
-// filter only by text
 router.get("/search/:text/:page", getProductsByText);
 
 

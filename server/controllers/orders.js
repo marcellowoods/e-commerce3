@@ -19,7 +19,7 @@ const sendOrderEmail = () => {
     //https://app.mailgun.com/app/account/setup
 }
 
-getCartTotal = (cartItems) => {
+const getCartTotal = (cartItems) => {
 
     const totalPrice = cartItems.reduce((total, product) => {
         return total + (roundToTwo(product.price) * product.count);
