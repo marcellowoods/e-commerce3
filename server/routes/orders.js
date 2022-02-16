@@ -4,13 +4,14 @@ const router = express.Router();
 
 // middlewares
 const { authCheck } = require("../middlewares/auth");
-// controllers
 
+// controllers
 const {
     createOrder,
     userCreateOrder
 } = require("../controllers/orders");
 
+//route
 router.post("/order", createOrder);
 router.post("/user-order", authCheck, userCreateOrder);  
 
