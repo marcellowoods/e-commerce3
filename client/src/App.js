@@ -19,7 +19,6 @@ import Checkout from "./pages/Checkout";
 import Login from "./pages/auth/Login"
 import Register from "./pages/auth/Register";
 
-
 import Orders from "./pages/user/Orders";
 import Settings from "./pages/user/Settings";
 
