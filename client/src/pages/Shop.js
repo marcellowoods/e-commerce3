@@ -54,8 +54,6 @@ const PageComponent = () => {
 
     useDidMountEffect(() => {
 
-        // console.log(typeParam);
-
         if (allCategories) {
             if (categoryParam) {
                 const categoryObj = allCategories.find(c => c.slug == categoryParam);

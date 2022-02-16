@@ -7,10 +7,8 @@ import getPagination from "../components/navigation/getPagination";
 import ProductShopCard from "../components/cards/ProductShopCard";
 import ProductLoadCard from "../components/cards/ProductLoadCard";
 import LoadingPage from "./LoadingPage";
-import { getCategories } from "../functions/category";
 import { getProductByText } from "../functions/product";
-import ElementsMenu from "../components/menus/ElementMenu";
-import { useAsyncDidMount, useDidMountEffect, useAsync } from "../auxiliary/reactUtils";
+import { useDidMountEffect, useAsync } from "../auxiliary/reactUtils";
 
 import { useTranslation } from 'react-i18next';
 import { getTranslatedField } from "../actions/translateActions";
@@ -23,11 +21,6 @@ const PRODUCTS_PER_PAGE = 6;
 function isNumeric(value) {
     return /^-?\d+$/.test(value);
 }
-
-const selectedTypes = [
-    { name: "new", slug: "new" },
-    { name: "best sellers", slug: "best-sellers" }
-]
 
 const PageComponent = () => {
 
@@ -77,7 +70,6 @@ const PageComponent = () => {
 
     useEffect(() => {
 
-        // console.log(typeParam);
         if (pageParam) {
             if (isNumeric(pageParam)) {
                 setPage(parseInt(pageParam) - 1);
@@ -105,18 +97,6 @@ const PageComponent = () => {
     const pushToProductPage = (id) => {
         history.push(PRODUCT_PATHNAME + id)
     }
-
-    // const handleCategoryChange = (category) => {
-
-    //     setSelectedCategory(category);
-    //     setPage(0);
-    // }
-
-    // const handleTypeChange = (type) => {
-
-    //     setSelectedType(type);
-    //     setPage(0);
-    // }
 
     const renderProducts = () => (
         <div key={"products"} className="grid gap-6 grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 mt-6">
@@ -170,26 +150,6 @@ const PageComponent = () => {
     return (
         <Fragment>
 
-            {/* <div className="flex flex-col sm:flex-row">
-                <div className="pr-2">
-                    <ElementsMenu
-                        allElements={allCategories}
-                        selectedElement={selectedCategory}
-                        setSelectedElement={handleCategoryChange}
-                        zIndex={4}
-                    />
-                </div>
-
-                <div className="sm:pl-2 pt-2 sm:pt-0">
-                    <ElementsMenu
-                        allElements={selectedTypes}
-                        selectedElement={selectedType}
-                        setSelectedElement={handleTypeChange}
-                    />
-                </div>
-            </div> */}
-            {/* xl:grid-cols-4 */}
-
             <button onClick={handleSearchClose}
                 className="border-none inline-flex justify-center items-center rounded-md border-gray-300  p-2 bg-white text-sm  text-gray-700 hover:bg-gray-50 focus:outline-none  focus:ring-indigo-500">
                 <h3 className="text-gray-700 text-2xl font-normal">{textParam}</h3>
@@ -198,8 +158,6 @@ const PageComponent = () => {
 
 
             {isProductsLoading ? renderLoadCards() : renderProducts()}
-
-
 
             {/* https://github.com/AdeleD/react-paginate */}
             <div className="p-6">

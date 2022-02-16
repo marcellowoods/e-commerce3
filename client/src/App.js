@@ -37,10 +37,6 @@ import Home from "./pages/Home";
 
 import { filterCart } from "./actions/cartActions";
 
-import {
-    onIdTokenChanged
-} from "firebase/auth";
-
 
 function App() {
 
