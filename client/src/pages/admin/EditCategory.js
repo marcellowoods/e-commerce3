@@ -1,11 +1,10 @@
 import React, { useEffect, useState } from "react";
-import { useDispatch, useSelector } from "react-redux";
+import { useSelector } from "react-redux";
 import { useHistory, useParams } from "react-router-dom";
 import { updateCategory, getCategory } from "../../functions/category";
 import { getImageIds } from "../../functions/cloudinary";
-import { useAsync, useDidMountEffect } from "../../auxiliary/reactUtils"
+
 import LoadingPage from "../LoadingPage";
-import FileUpload from "../../components/forms/FileUpload";
 
 import {
     NameForm,

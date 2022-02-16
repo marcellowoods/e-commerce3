@@ -1,6 +1,6 @@
-import React, { Fragment, useEffect, useState, useRef } from "react";
-import { Link, useLocation } from "react-router-dom";
-import { useDispatch, useSelector } from "react-redux";
+import React, { useEffect, useState } from "react";
+import { useLocation } from "react-router-dom";
+import { useSelector } from "react-redux";
 
 import { roleBasedRedirect } from "./auxiliary/redirect.js"
 import LoadingPage from "../LoadingPage"
@@ -8,15 +8,10 @@ import LoadingPage from "../LoadingPage"
 
 import {
     getAuth,
-    createUserWithEmailAndPassword,
     signInWithEmailAndPassword,
     GoogleAuthProvider,
     signInWithPopup
 } from "firebase/auth";
-
-function sleep(ms) {
-    return new Promise(resolve => setTimeout(resolve, ms));
-}
 
 const auth = getAuth();
 const googleAuthProvider = new GoogleAuthProvider();
@@ -103,8 +98,6 @@ const Login = ({ history }) => {
 
     const { user } = useSelector((state) => ({ ...state }));
 
-    let dispatch = useDispatch();
-
     useEffect(() => {
 
         if (user) {
@@ -127,28 +120,9 @@ const Login = ({ history }) => {
             // setLoading(false);
         } catch (error) {
             console.log(error);
-            // toast.error(error.message);
             setLoading(false);
         }
     };
-
-    // const emailLoginFormSubmit = async (e) => {
-    //     e.preventDefault();
-
-    //     await signInWithEmailAndPassword(auth, email, password)
-    //         .then((userCredential) => {
-    //             // Signed in 
-    //             const user = userCredential.user;
-    //             await sleep(6000);
-    //             console.log("signed in")
-    //             // ...
-    //         })
-    //         .catch((error) => {
-    //             const errorCode = error.code;
-    //             const errorMessage = error.message;
-    //             console.log(errorMessage);
-    //         });
-    // }
 
     const googleLogin = async () => {
 

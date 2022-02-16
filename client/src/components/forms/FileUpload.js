@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React from "react";
 import Resizer from "react-image-file-resizer";
 import axios from "axios";
 import { useSelector } from "react-redux";
@@ -99,7 +99,7 @@ const FileUpload = ({ images, setImages, setLoading, singleUpload = false }) => 
             });
     };
 
-    console.log(images)
+    // console.log(images)
 
     return (
         <>

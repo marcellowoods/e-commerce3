@@ -1,7 +1,7 @@
 import React, { Fragment } from "react";
 
 import { Dialog, Transition } from '@headlessui/react'
-import { useDispatch, useSelector } from "react-redux";
+import { useSelector } from "react-redux";
 import { getCartTotal } from "../../actions/cartActions";
 
 import { useTranslation } from 'react-i18next';

@@ -1,7 +1,8 @@
 const AccountCard = () => {
 
     return (
-        <div>
+        <div className="flex justify-center">
+            account page
         </div>
     )
 }

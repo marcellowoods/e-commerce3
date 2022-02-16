@@ -1,4 +1,4 @@
-import React, { Fragment } from "react";
+import React from "react";
 import { OrderConfirmed } from "../checkout/CheckoutModals";
 
 import { useDispatch, useSelector } from "react-redux";

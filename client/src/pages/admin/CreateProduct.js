@@ -1,6 +1,5 @@
-import React, { useState, Fragment, useEffect } from "react";
-import { useDispatch, useSelector } from "react-redux";
-import FileUpload from "../../components/forms/FileUpload"
+import React, { useState } from "react";
+import { useSelector } from "react-redux";
 import { getCategories } from "../../functions/category";
 import { createProduct as createProductRequest } from "../../functions/product"
 import { useAsync } from "../../auxiliary/reactUtils";
@@ -16,10 +15,6 @@ import {
     ImagesForm,
     SizeForm
 } from "../../components/forms/CRUDForms/ProductForms";
-
-function classNames(...classes) {
-    return classes.filter(Boolean).join(' ')
-}
 
 let makeEmptySize = () => ({ lowerBound: 0, upperBound: 0, stepSize: 0 });
 

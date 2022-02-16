@@ -63,7 +63,6 @@ const OrdersTable = ({ onDetailsClicked, onUpdateStatusClicked, orders }) => {
                 <tr className="border border-grey-500 md:border-none block md:table-row absolute -top-full md:top-auto -left-full md:left-auto  md:relative ">
                     <th className="bg-gray-600 p-2 text-white font-bold md:border md:border-grey-500 text-left block md:table-cell">{t("order id")}</th>
                     <th className="bg-gray-600 p-2 text-white font-bold md:border md:border-grey-500 text-left block md:table-cell">{t("created on")}</th>
-                    {/* <th className="bg-gray-600 p-2 text-white font-bold md:border md:border-grey-500 text-left block md:table-cell">Address</th> */}
                     <th className="bg-gray-600 p-2 text-white font-bold md:border md:border-grey-500 text-left block md:table-cell">{t("status")}</th>
                     <th className="bg-gray-600 p-2 text-white font-bold md:border md:border-grey-500 text-left block md:table-cell">{t("total")}</th>
                     <th className="bg-gray-600 p-2 text-white font-bold md:border md:border-grey-500 text-left block md:table-cell"></th>
@@ -75,7 +74,6 @@ const OrdersTable = ({ onDetailsClicked, onUpdateStatusClicked, orders }) => {
                         <OrderRow
                             orderId={order._id}
                             orderDate={getLocaleDate(order.createdAt, lang)}
-                            // orderAddress={order.deliveryInfo.address}
                             orderStatus={order.orderStatus}
                             orderTotal={order.totalCost}
                             onDetailsClicked={onDetailsClicked}

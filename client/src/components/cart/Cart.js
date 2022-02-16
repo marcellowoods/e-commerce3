@@ -43,7 +43,7 @@ const Cart = ({ products }) => {
             )
             }
 
-            <h3 className="text-right text-lg text-gray-600">total {getCartTotal(products)} {t('lv.')}</h3>
+            <h3 className="text-right text-lg text-gray-600">{t('total')} {getCartTotal(products)} {t('lv.')}</h3>
         </div>
     )
 }

@@ -1,9 +1,6 @@
-import React, { useState, Fragment, useEffect } from "react";
+import React, { useState, useEffect } from "react";
 import { useHistory, useParams } from "react-router-dom";
-import { useDispatch, useSelector } from "react-redux";
-import { Listbox, Transition } from '@headlessui/react'
-import { CheckIcon, SelectorIcon } from '@heroicons/react/solid'
-import FileUpload from "../../components/forms/FileUpload"
+import { useSelector } from "react-redux";
 import { getCategories } from "../../functions/category";
 import { getProduct, updateProduct } from "../../functions/product";
 import { getImageIds } from "../../functions/cloudinary";
@@ -19,14 +16,9 @@ import {
     ImagesForm
 } from "../../components/forms/CRUDForms/ProductForms";
 
-import { useDidMountEffect } from "../../auxiliary/reactUtils";
 import LoadingPage from "../LoadingPage";
 
 const LIST_PRODUCTS_PATHNAME = "/admin/list-products";
-
-function classNames(...classes) {
-    return classes.filter(Boolean).join(' ')
-}
 
 let isSizeNull = (size) => size.lowerBound === 0 || size.upperBound === 0 || size.stepSize === 0;
 

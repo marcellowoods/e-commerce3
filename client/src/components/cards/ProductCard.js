@@ -1,31 +1,19 @@
 import React, { useState, useEffect } from 'react'
-import { useHistory, useParams } from "react-router-dom";
 import ProductSlider from './ProductSlider';
 import {
     ColorSelector,
-    SizeSelector,
-    BreadCrumbs,
     BraceletSizeSelector
 } from "../forms/CardForms/ProductCardForms";
 
 import { useTranslation } from 'react-i18next';
-
-const shopUrl = '/shop';
-
-
-function classNames(...classes) {
-    return classes.filter(Boolean).join(' ')
-}
-
-
-
 
 //https://tailwindui.com/components/ecommerce/components/product-overviews
 const ProductCard = ({ product, translatedName, translatedDescription, handleAddToCart }) => {
 
     const { t } = useTranslation();
 
-    const { details, highlights, size, colors, images, breadcrumbs, price } = product;
+    //selecting colors is not a feature yet 
+    const { size, colors, images, price } = product;
 
     const [selectedColor, setSelectedColor] = useState(null);
     const [selectedSize, setSelectedSize] = useState(null);

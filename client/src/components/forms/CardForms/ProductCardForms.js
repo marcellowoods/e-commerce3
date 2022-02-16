@@ -1,6 +1,5 @@
-import React, { Fragment, useState, useEffect } from 'react'
-import { useHistory, useParams } from "react-router-dom";
-import { StarIcon } from '@heroicons/react/solid';
+import React, { Fragment, useState } from 'react'
+import { useHistory } from "react-router-dom";
 import { RadioGroup } from '@headlessui/react';
 import ReactSlider from "react-slider";
 import { useTranslation } from 'react-i18next';
@@ -207,8 +206,6 @@ const BraceletSizeSelector = ({ selectedSize, setSelectedSize, productSize }) =>
 
     const [selectedSizeType, setSelectedSizeType] = useState(null);
 
-    // const [infoModalOpen, setInfoModalOpen] = useState(false);
-
     const handleCustomValueChange = (value) => {
         setSelectedSize(value);
     }
@@ -229,16 +226,11 @@ const BraceletSizeSelector = ({ selectedSize, setSelectedSize, productSize }) =>
 
     return (
         <div className="mt-10">
-            {/* <InfoModal
-                isOpen={infoModalOpen}
-                closeModal={() => setInfoModalOpen(false)}
-            /> */}
+
             <div className="flex items-center ">
                 <h3 className="text-lg text-transform: capitalize text-gray-900 font-medium">{t("size")}</h3>
                 <span className="pl-2 text-xl">{selectedSize} {" "} {selectedSize && t("cm.")}</span>
-                {/* <a href="#" className="text-sm font-medium text-indigo-600 hover:text-indigo-500">
-                    Size guide
-                </a> */}
+
             </div>
 
             <div

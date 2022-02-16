@@ -1,10 +1,8 @@
-import React, { Fragment, useRef, useState } from "react";
-import { Dialog, Listbox, Transition } from '@headlessui/react';
-import { CheckIcon, SelectorIcon } from '@heroicons/react/solid';
+import React, { useState } from "react";
 
 import OrderDetails from "../../components/orders/OrderDetails";
 import { getOrders } from "../../functions/admin";
-import { changeStatus } from "../../functions/admin";
+import { changeOrderStatus } from "../../functions/admin";
 import { useAsync, useDidMountEffect } from "../../auxiliary/reactUtils";
 import { useSelector } from "react-redux";
 import OrdersTable from "../../components/orders/admin/OrdersTable";
@@ -29,26 +27,26 @@ function classNames(...classes) {
 const ORDERS_PER_PAGE = 6;
 
 //test data
-const testOrders = [
-    {
-        orderId: 1234,
-        orderDate: "12",
-        orderAddress: "some street",
-        orderStatus: "delivered"
-    },
-    {
-        orderId: 1235,
-        orderDate: "15",
-        orderAddress: "some street 2",
-        orderStatus: "delivered"
-    },
-    {
-        orderId: 12358,
-        orderDate: "18",
-        orderAddress: "some street 3",
-        orderStatus: "delivered"
-    }
-]
+// const testOrders = [
+//     {
+//         orderId: 1234,
+//         orderDate: "12",
+//         orderAddress: "some street",
+//         orderStatus: "delivered"
+//     },
+//     {
+//         orderId: 1235,
+//         orderDate: "15",
+//         orderAddress: "some street 2",
+//         orderStatus: "delivered"
+//     },
+//     {
+//         orderId: 12358,
+//         orderDate: "18",
+//         orderAddress: "some street 3",
+//         orderStatus: "delivered"
+//     }
+// ]
 
 
 const UpdateOrders = () => {
@@ -130,7 +128,7 @@ const UpdateOrders = () => {
         try {
             if (orderSelected) {
                 const userToken = await user.getToken();
-                await changeStatus(orderSelected._id, newOrderStatus, userToken);
+                await changeOrderStatus(orderSelected._id, newOrderStatus, userToken);
 
                 if (page === 0) {
                     const res = await getOrders(hideCompleted, 1, userToken);

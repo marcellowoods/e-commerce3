@@ -10,7 +10,7 @@ import {
     DeliveryMethod,
     DeliveryAdress
 } from "../components/checkout/CheckoutFields";
-import { OrderConfirmed, ConfirmOrder } from "../components/checkout/CheckoutModals";
+import { ConfirmOrder } from "../components/checkout/CheckoutModals";
 import { getCartTotal, clearCart, getFilteredCartData } from "../actions/cartActions";
 import { postOrder, userPostOrder } from "../functions/orders";
 
@@ -89,13 +89,11 @@ const Checkout = () => {
         }
         try {
             //clear cart
-
             let res = await postFn();
             clearCart(dispatch);
             dispatch({ type: "ORDER_SUCCESS_MODAL_TOGGLE", payload: true });
             history.push("/");
-            // setOrderSentLoading(false);
-            console.log(res);
+
         } catch (error) {
             alert(error);
             setOrderSentLoading(false);
@@ -105,7 +103,7 @@ const Checkout = () => {
 
 
     useDidMountEffect(() => {
-        // const options = [{ "name": "Delivery to home" }, { "name": `Delivery to ${selectedCourier.name} office` }];
+
         setMethodOptions(prevState => {
             return prevState.map(({ name, id }) => {
                 if (id === 'office') {
@@ -166,9 +164,8 @@ const Checkout = () => {
                 if (missingFields) {
                     window.alert("missing " + missingFields.join(','));
                 } else {
-                    // setCheckoutState(CheckoutStates.DELIVERY_ADDRESS);
+                    
                     setIsConfirmModalOpen(true);
-
                 }
                 break;
         }

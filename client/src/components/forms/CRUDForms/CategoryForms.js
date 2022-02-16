@@ -1,4 +1,4 @@
-import React, { useState, Fragment, useEffect } from "react";
+import React, { useState, useEffect } from "react";
 import { NameForm, DescriptionForm, TranslationsForm } from "./CommonForms";
 import FileUpload from "../FileUpload";
 

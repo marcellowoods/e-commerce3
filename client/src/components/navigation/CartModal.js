@@ -1,8 +1,7 @@
-import React, { Fragment, useContext, useEffect, useState } from "react";
+import React, { Fragment } from "react";
 import { useHistory } from "react-router-dom";
-import { getItemDeleteIcon } from "../../assets/icons";
 import { useDispatch, useSelector } from "react-redux";
-import { addToCart, getCartTotal, removeFromCart } from "../../actions/cartActions";
+
 import Cart from "../cart/Cart.js"
 
 import { useTranslation } from 'react-i18next';
@@ -13,7 +12,7 @@ import { useTranslation } from 'react-i18next';
 //https://www.youtube.com/watch?v=l6nmysZKHFU
 
 const CartModal = () => {
-    
+
     const history = useHistory();
 
     const { t } = useTranslation();
@@ -52,26 +51,26 @@ const CartModal = () => {
                     </div>
                     <hr className="my-3" />
 
-                    <Cart products={products}/>
+                    <Cart products={products} />
 
                     {!hasProducts() &&
                         <div className="text-2xl flex m-8 justify-center  font-medium text-gray-700">
-      
+
                             {t('cart is empty')}
-                            
+
                         </div>
                     }
 
-                    {/* promo code */}
-                    {/* <div className="mt-8">
-                    <form className="flex items-center justify-center">
-                        <input className="form-input w-48" type="text" placeholder="Add promocode">
-                        </input>
-                        <button className="ml-3 flex items-center px-3 py-2 bg-blue-600 text-white text-sm uppercase font-medium rounded hover:bg-blue-500 focus:outline-none focus:bg-blue-500">
-                            <span>Apply</span>
-                        </button>
-                    </form>
-                </div> */}
+                    {/* promo code? */}
+                        {/* <div className="mt-8">
+                        <form className="flex items-center justify-center">
+                            <input className="form-input w-48" type="text" placeholder="Add promocode">
+                            </input>
+                            <button className="ml-3 flex items-center px-3 py-2 bg-blue-600 text-white text-sm uppercase font-medium rounded hover:bg-blue-500 focus:outline-none focus:bg-blue-500">
+                                <span>Apply</span>
+                            </button>
+                        </form>
+                        </div> */}
 
                     <hr className="my-3" />
 

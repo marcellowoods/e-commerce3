@@ -10,7 +10,6 @@ import { useTranslation } from 'react-i18next';
 const PRODUCT_PAGE_URL = "/product/"
 
 const OrderDetails = ({ isOpen, orderStatus, orderId, products, totalCost, setIsOpen, deliveryInfo }) => {
-    // let [isOpen, setIsOpen] = useState(true)
 
     const { t, i18n } = useTranslation();
 

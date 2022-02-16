@@ -1,14 +1,12 @@
-import React, { Fragment, useContext, useEffect } from "react";
-import { useHistory } from "react-router-dom";
+import React, { Fragment, useEffect } from "react";
 import NavigationItems from './NavigationItems';
 import SearchBar from './SearchBar.js';
 import ChangeLangDropdown from "./ChangeLangDropdown";
 import { useDispatch, useSelector } from "react-redux";
 
 
-const MobileNavbarMenu = (props) => {
+const MobileNavbarMenu = () => {
 
-    const history = useHistory();
 
     let dispatch = useDispatch();
 

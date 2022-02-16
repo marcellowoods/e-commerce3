@@ -1,14 +1,11 @@
-import React, { Fragment, useContext } from "react";
-import { useDispatch, useSelector } from "react-redux";
+import React, { Fragment } from "react";
+import {  useSelector } from "react-redux";
 
 import { Menu, Transition } from '@headlessui/react'
 import { getAdminIcon } from "../../assets/icons";
 import { useHistory } from "react-router-dom";
-import { getAuth, signOut } from "firebase/auth";
 
 import { useTranslation } from 'react-i18next';
-
-const auth = getAuth();
 
 const getItemClassName = (isActive) => (
     `${isActive ? 'color-main-bold' : 'color-main-light'} focus:outline-none group flex rounded-md items-center w-full px-3 py-3 text-md`

@@ -1,7 +1,7 @@
 import React, { Fragment} from "react";
 import 'react-tridi/dist/index.css';
 import { Menu, Transition } from '@headlessui/react';
-import { CheckIcon, SelectorIcon } from '@heroicons/react/solid';
+import { SelectorIcon } from '@heroicons/react/solid';
 import { useTranslation } from 'react-i18next';
 import { getTranslatedField } from "../../actions/translateActions";
 
@@ -18,7 +18,6 @@ function classNames(...classes) {
 const ElementsMenu = ({ allElements, selectedElement, setSelectedElement, zIndex=3 }) => {
 
     const { t, i18n } = useTranslation();
-
 
     const getTranslatedName = (el) => {
 

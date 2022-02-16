@@ -1,4 +1,4 @@
-import React, { useState, Fragment, useEffect } from "react";
+import React, { useState } from "react";
 import { useSelector } from "react-redux";
 import { useHistory } from "react-router-dom";
 import { getAllProducts, removeProduct } from "../../functions/product";
@@ -8,7 +8,6 @@ import LoadingPage from "../LoadingPage";
 const ProductsTable = ({ products, handleProductRemove, handleProductEdit }) => {
 
     return (
-
         <div className="flex flex-col">
             <div className="-my-2 overflow-x-auto sm:-mx-6 lg:-mx-8">
                 <div className="py-2 align-middle inline-block min-w-full sm:px-6 lg:px-8">

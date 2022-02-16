@@ -1,8 +1,7 @@
-import React, { useEffect, useState } from "react";
-import { useDispatch, useSelector } from "react-redux";
+import React, { useState } from "react";
+import {  useSelector } from "react-redux";
 import { useHistory } from "react-router-dom";
 import { createCategory } from "../../functions/category"
-import { useTranslation } from 'react-i18next';
 
 import {
     NameForm,
@@ -10,10 +9,6 @@ import {
     ImageUrlForm,
     TranslationsForm
 } from "../../components/forms/CRUDForms/CategoryForms";
-
-function classNames(...classes) {
-    return classes.filter(Boolean).join(' ')
-}
 
 //more forms
 //https://tailwindcomponents.com/component/account-card
@@ -25,8 +20,6 @@ const CreateCategory = () => {
 
     let history = useHistory();
 
-    const { t, i18n } = useTranslation();
-
     const [name, setName] = useState("");
     const [description, setDescription] = useState("");
     const [imageUrl, setImageUrl] = useState("");
@@ -34,19 +27,6 @@ const CreateCategory = () => {
     const [uploadedImages, setUploadedImages] = useState([]);
 
     const { user } = useSelector((state) => ({ ...state }));
-
-    const handleEditTranslations = (forLanguage, field, newVal) => {
-
-        let translationObj = translations.find((tObj) => tObj.lang == forLanguage);
-        let newTranslationObj = { ...translationObj, [field]: newVal };
-
-        setTranslations(prev => {
-
-            let filtered = prev.filter((el) => el.lang != forLanguage);
-
-            return [...filtered, newTranslationObj];
-        })
-    }
 
     const handleSubmit = async () => {
 
