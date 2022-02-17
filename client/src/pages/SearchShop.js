@@ -1,7 +1,5 @@
 import React, { Fragment, useEffect, useState, useRef } from "react";
 import { useHistory, useParams } from "react-router-dom";
-// import Tridi from 'react-tridi';
-import 'react-tridi/dist/index.css';
 import { XIcon } from '@heroicons/react/solid';
 import getPagination from "../components/navigation/getPagination";
 import ProductShopCard from "../components/cards/ProductShopCard";

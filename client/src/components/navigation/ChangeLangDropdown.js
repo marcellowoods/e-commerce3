@@ -1,5 +1,4 @@
 import React, { useState, Fragment } from 'react'
-import 'react-tridi/dist/index.css';
 import { Menu, Transition } from '@headlessui/react';
 import { ChevronDownIcon } from '@heroicons/react/solid';
 

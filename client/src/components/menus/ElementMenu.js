@@ -1,5 +1,4 @@
 import React, { Fragment} from "react";
-import 'react-tridi/dist/index.css';
 import { Menu, Transition } from '@headlessui/react';
 import { SelectorIcon } from '@heroicons/react/solid';
 import { useTranslation } from 'react-i18next';

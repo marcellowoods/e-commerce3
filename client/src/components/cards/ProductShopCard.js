@@ -1,6 +1,4 @@
 import React, { useRef } from "react";
-// import Tridi from 'react-tridi';
-// import 'react-tridi/dist/index.css';
 import { getAddToCartIcon } from "../../assets/icons";
 import ProductShopSlider from "./ProductShopSlider";
 import { useTranslation } from 'react-i18next';
