@@ -1,5 +1,4 @@
 import React, { Fragment, useContext } from "react";
-// import { useHistory, useLocation } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import NavigationItems from './NavigationItems';
 import SearchBar from './SearchBar.js'

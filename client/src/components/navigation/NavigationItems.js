@@ -1,8 +1,5 @@
-
-import { reauthenticateWithCredential } from "@firebase/auth";
 import React from "react";
-import { useHistory } from "react-router-dom";
-import ChangeLangDropdown from "./ChangeLangDropdown";
+import { useNavigate } from "react-router-dom";
 
 import { useTranslation } from 'react-i18next';
 
@@ -11,13 +8,13 @@ const NavigationItems = ({ closeMobileNav = null }) => {
 
     const { t } = useTranslation();
 
-    const history = useHistory();
+    const navigate = useNavigate();
 
-    const handleHomeClick = () => history.push("/");
-    const handleShopClick = () => history.push("/shop");
-    const handleCategoriesClick = () => history.push("/categories");
-    const handleContactClick = () => history.push("/contact");
-    const handleAboutClick = () => history.push("/about");
+    const handleHomeClick = () => navigate("/");
+    const handleShopClick = () => navigate("/shop");
+    const handleCategoriesClick = () => navigate("/categories");
+    const handleContactClick = () => navigate("/contact");
+    const handleAboutClick = () => navigate("/about");
 
     const clickHandler = (e) => {
         const id = e.target.id;

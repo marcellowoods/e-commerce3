@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { useHistory, useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import { useSelector } from "react-redux";
 import { getCategories } from "../../functions/category";
 import { getProduct, updateProduct } from "../../functions/product";
@@ -34,7 +34,7 @@ let makeEmptySize = () => ({ lowerBound: 0, upperBound: 0, stepSize: 0 });
 const EditProduct = () => {
 
     const { productSlugParam } = useParams();
-    const history = useHistory();
+    const navigate = useNavigate();
 
     const [price, setPrice] = useState("");
     const [imagesUrl, setImagesUrl] = useState([]);
@@ -119,7 +119,7 @@ const EditProduct = () => {
                 setIsProductLoading(true)
                 await updateProduct(productSlugParam, productObj, userToken);
                 setIsProductLoading(false)
-                history.push(LIST_PRODUCTS_PATHNAME);
+                navigate(LIST_PRODUCTS_PATHNAME);
             }
 
         } catch (error) {

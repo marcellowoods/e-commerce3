@@ -1,5 +1,5 @@
 import React, { Fragment, useEffect, useState, useRef } from "react";
-import { useHistory, useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import { XIcon } from '@heroicons/react/solid';
 import getPagination from "../components/navigation/getPagination";
 import ProductShopCard from "../components/cards/ProductShopCard";
@@ -24,7 +24,7 @@ const PageComponent = () => {
 
     const { textParam, pageParam } = useParams();
 
-    const history = useHistory();
+    const navigate = useNavigate();
     const [products, setProducts] = useState(null);
 
     const [page, setPage] = useState(0);
@@ -56,7 +56,7 @@ const PageComponent = () => {
     }
 
     const handleSearchClose = () => {
-        history.push(SHOP_PATHNAME);
+        navigate(SHOP_PATHNAME);
     }
 
     useAsync(
@@ -73,7 +73,7 @@ const PageComponent = () => {
                 setPage(parseInt(pageParam) - 1);
             } else {
                 alert("wrong url");
-                history.push('/');
+                navigate('/');
                 return;
             }
         }
@@ -86,14 +86,14 @@ const PageComponent = () => {
         let path = SEARCH_PATHNAME + textParam;
 
         path += ("/" + (page + 1));
-
-        history.replace({ pathname: path });
+        
+        navigate(path, { replace: true })
 
     }, [page]);
 
 
     const pushToProductPage = (id) => {
-        history.push(PRODUCT_PATHNAME + id)
+        navigate(PRODUCT_PATHNAME + id)
     }
 
     const renderProducts = () => (

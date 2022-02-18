@@ -1,6 +1,6 @@
 import React, { useState, useEffect, Fragment } from "react";
 
-import { Switch, Route } from "react-router-dom";
+import { Routes, Route } from "react-router-dom";
 import onAuthStateChanged from "./firebase/firebaseAuthState";
 import { useDispatch } from "react-redux";
 import { getOrCreateUser } from "./functions/auth";
@@ -85,17 +85,39 @@ function App() {
             <Navigation />
 
             <div className="container max-w-7xl mx-auto px-4  pb-24">
-                <Switch>
-                    <Route exact path="/" component={Home} />
-                    <Route exact path="/categories" component={Home} />
-                    <Route exact path="/shop/:categoryParam?/:typeParam?/:pageParam?/" component={Shop} />
-                    <Route exact path="/search/:textParam?/:pageParam?" component={SearchShop} />
-                    <Route exact path="/product/:productSlugParam" component={ProductPage} />
-                    <Route exact path="/login" component={Login} />
-                    <Route exact path="/register" component={Register} />
-                    <Route exact path="/checkout" component={Checkout} />
+                <Routes>
+                    <Route exact path="/" element={<Home/>} />
+                    <Route exact path="/categories" element={<Home/>} />
 
-                    <UserRoute exact path="/user/orders" component={Orders} />
+                    <Route exact path="/shop/" element={<Shop/>} />
+                    <Route exact path="/shop/:categoryParam" element={<Shop/>} />
+                    <Route exact path="/shop/:categoryParam/:typeParam" element={<Shop/>} />
+                    <Route exact path="/shop/:categoryParam/:typeParam/:pageParam/" element={<Shop/>} />
+
+                    <Route exact path="/search/" element={<SearchShop/>} />
+                    <Route exact path="/search/:textParam/" element={<SearchShop/>} />
+                    <Route exact path="/search/:textParam/:pageParam" element={<SearchShop/>} />
+
+                    <Route exact path="/product/:productSlugParam" element={<ProductPage/>} />
+                    <Route exact path="/login" element={<Login/>} />
+                    <Route exact path="/register" element={<Register/>} />
+                    <Route exact path="/checkout" element={<Checkout/>} />
+
+                    <Route exact path="/user/orders" element={<UserRoute Component={Orders} />} />
+                    <Route exact path="/user/settings" element={<UserRoute Component={Settings} />} />
+
+                    <Route exact path="/admin/list-categories" element={<AdminRoute Component={ListCategories} />} />
+                    <Route exact path="/admin/create-category" element={<AdminRoute Component={CreateCategory} />} />
+                    <Route exact path="/admin/edit-category/:categorySlugParam" element={<AdminRoute Component={EditCategory} />} />
+
+                    <Route exact path="/admin/list-products" element={<AdminRoute Component={ListProducts} />} />
+                    <Route exact path="/admin/create-product" element={<AdminRoute Component={CreateProduct} />} />
+                    <Route exact path="/admin/edit-product/:productSlugParam" element={<AdminRoute Component={EditProduct} />} />
+
+                    <Route exact path="/admin/update-orders" element={<AdminRoute Component={UpdateOrders} />} />
+
+
+                    {/* <UserRoute exact path="/user/orders" component={Orders} />
                     <UserRoute exact path="/user/settings" component={Settings} />
 
                     <AdminRoute exact path="/admin/list-categories" component={ListCategories} />
@@ -106,9 +128,9 @@ function App() {
                     <AdminRoute exact path="/admin/create-product" component={CreateProduct} />
                     <AdminRoute exact path="/admin/edit-product/:productSlugParam" component={EditProduct} />
 
-                    <AdminRoute exact path="/admin/update-orders" component={UpdateOrders} />
+                    <AdminRoute exact path="/admin/update-orders" component={UpdateOrders} /> */}
 
-                </Switch>
+                </Routes>
             </div>
         </Fragment>
     );

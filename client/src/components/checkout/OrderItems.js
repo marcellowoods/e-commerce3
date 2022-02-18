@@ -1,18 +1,18 @@
 import React, { useEffect } from "react";
 import { useSelector } from "react-redux";
-import { useHistory } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import Cart from "../cart/Cart";
 
 const OrderItems = () => {
 
     const { cart } = useSelector((state) => ({ ...state }));
     const { cartItems: products } = cart;
-    const history = useHistory();
+    const navigate = useNavigate();
 
     useEffect(() => {
 
         if (products.length === 0) {
-            history.push("/")
+            navigate('/')
         }
     }, [products])
 

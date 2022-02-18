@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { useHistory } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import { getCategories } from "../functions/category";
 import LoadingPage from "./LoadingPage";
 
@@ -36,7 +36,7 @@ const CategoryCard = ({ handleClick, description, image, name, slug }) => {
 
 const Home = () => {
 
-    let history = useHistory();
+    const navigate = useNavigate();
 
     const [categories, setCategories] = useState([]);
     const [isLoading, setIsLoading] = useState(false);
@@ -62,7 +62,7 @@ const Home = () => {
     }, []);
 
     const handleClick = (slugy) => {
-        history.push(`/shop/${slugy}`);
+        navigate(`/shop/${slugy}`);
     }
 
     useEffect(() => {

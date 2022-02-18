@@ -1,5 +1,5 @@
 import React, { useEffect, useState, Fragment } from "react";
-import { useHistory } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 
 import { useDidMountEffect } from "../auxiliary/reactUtils"
 import LoadingPage from "./LoadingPage";
@@ -33,7 +33,7 @@ const CheckoutStates = {
 
 const Checkout = () => {
 
-    const history = useHistory();
+    const navigate = useNavigate();
 
     const { t, i18n } = useTranslation();
 
@@ -92,7 +92,7 @@ const Checkout = () => {
             let res = await postFn();
             clearCart(dispatch);
             dispatch({ type: "ORDER_SUCCESS_MODAL_TOGGLE", payload: true });
-            history.push("/");
+            navigate("/");
 
         } catch (error) {
             alert(error);

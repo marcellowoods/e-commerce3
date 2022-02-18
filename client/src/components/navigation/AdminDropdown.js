@@ -3,7 +3,7 @@ import {  useSelector } from "react-redux";
 
 import { Menu, Transition } from '@headlessui/react'
 import { getAdminIcon } from "../../assets/icons";
-import { useHistory } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 
 import { useTranslation } from 'react-i18next';
 
@@ -89,22 +89,22 @@ const AdminDropdownRender = ({
 
 const AdminDropdown = () => {
 
-    let history = useHistory();
+    const navigate = useNavigate();
 
     const { user } = useSelector((state) => ({ ...state }));
 
     const isLoggedIn = user !== null;
 
     const handleOrdersClicked = () => {
-        history.push("/admin/update-orders");
+        navigate("/admin/update-orders");
     }
 
     const handleProductsClicked = () => {
-        history.push("/admin/list-products");
+        navigate("/admin/list-products");
     }
 
     const handleCategoriesClicked = () => {
-        history.push("/admin/list-categories");
+        navigate("/admin/list-categories");
     }
 
 

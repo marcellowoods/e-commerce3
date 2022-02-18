@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { useSelector } from "react-redux";
-import { useHistory } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import { getCategories, removeCategory } from "../../functions/category";
 import { useAsync } from "../../auxiliary/reactUtils";
 import LoadingPage from "../LoadingPage";
@@ -75,7 +75,7 @@ const ListCategories = () => {
     const [isCategoriesLoading, setIsCategoriesLoading] = useState(false);
     const [reloadCategoriesFlag, setReloadCategoriesFlag] = useState(false);
 
-    const history = useHistory();
+    const navigate = useNavigate();
 
     const { user } = useSelector((state) => ({ ...state }));
 
@@ -100,11 +100,11 @@ const ListCategories = () => {
     }
 
     const handleCategoryEdit = (slug) => {
-        history.push(`/admin/edit-category/${slug}`);
+        navigate(`/admin/edit-category/${slug}`);
     }
 
     const handleCreateCategory = () => {
-        history.push("/admin/create-category");
+        navigate("/admin/create-category");
     }
 
     const renderCategories = () => {

@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { Route, Redirect, useLocation } from "react-router-dom";
+import { Route, Navigate, useLocation } from "react-router-dom";
 import { useSelector } from "react-redux";
 import LoadingToRedirect from "./LoadingToRedirect";
 import LoadingPage from "../../pages/LoadingPage";
@@ -13,7 +13,7 @@ const STATE = {
 }
 
 //https://reactrouter.com/web/example/auth-workflow
-const AdminRoute = ({ children, ...rest }) => {
+const AdminRoute = ({Component}) => {
     const { user } = useSelector((state) => ({ ...state }));
     let location = useLocation();
 
@@ -42,7 +42,7 @@ const AdminRoute = ({ children, ...rest }) => {
 
             case STATE.NO_USER:
                 return (
-                    <Redirect
+                    <Navigate
                         to={{
                             pathname: "/login",
                             state: { from: location }
@@ -57,7 +57,7 @@ const AdminRoute = ({ children, ...rest }) => {
 
 
             case STATE.IS_ADMIN:
-                return <Route {...rest} />
+                return <Component />
         }
 
     }

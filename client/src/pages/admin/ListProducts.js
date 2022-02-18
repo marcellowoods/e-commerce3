@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { useSelector } from "react-redux";
-import { useHistory } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import { getAllProducts, removeProduct } from "../../functions/product";
 import { useAsync } from "../../auxiliary/reactUtils"
 import LoadingPage from "../LoadingPage";
@@ -94,7 +94,7 @@ const ListProducts = () => {
     const [isProductsLoading, setIsProductsLoading] = useState(false);
     const [reloadProductsFlag, setReloadProductsFlag] = useState(false);
 
-    const history = useHistory();
+    const navigate = useNavigate();
 
     const { user } = useSelector((state) => ({ ...state }));
 
@@ -119,11 +119,11 @@ const ListProducts = () => {
     }
 
     const handleProductEdit = (slug) => {
-        history.push(`/admin/edit-product/${slug}`);
+        navigate(`/admin/edit-product/${slug}`);
     }
 
     const handleCreateProduct = () => {
-        history.push("/admin/create-product");
+        navigate("/admin/create-product");
     }
 
     const renderProducts = () => {

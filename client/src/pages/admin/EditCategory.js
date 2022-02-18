@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
-import { useHistory, useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import { updateCategory, getCategory } from "../../functions/category";
 import { getImageIds } from "../../functions/cloudinary";
 
@@ -23,7 +23,7 @@ import {
 
 const EditCategory = () => {
 
-    let history = useHistory();
+    const navigate = useNavigate();
     const { categorySlugParam } = useParams();
 
     const [name, setName] = useState("");
@@ -72,7 +72,7 @@ const EditCategory = () => {
         try {
             const userToken = await user.getToken();
             await updateCategory(categorySlugParam, updatedCategory, userToken);
-            history.push(`/categories`);
+            navigate(`/categories`);
         } catch (error) {
             if (error.response) {
                 console.log(error.response.data)

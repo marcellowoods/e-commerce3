@@ -3,7 +3,7 @@ import { useSelector } from "react-redux";
 
 import { Menu, Transition } from '@headlessui/react'
 import { getProfileIcon } from "../../assets/icons";
-import { useHistory } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import { getAuth, signOut } from "firebase/auth";
 
 import { useTranslation } from 'react-i18next';
@@ -122,26 +122,26 @@ const AccountDropdownRender = ({
 
 const AccountDropdown = () => {
 
-    let history = useHistory();
+    const navigate = useNavigate();
 
     const { user } = useSelector((state) => ({ ...state }));
 
     const isLoggedIn = user !== null;
 
     const handleSettingsClicked = () => {
-        history.push("/user/settings");
+        navigate("/user/settings");
     }
 
     const handleOrdersClicked = () => {
-        history.push("/user/orders");
+        navigate("/user/orders");
     }
 
     const handleLoginClicked = () => {
-        history.push("/login");
+        navigate("/login");
     }
 
     const handleRegisterClicked = () => {
-        history.push("/register");
+        navigate("/register");
     }
 
     const handleLogoutClicked = () => {

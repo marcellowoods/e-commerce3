@@ -1,6 +1,6 @@
 import React, { useState } from "react";
-import {  useSelector } from "react-redux";
-import { useHistory } from "react-router-dom";
+import { useSelector } from "react-redux";
+import { useNavigate } from "react-router-dom";
 import { createCategory } from "../../functions/category"
 
 import {
@@ -18,7 +18,7 @@ import {
 //https://dev.to/eons/detect-page-refresh-tab-close-and-route-change-with-react-router-v5-3pd
 const CreateCategory = () => {
 
-    let history = useHistory();
+    const navigate = useNavigate();
 
     const [name, setName] = useState("");
     const [description, setDescription] = useState("");
@@ -33,7 +33,7 @@ const CreateCategory = () => {
         try {
             const userToken = await user.getToken();
             await createCategory({ name, description, translations, image: imageUrl }, userToken);
-            history.push(`/categories`);
+            navigate(`/categories`);
         } catch (error) {
             if (error.response) {
                 console.log(error.response.data)

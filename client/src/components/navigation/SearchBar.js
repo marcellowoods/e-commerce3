@@ -1,5 +1,5 @@
 import React, { useState, useRef } from "react";
-import { useHistory } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import "./style.css";
 
@@ -10,7 +10,7 @@ const SearchBar = ({ cname }) => {
 
     const { t } = useTranslation();
     const [text, setText] = useState("");
-    const history = useHistory();
+    const navigate = useNavigate();
 
     const { drawerNav } = useSelector((state) => ({ ...state }));
     const inputEl = useRef(null);
@@ -44,7 +44,7 @@ const SearchBar = ({ cname }) => {
         }
         
         
-        history.push(url);
+        navigate(url);
     }
 
     const handleInputChange = (e) => {

@@ -1,5 +1,5 @@
 import React, { Fragment } from "react";
-import { useHistory } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 
 import Cart from "../cart/Cart.js"
@@ -13,7 +13,7 @@ import { useTranslation } from 'react-i18next';
 
 const CartModal = () => {
 
-    const history = useHistory();
+    const navigate = useNavigate();
 
     const { t } = useTranslation();
 
@@ -27,7 +27,7 @@ const CartModal = () => {
     const hasProducts = () => products && products.length !== 0;
 
     const handleCheckout = () => {
-        history.push('/checkout')
+        navigate('/checkout')
         closeCartModal();
     }
 

@@ -1,5 +1,5 @@
 import React, { Fragment, useState } from 'react'
-import { useHistory } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import { RadioGroup } from '@headlessui/react';
 import ReactSlider from "react-slider";
 import { useTranslation } from 'react-i18next';
@@ -297,10 +297,10 @@ const BraceletSizeSelector = ({ selectedSize, setSelectedSize, productSize }) =>
 
 const BreadCrumbs = ({ breadcrumbs, name }) => {
 
-    const history = useHistory();
+    const navigate = useNavigate();
 
     const pushToPage = (pageUrl) => {
-        history.push(shopUrl + pageUrl)
+        navigate(shopUrl + pageUrl)
     }
 
     return (

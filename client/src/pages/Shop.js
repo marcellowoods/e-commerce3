@@ -1,5 +1,5 @@
 import React, { Fragment, useEffect, useState, useRef } from "react";
-import { useHistory, useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import getPagination from "../components/navigation/getPagination";
 import ProductShopCard from "../components/cards/ProductShopCard";
 import ProductLoadCard from "../components/cards/ProductLoadCard";
@@ -29,7 +29,7 @@ const PageComponent = () => {
 
     const { categoryParam, typeParam, pageParam } = useParams();
 
-    const history = useHistory();
+    const navigate = useNavigate();
     const [products, setProducts] = useState(null);
     const [selectedCategory, setSelectedCategory] = useState(null);
     const [allCategories, setAllCategories] = useState(null);
@@ -59,7 +59,7 @@ const PageComponent = () => {
                     setSelectedCategory(categoryObj);
                 } else {
                     alert("wrong url");
-                    history.push('/');
+                    navigate('/');
                     return;
                 }
             } else {
@@ -72,7 +72,7 @@ const PageComponent = () => {
                     setSelectedType(typeObj);
                 } else {
                     alert("wrong url");
-                    history.push('/');
+                    navigate('/');
                     return;
                 }
             }
@@ -83,7 +83,7 @@ const PageComponent = () => {
                 } else {
 
                     alert("wrong url");
-                    history.push('/');
+                    navigate('/');
                     return;
                 }
 
@@ -104,7 +104,7 @@ const PageComponent = () => {
 
             path += ("/" + (page + 1));
 
-            history.replace({ pathname: path });
+            navigate(path, { replace: true })
         }
 
 
@@ -139,7 +139,7 @@ const PageComponent = () => {
     );
 
     const pushToProductPage = (id) => {
-        history.push(PRODUCT_PATHNAME + id)
+        navigate(PRODUCT_PATHNAME + id)
     }
 
     const handleCategoryChange = (category) => {
