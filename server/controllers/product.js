@@ -41,13 +41,11 @@ exports.listAll = async (req, res) => {
         products = await Product.find({})
             .limit(parseInt(limitCount))
             .populate("category")
-            .populate("subs")
             .sort([["createdAt", "desc"]])
             .exec();
     } else {
         products = await Product.find({})
             .populate("category")
-            .populate("subs")
             .sort([["createdAt", "desc"]])
             .exec();
     }
@@ -73,7 +71,6 @@ exports.remove = async (req, res) => {
 exports.read = async (req, res) => {
     const product = await Product.findOne({ slug: req.params.slug })
         .populate("category")
-        .populate("subs")
         .exec();
     res.json(product);
 };
@@ -81,7 +78,6 @@ exports.read = async (req, res) => {
 exports.readById = async (req, res) => {
     const product = await Product.findById( req.params.id )
         .populate("category")
-        .populate("subs")
         .exec();
     res.json(product);
 };
@@ -154,7 +150,6 @@ exports.list = async (req, res) => {
         // const products = await Product.find({})
         //     .skip((currentPage - 1) * perPage)
         //     .populate("category")
-        //     .populate("subs")
         //     .sort([[sort, order]])
         //     .limit(perPage)
         //     .exec();
@@ -182,7 +177,6 @@ exports.listRelated = async (req, res) => {
         })
             .limit(3)
             .populate("category")
-            .populate("subs")
             .populate("postedBy")
             .exec();
 
