@@ -155,7 +155,8 @@ const makeOrderCreator = (withUser = false) => {
                 orderedBy: userId,
             }).save();
 
-            let order = await createdOrder.populate("products.product").execPopulate();
+            let order = await createdOrder.populate("products.product");
+            console.log(order);
 
             // sendCreatedOrderEmail(order);
 
