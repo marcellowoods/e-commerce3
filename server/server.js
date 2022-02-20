@@ -5,15 +5,16 @@ const bodyParser = require("body-parser");
 const cors = require("cors");
 const { readdirSync } = require("fs");
 require("dotenv").config();
+const path = require('path');
 
 // app
 const app = express();
 
 // db
 mongoose
-  .connect(process.env.MONGO_URI)
-  .then(() => console.log("DB CONNECTED"))
-  .catch((err) => console.log("DB CONNECTION ERR", err));
+    .connect(process.env.MONGO_URI)
+    .then(() => console.log("DB CONNECTED"))
+    .catch((err) => console.log("DB CONNECTION ERR", err));
 
 // middlewares
 app.use(morgan("dev"));
@@ -22,6 +23,18 @@ app.use(cors());
 
 // routes middleware
 readdirSync("./routes").map((r) => app.use("/api", require("./routes/" + r)));
+
+if (true) {
+    app.use(express.static(path.join(__dirname, '../client/build')))
+
+    app.get('*', (req, res) =>
+        res.sendFile(path.resolve(__dirname, 'client', 'build', 'index.html'))
+    )
+} else {
+    // app.get('/', (req, res) => {
+    //     res.send('API is running....')
+    // })
+}
 
 // port
 const port = process.env.PORT || 8000;
