@@ -5,8 +5,12 @@
   "main": "server.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
+
     "start": "node server.js",
     "startDev": "nodemon server.js",
+
+    "pm2Run": "pm2 start server.js",
+
     "img:clean": "node devData/imgCleaner d",
     "img:get": "node devData/imgCleaner get"
   },

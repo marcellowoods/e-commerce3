@@ -3,8 +3,8 @@
     "version": "1.0.0",
     "description": "shop app",
     "scripts": {
-        "pm2Server": "pm2 start server.js --prefix server",
-        "pm2Client": "pm2 serve build 3000 --spa --prefix client",
+        "pm2Server": "npm run pm2Run --prefix server",
+        "pm2Client": "npm run pm2Run --prefix client",
 
         "serverDev": "npm run startDev --prefix server",
         "clientDev": "npm start --prefix client",
