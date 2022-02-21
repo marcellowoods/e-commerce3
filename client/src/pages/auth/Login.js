@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { useLocation } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import { useSelector } from "react-redux";
 
 import { roleBasedRedirect } from "./auxiliary/redirect.js"
@@ -90,7 +90,9 @@ const LoginRender = ({
     )
 }
 
-const Login = ({ history }) => {
+const Login = () => {
+
+    const navigate = useNavigate();
     const [email, setEmail] = useState("dabstone@protonmail.com");
     const [password, setPassword] = useState("123456");
     const [loading, setLoading] = useState(false);
@@ -103,11 +105,11 @@ const Login = ({ history }) => {
         if (user) {
             let isAdmin = user.role === "admin";
             console.log("role based redirect")
-            roleBasedRedirect(location, history, isAdmin);
+            roleBasedRedirect(location, navigate, isAdmin);
         }
 
 
-    }, [user, history]);
+    }, [user, navigate]);
 
     const emailLoginFormSubmit = async (e) => {
         

@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from "react";
+import { useNavigate } from "react-router-dom";
 
 import { useSelector } from "react-redux";
 
@@ -9,14 +10,19 @@ import {
 
 const auth = getAuth();
 
-const Register = ({ history }) => {
+const Register = () => {
+
+    const navigate = useNavigate();
     const [email, setEmail] = useState("");
 
     const { user } = useSelector((state) => ({ ...state }));
 
     useEffect(() => {
-        if (user) history.push("/");
-    }, [user, history]);
+
+        if (user) {
+            navigate("/")
+        };
+    }, [user, navigate]);
 
     const handleSubmit = async (e) => {
         e.preventDefault();
