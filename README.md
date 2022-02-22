@@ -38,16 +38,16 @@ make .env file in server directory
   ```
 
 Add the Firebase Admin SDK to server - https://firebase.google.com/docs/admin/setup   
-  add fbServiceAccountKey to server/config/  
+  add fbServiceAccountKey.json to server/config/  
 
 Add firebaseConfig to client  
   get firebaseConfig from firebase console,  
   project settings, upper left corner  
   add firebaseConfig.js to client/src/firebase/ in the following format  
-    ```  
-    let firebaseConfig = {
-        
-    };
-    export default firebaseConfig;
-    ```
+
+let firebaseConfig = {
+    
+};
+export default firebaseConfig;
+
 
