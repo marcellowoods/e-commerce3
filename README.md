@@ -44,9 +44,8 @@ Add firebaseConfig to client
   get firebaseConfig from firebase console,  
   project settings, upper left corner  
   add firebaseConfig.js to client/src/firebase/ in the following format  
-    ```
     var firebaseConfig = {
       ...
     };
     export default firebaseConfig;
-    ```
+
