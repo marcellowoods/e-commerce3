@@ -3,18 +3,23 @@
 make .env file in client directory
 
   for development:
+  ```
   REACT_APP_REGISTER_REDIRECT_URL='http://localhost:3000/register/complete'
   REACT_APP_FORGOT_PASSWORD_REDIRECT='http://localhost:3000/login'
   REACT_APP_API='/api'
+  ```
+  
 
   for production:
+  ```
   REACT_APP_REGISTER_REDIRECT_URL='http://{ip or domain-name}/register/complete'
   REACT_APP_FORGOT_PASSWORD_REDIRECT='http://{ip or domain-name}/login'
   REACT_APP_API='/api'
+  ```
 
 
 make .env file in server directory
-
+  ```
   MONGO_URI = mongodb+srv://{username}:...string
   PORT=8000
 
@@ -30,6 +35,7 @@ make .env file in server directory
   MAILTRAP_PASS = string
 
   MAILGUN_AUTH = string
+  ```
 
 Add the Firebase Admin SDK to server - https://firebase.google.com/docs/admin/setup 
   add fbServiceAccountKey to server/config/
