@@ -37,15 +37,16 @@ make .env file in server directory
   MAILGUN_AUTH = string
   ```
 
-Add the Firebase Admin SDK to server - https://firebase.google.com/docs/admin/setup 
-  add fbServiceAccountKey to server/config/
+Add the Firebase Admin SDK to server - https://firebase.google.com/docs/admin/setup   
+  add fbServiceAccountKey to server/config/  
 
-Add firebaseConfig to client
-  get firebaseConfig from firebase console,
-  project settings, upper left corner
-  add firebaseConfig.js to client/src/firebase/ in the following format
-  
+Add firebaseConfig to client  
+  get firebaseConfig from firebase console,  
+  project settings, upper left corner  
+  add firebaseConfig.js to client/src/firebase/ in the following format  
+    ```
     var firebaseConfig = {
       ...
     };
     export default firebaseConfig;
+    ```
