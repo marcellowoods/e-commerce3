@@ -45,9 +45,11 @@ Add firebaseConfig to client
   project settings, upper left corner  
   add firebaseConfig.js to client/src/firebase/ in the following format  
 
+```
 let firebaseConfig = {
     
 };
 export default firebaseConfig;
+```
 
 
