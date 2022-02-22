@@ -3,12 +3,13 @@
     "version": "1.0.0",
     "description": "shop app",
     "scripts": {
-        "pm2Server": "npm run pm2Run --prefix server",
-        "pm2Client": "npm run pm2Run --prefix client",
-
         "serverDev": "npm run startDev --prefix server",
         "clientDev": "npm start --prefix client",
 
+        "pm2Server": "npm run pm2Run --prefix server",
+        "pm2Client": "npm run pm2Run --prefix client",
+
+        "buildServer": "npm install --prefix server",
         "buildClient": "npm install --prefix client && npm run build --prefix client"
     },
     "author": "Pres lav",
