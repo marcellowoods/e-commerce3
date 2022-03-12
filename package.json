@@ -13,5 +13,9 @@
         "buildClient": "npm install --prefix client && npm run build --prefix client"
     },
     "author": "Pres lav",
-    "license": "MIT"
+    "license": "MIT",
+    "comments": {
+        "1": "dont run buildServer and buildClient in linux",
+        "2": "instead run sudo npm install (in client and server folders) and sudo npm run build (in client)"
+    }
 }
