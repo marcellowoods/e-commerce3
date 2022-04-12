@@ -1,3 +1,6 @@
+use nodemailer with gmail!!!
+https://dev.to/chandrapantachhetri/sending-emails-securely-using-node-js-nodemailer-smtp-gmail-and-oauth2-g3a
+
 https://stackoverflow.com/questions/45478293/username-and-password-not-accepted-when-using-nodemailer
 https://codeburst.io/sending-an-email-using-nodemailer-gmail-7cfa0712a799
 

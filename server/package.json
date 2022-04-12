@@ -5,12 +5,9 @@
   "main": "server.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-
     "start": "node server.js",
     "startDev": "nodemon server.js",
-
     "pm2Run": "pm2 start server.js",
-
     "img:clean": "node devData/imgCleaner d",
     "img:get": "node devData/imgCleaner get"
   },
@@ -26,6 +23,7 @@
     "express-async-handler": "^1.2.0",
     "express-jwt": "^6.1.0",
     "firebase-admin": "^10.0.2",
+    "googleapis": "^100.0.0",
     "handlebars": "^4.7.7",
     "i18next": "^21.6.11",
     "jsonwebtoken": "^8.5.1",

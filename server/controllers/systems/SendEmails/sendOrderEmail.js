@@ -1,25 +1,19 @@
-var nodemailer = require('nodemailer');
 const path = require("path");
 require("dotenv").config({ path: path.resolve(__dirname, '../../.env') });
 const compileTemplate = require("./compileTemplate");
 
+const sendWithNodemailer  = require("./sendWithNodemailer");
 
-const mailTrapUser = process.env.MAILTRAP_USER;
-//pass is revoked
-const mailTrapPass = process.env.MAILTRAP_PASS;
+// var mailOptions = {
+//     from: gmailUser,
+//     to: 'dabstone@protonmail.com',
+//     subject: 'trying out the mail send',
+//     html: htmlToSend
+// };
 
-var transporter = nodemailer.createTransport({
-    host: "smtp.mailtrap.io",
-    port: 2525,
-    auth: {
-        user: mailTrapUser,
-        pass: mailTrapPass
-    }
-});
+const sendOrderEmail = async (order, message) => {
 
-
-const sendOrderEmail = (order, message) => {
-
+    const fromEmail = process.env.EMAIL;
 
     //remove undefined fields
     const orderFiltered = JSON.parse(JSON.stringify(order));
@@ -27,29 +21,31 @@ const sendOrderEmail = (order, message) => {
     const htmlToSend = compileTemplate(orderFiltered, message);
 
     var mailOptions = {
-        from: "from-example@email.com",
-        to: "to-example@email.com",
+        from: fromEmail,
+        to: 'dabstone@protonmail.com',
         subject: 'trying out the mail send',
         html: htmlToSend
     };
 
-    transporter.sendMail(mailOptions, function (error, info) {
-        if (error) {
-            console.log(error);
-        } else {
-            console.log('Email sent: ' + info.response);
-        }
-    });
+
+    // var mailOptions = {
+    //     from: "from-example@email.com",
+    //     to: "to-example@email.com",
+    //     subject: 'trying out the mail send',
+    //     html: htmlToSend
+    // };
+
+    await sendWithNodemailer(mailOptions);
 }
 
-const sendCreatedOrderEmail = (order) => {
+const sendCreatedOrderEmail = async (order) => {
 
-    sendOrderEmail(order, "your order is accepted")
+    await sendOrderEmail(order, "your order is accepted")
 }
 
-const sendShippedOrderEmail = (order) => {
+const sendShippedOrderEmail = async (order) => {
 
-    sendOrderEmail(order, "your order has been shipped")
+    await sendOrderEmail(order, "your order has been shipped")
 }
 
 exports.sendCreatedOrderEmail = sendCreatedOrderEmail;
