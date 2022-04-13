@@ -1,84 +1,63 @@
 const { google } = require("googleapis");
-const OAuth2 = google.auth.OAuth2;
+// const OAuth2 = google.auth.OAuth2;
 
 var nodemailer = require('nodemailer');
 const path = require("path");
 require("dotenv").config({ path: path.resolve(__dirname, '../../../.env') });
 
-console.log("token")
-console.log(process.env.EMAIL);
+//what worked for unoutharized_client error
+//I forget to click on the gear icon at oauth2 playground and insert my OAuth Client ID and OAuth Client Secret.
+//BEFORE getting the refresh token
+//https://github.com/nodemailer/nodemailer/issues/564
 
-const createTransporter = async () => {
-    const oauth2Client = new OAuth2(
-        process.env.CLIENT_ID,
-        process.env.CLIENT_SECRET,
-        "https://developers.google.com/oauthplayground/"
+async function sendWithNodemailer(mailOptions) {
+
+    const CLIENT_EMAIL = process.env.GMAIL_CLIENT_EMAIL;
+    const CLIENT_ID = process.env.GMAIL_CLIENT_ID;
+    const CLIENT_SECRET = process.env.GMAIL_CLIENT_SECRET;
+    const REDIRECT_URI = process.env.GMAIL_REDIRECT_URI;
+    const REFRESH_TOKEN = process.env.GMAIL_REFRESH_TOKEN;
+
+    const OAuth2Client = new google.auth.OAuth2(
+        CLIENT_ID,
+        CLIENT_SECRET,
+        REDIRECT_URI,
     );
 
+    OAuth2Client.setCredentials({ refresh_token: REFRESH_TOKEN });
+    try {
+        // Generate the accessToken on the fly
+        const accessToken = await OAuth2Client.getAccessToken();
 
-
-    oauth2Client.setCredentials({
-        refresh_token: process.env.REFRESH_TOKEN
-    });
-
-    const accessToken = await new Promise((resolve, reject) => {
-        oauth2Client.getAccessToken((err, token) => {
-            if (err) {
-                console.log(err);
-                reject();
-            }
-            resolve(token);
+        // Create the email envelope (transport)
+        const transport = nodemailer.createTransport({
+            service: 'gmail',
+            auth: {
+                type: 'OAuth2',
+                user: CLIENT_EMAIL,
+                clientId: CLIENT_ID,
+                clientSecret: CLIENT_SECRET,
+                refreshToken: REFRESH_TOKEN,
+                accessToken: accessToken,
+            },
         });
-    });
 
-    const transporter = nodemailer.createTransport({
-        service: "gmail",
-        auth: {
-            type: "OAuth2",
-            user: process.env.EMAIL,
-            accessToken,
-            clientId: process.env.CLIENT_ID,
-            clientSecret: process.env.CLIENT_SECRET,
-            refreshToken: process.env.REFRESH_TOKEN
-        },
-        tls: {
-            rejectUnauthorized: false
-        }
-    });
+        // Create the email options and body 
+        // ('email': user's email and 'name': is the e-book the user wants to receive)
+        // const mailOptions = {
+        //     from: `FRONT <${CLIENT_EMAIL}>`,
+        //     to: email,
+        //     subject: `[FRONT]- Here is your e-Book!`,
+        //     text: `Enjoy learning!`
+        // };
 
-    return transporter;
-};
+        // Set up the email options and delivering it
+        const result = await transport.sendMail(mailOptions);
+        return result;
 
-//gmail
-const sendWithNodemailer = async (emailOptions) => {
-
-    let emailTransporter = await createTransporter();
-
-    await emailTransporter.sendMail(emailOptions, function (error, info) {
-        console.log(error);
-        if (error) {
-            console.log(error);
-        } else {
-            console.log('Email sent: ' + info.response);
-        }
-    });
-};
-
-//mailtrap
-// const sendWithNodemailer = async (emailOptions) => {
-//     const mailTrapUser = process.env.MAILTRAP_USER;
-//     const mailTrapPass = process.env.MAILTRAP_PASS;
-
-//     var transporter = nodemailer.createTransport({
-//         host: "smtp.mailtrap.io",
-//         port: 2525,
-//         auth: {
-//             user: mailTrapUser,
-//             pass: mailTrapPass
-//         }
-//     });
-
-//     await transporter.sendMail(emailOptions);
-// };
+    } catch (error) {
+        return error;
+    }
+}
 
 module.exports = sendWithNodemailer;

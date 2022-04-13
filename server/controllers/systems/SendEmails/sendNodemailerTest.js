@@ -12,7 +12,7 @@ const sendWithNodemailer = require("./sendWithNodemailer");
 
 const sendEmail = async () => {
 
-    const fromEmail = process.env.EMAIL;
+    const fromEmail = process.env.CLIENT_EMAIL;
 
 
     var mailOptions = {
@@ -22,12 +22,9 @@ const sendEmail = async () => {
         text: "I am sending an email from nodemailer!",
     };
 
-    try {
-        await sendWithNodemailer(mailOptions);
-    }catch(err){
-        console.log("error")
-        console.log(err);
-    }
+    sendWithNodemailer(mailOptions)
+        .then((res) => console.log(res))
+        .catch((error) => console.log(error));
 
 }
 
