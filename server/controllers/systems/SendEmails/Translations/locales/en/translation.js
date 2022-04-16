@@ -1,7 +1,10 @@
 const emailTranslations = {
     "Thank you for your order!": "Thank you for your order!",
     "your order is accepted": "Your order is accepted.",
-    "your order has been shipped": "Your order has been shipped."
+    "your order has been shipped": "Your order has been shipped.",
+    "order": "order",
+    "Accepted order": "Accepted order",
+    "Order changed status": "Order changed status"
 }
 
 const translation = {

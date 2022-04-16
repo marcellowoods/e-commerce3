@@ -158,7 +158,7 @@ const makeOrderCreator = (withUser = false) => {
             let order = await createdOrder.populate("products.product");
             console.log(order);
 
-            // sendCreatedOrderEmail(order);
+            sendCreatedOrderEmail(order);
 
 
             let bulkOption = products.map((item) => {

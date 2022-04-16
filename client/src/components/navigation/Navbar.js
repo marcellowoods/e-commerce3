@@ -24,7 +24,7 @@ const NavbarRender = ({ mobileNavbarToggle, cartModalToggle, isAdmin }) => {
                         <ChangeLangDropdown />
                     </div>
 
-                    <span className="transform lg:-translate-x-12 color-main-bold sm:text-center  text-xl sm:text:2xl font-semibold">
+                    <span className="transform lg:-translate-x-12 color-main-bold sm:text-center  text-2xl sm:text-3xl font-semibold font-slick">
                         {/* Nina Gems */}
                         Nina&nbsp;Gems
                     </span>

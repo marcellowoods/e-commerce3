@@ -1,6 +1,7 @@
 const path = require("path");
 require("dotenv").config({ path: path.resolve(__dirname, '../../.env') });
 const compileTemplate = require("./compileTemplate");
+const i18n = require('./Translations/i18n.js');
 
 const sendWithNodemailer  = require("./sendWithNodemailer");
 
@@ -11,7 +12,11 @@ const sendWithNodemailer  = require("./sendWithNodemailer");
 //     html: htmlToSend
 // };
 
-const sendOrderEmail = async (order, message) => {
+const sendOrderEmail = async (order, subject, message) => {
+
+    const lang = order.deliveryInfo.lang;
+
+    const t = i18n(lang);
 
     const fromEmail = process.env.EMAIL;
 
@@ -25,7 +30,7 @@ const sendOrderEmail = async (order, message) => {
     var mailOptions = {
         from: fromEmail,
         to: email,
-        subject: 'trying out the mail send',
+        subject: t(subject),
         html: htmlToSend
     };
 
@@ -42,12 +47,16 @@ const sendOrderEmail = async (order, message) => {
 
 const sendCreatedOrderEmail = async (order) => {
 
-    await sendOrderEmail(order, "your order is accepted")
+    const subject = "Accepted order";
+
+    await sendOrderEmail(order, subject, "your order is accepted")
 }
 
 const sendShippedOrderEmail = async (order) => {
 
-    await sendOrderEmail(order, "your order has been shipped")
+    const subject = "Order changed status";
+
+    await sendOrderEmail(order, subject, "your order has been shipped")
 }
 
 exports.sendCreatedOrderEmail = sendCreatedOrderEmail;
