@@ -12,9 +12,11 @@ import AdminRoute from "./components/routes/UserRoute";
 
 import LoadingPage from "./pages/LoadingPage";
 import Shop from "./pages/Shop";
+import ContactPage from "./pages/ContactPage";
 import SearchShop from "./pages/SearchShop";
 import ProductPage from "./pages/ProductPage";
 import Checkout from "./pages/Checkout";
+
 
 import Login from "./pages/auth/Login"
 import Register from "./pages/auth/Register";
@@ -88,6 +90,7 @@ function App() {
                 <Routes>
                     <Route exact path="/" element={<Home/>} />
                     <Route exact path="/categories" element={<Home/>} />
+                    <Route exact path="/contact" element={<ContactPage/>} />
 
                     <Route exact path="/shop/" element={<Shop/>} />
                     <Route exact path="/shop/:categoryParam" element={<Shop/>} />
@@ -116,19 +119,7 @@ function App() {
 
                     <Route exact path="/admin/update-orders" element={<AdminRoute Component={UpdateOrders} />} />
 
-
-                    {/* <UserRoute exact path="/user/orders" component={Orders} />
-                    <UserRoute exact path="/user/settings" component={Settings} />
-
-                    <AdminRoute exact path="/admin/list-categories" component={ListCategories} />
-                    <AdminRoute exact path="/admin/create-category" component={CreateCategory} />
-                    <AdminRoute exact path="/admin/edit-category/:categorySlugParam" component={EditCategory} />
-
-                    <AdminRoute exact path="/admin/list-products" component={ListProducts} />
-                    <AdminRoute exact path="/admin/create-product" component={CreateProduct} />
-                    <AdminRoute exact path="/admin/edit-product/:productSlugParam" component={EditProduct} />
-
-                    <AdminRoute exact path="/admin/update-orders" component={UpdateOrders} /> */}
+                    
 
                 </Routes>
             </div>
