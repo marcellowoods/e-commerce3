@@ -24,9 +24,10 @@ const NavbarRender = ({ mobileNavbarToggle, cartModalToggle, isAdmin }) => {
                         <ChangeLangDropdown />
                     </div>
 
-                    <div className="transform lg:-translate-x-12 color-main-bold sm:text-center  text-2xl font-semibold">
-                        Brand
-                    </div>
+                    <span className="transform lg:-translate-x-12 color-main-bold sm:text-center  text-xl sm:text:2xl font-semibold">
+                        {/* Nina Gems */}
+                        Nina&nbsp;Gems
+                    </span>
 
                     <div className="flex items-center justify-end w-full sm:w-auto">
                         <button onClick={cartModalToggle} className="color-main-light focus:outline-none mx-2">

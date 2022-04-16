@@ -18,11 +18,13 @@ const sendOrderEmail = async (order, message) => {
     //remove undefined fields
     const orderFiltered = JSON.parse(JSON.stringify(order));
 
+    const email = orderFiltered.deliveryInfo.email;
+
     const htmlToSend = compileTemplate(orderFiltered, message);
 
     var mailOptions = {
         from: fromEmail,
-        to: 'dabstone@protonmail.com',
+        to: email,
         subject: 'trying out the mail send',
         html: htmlToSend
     };

@@ -57,7 +57,7 @@ const AccountDropdownRender = ({
                                         )}
                                     </Menu.Item>
 
-                                    <Menu.Item>
+                                    {/* <Menu.Item>
                                         {({ active }) => (
                                             <button
                                                 onClick={handleSettingsClicked}
@@ -66,7 +66,7 @@ const AccountDropdownRender = ({
                                                 {t("settings")}
                                             </button>
                                         )}
-                                    </Menu.Item>
+                                    </Menu.Item> */}
 
                                     <Menu.Item>
                                         {({ active }) => (
@@ -97,7 +97,7 @@ const AccountDropdownRender = ({
                                         )}
                                     </Menu.Item>
 
-                                    <Menu.Item>
+                                    {/* <Menu.Item>
                                         {({ active }) => (
                                             <button
                                                 onClick={handleRegisterClicked}
@@ -106,7 +106,7 @@ const AccountDropdownRender = ({
                                                 {t("register")}
                                             </button>
                                         )}
-                                    </Menu.Item>
+                                    </Menu.Item> */}
 
                                 </div>
                             </Menu.Items>

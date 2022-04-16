@@ -42,15 +42,6 @@ async function sendWithNodemailer(mailOptions) {
             },
         });
 
-        // Create the email options and body 
-        // ('email': user's email and 'name': is the e-book the user wants to receive)
-        // const mailOptions = {
-        //     from: `FRONT <${CLIENT_EMAIL}>`,
-        //     to: email,
-        //     subject: `[FRONT]- Here is your e-Book!`,
-        //     text: `Enjoy learning!`
-        // };
-
         // Set up the email options and delivering it
         const result = await transport.sendMail(mailOptions);
         return result;
