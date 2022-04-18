@@ -86,7 +86,7 @@ const OrderConfirmed = ({ isOpen, closeModal }) => {
 
 
 
-const ConfirmOrder = ({ isOpen, setIsOpen, deliveryAdress, contactInformation, onConfirmClicked }) => {
+const ConfirmOrder = ({ isOpen, setIsOpen, selectedMethod, selectedCourier, deliveryAdress, contactInformation, onConfirmClicked }) => {
 
     const { t, i18n } = useTranslation();
 
@@ -148,6 +148,28 @@ const ConfirmOrder = ({ isOpen, setIsOpen, deliveryAdress, contactInformation, o
                 {size && (
                     <h3 className="italic ">{renderSize(cartItem, size)}</h3>
                 )}
+            </div>
+        )
+    }
+
+    const getShippingCost = () => {
+
+        if(selectedMethod && selectedCourier.shippingPrice){
+
+            const homeOrOffice = selectedMethod.id;
+            return selectedCourier.shippingPrice[homeOrOffice]
+        }else{
+
+            return null;
+        }
+    }
+
+    const renderShippingCost = (shippingCost) => {
+
+        return (
+            <div className="flex justify-between">
+                <h3>{t("shipping")}</h3>
+                <h3>{shippingCost} {" "} {t("lv.")}</h3>
             </div>
         )
     }
@@ -214,10 +236,11 @@ const ConfirmOrder = ({ isOpen, setIsOpen, deliveryAdress, contactInformation, o
                                             </div>
                                         )
                                     })}
+                                    {getShippingCost() && renderShippingCost(getShippingCost())}
                                     <hr />
                                     <div className=" flex justify-between">
                                         <h3>{t("total")}</h3>
-                                        <h3>{getCartTotal(products)} {t('lv.')}</h3>
+                                        <h3>{getCartTotal(products, getShippingCost())} {t('lv.')}</h3>
                                     </div>
                                     <div className="pt-6">
                                         <div className="flex">

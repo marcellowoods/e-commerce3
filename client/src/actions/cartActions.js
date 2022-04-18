@@ -209,11 +209,15 @@ export const addToCart = (id, size) => async (dispatch, getState) => {
 
 }
 
-export const getCartTotal = (cartItems) => {
+export const getCartTotal = (cartItems, shippingCost=null) => {
 
-    const totalPrice = cartItems.reduce((total, product) => {
+    let totalPrice = cartItems.reduce((total, product) => {
         return total + (roundToTwo(product.price) * product.count);
     }, 0);
+
+    if(shippingCost){
+        totalPrice += shippingCost;
+    }
 
     return roundToTwo(totalPrice);
 }
