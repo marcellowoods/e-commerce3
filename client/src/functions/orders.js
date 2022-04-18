@@ -17,4 +17,7 @@ export const postOrder = async (products, totalCost, deliveryInfo) =>
         { products, totalCost, deliveryInfo }
     );
 
+export const getOrderOptions = async () =>
+    await axios.get(`${process.env.REACT_APP_API}/orderOptions`);
+
 

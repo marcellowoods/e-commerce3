@@ -1,7 +1,7 @@
 import React, { useEffect, useState, Fragment } from "react";
 import { useNavigate } from "react-router-dom";
 
-import { useDidMountEffect } from "../auxiliary/reactUtils"
+import { useDidMountEffect, useAsync } from "../auxiliary/reactUtils"
 import LoadingPage from "./LoadingPage";
 
 import OrderItems from "../components/checkout/OrderItems";
@@ -17,16 +17,17 @@ import { postOrder, userPostOrder } from "../functions/orders";
 import { useTranslation } from 'react-i18next';
 
 import { useDispatch, useSelector } from "react-redux";
+import { getOrderOptions } from "../functions/orders";
 
-const selectedCourier = {
-    name: "Econt",
-    id: "econt",
-    findOffice: "https://www.econt.com/find-office",
-    shippingPrice: {
-        home: 7,
-        office: 5
-    }
-};
+// const selectedCourier = {
+//     name: "Econt",
+//     id: "econt",
+//     findOffice: "https://www.econt.com/find-office",
+//     shippingPrice: {
+//         home: 7,
+//         office: 5
+//     }
+// };
 const deliveryMethods = [{ name: "Delivery to home", id: "home" }, { name: "Delivery to courrier office", id: "office" }];
 
 const CheckoutStates = {
@@ -44,6 +45,7 @@ const Checkout = () => {
 
     const [checkoutState, setCheckoutState] = useState(CheckoutStates.DELIVERY_METHOD);
 
+    const [selectedCourier, setSelectedCourier] = useState(null);
     const [selectedMethod, setSelectedMethod] = useState(null);
     const [deliveryAdress, setDeliveryAddress] = useState({ city: "", address: "" });
     const [contactInformation, setContactInformation] = useState({ phone: "", email: "", name: "" });
@@ -62,6 +64,13 @@ const Checkout = () => {
     //     setContactInformation({ phone: "1234", email: "test@mail.com", name: "Somename" })
     //     setDeliveryAddress({ city: "some sity", address: "address 2" })
     // }, [])
+
+    useAsync(
+        async () => getOrderOptions(),
+        (data) => setSelectedCourier(data.selectedCourier),
+        null,
+        []
+    );
 
     const onConfirmOrderClicked = async () => {
 
@@ -104,7 +113,7 @@ const Checkout = () => {
 
 
 
-    useEffect(() => {
+    useDidMountEffect(() => {
 
         setMethodOptions(prevState => {
             return prevState.map(({ name, id }) => {
@@ -123,7 +132,7 @@ const Checkout = () => {
                 }
             })
         });
-    }, []);
+    }, [selectedCourier]);
 
 
     const isFieldsMissing = () => {
@@ -220,7 +229,7 @@ const Checkout = () => {
 
     }
 
-    if (orderSentLoading) {
+    if (orderSentLoading | !selectedCourier) {
         return <LoadingPage />
     }
 
