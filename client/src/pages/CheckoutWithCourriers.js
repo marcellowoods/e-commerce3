@@ -18,20 +18,17 @@ import { useTranslation } from 'react-i18next';
 
 import { useDispatch, useSelector } from "react-redux";
 
-const selectedCourier = {
-    name: "Econt",
-    id: "econt",
-    findOffice: "https://www.econt.com/find-office",
-    shippingPrice: {
-        home: 7,
-        office: 5
-    }
-};
+
+const deliveryCouriers = [
+    { name: "Econt", id: "econt", findOffice: "https://www.econt.com/find-office" },
+    { name: "Speedy", id: "speedy", findOffice: "https://www.speedy.bg/bg/speedy-offices" }
+];
 const deliveryMethods = [{ name: "Delivery to home", id: "home" }, { name: "Delivery to courrier office", id: "office" }];
 
 const CheckoutStates = {
-    "DELIVERY_METHOD": 1,
-    "DELIVERY_ADDRESS": 2,
+    "DELIVERY_COURIER": 1,
+    "DELIVERY_METHOD": 2,
+    "DELIVERY_ADDRESS": 3,
 }
 
 const Checkout = () => {
@@ -42,13 +39,15 @@ const Checkout = () => {
 
     let dispatch = useDispatch();
 
-    const [checkoutState, setCheckoutState] = useState(CheckoutStates.DELIVERY_METHOD);
+    const [checkoutState, setCheckoutState] = useState(CheckoutStates.DELIVERY_COURIER);
 
+    const [selectedCourier, setSelectedCourier] = useState(null);
     const [selectedMethod, setSelectedMethod] = useState(null);
     const [deliveryAdress, setDeliveryAddress] = useState({ city: "", address: "" });
     const [contactInformation, setContactInformation] = useState({ phone: "", email: "", name: "" });
 
     const [methodOptions, setMethodOptions] = useState(deliveryMethods);
+    const [courierOptions, setCourierOptions] = useState(deliveryCouriers);
 
     const [isConfirmModalOpen, setIsConfirmModalOpen] = useState(false);
     const [orderSentLoading, setOrderSentLoading] = useState(false);
@@ -104,26 +103,21 @@ const Checkout = () => {
 
 
 
-    useEffect(() => {
+    useDidMountEffect(() => {
 
         setMethodOptions(prevState => {
             return prevState.map(({ name, id }) => {
                 if (id === 'office') {
-
                     const text = t('delivery to office', { name: selectedCourier.name });
-                    const shippingPrice = selectedCourier.shippingPrice.office + t("lv.");
-                    return { name: text, id, shippingPrice }
-
+                    return { name: text, id }
                 } else {
-
-                    const shippingPrice = selectedCourier.shippingPrice.home + t("lv.");
                     const text = t('delivery to home');
-                    return { name: text, id, shippingPrice }
-
+                    return { name: text, id }
                 }
             })
         });
-    }, []);
+    }, [selectedCourier]);
+
 
 
     const isFieldsMissing = () => {
@@ -152,6 +146,13 @@ const Checkout = () => {
     const handleNextClick = () => {
 
         switch (checkoutState) {
+            case CheckoutStates.DELIVERY_COURIER:
+                if (selectedCourier === null) {
+                    window.alert("please choose delivery courier");
+                } else {
+                    setCheckoutState(CheckoutStates.DELIVERY_METHOD)
+                }
+                break;
             case CheckoutStates.DELIVERY_METHOD:
                 if (selectedMethod === null) {
                     window.alert("please choose delivery method");
@@ -164,7 +165,7 @@ const Checkout = () => {
                 if (missingFields) {
                     window.alert("missing " + missingFields.join(','));
                 } else {
-
+                    
                     setIsConfirmModalOpen(true);
                 }
                 break;
@@ -176,6 +177,9 @@ const Checkout = () => {
         switch (checkoutState) {
             case CheckoutStates.DELIVERY_ADDRESS:
                 setCheckoutState(CheckoutStates.DELIVERY_METHOD)
+                break;
+            case CheckoutStates.DELIVERY_METHOD:
+                setCheckoutState(CheckoutStates.DELIVERY_COURIER)
                 break;
         }
     }
@@ -196,6 +200,14 @@ const Checkout = () => {
     }
 
     const getHelperForAddressComponent = () => {
+
+        // if (!selectedMethod || !selectedCourier) {
+        //     return (
+        //         <h3 className="text-gray-700 text-xl font-medium">
+        //             Fill in your address and contact information to finish the order
+        //         </h3>
+        //     );
+        // }
 
         if (selectedMethod.id == "office") {
 
@@ -247,7 +259,17 @@ const Checkout = () => {
 
                         {checkoutState === CheckoutStates.DELIVERY_ADDRESS && getHelperForAddressComponent()}
 
-
+                        {checkoutState === CheckoutStates.DELIVERY_COURIER && (
+                            <div>
+                                <DeliveryMethod
+                                    selected={selectedCourier}
+                                    setSelected={setSelectedCourier}
+                                    name={t('delivery courrier')}
+                                    options={courierOptions}
+                                />
+                            </div>
+                        )
+                        }
                         {checkoutState === CheckoutStates.DELIVERY_METHOD && (
                             <div>
                                 <DeliveryMethod

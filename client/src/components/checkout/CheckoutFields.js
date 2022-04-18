@@ -14,7 +14,7 @@ const DeliveryMethod = ({ name, options, selected, setSelected }) => {
 
     }
 
-    const renderMethod = (name, id) => {
+    const renderMethod = (name, id, shippingPrice) => {
         return (
             <button key={id} value={id} onClick={onChangeValue} className="mt-6 cursor-pointer flex items-center justify-between w-full bg-white rounded-md border p-4 focus:outline-none">
                 <label className="flex items-center">
@@ -25,7 +25,7 @@ const DeliveryMethod = ({ name, options, selected, setSelected }) => {
                         className="form-radio cursor-pointer  h-5 w-5 text-blue-600"
                         onChange={onChangeValue}
                     />
-                    <span className="ml-2 cursor-pointer text-sm text-gray-700">{name}</span>
+                    <span className="ml-2 cursor-pointer text-sm text-gray-700">{name}: {shippingPrice}</span>
                 </label>
 
                 {/* <span className="text-gray-600 text-sm">$26</span> */}
@@ -37,7 +37,7 @@ const DeliveryMethod = ({ name, options, selected, setSelected }) => {
         <div>
             <h4 className="text-sm text-gray-500 font-medium">{name}</h4>
             <div className="mt-6">
-                {options.map(({ name, id }) => renderMethod(name, id))}
+                {options.map(({ name, id, shippingPrice }) => renderMethod(name, id, shippingPrice))}
             </div>
         </div>
     )

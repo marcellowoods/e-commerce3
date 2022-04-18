@@ -8,7 +8,7 @@ const { authCheck } = require("../middlewares/auth");
 // controllers
 const {
     createOrder,
-    userCreateOrder
+    userCreateOrder,
 } = require("../controllers/orders");
 
 //route
