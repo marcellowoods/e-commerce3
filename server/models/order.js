@@ -83,7 +83,7 @@ const orderSchema = new mongoose.Schema(
             // postalCode: { type: String, required: true },
             // country: { type: String, required: true },
         },
-        shippingPrice: Number,
+        shippingCost: Number,
         totalCost: Number
     },
     { timestamps: true }

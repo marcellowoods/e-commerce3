@@ -1,5 +1,6 @@
 const translation = {
 
+    "shipping": "доставка",
     "Not Processed": "Не обработена",
     "Processing": "Обравотва се",
     "Dispatched": "Изпратена",

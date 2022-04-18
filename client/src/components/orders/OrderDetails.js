@@ -9,7 +9,7 @@ import { useTranslation } from 'react-i18next';
 
 const PRODUCT_PAGE_URL = "/product/"
 
-const OrderDetails = ({ isOpen, orderStatus, orderId, products, totalCost, setIsOpen, deliveryInfo }) => {
+const OrderDetails = ({ isOpen, orderStatus, orderId, products, totalCost, shippingCost, setIsOpen, deliveryInfo }) => {
 
     const { t, i18n } = useTranslation();
 
@@ -135,6 +135,11 @@ const OrderDetails = ({ isOpen, orderStatus, orderId, products, totalCost, setIs
                                         </div>
                                     ))
                                     }
+
+                                    <div className="flex justify-between">
+                                        <h3>{t("shipping")}</h3>
+                                        <h3>{5} {" "} {t("lv.")}</h3>
+                                    </div>
                                     <hr />
                                     <div className="flex justify-between">
                                         <h3>{t("total")}</h3>

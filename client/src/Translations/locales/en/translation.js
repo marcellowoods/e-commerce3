@@ -1,5 +1,6 @@
 
 const translation = {
+    "shipping": "shipping",
     "categories": "Categories",
     "home": "Home",
     "shop": "Shop",
