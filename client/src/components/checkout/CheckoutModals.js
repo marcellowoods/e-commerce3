@@ -129,23 +129,24 @@ const ConfirmOrder = ({ isOpen, setIsOpen, deliveryAdress, contactInformation, o
 
     }
 
-    let renderName = (product) => {
+    let renderName = (cartItem) => {
 
-        const slug = product.slug;
+        const { count, size, slug } = cartItem;
+
         const linkString = PRODUCT_PAGE_URL + slug;
-        
-        const size = product.size;
-
         const lang = i18n.language;
-        const translatedName = getTranslatedField(product, 'name', lang);
+        const translatedName = getTranslatedField(cartItem, 'name', lang);
 
         return (
-            <div className="flex flex-row">
-                <Link to={linkString}>
-                    <h3 className="underline">{translatedName} </h3>
-                </Link>
+            <div className="">
+                <div className="flex">
+                    <Link to={linkString}>
+                        <h3 className="underline">{translatedName} </h3>
+                    </Link>
+                    <h3 className="pl-2 font-medium ">x{count}</h3>
+                </div>
                 {size && (
-                    <h3 className="italic pl-2">{renderSize(product, size)}</h3>
+                    <h3 className="italic ">{renderSize(cartItem, size)}</h3>
                 )}
             </div>
         )
@@ -208,7 +209,6 @@ const ConfirmOrder = ({ isOpen, setIsOpen, deliveryAdress, contactInformation, o
                                             <div className="flex justify-between">
                                                 <div className="flex">
                                                     {renderName(item)}
-                                                    <h3 className="pl-2 font-medium ">x{item.count}</h3>
                                                 </div>
                                                 <h3>{roundToTwo(item.price * item.count)} {" "} {t("lv.")}</h3>
                                             </div>
