@@ -3,7 +3,8 @@ const emailTranslations = {
     "your order is accepted": "Вашата поръчка е приета.",
     "your order has been shipped": "Вашата поръчка е изпратена.",
     "Accepted order": "Приета поръчка",
-    "Order changed status": "Променен статус на поръчка"
+    "Order changed status": "Променен статус на поръчка",
+    "shipping cost": "доставка"
 }
 
 const translation = {

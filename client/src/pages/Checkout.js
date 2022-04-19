@@ -87,7 +87,11 @@ const Checkout = () => {
             lang: i18n.language
         }
 
-        const totalCost = getCartTotal(products);
+        const homeOrOffice = selectedMethod.id;
+        const shippingCost = selectedCourier.shippingPrice[homeOrOffice];
+
+        const totalCost = getCartTotal(products, shippingCost);
+        
         let postFn = null;
 
         if (user === null) {

@@ -1,6 +1,6 @@
 const translation = {
     "currrently we deliver only in Bulgaria and only with cash on delivery payment":
-    "За момента доставяме само в България и само с опция за плащане при доставка",
+    "За момента доставяме само в България и единствения метод за плащане е с пари в брой при доставка.",
 
     "shipping": "доставка",
     "Not Processed": "Не обработена",
