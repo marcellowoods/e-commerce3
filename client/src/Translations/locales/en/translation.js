@@ -12,6 +12,8 @@ const translation = {
     "cart is empty": "Cart is empty",
     "lv.": "lv.",
 
+    "currrently we deliver only in Bulgaria and only with cash on delivery payment":
+     "Currently we deliver only in Bulgaria and only with cash on delivery payment",
 
     "delivery to office": "Delivery to {{name}} office",
     "delivery to home": "Delivery to home",

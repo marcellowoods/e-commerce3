@@ -10,7 +10,7 @@ import {
     DeliveryMethod,
     DeliveryAdress
 } from "../components/checkout/CheckoutFields";
-import { ConfirmOrder } from "../components/checkout/CheckoutModals";
+import { ConfirmOrder, BeforeCheckoutMessage } from "../components/checkout/CheckoutModals";
 import { getCartTotal, clearCart, getFilteredCartData } from "../actions/cartActions";
 import { postOrder, userPostOrder } from "../functions/orders";
 
@@ -236,6 +236,9 @@ const Checkout = () => {
     return (
 
         <div className="pt-6 sm:px-12">
+
+            <BeforeCheckoutMessage/>
+
             <ConfirmOrder
                 selectedCourier={selectedCourier}
                 selectedMethod={selectedMethod}
