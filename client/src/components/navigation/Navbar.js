@@ -61,7 +61,7 @@ const NavbarRender = ({ mobileNavbarToggle, cartModalToggle, isAdmin }) => {
 
                     <div className="hidden lg:flex pr-64">
                     </div>
-                    <div className="">
+                    <div className="translate-x-2">
                         <NavigationItems />
                     </div>
 
