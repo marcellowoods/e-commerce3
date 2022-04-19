@@ -21,7 +21,7 @@ const CartItem = ({
 
     const increaseQty = () => {
         dispatch(increaseItemQty(cartItemObj));
-        
+
     }
 
     const removeItem = () => {
@@ -33,8 +33,8 @@ const CartItem = ({
     }
 
     const renderSize = () => {
- 
-        if(size !== null){
+
+        if (size !== null) {
             const textSize = t('size');
             const textCm = t('cm.');
             return "(" + textSize + " " + size + textCm + ")";
@@ -47,8 +47,17 @@ const CartItem = ({
             <div className="flex">
                 <img className="h-20 w-20 object-cover rounded" src={imageLink} alt="" />
                 <div className="mx-3">
-                    <h3 className="text-sm text-gray-600">{name} {renderSize()}</h3>
+                    <h3 className="text-md text-gray-600">{name} </h3>
+                    <h3 className="text-md text-gray-600">{renderSize()} </h3>
+
                     <div className="flex items-center mt-2">
+                        <button
+                            onClick={removeItem}
+                            className="mr-2 -translate-y-1 text-gray-500 mt-2 focus:outline-none focus:text-gray-600"
+                        >
+                            {getItemDeleteIcon()}
+
+                        </button>
                         <button
                             onClick={increaseQty}
                             className="text-gray-500 focus:outline-none focus:text-gray-600"
@@ -63,14 +72,10 @@ const CartItem = ({
                             <svg className="h-5 w-5" fill="none" strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" viewBox="0 0 24 24" stroke="currentColor"><path d="M15 12H9m12 0a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
                         </button>
 
-                    </div>
-                    <button
-                        onClick={removeItem}
-                        className="text-gray-500 mt-2 focus:outline-none focus:text-gray-600"
-                    >
-                        {getItemDeleteIcon()}
 
-                    </button>
+
+                    </div>
+
 
                 </div>
             </div>
