@@ -77,6 +77,8 @@ const translation = {
     "new status": "нов статус",
     "hide completed orders": "Скрий завършени поръчки",
 
+    "message": "Съобщение"
+
 }
 
 export default translation;
