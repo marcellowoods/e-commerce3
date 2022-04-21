@@ -70,7 +70,9 @@ const translation = {
     "large": "large",
     "update status": "update status",
     "new status": "new status",
-    "hide completed orders": "Hide completed orders"
+    "hide completed orders": "Hide completed orders",
+
+    "message": "Message"
 }
 
 export default translation;
