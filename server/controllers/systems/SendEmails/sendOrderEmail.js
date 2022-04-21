@@ -18,7 +18,7 @@ const sendOrderEmail = async (order, subject, message) => {
 
     const t = i18n(lang);
 
-    const fromEmail = process.env.EMAIL;
+    const fromEmail = process.env.GMAIL_CLIENT_EMAIL;
 
     //remove undefined fields
     const orderFiltered = JSON.parse(JSON.stringify(order));

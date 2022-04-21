@@ -12,6 +12,8 @@ require("dotenv").config({ path: path.resolve(__dirname, '../../../.env') });
 
 async function sendWithNodemailer(mailOptions) {
 
+    console.log("sendWithNodemailer")
+
     const CLIENT_EMAIL = process.env.GMAIL_CLIENT_EMAIL;
     const CLIENT_ID = process.env.GMAIL_CLIENT_ID;
     const CLIENT_SECRET = process.env.GMAIL_CLIENT_SECRET;

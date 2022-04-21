@@ -1,5 +1,7 @@
 import React, { useState } from "react";
 import { useTranslation } from 'react-i18next';
+import { sendMessage } from "../functions/messages";
+
 
 function ContactPage() {
 
@@ -8,9 +10,10 @@ function ContactPage() {
     const [message, setMessage] = useState("");
     const [name, setName] = useState("");
 
-    const onSend = () => {
+    const onSend = async () => {
 
-    }
+        await sendMessage(email, name, message);
+    };
 
 
     return (
@@ -55,7 +58,7 @@ function ContactPage() {
             </div>
 
             <div className="flex items-center justify-center w-full">
-                <button className="mt-9 text-base font-semibold leading-none text-white py-4 px-10 bg-blue-600 rounded hover:bg-blue-500 focus:ring-2 focus:ring-offset-2 focus:bg-blue-500 focus:outline-none">SUBMIT</button>
+                <button onClick={onSend} className="mt-9 text-base font-semibold leading-none text-white py-4 px-10 bg-blue-600 rounded hover:bg-blue-500 focus:ring-2 focus:ring-offset-2 focus:bg-blue-500 focus:outline-none">SUBMIT</button>
             </div>
 
         </div>
