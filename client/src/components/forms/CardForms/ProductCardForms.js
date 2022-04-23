@@ -202,7 +202,7 @@ const BraceletSizeSelector = ({ selectedSize, setSelectedSize, productSize }) =>
     const maxSliderValue = upperBound - stepSize;
     const minSliderValue = lowerBound + stepSize;
 
-    const [sizeTypes, setSelectedSizeTypes] =  useState([{ name: "small" }, { name: "large" }, { name: "custom" }]);
+    const [sizeTypes, setSelectedSizeTypes] = useState([{ name: "small" }, { name: "large" }, { name: "custom" }]);
 
     const [selectedSizeType, setSelectedSizeType] = useState(null);
 
@@ -341,9 +341,56 @@ const BreadCrumbs = ({ breadcrumbs, name }) => {
     )
 }
 
+const Category = ({ product, category }) => {
+
+    const navigate = useNavigate();
+
+    const pushToPage = () => {
+        // navigate(shopUrl + pageUrl)
+    }
+
+    return (
+        <nav aria-label="Breadcrumb">
+            <ol role="list" className="max-w-2xl mx-auto flex items-center space-x-2 lg:max-w-7xl">
+
+                <li key={"123"}>
+                    <div className="flex items-center">
+                        <button
+                            onClick={() => pushToPage()}
+                            className="mr-2 text-sm text-xl	 text-gray-900"
+                        >
+                            {"name0"}
+                        </button>
+                        <svg
+                            width={16}
+                            height={20}
+                            viewBox="0 0 16 20"
+                            fill="currentColor"
+                            xmlns="http://www.w3.org/2000/svg"
+                            aria-hidden="true"
+                            className="w-4 h-5 text-gray-300"
+                        >
+
+                            <path d="M5.697 4.34L8.98 16.532h1.327L7.025 4.341H5.697z" />
+                        </svg>
+
+                    </div>
+                </li>
+
+                <li className="text-sm">
+                    <a  aria-current="page" className="font-medium text-gray-500 hover:text-gray-600">
+                        {"name"}
+                    </a>
+                </li>
+            </ol>
+        </nav>
+    )
+}
+
 export {
     ColorSelector,
     SizeSelector,
     BraceletSizeSelector,
-    BreadCrumbs
+    BreadCrumbs,
+    Category
 }

@@ -81,6 +81,8 @@ const ProductPage = () => {
     const { productSlugParam } = useParams();
     const [product, setProduct] = useState(null);
 
+    console.log(product)
+
     const { t, i18n } = useTranslation();
 
     const dispatch = useDispatch()
