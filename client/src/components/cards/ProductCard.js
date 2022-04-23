@@ -3,13 +3,13 @@ import ProductSlider from './ProductSlider';
 import {
     ColorSelector,
     BraceletSizeSelector,
-    Category
+    ProductCategory
 } from "../forms/CardForms/ProductCardForms";
 
 import { useTranslation } from 'react-i18next';
 
 //https://tailwindui.com/components/ecommerce/components/product-overviews
-const ProductCard = ({ product, translatedName, translatedDescription, handleAddToCart }) => {
+const ProductCard = ({ product, translatedCategoryName, translatedName, translatedDescription, handleAddToCart }) => {
 
     const { t } = useTranslation();
 
@@ -41,11 +41,13 @@ const ProductCard = ({ product, translatedName, translatedDescription, handleAdd
     return (
         <div>
 
-            <Category category={product.category} />
+            <ProductCategory
+                translatedProductName={translatedName}
+                translatedCategoryName={translatedCategoryName}
+                product={product}
+            />
 
-            <div className="w-full grid grid-cols-1 gap-y-8 gap-x-6 items-center sm:grid-cols-12 lg:gap-x-8">
-
-
+            <div className="pt-2 w-full grid grid-cols-1 gap-y-8 gap-x-6 items-center sm:grid-cols-12 lg:gap-x-8">
 
                 <div className="aspect-w-2 aspect-h-3 rounded-lg bg-gray-100 overflow-hidden sm:col-span-7">
 

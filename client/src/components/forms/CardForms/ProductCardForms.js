@@ -5,6 +5,7 @@ import ReactSlider from "react-slider";
 import { useTranslation } from 'react-i18next';
 import { Dialog, Transition } from '@headlessui/react';
 import { t } from 'i18next';
+import { getTranslatedField } from "../../../actions/translateActions"
 
 const shopUrl = '/shop';
 
@@ -341,12 +342,15 @@ const BreadCrumbs = ({ breadcrumbs, name }) => {
     )
 }
 
-const Category = ({ product, category }) => {
+const ProductCategory = ({translatedProductName, translatedCategoryName, product }) => {
 
     const navigate = useNavigate();
+    
+
+    const { slug: categorySlug} = product.category;
 
     const pushToPage = () => {
-        // navigate(shopUrl + pageUrl)
+        navigate(shopUrl + "/" + categorySlug);
     }
 
     return (
@@ -357,9 +361,9 @@ const Category = ({ product, category }) => {
                     <div className="flex items-center">
                         <button
                             onClick={() => pushToPage()}
-                            className="mr-2 text-sm text-xl	 text-gray-900"
+                            className="mr-2 font-medium text-lg text-gray-900"
                         >
-                            {"name0"}
+                            {translatedCategoryName}
                         </button>
                         <svg
                             width={16}
@@ -377,9 +381,9 @@ const Category = ({ product, category }) => {
                     </div>
                 </li>
 
-                <li className="text-sm">
+                <li className="text-lg">
                     <a  aria-current="page" className="font-medium text-gray-500 hover:text-gray-600">
-                        {"name"}
+                        {translatedProductName}
                     </a>
                 </li>
             </ol>
@@ -392,5 +396,5 @@ export {
     SizeSelector,
     BraceletSizeSelector,
     BreadCrumbs,
-    Category
+    ProductCategory
 }
