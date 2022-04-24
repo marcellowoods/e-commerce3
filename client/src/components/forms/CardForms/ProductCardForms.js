@@ -226,7 +226,7 @@ const BraceletSizeSelector = ({ selectedSize, setSelectedSize, productSize }) =>
     }
 
     return (
-        <div className="mt-10">
+        <div className="mt-5">
 
             <div className="flex items-center ">
                 <h3 className="text-lg text-transform: capitalize text-gray-900 font-medium">{t("size")}</h3>

@@ -39,7 +39,7 @@ const ProductCard = ({ product, translatedCategoryName, translatedName, translat
     }
 
     return (
-        <div>
+        <div className="">
 
             <ProductCategory
                 translatedProductName={translatedName}
@@ -49,6 +49,7 @@ const ProductCard = ({ product, translatedCategoryName, translatedName, translat
 
             <div className="pt-2 w-full grid grid-cols-1 gap-y-8 gap-x-6 items-center sm:grid-cols-12 lg:gap-x-8">
 
+                {/* change col-span for size change but it has to add to grid-cols-12 */}
                 <div className="aspect-w-2 aspect-h-3 rounded-lg bg-gray-100 overflow-hidden sm:col-span-7">
 
                     <ProductSlider
@@ -60,19 +61,23 @@ const ProductCard = ({ product, translatedCategoryName, translatedName, translat
 
                     </div>
                 </div>
+                {/* change col-span for size change but it has to add to grid-cols-12 */}
                 <div className="sm:col-span-5">
-                    <h2 className="text-2xl font-extrabold text-gray-900 sm:pr-12">{translatedName}</h2>
+                    <h3 class="text-gray-700 uppercase text-xl">{translatedName}</h3>
+                    {/* <h2 className="text-2xl font-extrabold text-gray-900 sm:pr-12">{translatedName}</h2> */}
 
-                    <section aria-labelledby="information-heading" className="mt-2">
+                    <section aria-labelledby="information-heading" className="">
                         <h3 id="information-heading" className="sr-only">
                             Product information
                         </h3>
 
-                        <p className="text-2xl text-gray-900">{price} {" "} {t("lv.")}</p>
+                        <span class="text-gray-500 text-xl">{price} {" "} {t("lv.")}</span>
+                        {/* <p className="text-2xl text-gray-900">{price} {" "} {t("lv.")}</p> */}
+                        <hr class="my-3 mt-5"></hr>
 
                         {
                             translatedDescription && (
-                                <div className="mt-10">
+                                <div className="mt-5">
                                     <h3 className="sr-only">{t("description")}</h3>
 
                                     <div className="space-y-6">
@@ -85,7 +90,7 @@ const ProductCard = ({ product, translatedCategoryName, translatedName, translat
 
                     </section>
 
-                    <section aria-labelledby="options-heading" className="mt-10">
+                    <section aria-labelledby="options-heading" className="mt-5">
                         <h3 id="options-heading" className="sr-only">
                             Product options
                         </h3>
@@ -114,7 +119,7 @@ const ProductCard = ({ product, translatedCategoryName, translatedName, translat
                     <button
                         onClick={onAddToCartClick}
                         type="submit"
-                        className="mt-10 w-full bg-indigo-600 border border-transparent rounded-md py-3 px-8 flex items-center justify-center text-base font-medium text-white hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
+                        className="text-sm font-medium uppercase mt-7 w-full  bg-blue-600 border border-transparent rounded-md py-3 px-8 flex items-center justify-center text-base font-medium text-white hover:bg-blue-500 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:bg-blue-500"
                     >
                         {t("add to bag")}
                     </button>

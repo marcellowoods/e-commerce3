@@ -72,7 +72,8 @@ const translation = {
     "new status": "new status",
     "hide completed orders": "Hide completed orders",
 
-    "message": "Message"
+    "message": "Message",
+    "send": "send"
 }
 
 export default translation;

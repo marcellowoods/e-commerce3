@@ -58,7 +58,9 @@ function ContactPage() {
             </div>
 
             <div className="flex items-center justify-center w-full">
-                <button onClick={onSend} className="mt-9 text-base font-semibold leading-none text-white py-4 px-10 bg-blue-600 rounded hover:bg-blue-500 focus:ring-2 focus:ring-offset-2 focus:bg-blue-500 focus:outline-none">SUBMIT</button>
+                <button onClick={onSend} className="uppercase mt-9 text-base font-semibold leading-none text-white py-4 px-10 bg-blue-600 rounded hover:bg-blue-500 focus:ring-2 focus:ring-offset-2 focus:bg-blue-500 focus:outline-none">
+                    {t('send')}
+                </button>
             </div>
 
         </div>

@@ -143,7 +143,7 @@ const ProductPage = () => {
     }
 
     return (
-        <div className="pt-6">
+        <div className="pt-6 max-w-6xl mx-auto">
             <ProductCard
                 product={product}
                 translatedCategoryName={getTranslatedCategoryName()}
