@@ -60,10 +60,10 @@ const Checkout = () => {
 
     //test
     //remove from production!
-    useEffect(() => {
-        setContactInformation({ phone: "1234", email: "test@mail.com", name: "Somename" })
-        setDeliveryAddress({ city: "some sity", address: "address 2" })
-    }, [])
+    // useEffect(() => {
+    //     setContactInformation({ phone: "1234", email: "test@mail.com", name: "Somename" })
+    //     setDeliveryAddress({ city: "some sity", address: "address 2" })
+    // }, [])
 
     useAsync(
         async () => getOrderOptions(),
