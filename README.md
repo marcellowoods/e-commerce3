@@ -49,17 +49,17 @@ Add firebaseConfig to client
 let firebaseConfig = {
     
 };
-export default firebaseConfig;
-```
+export default firebaseConfig;  
+```  
 
-got to server folder
-yarn install
+got to server folder  
+yarn install  
 
-go to client folder
-yarn install
+go to client folder  
+yarn install   
 
 
-for running with pm2:
+for running with pm2:  
 
 go to server folder
 pm2 start server.js
