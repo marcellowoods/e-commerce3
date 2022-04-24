@@ -1,4 +1,6 @@
 //change fonts
+//first laod the font in index.html!
+//just add font-{fontname} in className
 //https://www.themes.dev/blog/typographic-defaults-in-tailwind-css/
 //https://fonts.google.com/
 
@@ -16,7 +18,8 @@ module.exports = {
             },
             fontFamily: {
                 'robo': ['Roboto'],
-                'workSans': ['Work Sans']
+                'workSans': ['Work Sans'],
+                'slick': ['Sacramento']
             }
         }
 

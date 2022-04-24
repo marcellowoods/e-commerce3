@@ -1,5 +1,6 @@
 
 const translation = {
+    "shipping": "shipping",
     "categories": "Categories",
     "home": "Home",
     "shop": "Shop",
@@ -11,6 +12,8 @@ const translation = {
     "cart is empty": "Cart is empty",
     "lv.": "lv.",
 
+    "currrently we deliver only in Bulgaria and only with cash on delivery payment":
+     "Currently we deliver only in Bulgaria and only with cash on delivery payment.",
 
     "delivery to office": "Delivery to {{name}} office",
     "delivery to home": "Delivery to home",
@@ -67,7 +70,10 @@ const translation = {
     "large": "large",
     "update status": "update status",
     "new status": "new status",
-    "hide completed orders": "Hide completed orders"
+    "hide completed orders": "Hide completed orders",
+
+    "message": "Message",
+    "send": "send"
 }
 
 export default translation;

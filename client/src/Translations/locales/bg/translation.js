@@ -1,5 +1,8 @@
 const translation = {
+    "currrently we deliver only in Bulgaria and only with cash on delivery payment":
+    "За момента доставяме само в България и единствения метод за плащане е с пари в брой при доставка.",
 
+    "shipping": "доставка",
     "Not Processed": "Не обработена",
     "Processing": "Обравотва се",
     "Dispatched": "Изпратена",
@@ -73,6 +76,9 @@ const translation = {
     "update status": "промени статус",
     "new status": "нов статус",
     "hide completed orders": "Скрий завършени поръчки",
+
+    "message": "Съобщение",
+    "send": "изпрати"
 
 }
 

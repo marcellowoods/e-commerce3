@@ -65,6 +65,7 @@ const compileTemplate = (order, message) => {
         deliveryInfo,
         products,
         totalCost,
+        shippingCost,
         _id: orderId,
         createdAt: orderCreatedAt,
     } = order;
@@ -92,10 +93,11 @@ const compileTemplate = (order, message) => {
 
     const moneyMarkTranslate = t("lv.");
     const totalTranslate = t("total");
+    const shippingTranslate = t("shipping cost");
 
     const translatedProducts = products.map(product => {
 
-        const priceTimesCount = product.priceTimesCount + " " + moneyMarkTranslate;
+        const priceTimesCount = product.priceTimesCount;
         let name = getTranslatedField(product.product, "name", lang);
 
         let size = "";
@@ -123,9 +125,11 @@ const compileTemplate = (order, message) => {
         orderCreatedAtTranslate,
         moneyMarkTranslate,
         totalTranslate,
+        shippingTranslate,
 
         products: translatedProducts,
         totalCost,
+        shippingCost,
         deliveryInfo,
         deliveryTypeTranslate
     });

@@ -81,6 +81,8 @@ const ProductPage = () => {
     const { productSlugParam } = useParams();
     const [product, setProduct] = useState(null);
 
+    console.log(product)
+
     const { t, i18n } = useTranslation();
 
     const dispatch = useDispatch()
@@ -102,6 +104,18 @@ const ProductPage = () => {
         }
 
         return name;
+    }
+
+    const getTranslatedCategoryName = () => {
+
+        let categoryName = null;
+        const lang = i18n.language;
+
+        if (product.category) {
+            categoryName = getTranslatedField(product.category, 'name', lang);
+        }
+
+        return categoryName;
     }
 
     const getTranslatedDescription = () => {
@@ -129,9 +143,10 @@ const ProductPage = () => {
     }
 
     return (
-        <div className="pt-6">
+        <div className="pt-6 max-w-6xl mx-auto">
             <ProductCard
                 product={product}
+                translatedCategoryName={getTranslatedCategoryName()}
                 translatedName={getTranslatedName()}
                 translatedDescription={getTranslatedDescription()}
                 handleAddToCart={handleAddToCart} />

@@ -8,6 +8,8 @@ const asyncHandler = require('express-async-handler');
 const { roundToTwo } = require("./utils");
 const { sendCreatedOrderEmail } = require("./systems/SendEmails/sendOrderEmail");
 
+const { selectedCourier } = require("./orderOptions");
+
 
 const sendOrderEmail = () => {
     //https://www.courier.com/blog/how-to-send-emails-with-node-js/
@@ -19,11 +21,13 @@ const sendOrderEmail = () => {
     //https://app.mailgun.com/app/account/setup
 }
 
-const getCartTotal = (cartItems) => {
+const getCartTotal = (cartItems, shippingCost) => {
 
-    const totalPrice = cartItems.reduce((total, product) => {
+    let totalPrice = cartItems.reduce((total, product) => {
         return total + (roundToTwo(product.price) * product.count);
     }, 0);
+
+    totalPrice += shippingCost;
 
     return roundToTwo(totalPrice);
 }
@@ -124,7 +128,9 @@ const makeOrderCreator = (withUser = false) => {
             const cart = await createCartForOrder(cartFromUser);
 
             //check for price shenanigans
-            const totalCost = getCartTotal(cartFromUser);
+            const homeOrOffice = deliveryInfo.method;
+            const shippingCost = selectedCourier.shippingPrice[homeOrOffice];
+            const totalCost = getCartTotal(cartFromUser, shippingCost);
 
             if (totalCost !== totalCostFromUser) {
                 console.log(totalCost);
@@ -145,7 +151,6 @@ const makeOrderCreator = (withUser = false) => {
                 }
 
                 userId = user._id;
-
             }
 
             const createdOrder = await new Order({
@@ -153,12 +158,13 @@ const makeOrderCreator = (withUser = false) => {
                 products: cart,
                 totalCost,
                 orderedBy: userId,
+                shippingCost
             }).save();
 
             let order = await createdOrder.populate("products.product");
             console.log(order);
 
-            // sendCreatedOrderEmail(order);
+            sendCreatedOrderEmail(order);
 
 
             let bulkOption = products.map((item) => {

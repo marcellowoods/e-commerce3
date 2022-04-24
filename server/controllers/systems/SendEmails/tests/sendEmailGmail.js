@@ -5,7 +5,6 @@ const path = require("path");
 require("dotenv").config({path: path.resolve(__dirname, '../../../.env')});
 
 const gmailUser = process.env.GMAIL_USER;
-//pass is revoked
 const gmailPass = process.env.GMAIL_PASS;
 
 // const emailTemplateSource = fs.readFileSync(path.join(__dirname, "/template.hbs"), "utf8");

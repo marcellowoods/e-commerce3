@@ -5,6 +5,7 @@ import ReactSlider from "react-slider";
 import { useTranslation } from 'react-i18next';
 import { Dialog, Transition } from '@headlessui/react';
 import { t } from 'i18next';
+import { getTranslatedField } from "../../../actions/translateActions"
 
 const shopUrl = '/shop';
 
@@ -202,7 +203,7 @@ const BraceletSizeSelector = ({ selectedSize, setSelectedSize, productSize }) =>
     const maxSliderValue = upperBound - stepSize;
     const minSliderValue = lowerBound + stepSize;
 
-    const [sizeTypes, setSelectedSizeTypes] =  useState([{ name: "small" }, { name: "large" }, { name: "custom" }]);
+    const [sizeTypes, setSelectedSizeTypes] = useState([{ name: "small" }, { name: "large" }, { name: "custom" }]);
 
     const [selectedSizeType, setSelectedSizeType] = useState(null);
 
@@ -225,7 +226,7 @@ const BraceletSizeSelector = ({ selectedSize, setSelectedSize, productSize }) =>
     }
 
     return (
-        <div className="mt-10">
+        <div className="mt-5">
 
             <div className="flex items-center ">
                 <h3 className="text-lg text-transform: capitalize text-gray-900 font-medium">{t("size")}</h3>
@@ -341,9 +342,59 @@ const BreadCrumbs = ({ breadcrumbs, name }) => {
     )
 }
 
+const ProductCategory = ({translatedProductName, translatedCategoryName, product }) => {
+
+    const navigate = useNavigate();
+    
+
+    const { slug: categorySlug} = product.category;
+
+    const pushToPage = () => {
+        navigate(shopUrl + "/" + categorySlug);
+    }
+
+    return (
+        <nav aria-label="Breadcrumb">
+            <ol role="list" className="max-w-2xl mx-auto flex items-center space-x-2 lg:max-w-7xl">
+
+                <li key={"123"}>
+                    <div className="flex items-center">
+                        <button
+                            onClick={() => pushToPage()}
+                            className="mr-2 font-medium text-lg text-gray-900"
+                        >
+                            {translatedCategoryName}
+                        </button>
+                        <svg
+                            width={16}
+                            height={20}
+                            viewBox="0 0 16 20"
+                            fill="currentColor"
+                            xmlns="http://www.w3.org/2000/svg"
+                            aria-hidden="true"
+                            className="w-4 h-5 text-gray-300"
+                        >
+
+                            <path d="M5.697 4.34L8.98 16.532h1.327L7.025 4.341H5.697z" />
+                        </svg>
+
+                    </div>
+                </li>
+
+                <li className="text-lg">
+                    <a  aria-current="page" className="font-medium text-gray-500 hover:text-gray-600">
+                        {translatedProductName}
+                    </a>
+                </li>
+            </ol>
+        </nav>
+    )
+}
+
 export {
     ColorSelector,
     SizeSelector,
     BraceletSizeSelector,
-    BreadCrumbs
+    BreadCrumbs,
+    ProductCategory
 }

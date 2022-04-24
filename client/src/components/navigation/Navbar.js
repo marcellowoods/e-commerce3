@@ -6,9 +6,26 @@ import { getCartIcon, getMobileToggleIcon } from "../../assets/icons";
 import AccountDropdown from "./AccountDropdown";
 import AdminDropdown from "./AdminDropdown";
 import ChangeLangDropdown from "./ChangeLangDropdown";
-
+import { useNavigate, useParams } from "react-router-dom";
 
 import "./style.css";
+
+const BrandLogo = () => {
+
+    const SHOP_PATHNAME = "/shop/";
+    const navigate = useNavigate();
+
+    const handleClick = () => {
+        navigate(SHOP_PATHNAME);
+    }
+
+    return (
+        <button onClick={handleClick} className="transform lg:-translate-x-12 color-main-bold sm:text-center  text-2xl sm:text-3xl font-semibold font-slick">
+            {/* Nina Gems */}
+            Nina&nbsp;Gems
+        </button>
+    )
+}
 
 const NavbarRender = ({ mobileNavbarToggle, cartModalToggle, isAdmin }) => {
 
@@ -24,9 +41,7 @@ const NavbarRender = ({ mobileNavbarToggle, cartModalToggle, isAdmin }) => {
                         <ChangeLangDropdown />
                     </div>
 
-                    <div className="transform lg:-translate-x-12 color-main-bold sm:text-center  text-2xl font-semibold">
-                        Brand
-                    </div>
+                    <BrandLogo />
 
                     <div className="flex items-center justify-end w-full sm:w-auto">
                         <button onClick={cartModalToggle} className="color-main-light focus:outline-none mx-2">
@@ -58,9 +73,9 @@ const NavbarRender = ({ mobileNavbarToggle, cartModalToggle, isAdmin }) => {
                 </div>
                 <nav className={`hidden transform -translate-x-2 container mx-auto px-6  items-center max-w-7xl flex pb-4 sm:flex  flex justify-between`}>
 
-                    <div className="hidden lg:flex pr-72">
+                    <div className="hidden lg:flex pr-64">
                     </div>
-                    <div className="">
+                    <div className="translate-x-2">
                         <NavigationItems />
                     </div>
 
@@ -121,7 +136,7 @@ const Navbar = () => {
             ? cartModalOff()
             : cartModalOn();
 
-    
+
 
     return (
         <NavbarRender

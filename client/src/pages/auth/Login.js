@@ -42,7 +42,7 @@ const LoginRender = ({
                         <h1 className="px-4 py-3 text-center text-gray-600 font-bold">Sign in with Google</h1>
                     </button>
 
-                    <div className="mt-4 flex items-center justify-between">
+                    {/* <div className="mt-4 flex items-center justify-between">
                         <span className="border-b w-1/5 lg:w-1/4"></span>
                         <a href="#" className="text-xs text-center text-gray-500 uppercase">or login with email</a>
                         <span className="border-b w-1/5 lg:w-1/4"></span>
@@ -82,7 +82,7 @@ const LoginRender = ({
                         <span className="border-b w-1/5 md:w-1/4"></span>
                         <a href="#" className="text-xs text-gray-500 uppercase">or sign up</a>
                         <span className="border-b w-1/5 md:w-1/4"></span>
-                    </div>
+                    </div> */}
 
                 </div>
             </div>

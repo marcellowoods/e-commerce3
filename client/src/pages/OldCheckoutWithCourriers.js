@@ -1,7 +1,7 @@
 import React, { useEffect, useState, Fragment } from "react";
 import { useNavigate } from "react-router-dom";
 
-import { useDidMountEffect, useAsync } from "../auxiliary/reactUtils"
+import { useDidMountEffect } from "../auxiliary/reactUtils"
 import LoadingPage from "./LoadingPage";
 
 import OrderItems from "../components/checkout/OrderItems";
@@ -10,29 +10,25 @@ import {
     DeliveryMethod,
     DeliveryAdress
 } from "../components/checkout/CheckoutFields";
-import { ConfirmOrder, BeforeCheckoutMessage } from "../components/checkout/CheckoutModals";
+import { ConfirmOrder } from "../components/checkout/CheckoutModals";
 import { getCartTotal, clearCart, getFilteredCartData } from "../actions/cartActions";
 import { postOrder, userPostOrder } from "../functions/orders";
 
 import { useTranslation } from 'react-i18next';
 
 import { useDispatch, useSelector } from "react-redux";
-import { getOrderOptions } from "../functions/orders";
 
-// const selectedCourier = {
-//     name: "Econt",
-//     id: "econt",
-//     findOffice: "https://www.econt.com/find-office",
-//     shippingPrice: {
-//         home: 7,
-//         office: 5
-//     }
-// };
+
+const deliveryCouriers = [
+    { name: "Econt", id: "econt", findOffice: "https://www.econt.com/find-office" },
+    { name: "Speedy", id: "speedy", findOffice: "https://www.speedy.bg/bg/speedy-offices" }
+];
 const deliveryMethods = [{ name: "Delivery to home", id: "home" }, { name: "Delivery to courrier office", id: "office" }];
 
 const CheckoutStates = {
-    "DELIVERY_METHOD": 1,
-    "DELIVERY_ADDRESS": 2,
+    "DELIVERY_COURIER": 1,
+    "DELIVERY_METHOD": 2,
+    "DELIVERY_ADDRESS": 3,
 }
 
 const Checkout = () => {
@@ -43,7 +39,7 @@ const Checkout = () => {
 
     let dispatch = useDispatch();
 
-    const [checkoutState, setCheckoutState] = useState(CheckoutStates.DELIVERY_METHOD);
+    const [checkoutState, setCheckoutState] = useState(CheckoutStates.DELIVERY_COURIER);
 
     const [selectedCourier, setSelectedCourier] = useState(null);
     const [selectedMethod, setSelectedMethod] = useState(null);
@@ -51,6 +47,7 @@ const Checkout = () => {
     const [contactInformation, setContactInformation] = useState({ phone: "", email: "", name: "" });
 
     const [methodOptions, setMethodOptions] = useState(deliveryMethods);
+    const [courierOptions, setCourierOptions] = useState(deliveryCouriers);
 
     const [isConfirmModalOpen, setIsConfirmModalOpen] = useState(false);
     const [orderSentLoading, setOrderSentLoading] = useState(false);
@@ -64,13 +61,6 @@ const Checkout = () => {
     //     setContactInformation({ phone: "1234", email: "test@mail.com", name: "Somename" })
     //     setDeliveryAddress({ city: "some sity", address: "address 2" })
     // }, [])
-
-    useAsync(
-        async () => getOrderOptions(),
-        (data) => setSelectedCourier(data.selectedCourier),
-        null,
-        []
-    );
 
     const onConfirmOrderClicked = async () => {
 
@@ -87,11 +77,7 @@ const Checkout = () => {
             lang: i18n.language
         }
 
-        const homeOrOffice = selectedMethod.id;
-        const shippingCost = selectedCourier.shippingPrice[homeOrOffice];
-
-        const totalCost = getCartTotal(products, shippingCost);
-        
+        const totalCost = getCartTotal(products);
         let postFn = null;
 
         if (user === null) {
@@ -122,21 +108,16 @@ const Checkout = () => {
         setMethodOptions(prevState => {
             return prevState.map(({ name, id }) => {
                 if (id === 'office') {
-
                     const text = t('delivery to office', { name: selectedCourier.name });
-                    const shippingPrice = selectedCourier.shippingPrice.office + t("lv.");
-                    return { name: text, id, shippingPrice }
-
+                    return { name: text, id }
                 } else {
-
-                    const shippingPrice = selectedCourier.shippingPrice.home + t("lv.");
                     const text = t('delivery to home');
-                    return { name: text, id, shippingPrice }
-
+                    return { name: text, id }
                 }
             })
         });
     }, [selectedCourier]);
+
 
 
     const isFieldsMissing = () => {
@@ -165,6 +146,13 @@ const Checkout = () => {
     const handleNextClick = () => {
 
         switch (checkoutState) {
+            case CheckoutStates.DELIVERY_COURIER:
+                if (selectedCourier === null) {
+                    window.alert("please choose delivery courier");
+                } else {
+                    setCheckoutState(CheckoutStates.DELIVERY_METHOD)
+                }
+                break;
             case CheckoutStates.DELIVERY_METHOD:
                 if (selectedMethod === null) {
                     window.alert("please choose delivery method");
@@ -177,7 +165,7 @@ const Checkout = () => {
                 if (missingFields) {
                     window.alert("missing " + missingFields.join(','));
                 } else {
-
+                    
                     setIsConfirmModalOpen(true);
                 }
                 break;
@@ -189,6 +177,9 @@ const Checkout = () => {
         switch (checkoutState) {
             case CheckoutStates.DELIVERY_ADDRESS:
                 setCheckoutState(CheckoutStates.DELIVERY_METHOD)
+                break;
+            case CheckoutStates.DELIVERY_METHOD:
+                setCheckoutState(CheckoutStates.DELIVERY_COURIER)
                 break;
         }
     }
@@ -209,6 +200,14 @@ const Checkout = () => {
     }
 
     const getHelperForAddressComponent = () => {
+
+        // if (!selectedMethod || !selectedCourier) {
+        //     return (
+        //         <h3 className="text-gray-700 text-xl font-medium">
+        //             Fill in your address and contact information to finish the order
+        //         </h3>
+        //     );
+        // }
 
         if (selectedMethod.id == "office") {
 
@@ -233,19 +232,14 @@ const Checkout = () => {
 
     }
 
-    if (orderSentLoading | !selectedCourier) {
+    if (orderSentLoading) {
         return <LoadingPage />
     }
 
     return (
 
         <div className="pt-6 sm:px-12">
-
-            <BeforeCheckoutMessage/>
-
             <ConfirmOrder
-                selectedCourier={selectedCourier}
-                selectedMethod={selectedMethod}
                 onConfirmClicked={onConfirmOrderClicked}
                 deliveryAdress={deliveryAdress}
                 contactInformation={contactInformation}
@@ -265,7 +259,17 @@ const Checkout = () => {
 
                         {checkoutState === CheckoutStates.DELIVERY_ADDRESS && getHelperForAddressComponent()}
 
-
+                        {checkoutState === CheckoutStates.DELIVERY_COURIER && (
+                            <div>
+                                <DeliveryMethod
+                                    selected={selectedCourier}
+                                    setSelected={setSelectedCourier}
+                                    name={t('delivery courrier')}
+                                    options={courierOptions}
+                                />
+                            </div>
+                        )
+                        }
                         {checkoutState === CheckoutStates.DELIVERY_METHOD && (
                             <div>
                                 <DeliveryMethod

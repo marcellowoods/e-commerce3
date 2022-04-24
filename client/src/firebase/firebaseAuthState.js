@@ -27,7 +27,7 @@ let onAuthStateChanged = (isLoading, setIsLoading, getUserFromServer, onSuccessU
 
     return onAuthStateChangedFirebase(auth, async (user) => {
 
-        console.log(user);
+        // console.log(user);
 
         if (user) {
             const idTokenResult = await user.getIdTokenResult();
