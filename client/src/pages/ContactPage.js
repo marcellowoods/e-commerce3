@@ -32,6 +32,7 @@ function ContactPage() {
                         className="text-base leading-none text-gray-900 p-3 focus:oultine-none focus:border-indigo-700 mt-4 bg-gray-100 border rounded border-gray-200 placeholder-gray-100"
                     />
                 </div>
+                
                 <div className="sm:w-72 flex flex-col sm:ml-6 sm:mt-0 mt-4">
                     <label className="capitalize text-base font-semibold leading-none text-gray-800" >{t('email')}</label>
                     <input
