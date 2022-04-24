@@ -3,6 +3,7 @@ import { useTranslation } from 'react-i18next';
 import { sendMessage } from "../functions/messages";
 
 
+//https://tailwinduikit.com/components/marketing/page_section/contact
 function ContactPage() {
 
     const { t, i18n } = useTranslation();
