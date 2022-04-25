@@ -206,7 +206,7 @@ const PageComponent = () => {
     return (
         <Fragment>
 
-            <div className="flex flex-col sm:flex-row">
+            <div className="flex flex-col sm:flex-row pt-6 sm:pt-4 ">
                 <div className="pr-2">
                     <ElementsMenu
                         allElements={allCategories}

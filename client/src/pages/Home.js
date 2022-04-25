@@ -77,7 +77,7 @@ const Home = () => {
 
     return (
 
-        <div className="grid  grid-cols-1 lg:grid-cols-2">
+        <div className="pt-2 grid  grid-cols-1 lg:grid-cols-2">
             {categories.map((c) => {
 
                 const { description, image, name, slug, _id } = c;

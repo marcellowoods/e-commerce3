@@ -38,7 +38,7 @@ const ElementsMenu = ({ allElements, selectedElement, setSelectedElement, zIndex
     return (
         <Menu style={{ zIndex }} as="div" className="relative inline-block text-left">
             <div>
-                <Menu.Button className="border-none inline-flex justify-center w-full rounded-md border-gray-300  p-2 bg-white text-sm  text-gray-700 hover:bg-gray-50 focus:outline-none  focus:ring-indigo-500">
+                <Menu.Button className="border-none inline-flex justify-center w-full rounded-md border-gray-300  px-2 sm:py-2 bg-white text-sm  text-gray-700 hover:bg-gray-50 focus:outline-none  focus:ring-indigo-500">
                     <h3 className="text-gray-700 text-2xl font-normal">{getTranslatedName(selectedElement)}</h3>
                     <SelectorIcon className="-mr-2 ml-1 mt-2 h-6 w-6" aria-hidden="true" />
                 </Menu.Button>
