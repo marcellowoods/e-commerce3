@@ -361,7 +361,7 @@ const ProductCategory = ({translatedProductName, translatedCategoryName, product
                     <div className="flex items-center">
                         <button
                             onClick={() => pushToPage()}
-                            className="mr-2 font-medium text-lg text-gray-900"
+                            className="mr-2 font-medium text-md text-gray-900"
                         >
                             {translatedCategoryName}
                         </button>
@@ -381,7 +381,7 @@ const ProductCategory = ({translatedProductName, translatedCategoryName, product
                     </div>
                 </li>
 
-                <li className="text-lg">
+                <li className="text-md">
                     <a  aria-current="page" className="font-medium text-gray-500 hover:text-gray-600">
                         {translatedProductName}
                     </a>

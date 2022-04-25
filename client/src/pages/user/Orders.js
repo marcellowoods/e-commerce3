@@ -60,7 +60,7 @@ const Orders = () => {
     }
 
     return (
-        <div>
+        <div className="pt-6">
             {orderSelected && (
                 <OrderDetails
                     totalCost={orderSelected.totalCost}

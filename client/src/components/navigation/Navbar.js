@@ -87,7 +87,7 @@ const NavbarRender = ({ mobileNavbarToggle, cartModalToggle, isAdmin }) => {
             </div>
 
             {/* empty space for sticky top */}
-            <div className="pt-24 sm:pt-36">
+            <div className="pt-16 sm:pt-32">
 
             </div>
 

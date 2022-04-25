@@ -39,7 +39,8 @@ const ProductCard = ({ product, translatedCategoryName, translatedName, translat
     }
 
     return (
-        <div className="">
+        
+        <div >
 
             <ProductCategory
                 translatedProductName={translatedName}
@@ -78,10 +79,12 @@ const ProductCard = ({ product, translatedCategoryName, translatedName, translat
                         {
                             translatedDescription && (
                                 <div className="mt-5">
+                                    
+                                     {/* whiteSpace: "pre-line" for showing newline in description */}
                                     <h3 className="sr-only">{t("description")}</h3>
 
                                     <div className="space-y-6">
-                                        <p className="text-base text-gray-900">{translatedDescription}</p>
+                                        <p style={{ whiteSpace: "pre-line" }} className="text-base text-gray-900">{translatedDescription}</p>
                                     </div>
                                 </div>
                             )
