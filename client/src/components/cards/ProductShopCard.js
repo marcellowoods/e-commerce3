@@ -53,7 +53,7 @@ const ProductShopCard = ({ id, name, price, images, onAddClick, onCardClick }) =
                 <ProductShopSlider
                     onPointerDown={onPointerDown}
                     onPointerUp={onPointerUp}
-                    images={images}
+                    images={images.slice(0, 3)}
                 />
 
             </div>
