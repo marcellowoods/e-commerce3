@@ -54,7 +54,7 @@ const ProductCard = ({ product, translatedCategoryName, translatedName, translat
                 <div className="aspect-w-2 aspect-h-3 rounded-lg bg-gray-100 overflow-hidden sm:col-span-7">
 
                     <ProductSlider
-                        images={images.slice(0, 3)}
+                        images={images}
                         onPointerDown={() => { }}
                         onPointerUp={() => { }}
                     />

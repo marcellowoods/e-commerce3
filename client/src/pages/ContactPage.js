@@ -19,7 +19,7 @@ function ContactPage() {
 
     return (
 
-        <div className="w-full max-w-xl mx-auto">
+        <div className="w-full max-w-xl mx-auto pt-6">
             <div className="sm:flex items-center sm:mt-6">
                 <div className=" sm:w-72 flex flex-col">
                     <label className="capitalize autocomplete text-base font-semibold leading-none text-gray-800">{t('name')}</label>
