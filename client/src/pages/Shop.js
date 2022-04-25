@@ -206,7 +206,11 @@ const PageComponent = () => {
     return (
         <Fragment>
 
+<<<<<<< HEAD
             <div className="flex flex-col sm:flex-row pt-6 ">
+=======
+            <div className="flex flex-col sm:flex-row pt-6 sm:pt-4 ">
+>>>>>>> branch1
                 <div className="pr-2">
                     <ElementsMenu
                         allElements={allCategories}
