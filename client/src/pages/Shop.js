@@ -199,6 +199,7 @@ const PageComponent = () => {
     if (products == null || allCategories == null || selectedCategory == null) {
 
         return (
+            
             <LoadingPage />
         )
     }
