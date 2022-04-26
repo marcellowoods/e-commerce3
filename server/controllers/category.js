@@ -32,7 +32,7 @@ exports.create = async (req, res) => {
 exports.list = async (req, res) => {
 
     // res.json(await Category.find({}).sort({ createdAt: -1 }).exec());
-    res.json(await Category.find({}).sort({ updatedAt: 1 }).exec());
+    res.json(await Category.find({}).sort({ updatedAt: -1 }).exec());
 }
     
 
