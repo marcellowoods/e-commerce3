@@ -1,20 +1,37 @@
 import React, { useState } from "react";
 import { useTranslation } from 'react-i18next';
 import { sendMessage } from "../functions/messages";
+import LoadingPage from "./LoadingPage";
+import { useNavigate, useParams } from "react-router-dom";
 
 
 //https://tailwinduikit.com/components/marketing/page_section/contact
 function ContactPage() {
 
+    const navigate = useNavigate();
+
     const { t, i18n } = useTranslation();
     const [email, setEmail] = useState("");
     const [message, setMessage] = useState("");
     const [name, setName] = useState("");
+    const [isLoading, setIsLoading] = useState(false);
 
     const onSend = async () => {
 
-        await sendMessage(email, name, message);
+        setIsLoading(true);
+        try {
+            await sendMessage(email, name, message);
+            setIsLoading(false);
+            navigate('/');
+        } catch (error) {
+            console.error(error);
+        }
+        
     };
+
+    if(isLoading){
+        return < LoadingPage/>
+    }
 
 
     return (
@@ -32,7 +49,7 @@ function ContactPage() {
                         className="text-base leading-none text-gray-900 p-3 focus:oultine-none focus:border-indigo-700 mt-4 bg-gray-100 border rounded border-gray-200 placeholder-gray-100"
                     />
                 </div>
-                
+
                 <div className="sm:w-72 flex flex-col sm:ml-6 sm:mt-0 mt-4">
                     <label className="capitalize text-base font-semibold leading-none text-gray-800" >{t('email')}</label>
                     <input
