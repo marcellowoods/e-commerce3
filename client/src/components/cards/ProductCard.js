@@ -64,7 +64,7 @@ const ProductCard = ({ product, translatedCategoryName, translatedName, translat
                 </div>
                 {/* change col-span for size change but it has to add to grid-cols-12 */}
                 <div className="sm:col-span-5">
-                    <h3 class="text-gray-700 uppercase text-xl">{translatedName}</h3>
+                    <h3 className="text-gray-700 uppercase text-xl">{translatedName}</h3>
                     {/* <h2 className="text-2xl font-extrabold text-gray-900 sm:pr-12">{translatedName}</h2> */}
 
                     <section aria-labelledby="information-heading" className="">
