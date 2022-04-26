@@ -73,7 +73,8 @@ const translation = {
     "hide completed orders": "Hide completed orders",
 
     "message": "Message",
-    "send": "send"
+    "send": "send",
+    "please choose delivery method": "please choose delivery method"
 }
 
 export default translation;

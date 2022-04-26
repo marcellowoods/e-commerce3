@@ -167,7 +167,7 @@ const Checkout = () => {
         switch (checkoutState) {
             case CheckoutStates.DELIVERY_METHOD:
                 if (selectedMethod === null) {
-                    window.alert("please choose delivery method");
+                    window.alert(t("please choose delivery method"));
                 } else {
                     setCheckoutState(CheckoutStates.DELIVERY_ADDRESS)
                 }

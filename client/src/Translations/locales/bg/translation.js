@@ -78,7 +78,9 @@ const translation = {
     "hide completed orders": "Скрий завършени поръчки",
 
     "message": "Съобщение",
-    "send": "изпрати"
+    "send": "изпрати",
+
+    "please choose delivery method": "моля изберете опция за доставка"
 
 }
 
